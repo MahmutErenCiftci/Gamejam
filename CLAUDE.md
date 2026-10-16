@@ -19,6 +19,14 @@ Repo: https://github.com/MahmutErenCiftci/Gamejam
 - Commit atmadan önce `git status` çıktısını kullanıcıya göster; ilgisiz dosyaları (başka sahneler, ayar dosyaları) commit'e katma.
 - PR açmadan önce `dev`'in son halini kendi dalına al (`git pull origin dev`) ve çakışma varsa kullanıcıya bildir.
 
+## Birleştirme (merge) kuralı
+
+- `dev` ve `main`'e **birleştirmeyi sadece proje lideri (MahmutErenCiftci) yapar**. GitHub bunu zorunlu tutar; ekip üyelerinin birleştirme butonu çalışmaz.
+- Ekip üyesi olarak işin: feature dalında çalışmak, push etmek ve `dev`'e PR açmak. PR'ı açtıktan sonra kullanıcıya liderin incelemesini beklemesini söyle.
+- Ekip üyesi için **asla** `gh pr merge` çalıştırma, `main`'e PR açma.
+- PR'a yorum gelirse aynı feature dalında düzeltip tekrar push et; PR otomatik güncellenir.
+- `main` sadece lider tarafından `dev` → `main` PR'ı ile güncellenir.
+
 ## Unity kuralları
 
 - Her asset ile birlikte onun `.meta` dosyası da commit edilmeli; `.meta` dosyalarını asla silme veya elle değiştirme.
