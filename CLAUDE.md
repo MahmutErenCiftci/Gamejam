@@ -19,13 +19,13 @@ Repo: https://github.com/MahmutErenCiftci/Gamejam
 - Commit atmadan önce `git status` çıktısını kullanıcıya göster; ilgisiz dosyaları (başka sahneler, ayar dosyaları) commit'e katma.
 - PR açmadan önce `dev`'in son halini kendi dalına al (`git pull origin dev`) ve çakışma varsa kullanıcıya bildir.
 
-## Pull Request onay kuralı
+## Birleştirme (merge) kuralı
 
-- `dev`'e giden her PR birleşmeden önce **en az 1 ekip arkadaşının onayını** (Approve) almak zorunda. GitHub bunu zorunlu tutar; kimse kendi PR'ını onaylayamaz.
-- PR'a onaydan sonra yeni commit gelirse eski onay düşer, **yeniden onay** gerekir.
-- PR açtıktan sonra kullanıcıya bir ekip arkadaşından inceleme istemesini hatırlat (`gh pr edit <no> --add-reviewer <kullanıcı>`).
-- Başkasının PR'ını onaylaman istenirse: önce `gh pr diff <no>` ile değişiklikleri incele, sorunları (sahne/prefab çakışması, eksik `.meta`, ilgisiz dosyalar, `main`'e açılmış PR) kullanıcıya özetle; onayı (`gh pr review <no> --approve`) sadece kullanıcı açıkça isterse ver.
-- `main` korumalıdır: doğrudan push yasak, sadece proje lideri `dev` → `main` PR'ı ile günceller.
+- `dev` ve `main`'e **birleştirmeyi sadece proje lideri (MahmutErenCiftci) yapar**. GitHub bunu zorunlu tutar; ekip üyelerinin birleştirme butonu çalışmaz.
+- Ekip üyesi olarak işin: feature dalında çalışmak, push etmek ve `dev`'e PR açmak. PR'ı açtıktan sonra kullanıcıya liderin incelemesini beklemesini söyle.
+- Ekip üyesi için **asla** `gh pr merge` çalıştırma, `main`'e PR açma.
+- PR'a yorum gelirse aynı feature dalında düzeltip tekrar push et; PR otomatik güncellenir.
+- `main` sadece lider tarafından `dev` → `main` PR'ı ile güncellenir.
 
 ## Unity kuralları
 
