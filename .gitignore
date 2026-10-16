@@ -43,3 +43,6 @@ crashlytics-buildid.txt
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude kişisel notlar
+CLAUDE.local.md
