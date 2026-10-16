@@ -1,35 +1,43 @@
 ﻿ID,Owner,Priority,Due,Task,Dependencies,Acceptance_Criteria,Owner_Paths,Status
-SETUP-01,K1,P0,T+04,Unity proje ve Git ayarları,-,Unity açılıyor; sahne ve meta ayarları doğru,ProjectSettings/; repo config,TODO
-SETUP-02,K4,P0,T+04,"Kickoff, rol isimleri ve task board",-,"4 kişi owner atanmış, kanal ve teslim saati kayıtlı",planning/,TODO
-MENU-01,K1,P0,T+08,MainMenu sahnesi + gerçek UI,SETUP-01,Yeni Oyun/Ayarlar/Çıkış çalışıyor,Assets/Scenes/Menu/,TODO
-MENU-02,K3,P0,T+08,Menu temel görselleri import,SETUP-01,8 temel PNG ayrı ve import ayarı doğru,Assets/Art/,TODO
-MENU-03,K1,P0,T+10,"4 afet bulutu: 2 açık, 2 kilitli",MENU-01;MENU-02,Sel ve Deprem yüklenir; diğerleri Yakında,Assets/Scripts/Menu/,TODO
-MENU-04,K1,P0,T+14,5 sn menü intro ve skip,MENU-01,07:00→oda→bulutlar→başlık; Space skip,Assets/Scenes/Menu/;Assets/Scripts/Menu/,TODO
-CORE-01,K1,P0,T+06,GameSceneRouter kontratı,SETUP-01,"K2/K3 scene isimlerini bilir, menüye döner",Assets/Scripts/Core/,TODO
-BUILD-01,K1,P0,T+10,İlk Windows build,MENU-01;CORE-01,EXE açılıyor; hata açıkça raporlu,Builds/Windows/,TODO
-FLOOD-01,K2,P0,T+10,Sel sahnesi ve state skeleton,CORE-01,Sel sahnesi tek başına açılıyor,Assets/Scenes/Chapters/Flood/,TODO
-FLOOD-02,K2,P0,T+12,Çocuk hareket ve E etkileşimi,FLOOD-01,E ile uyanış/kapı aksiyonu işliyor,Assets/Scripts/Chapters/Flood/,TODO
-STORY-01,K4,P0,T+12,Sel TV/anne diyalogları,SETUP-02,Türkçe ve eğitsel doğruluk kontrolü,Assets/Data/,TODO
-STORY-02,K4,P0,T+12,Deprem 5 seçenek + feedback,SETUP-02,"1 doğru, 2-5 yanlış, timeout açıklaması",Assets/Data/,TODO
-FLOOD-03,K2,P0,T+18,TV + anne + karar 1,FLOOD-02;STORY-01,Karar 1 tüm seçenekleri feedback veriyor,Assets/Scenes/Chapters/Flood/,TODO
-QUAKE-01,K3,P0,T+12,Deprem salon + masa görseli,SETUP-01,Masa/pencere ve adult silhouette görünüyor,Assets/Art/;Assets/Scenes/Chapters/Earthquake/,TODO
-QUAKE-02,K3,P0,T+18,"5 saniye sayaç, 5 düğme",QUAKE-01;STORY-02,"1–5 ve mouse, timeout çalışıyor",Assets/Scripts/Chapters/Earthquake/,TODO
-ART-01,K3,P0,T+18,Sel için yağmurlu sokak minimum art,MENU-02,Tek arka plan/durak yağmur okunuşlu,Assets/Art/,TODO
-STORY-03,K4,P0,T+18,Sel söylentiler + karar 2,STORY-01,3 arkadaş iddiası ve güvenli feedback hazır,Assets/Data/,TODO
-FLOOD-04,K2,P0,T+23,"Yağmur, kapalı yol, söylenti",FLOOD-03;ART-01;STORY-03,Oyuncu tehlikeli sudan uzak bekliyor,Assets/Scenes/Chapters/Flood/,TODO
-FLOOD-05,K2,P0,T+28,Sel karar 2 + sonuç + reset,FLOOD-04,Sel tam loop ve menüye dönüş,Assets/Scenes/Chapters/Flood/,TODO
-QUAKE-03,K3,P0,T+23,Sarsıntı efekti / güvenli poz,QUAKE-02,"Doğru güvenli davranış görünür, flaş yok",Assets/Scenes/Chapters/Earthquake/,TODO
-QUAKE-04,K3,P0,T+28,Deprem sonucu + retry + menü,QUAKE-03,"Deprem tam loop, sayaç reset",Assets/Scenes/Chapters/Earthquake/,TODO
-CONTENT-01,K4,P0,T+24,Afet güvenlik doğruluk incelemesi,STORY-03;STORY-02,Sel/deprem yanlış güvenli mesaj yok,qa/,TODO
-INTEG-01,K1,P0,T+28,Sel ve Deprem entegrasyonu,FLOOD-05;QUAKE-04;MENU-03,Menü iki bölüme doğru gider ve döner,Assets/Scripts/Core/,TODO
-MENU-05,K1,P0,T+30,Ayarlar ses/fullscreen ve kilit tooltip,MENU-04,"İki buton işlevsel, kilit çalışıyor",Assets/Scripts/Menu/,TODO
-ART-02,K3,P1,T+34,Menü/yağmur/sarsıntı minimum polish,FLOOD-05;QUAKE-04,Yeni sisteme gerek kalmadan görünüm düzeldi,Assets/Art/;Assets/Animations/,TODO
-AUDIO-01,K4,P1,T+32,Lisans uygun 3-4 ses / ses seviyesi,CONTENT-01,Menü/rain/quake kullanılabilir veya sessiz fallback,Assets/Audio/,TODO
-QA-01,K4,P0,T+32,İki bölümün tam test turu,INTEG-01,E01-E06 ve F01-F08 kaydı,qa/,TODO
-FIX-01,K2,P0,T+36,Sel bug fixes,QA-01,Sel kritik bug 0,Assets/Scripts/Chapters/Flood/,TODO
-FIX-02,K3,P0,T+36,Deprem bug fixes,QA-01,Deprem kritik bug 0,Assets/Scripts/Chapters/Earthquake/,TODO
-FREEZE-01,K1,P0,T+36,Feature freeze ve RC0 build,FIX-01;FIX-02,Yeni feature yok; çalışan build işaretli,Builds/Windows/,TODO
-QA-02,K4,P0,T+44,Regresyon ve test raporu,FREEZE-01,Menü→Sel→Deprem smoke test sonucu kayıtlı,qa/,TODO
-BUILD-02,K1,P0,T+44,Release candidate Windows build,FREEZE-01;QA-02,"Ayrı Windows PC tercih, hash kaydı",Builds/Windows/,TODO
-DEMO-01,K4,P0,T+46,3 dakikalık jüri provası,QA-02,İki bölüm ve güvenlik mesajı 3 dk içinde,docs/JURY_DEMO.md,TODO
-RELEASE-01,K1,P0,T+48,Final build ZIP ve teslim,BUILD-02;DEMO-01,Geri alınabilir başarılı build teslim edilmiş,Builds/Windows/,TODO
+SETUP-01,Mahmut,P0,T+04,Unity proje ve Git ayarları,-,Unity açılıyor; sahne ve meta ayarları doğru,ProjectSettings/; repo config,TODO
+SETUP-02,Mahmut,P0,T+04,"Kickoff, rol isimleri ve task board",-,"4 kişi owner atanmış, kanal ve teslim saati kayıtlı",planning/,TODO
+MENU-01,Berk,P0,T+08,MainMenu sahnesi + gerçek UI,SETUP-01,Yeni Oyun/Ayarlar/Çıkış çalışıyor,Assets/Scenes/Menu/,TODO
+MENU-02,Berk,P0,T+08,Menu temel görselleri import,SETUP-01,8 temel PNG ayrı ve import ayarı doğru,Assets/Art/,TODO
+MENU-03,Berk,P0,T+10,"4 afet bulutu: 2 açık, 2 kilitli",MENU-01;MENU-02,Sel ve Deprem yüklenir; diğerleri Yakında,Assets/Scripts/Menu/,TODO
+MENU-04,Berk,P0,T+14,5 sn menü intro ve skip,MENU-01,07:00→oda→bulutlar→başlık; Space skip,Assets/Scenes/Menu/;Assets/Scripts/Menu/,TODO
+CORE-01,Mahmut,P0,T+06,GameSceneRouter kontratı,SETUP-01,"Berk (menü) ve bölüm sahneleri scene isimlerini bilir, menüye döner",Assets/Scripts/Core/,TODO
+BUILD-01,Mahmut,P0,T+10,İlk Windows build,MENU-01;CORE-01,EXE açılıyor; hata açıkça raporlu,Builds/Windows/,TODO
+FLOOD-01,Mahmut,P0,T+10,Sel sahnesi ve state skeleton,CORE-01,Sel sahnesi tek başına açılıyor,Assets/Scenes/Chapters/Flood/,TODO
+FLOOD-02,Mahmut,P0,T+12,Çocuk hareket ve E etkileşimi,FLOOD-01,E ile uyanış/kapı aksiyonu işliyor,Assets/Scripts/Chapters/Flood/,TODO
+STORY-01,Arda,P0,T+12,Sel TV/anne diyalogları,SETUP-02,Türkçe ve eğitsel doğruluk kontrolü,Assets/Data/,TODO
+STORY-02,Arda,P0,T+12,Deprem 5 seçenek + feedback,SETUP-02,"1 doğru, 2-5 yanlış, timeout açıklaması",Assets/Data/,TODO
+FLOOD-03,Mahmut,P0,T+18,TV + anne + karar 1,FLOOD-02;STORY-01,Karar 1 tüm seçenekleri feedback veriyor,Assets/Scenes/Chapters/Flood/,TODO
+QUAKE-01,Mahmut,P0,T+12,Deprem salon + masa görseli,SETUP-01,Masa/pencere ve adult silhouette görünüyor,Assets/Art/;Assets/Scenes/Chapters/Earthquake/,TODO
+QUAKE-02,Mahmut,P0,T+18,"5 saniye sayaç, 5 düğme",QUAKE-01;STORY-02,"1–5 ve mouse, timeout çalışıyor",Assets/Scripts/Chapters/Earthquake/,TODO
+ART-01,Mahmut,P0,T+18,Sel için yağmurlu sokak minimum art,MENU-02,Tek arka plan/durak yağmur okunuşlu,Assets/Art/,TODO
+STORY-03,Arda,P0,T+18,Sel söylentiler + karar 2,STORY-01,3 arkadaş iddiası ve güvenli feedback hazır,Assets/Data/,TODO
+FLOOD-04,Mahmut,P0,T+23,"Yağmur, kapalı yol, söylenti",FLOOD-03;ART-01;STORY-03,Oyuncu tehlikeli sudan uzak bekliyor,Assets/Scenes/Chapters/Flood/,TODO
+FLOOD-05,Mahmut,P0,T+28,Sel karar 2 + sonuç + reset,FLOOD-04,Sel tam loop ve menüye dönüş,Assets/Scenes/Chapters/Flood/,TODO
+QUAKE-03,Mahmut,P0,T+23,Sarsıntı efekti / güvenli poz,QUAKE-02,"Doğru güvenli davranış görünür, flaş yok",Assets/Scenes/Chapters/Earthquake/,TODO
+QUAKE-04,Mahmut,P0,T+28,Deprem sonucu + retry + menü,QUAKE-03,"Deprem tam loop, sayaç reset",Assets/Scenes/Chapters/Earthquake/,TODO
+CONTENT-01,Arda,P0,T+24,Afet güvenlik doğruluk incelemesi,STORY-03;STORY-02,Sel/deprem yanlış güvenli mesaj yok,qa/,TODO
+INTEG-01,Mahmut,P0,T+28,Sel ve Deprem entegrasyonu,FLOOD-05;QUAKE-04;MENU-03,Menü iki bölüme doğru gider ve döner,Assets/Scripts/Core/,TODO
+MENU-05,Berk,P0,T+30,Ayarlar ses/fullscreen ve kilit tooltip,MENU-04,"İki buton işlevsel, kilit çalışıyor",Assets/Scripts/Menu/,TODO
+ART-02,Mahmut,P1,T+34,Menü/yağmur/sarsıntı minimum polish,FLOOD-05;QUAKE-04,Yeni sisteme gerek kalmadan görünüm düzeldi,Assets/Art/;Assets/Animations/,TODO
+AUDIO-01,Mahmut,P1,T+32,Lisans uygun 3-4 ses / ses seviyesi,CONTENT-01,Menü/rain/quake kullanılabilir veya sessiz fallback,Assets/Audio/,TODO
+QA-01,Mahmut,P0,T+32,İki bölümün tam test turu,INTEG-01,E01-E06 ve F01-F08 kaydı,qa/,TODO
+FIX-01,Mahmut,P0,T+36,Sel bug fixes,QA-01,Sel kritik bug 0,Assets/Scripts/Chapters/Flood/,TODO
+FIX-02,Mahmut,P0,T+36,Deprem bug fixes,QA-01,Deprem kritik bug 0,Assets/Scripts/Chapters/Earthquake/,TODO
+FREEZE-01,Mahmut,P0,T+36,Feature freeze ve RC0 build,FIX-01;FIX-02,Yeni feature yok; çalışan build işaretli,Builds/Windows/,TODO
+QA-02,Mahmut,P0,T+44,Regresyon ve test raporu,FREEZE-01,Menü→Sel→Deprem smoke test sonucu kayıtlı,qa/,TODO
+BUILD-02,Mahmut,P0,T+44,Release candidate Windows build,FREEZE-01;QA-02,"Ayrı Windows PC tercih, hash kaydı",Builds/Windows/,TODO
+DEMO-01,Mahmut,P0,T+46,3 dakikalık jüri provası,QA-02,İki bölüm ve güvenlik mesajı 3 dk içinde,docs/JURY_DEMO.md,TODO
+RELEASE-01,Mahmut,P0,T+48,Final build ZIP ve teslim,BUILD-02;DEMO-01,Geri alınabilir başarılı build teslim edilmiş,Builds/Windows/,TODO
+UI-01,Berk,P0,T+12,"Ortak UI prefabları (DialoguePanel, DecisionPanel 3/5, ResultPanel, InteractionHint, FadePanel)",SETUP-01,Prefablar görünüm olarak hazır; Arda/Eren/Mahmut kullanabiliyor,Assets/Prefabs/UI/;Assets/Scripts/UI/;Assets/Art/UI/,TODO
+UI-02,Berk,P0,T+08,Türkçe karakterli pixel font,SETUP-01,Ç Ğ İ ı Ö Ş Ü doğru görünüyor; lisans net,Assets/Fonts/,TODO
+DIALOG-01,Arda,P0,T+12,Diyalog sistemi + JSON yükleyici,CORE-01;UI-01,"JSON satırları sırayla, konuşan adıyla; E/Space/mouse ile ilerliyor; bitince event",Assets/Scripts/Dialogue/;Assets/Prefabs/Dialogue/,TODO
+DIALOG-02,Arda,P0,T+16,Seçenekli karar + feedback,DIALOG-01,3 ve 5 seçenek; seçim feedback gösterip correct bilgisiyle event atıyor,Assets/Scripts/Dialogue/,TODO
+NEWS-01,Eren,P0,T+14,Sel TV haber sekansı (F03),UI-01,Haber bandı + uyarı ekranı + metin; bitince event; sahte kurum logosu yok,Assets/Scripts/News/;Assets/Prefabs/News/;Assets/Art/News/,TODO
+NEWS-02,Eren,P0,T+16,Deprem kurgu uyarı bildirimi (EQ02),UI-01,Telefon/TV bildirimi prefabı; kurgu olduğu belli; garanti 5 sn iddiası yok,Assets/Scripts/News/;Assets/Prefabs/News/,TODO
+NEWS-03,Eren,P0,T+20,Söylenti/haber kartları (F05),NEWS-01,3 iddia kartı Kaynak: bilinmiyor; 1 resmî duyuru kartı tarih/saatli,Assets/Prefabs/News/;Assets/Data/News/,TODO
+NEWS-04,Eren,P1,T+24,Haber metinleri doğruluk kontrolü,NEWS-01;NEWS-03,Renk kodu evrensel diye anlatılmıyor; gerçek kurum adı/logosu yok,Assets/Data/News/,TODO
