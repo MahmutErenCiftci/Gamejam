@@ -1,0 +1,79 @@
+{
+  "chapter_id": "earthquake",
+  "version": "1.1",
+  "scenes": [
+    {
+      "id": "E01_MORNING",
+      "title": "Sabah",
+      "lines": [
+        { "speaker": "Yetişkin", "text": "Günaydın. Kahveyi koydum." },
+        { "speaker": "Eşi", "text": "Günaydın. Bugün biraz yoğun olacak." }
+      ]
+    },
+    {
+      "id": "E01_AFTER_ALERT",
+      "title": "Bildirim",
+      "lines": [
+        { "speaker": "Yetişkin", "text": "Ne oluyor?" }
+      ]
+    },
+    {
+      "id": "E03_AFTER_SHAKE",
+      "title": "Sarsıntı Sonrası",
+      "lines": [
+        { "speaker": "Eşi", "text": "Sarsıntı durdu. İyi misin?" },
+        { "speaker": "Yetişkin", "text": "İyiyim. Sakin olalım; önce yaralanan var mı, ona bakalım." }
+      ]
+    },
+    {
+      "id": "E04_RESULT",
+      "title": "Öğrendiklerimiz",
+      "lines": [
+        { "speaker": "", "text": "Sarsıntı sırasında kendini koru: Uygun ve güvenli bir noktada Çök–Kapan–Tutun." },
+        { "speaker": "", "text": "Baş ve boynunu koru; camlardan ve devrilebilecek eşyalardan uzak dur." },
+        { "speaker": "", "text": "Sarsıntı sırasında asansöre binme veya merdivene koşma. Her durumda yerel resmî yönlendirmeleri izle." },
+        { "speaker": "", "text": "Bu bir farkındalık oyunudur. Güncel resmî afet talimatlarını takip edin." }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "E_D1",
+      "prompt": "Sarsıntı başlıyor. Ne yaparsın?",
+      "time_limit": 5,
+      "timeout_feedback": "Sarsıntı başladı! Başını korumayı ve güvenli bir yerde Çök–Kapan–Tutun'u hatırla.",
+      "choices": [
+        {
+          "id": "E_D1_1",
+          "text": "Sağlam masanın altına Çök–Kapan–Tutun",
+          "correct": true,
+          "feedback": "Doğru. Baş ve boynunu koru, sarsıntı geçene dek tutun."
+        },
+        {
+          "id": "E_D1_2",
+          "text": "Pencereye koş",
+          "correct": false,
+          "feedback": "Cam ve düşen parçalar tehlikeli olabilir."
+        },
+        {
+          "id": "E_D1_3",
+          "text": "Merdivene koş",
+          "correct": false,
+          "feedback": "Sarsıntı sırasında koşmak ve dengeyi kaybetmek tehlikelidir."
+        },
+        {
+          "id": "E_D1_4",
+          "text": "Asansöre git",
+          "correct": false,
+          "feedback": "Deprem sırasında asansör kullanılmaz."
+        },
+        {
+          "id": "E_D1_5",
+          "text": "Balkona çık",
+          "correct": false,
+          "feedback": "Sarsıntı sırasında balkona ya da dışarı fırlamak risklidir."
+        }
+      ]
+    }
+  ]
+}

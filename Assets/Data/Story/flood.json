@@ -1,0 +1,119 @@
+{
+  "chapter_id": "flood",
+  "version": "1.1",
+  "scenes": [
+    {
+      "id": "F01_WAKE",
+      "title": "Uyanış",
+      "lines": [
+        { "speaker": "İç ses", "text": "Yine okula geç kalmayayım..." }
+      ]
+    },
+    {
+      "id": "F02_WASH",
+      "title": "Sabah Rutini",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Bakalım kahvaltıda ne var?" }
+      ]
+    },
+    {
+      "id": "F03_MOTHER",
+      "title": "Haber ve Anne",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Anne, bu uyarı neden kırmızı? Dışarı çıkmak tehlikeli mi?" },
+        { "speaker": "Anne", "text": "Yağmur işte canım, hep yağıyor. Bir şey olmaz." },
+        { "speaker": "Çocuk", "text": "Ama haberde yolların su basabileceğini söylediler." }
+      ]
+    },
+    {
+      "id": "F04_RAIN",
+      "title": "Şiddetli Yağmur",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur iyice arttı. Neden trafik durdu?" },
+        { "speaker": "Görevli", "text": "Yol kapalı. Lütfen bariyerin gerisinde, güvenli alanda bekleyin." }
+      ]
+    },
+    {
+      "id": "F05_RUMORS",
+      "title": "Söylenti Zinciri",
+      "lines": [
+        { "speaker": "Arkadaş A", "text": "Telefonda bir mesaj gördüm. İleride yol sel yüzünden kapanmış!" },
+        { "speaker": "Arkadaş B", "text": "Ben köprünün tamamen yıkıldığını duydum." },
+        { "speaker": "Arkadaş C", "text": "Birileri baraj taşmış diyor. Ama kim söyledi bilmiyorum." },
+        { "speaker": "Çocuk", "text": "Hangisi gerçekten doğru? Bu mesajlar aynı şeyi bile söylemiyor." }
+      ]
+    },
+    {
+      "id": "F07_CLOSING",
+      "title": "Ekipler ve Kapanış",
+      "lines": [
+        { "speaker": "Görevli", "text": "Ekipler yolu emniyete aldı. Su çekilip kontroller bitene kadar bu yol kapalı kalacak." },
+        { "speaker": "Görevli", "text": "Resmî duyuruları takip edin ve güvenli alanda bekleyin." },
+        { "speaker": "Çocuk", "text": "Sadece çok yağmur yağacak sanmıştım. Bilginin kaynağı da önemliymiş." }
+      ]
+    },
+    {
+      "id": "F07_RESULT",
+      "title": "Öğrendiklerimiz",
+      "lines": [
+        { "speaker": "", "text": "Resmî uyarının içeriğini oku." },
+        { "speaker": "", "text": "Suyla kaplı yola girme." },
+        { "speaker": "", "text": "Söylentiyi paylaşmadan kaynağını doğrula." }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "F_D1",
+      "prompt": "Uyarıyı nasıl değerlendirirsin?",
+      "time_limit": 0,
+      "timeout_feedback": "",
+      "choices": [
+        {
+          "id": "F_D1_A",
+          "text": "Resmî uyarının ayrıntılarını kontrol edelim.",
+          "correct": true,
+          "feedback": "Doğru. Başlığı değil, ayrıntıyı ve yetkili yönlendirmeyi kontrol etmek önemlidir."
+        },
+        {
+          "id": "F_D1_B",
+          "text": "Annem haklı, haber abartılı olabilir.",
+          "correct": false,
+          "feedback": "Uyarıyı küçümsemek riskli. Resmî kaynakları kontrol etmek daha güvenlidir."
+        },
+        {
+          "id": "F_D1_C",
+          "text": "Sosyal medyada yazılanlara göre karar verelim.",
+          "correct": false,
+          "feedback": "Kaynağı doğrulanmamış paylaşımlar güvenilir değildir."
+        }
+      ]
+    },
+    {
+      "id": "F_D2",
+      "prompt": "Yol kapalı, ne yaparsın?",
+      "time_limit": 0,
+      "timeout_feedback": "",
+      "choices": [
+        {
+          "id": "F_D2_A",
+          "text": "Güvenli alanda kalıp yetkililerin açıklamasını beklerim.",
+          "correct": true,
+          "feedback": "Doğru. Suyla kaplı yola girmeyin. Resmî uyarıları ve görevli yönlendirmesini izleyin."
+        },
+        {
+          "id": "F_D2_B",
+          "text": "Yol su dolu olsa da karşıya geçerim.",
+          "correct": false,
+          "feedback": "Bu tehlikelidir. Suyun derinliği ve akıntı gücü görünenden farklı olabilir."
+        },
+        {
+          "id": "F_D2_C",
+          "text": "Bir arkadaşın paylaştığı kestirmeyi denerim.",
+          "correct": false,
+          "feedback": "Doğrulanmamış yönlendirmeler sizi riskli bir alana götürebilir."
+        }
+      ]
+    }
+  ]
+}
