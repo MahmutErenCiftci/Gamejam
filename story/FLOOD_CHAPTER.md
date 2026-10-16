@@ -1,5 +1,7 @@
 # Sel Bölümü — Detaylı Senaryo ve Sahne Planı
 
+> ⚠️ **GÜNCEL DEĞİL — paketin ilk senaryosu.** Bağlayıcı Sel akışı: [`docs/OYUN_AKISI.md` §6](../docs/OYUN_AKISI.md). Güncel metinler: `Assets/Data/Story/flood.json`.
+
 **Sahip:** K2 (oynanış), K4 (metin), K3 (görsel) · **P0** · **Hedef oynanış:** 2–4 dakika · **Başarı kapısı:** T+28'de baştan sona demo.
 
 ## Anlatının ana fikri

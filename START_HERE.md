@@ -1,5 +1,7 @@
 # AFET UYANIŞI — 48 Saatlik Game Jam Çalışma Paketi
 
+> ✅ **Bu repoda güncel başlangıç:** oyunun akışı [`docs/OYUN_AKISI.md`](docs/OYUN_AKISI.md) · roller [`planning/EKIP_ROLLERI.md`](planning/EKIP_ROLLERI.md) · isimlendirme [`technical/ISIMLENDIRME_VE_KLASORLER.md`](technical/ISIMLENDIRME_VE_KLASORLER.md) · Claude kuralları [`CLAUDE.md`](CLAUDE.md).
+
 > **SÜRÜM 2.0 · 4 kişi · Unity 2D/C# · ZORUNLU İKİ OYNANABİLİR BÖLÜM: SEL + DEPREM**  
 > Bu ZIP **oyunun hazır Unity projesi değildir**. Uygulama planı, özgün görsel referanslar/PNG'ler, görev panosu, içerik örnekleri ve ekip/AI-agent kurallarıdır. Klasörleri mevcut Unity projenizle kontrollü birleştirin.
 

@@ -1,13 +1,13 @@
 ﻿ID,Owner,Priority,Due,Task,Dependencies,Acceptance_Criteria,Owner_Paths,Status
-SETUP-01,Mahmut,P0,T+04,Unity proje ve Git ayarları,-,Unity açılıyor; sahne ve meta ayarları doğru,ProjectSettings/; repo config,TODO
+SETUP-01,Mahmut,P0,T+04,Unity proje ve Git ayarları,-,Unity açılıyor; sahne ve meta ayarları doğru,ProjectSettings/; repo config,IN_REVIEW
 SETUP-02,Mahmut,P0,T+04,"Kickoff, rol isimleri ve task board",-,"4 kişi owner atanmış, kanal ve teslim saati kayıtlı",planning/,TODO
 MENU-01,Berk,P0,T+08,MainMenu sahnesi + gerçek UI,SETUP-01,Yeni Oyun/Ayarlar/Çıkış çalışıyor,Assets/Scenes/Menu/,TODO
 MENU-02,Berk,P0,T+08,Menu temel görselleri import,SETUP-01,8 temel PNG ayrı ve import ayarı doğru,Assets/Art/,TODO
 MENU-03,Berk,P0,T+10,"4 afet bulutu: 2 açık, 2 kilitli",MENU-01;MENU-02,Sel ve Deprem yüklenir; diğerleri Yakında,Assets/Scripts/Menu/,TODO
 MENU-04,Berk,P0,T+14,5 sn menü intro ve skip,MENU-01,07:00→oda→bulutlar→başlık; Space skip,Assets/Scenes/Menu/;Assets/Scripts/Menu/,TODO
-CORE-01,Mahmut,P0,T+06,GameSceneRouter kontratı,SETUP-01,"Berk (menü) ve bölüm sahneleri scene isimlerini bilir, menüye döner",Assets/Scripts/Core/,TODO
+CORE-01,Mahmut,P0,T+06,GameSceneRouter kontratı,SETUP-01,"Berk (menü) ve bölüm sahneleri scene isimlerini bilir, menüye döner",Assets/Scripts/Core/,IN_REVIEW
 BUILD-01,Mahmut,P0,T+10,İlk Windows build,MENU-01;CORE-01,EXE açılıyor; hata açıkça raporlu,Builds/Windows/,TODO
-FLOOD-01,Mahmut,P0,T+10,Sel sahnesi ve state skeleton,CORE-01,Sel sahnesi tek başına açılıyor,Assets/Scenes/Chapters/Flood/,TODO
+FLOOD-01,Mahmut,P0,T+10,Sel sahnesi ve state skeleton,CORE-01,Sel sahnesi tek başına açılıyor,Assets/Scenes/Chapters/Flood/,IN_REVIEW
 FLOOD-02,Mahmut,P0,T+12,Çocuk hareket ve E etkileşimi,FLOOD-01,E ile uyanış/kapı aksiyonu işliyor,Assets/Scripts/Chapters/Flood/,TODO
 STORY-01,Arda,P0,T+12,Sel TV/anne diyalogları,SETUP-02,Türkçe ve eğitsel doğruluk kontrolü,Assets/Data/,TODO
 STORY-02,Arda,P0,T+12,Deprem 5 seçenek + feedback,SETUP-02,"1 doğru, 2-5 yanlış, timeout açıklaması",Assets/Data/,TODO
@@ -37,7 +37,7 @@ UI-01,Berk,P0,T+12,"Ortak UI prefabları (DialoguePanel, DecisionPanel 3/5, Resu
 UI-02,Berk,P0,T+08,Türkçe karakterli pixel font,SETUP-01,Ç Ğ İ ı Ö Ş Ü doğru görünüyor; lisans net,Assets/Fonts/,TODO
 DIALOG-01,Arda,P0,T+12,Diyalog sistemi + JSON yükleyici,CORE-01;UI-01,"JSON satırları sırayla, konuşan adıyla; E/Space/mouse ile ilerliyor; bitince event",Assets/Scripts/Dialogue/;Assets/Prefabs/Dialogue/,TODO
 DIALOG-02,Arda,P0,T+16,Seçenekli karar + feedback,DIALOG-01,3 ve 5 seçenek; seçim feedback gösterip correct bilgisiyle event atıyor,Assets/Scripts/Dialogue/,TODO
-NEWS-01,Eren,P0,T+14,Sel TV haber sekansı (F03),UI-01,Haber bandı + uyarı ekranı + metin; bitince event; sahte kurum logosu yok,Assets/Scripts/News/;Assets/Prefabs/News/;Assets/Art/News/,TODO
-NEWS-02,Eren,P0,T+16,Deprem kurgu uyarı bildirimi (EQ02),UI-01,Telefon/TV bildirimi prefabı; kurgu olduğu belli; garanti 5 sn iddiası yok,Assets/Scripts/News/;Assets/Prefabs/News/,TODO
-NEWS-03,Eren,P0,T+20,Söylenti/haber kartları (F05),NEWS-01,3 iddia kartı Kaynak: bilinmiyor; 1 resmî duyuru kartı tarih/saatli,Assets/Prefabs/News/;Assets/Data/News/,TODO
+NEWS-01,Eren,P0,T+14,Sel TV haberi (NEWS_F03_TV),UI-01,Haber bandı + başlık + alt yazı + harita/renk lejantı (kurgu); NewsPlayerBase.Play bitince döner; sahte kurum logosu yok,Assets/Scripts/News/;Assets/Prefabs/News/;Assets/Art/News/,TODO
+NEWS-02,Eren,P0,T+16,Deprem TV haberi (NEWS_E03_TV),NEWS-01,"Hafif sarsıntılar hissedildi" + hazırlık hatırlatması; deprem tahmini/erken uyarı iddiası yok,Assets/Scripts/News/;Assets/Prefabs/News/,TODO
+NEWS-03,Eren,P0,T+20,Duyuru ve söylenti kartları (NEWS_F04_OFFICIAL; NEWS_F06_RUMORS; NEWS_F06_OFFICIAL_ROAD),NEWS-01,3 söylenti kartı Kaynak: bilinmiyor; 2 resmî duyuru kartı (kurgu kaynak),Assets/Prefabs/News/;Assets/Data/News/,TODO
 NEWS-04,Eren,P1,T+24,Haber metinleri doğruluk kontrolü,NEWS-01;NEWS-03,Renk kodu evrensel diye anlatılmıyor; gerçek kurum adı/logosu yok,Assets/Data/News/,TODO

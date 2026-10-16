@@ -1,5 +1,7 @@
 # Game Design Document (GDD) — AFET UYANIŞI
 
+> ⚠️ **GÜNCEL DEĞİL — paketin ilk tasarımı.** Bağlayıcı akış, kararlar ve ID'ler: [`docs/OYUN_AKISI.md`](OYUN_AKISI.md). Çelişki varsa OYUN_AKISI geçerlidir (ör. deprem artık aynı çocuğun evinde geçer, anne uyarıyı küçümsemez).
+
 **Sürüm:** 2.0 · **Kapsam:** 48 saat · **Hedef platform:** Windows PC · **Oyun motoru:** Unity 2D/C# · **Görsel:** sinematik modern pixel art · **Dil:** Türkçe
 
 ## 1. Tek cümlelik konsept
