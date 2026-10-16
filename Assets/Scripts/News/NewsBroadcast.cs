@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace AfetUyanisi.News
@@ -142,13 +141,6 @@ namespace AfetUyanisi.News
             tickerRect.anchoredPosition = new Vector2(tickerStartX, tickerRect.anchoredPosition.y);
         }
 
-        static bool PressedThisFrame()
-        {
-            var kb = Keyboard.current;
-            if (kb != null && (kb.eKey.wasPressedThisFrame || kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame))
-                return true;
-            var mouse = Mouse.current;
-            return mouse != null && mouse.leftButton.wasPressedThisFrame;
-        }
+        static bool PressedThisFrame() => NewsInput.ContinuePressed();
     }
 }
