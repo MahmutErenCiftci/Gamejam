@@ -36,6 +36,25 @@ Repo: https://github.com/MahmutErenCiftci/Gamejam
   - Sahne/prefab dosyasında merge conflict çıkarsa **otomatik çözmeye çalışma**, kullanıcıya bildir.
 - Scriptler `Assets/Scripts/` altında, sahneler `Assets/Scenes/` altında, prefablar `Assets/Prefabs/` altında tutulur.
 
+## Unity MCP (Claude'un Unity Editor'ü kontrol etmesi)
+
+Proje `com.unity.ai.assistant` paketini içerir; bu paket Unity MCP sunucusunu sağlar. Kurulum her bilgisayarda bir kez yapılır (ayar kişiseldir, repoya girmez):
+
+1. Projeyi Unity'de en az bir kez aç. Unity, relay programını `%USERPROFILE%\.unity\relay\relay_win.exe` konumuna kurar.
+2. Unity'de **Edit > Project Settings > AI > Unity MCP Server** altında **Unity Bridge**'in **Running** olduğunu kontrol et (değilse **Start**).
+3. Proje klasöründe şu komutu çalıştır (yolları kendi bilgisayarına göre değiştir):
+   ```
+   claude mcp add unity-mcp --scope local -- "C:/Users/<kullanıcı>/.unity/relay/relay_win.exe" --mcp --project-path "C:/Users/<kullanıcı>/Gamejam"
+   ```
+4. Claude Code'u yeniden başlat. Unity'de aynı sayfadaki **Pending Connections** altında bağlantıya **Allow** de (sadece ilk seferde).
+5. Test: Claude'a "Unity konsolundaki hataları göster" de; cevap Unity'den gelirse bağlantı çalışıyordur.
+
+Claude için Unity MCP kuralları:
+- Unity MCP araçlarıyla sahnede değişiklik yapmadan önce kullanıcıya ne yapacağını söyle; başkasının sahnesini MCP ile de düzenleme.
+- `Unity_AssetGeneration_GenerateAsset` (AI ile asset üretimi) Unity hesabından kredi harcayabilir; kullanıcı açıkça istemedikçe çağırma.
+- Değişiklikten sonra `Unity_GetConsoleLogs` ile hata olup olmadığını kontrol et.
+- MCP araçları bulunamıyorsa: Unity açık mı, Bridge **Running** mi, bağlantıya **Allow** denmiş mi kontrol ettir ve `claude mcp get unity-mcp` çıktısına bak.
+
 ## Commit mesajları
 
 Kısa ve Türkçe, ne yapıldığını anlatan: `Oyuncu zıplama eklendi`, `Düşman hasar hatası düzeltildi`.
