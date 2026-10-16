@@ -26,6 +26,24 @@
 | [UI_Bubble_Landslide_LOCKED.png](ui/UI_Bubble_Landslide_LOCKED.png) | 1448×1086 | alpha | Landslide concept bubble RGBA, locked in P0. |
 | [UI_MenuButtons_REFERENCE.png](ui/UI_MenuButtons_REFERENCE.png) | 1086×1448 | alpha | Three menu buttons in a single PNG; not 3 independently clickable Unity Buttons. |
 
+## Piksel karakter animasyonları (`characters/`, gj_karakterler paketi)
+
+Oyunda kullanılmaya **en yakın** karakter görselleri bunlardır: küçük, gerçek pixel art, çok kareli animasyon. Hepsi animasyonlu GIF, 6 kare, kare başı 200 ms (yürüyüş için ~5 fps).
+
+| Klasör | Dosyalar | Boyut | Not |
+|---|---|---:|---|
+| `characters/arda_yuruyus/` | `Idle_walk_<yön>.gif` × 8 yön (north, north-east, east, south-east, south, south-west, west, north-west) | 96×96, **çapraz yönler 80×80** | Ana karakter (sarı montlu çocuk, sırt çantalı). |
+| `characters/arda_yuruyus/` | `ana_karakter_piksel.gif` | 48×48, 8 kare | Küçük önizleme / idle. |
+| `characters/anne_yuruyus/` | `Idle_walk_<yön>.gif` × 8 yön | 96×96 | Anne. |
+| `characters/anne_yuruyus/` | `anne_piksel.gif` | 64×64, 8 kare | Küçük önizleme / idle. |
+
+**K3 için dikkat:**
+- **Unity animasyonlu GIF'i animasyon olarak içe aktarmaz**, sadece ilk kareyi alır. Kullanmadan önce her GIF yatay **PNG sprite sheet**'e çevrilmeli (6 kare yan yana), sonra Sprite Mode = Multiple ile dilimlenip Animator/Animation Clip yapılmalı.
+- GDD 2D **side view** istiyor: oyunda büyük ihtimalle yalnız `east` ve `west` (ve duruş için `south`) yeterli; diğer 5 yön opsiyonel.
+- Arda'nın çapraz yönleri 80×80, diğerleri 96×96: aynı PPU ile koyulursa yön değişince karakter boyu zıplar. Sprite sheet'e çevirirken hepsini 96×96 tuvale ortala (ayak hizası aynı).
+- Import: `Filter Mode = Point`, `Compression = None`, `Mip Maps = off`, PPU tüm karakterlerde aynı.
+- Bu küçük sprite'lar ile `sprites/` altındaki 1254×1254 büyük pozlar farklı stilde; oyun içinde tek stil seçilmeli (ART_BIBLE: "farklı üç çocuk gibi görünmemeli"). Oyun içi karakter için bu paket, diyalog portresi için `sprites/*_Portrait.png` önerilir.
+
 ## İlk kullanılacak 8 parça
 
 1. `backgrounds/BG_Bedroom_Sunrise.png` — menü arka plan.
