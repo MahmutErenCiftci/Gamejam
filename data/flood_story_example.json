@@ -1,0 +1,135 @@
+{
+  "chapter_id": "flood",
+  "version": "1.0",
+  "content_status": "example_data_not_integrated",
+  "scenes": [
+    {
+      "id": "F01_WAKE",
+      "title": "Uyanış",
+      "lines": [
+        {
+          "speaker": "Çocuk",
+          "text": "Yine okula geç kalmayayım..."
+        }
+      ],
+      "action": "Press E to get up"
+    },
+    {
+      "id": "F02_WASH",
+      "title": "Sabah Rutini",
+      "lines": [
+        {
+          "speaker": "Çocuk",
+          "text": "Önce yüzümü yıkayayım."
+        }
+      ],
+      "action": "Press E at sink"
+    },
+    {
+      "id": "F03_NEWS",
+      "title": "Sabah Haberleri",
+      "lines": [
+        {
+          "speaker": "Haber",
+          "text": "Bugün çok kuvvetli yağış bekleniyor. Sel ve su baskını riskine karşı resmî uyarıları takip edin."
+        },
+        {
+          "speaker": "Çocuk",
+          "text": "Anne, bu uyarı neden bu kadar önemli?"
+        },
+        {
+          "speaker": "Anne",
+          "text": "Yağmur işte canım, bir şey olmaz."
+        }
+      ]
+    },
+    {
+      "id": "F04_RAIN",
+      "title": "Şiddetli Yağmur",
+      "lines": [
+        {
+          "speaker": "Çocuk",
+          "text": "Yağmur iyice arttı..."
+        }
+      ]
+    },
+    {
+      "id": "F05_RUMORS",
+      "title": "Farklı Söylentiler",
+      "lines": [
+        {
+          "speaker": "Arkadaş A",
+          "text": "İleride yol sel yüzünden kapanmış diyorlar."
+        },
+        {
+          "speaker": "Arkadaş B",
+          "text": "Ben köprü yıkılmış diye duydum."
+        },
+        {
+          "speaker": "Arkadaş C",
+          "text": "Biri baraj taşmış dedi ama kaynağı bilmiyorum."
+        }
+      ]
+    },
+    {
+      "id": "F07_RESULT",
+      "title": "Öğrendiklerimiz",
+      "lines": [
+        {
+          "speaker": "Sistem",
+          "text": "Resmî uyarının ayrıntılarını kontrol et. Suyla kaplı yola girme. Söylentiyi doğrula."
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "F_D1",
+      "prompt": "Uyarıyı nasıl değerlendirmeliyim?",
+      "choices": [
+        {
+          "id": "F_D1_A",
+          "text": "Resmî uyarının ayrıntılarını kontrol edelim.",
+          "correct": true,
+          "feedback": "Doğru. Resmî açıklamaları ve yönlendirmeleri kontrol etmek önemlidir."
+        },
+        {
+          "id": "F_D1_B",
+          "text": "Yağmur her zaman yağar, sorun olmaz.",
+          "correct": false,
+          "feedback": "Uyarıyı küçümsemek riskli olabilir. Resmî kaynağı kontrol et."
+        },
+        {
+          "id": "F_D1_C",
+          "text": "Sosyal medya iddialarına bakıp karar verelim.",
+          "correct": false,
+          "feedback": "Kaynağı doğrulanmamış paylaşımlar yanıltıcı olabilir."
+        }
+      ]
+    },
+    {
+      "id": "F_D2",
+      "prompt": "Yol kapalı ve herkes farklı bir şey söylüyor. Ne yaparsın?",
+      "choices": [
+        {
+          "id": "F_D2_A",
+          "text": "Güvenli yerde kalır, yetkili açıklamasını beklerim.",
+          "correct": true,
+          "feedback": "Doğru. Suyla kaplı yollardan uzak dur ve resmî yönlendirmeyi izle."
+        },
+        {
+          "id": "F_D2_B",
+          "text": "Suyun içinden hızlıca geçerim.",
+          "correct": false,
+          "feedback": "Suyla kaplı yolun derinliği ve akıntısı görünenden farklı olabilir; girme."
+        },
+        {
+          "id": "F_D2_C",
+          "text": "Kaynağı bilinmeyen kestirmeyi denerim.",
+          "correct": false,
+          "feedback": "Doğrulanmamış rota bilgisi risklidir; güvenli yerde kal."
+        }
+      ]
+    }
+  ]
+}
