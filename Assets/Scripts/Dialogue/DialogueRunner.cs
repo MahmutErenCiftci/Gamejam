@@ -34,14 +34,22 @@ namespace AfetUyanisi.Dialogue
 
         [Header("Karar paneli")]
         [SerializeField] GameObject decisionPanel;
+        [SerializeField] CanvasGroup decisionGroup;
+        [SerializeField] RectTransform decisionBox;
         [SerializeField] Text promptText;
-        [SerializeField] Button[] choiceButtons;
-        [SerializeField] Text[] choiceTexts;
+        [SerializeField] DecisionChoiceView[] choices;
+        [SerializeField] GameObject timerBadge;
+        [SerializeField] Image timerFill;
         [SerializeField] Text timerText;
+        [SerializeField] GameObject feedbackPanel;
+        [SerializeField] Image feedbackAccent;
+        [SerializeField] Text feedbackIcon;
         [SerializeField] Text feedbackText;
         [SerializeField] GameObject decisionContinueHint;
-        [SerializeField] Color correctColor = new Color(0.55f, 0.95f, 0.6f, 1f);
-        [SerializeField] Color wrongColor = new Color(1f, 0.7f, 0.45f, 1f);
+        [SerializeField] Color correctColor = new Color(0.09f, 0.66f, 0.34f, 1f);
+        [SerializeField] Color wrongColor = new Color(0.91f, 0.22f, 0.17f, 1f);
+        [SerializeField] Color timerStartColor = new Color(0.95f, 0.77f, 0.2f, 1f);
+        [SerializeField] float openDuration = 0.2f;
 
         [Header("Zamanlama")]
         [SerializeField] float charsPerSecond = 45f;
@@ -66,10 +74,10 @@ namespace AfetUyanisi.Dialogue
         {
             dialoguePanel.SetActive(false);
             decisionPanel.SetActive(false);
-            for (int i = 0; i < choiceButtons.Length; i++)
+            for (int i = 0; i < choices.Length; i++)
             {
                 int index = i;
-                choiceButtons[i].onClick.AddListener(() => pickedIndex = index);
+                choices[i].Button.onClick.AddListener(() => pickedIndex = index);
             }
         }
 
@@ -141,13 +149,14 @@ namespace AfetUyanisi.Dialogue
         {
             hint.SetActive(false);
             target.text = "";
+            int length = RichTextTyper.VisibleLength(text);
             float shown = 0f;
-            while (shown < text.Length)
+            while (shown < length)
             {
                 // Yazarken basılırsa satırı tamamla.
                 if (DialogueInput.ContinuePressed()) break;
                 shown += charsPerSecond * Time.deltaTime;
-                target.text = text.Substring(0, Mathf.Min(text.Length, (int)shown));
+                target.text = RichTextTyper.Substring(text, (int)shown);
                 yield return null;
             }
             target.text = text;
@@ -157,28 +166,29 @@ namespace AfetUyanisi.Dialogue
         IEnumerator RunDecision(StoryDecision decision, Action<StoryChoice> onDone)
         {
             IsBusy = true;
-            int count = Mathf.Min(decision.choices.Length, choiceButtons.Length);
-            if (decision.choices.Length > choiceButtons.Length)
-                Debug.LogWarning($"[Dialogue] '{decision.id}' {decision.choices.Length} seçenekli, prefabta {choiceButtons.Length} yuva var.");
+            int count = Mathf.Min(decision.choices.Length, choices.Length);
+            if (decision.choices.Length > choices.Length)
+                Debug.LogWarning($"[Dialogue] '{decision.id}' {decision.choices.Length} seçenekli, prefabta {choices.Length} yuva var.");
 
             promptText.text = decision.prompt;
-            feedbackText.text = "";
+            feedbackPanel.SetActive(false);
             decisionContinueHint.SetActive(false);
-            for (int i = 0; i < choiceButtons.Length; i++)
+            for (int i = 0; i < choices.Length; i++)
             {
                 bool used = i < count;
-                choiceButtons[i].gameObject.SetActive(used);
-                choiceButtons[i].interactable = true;
-                if (used) choiceTexts[i].text = $"{i + 1}. {decision.choices[i].text}";
+                choices[i].gameObject.SetActive(used);
+                choices[i].Button.interactable = true;
+                if (used) choices[i].Bind(i + 1, decision.choices[i].text);
             }
             bool timed = decision.time_limit > 0f;
-            timerText.gameObject.SetActive(timed);
+            timerBadge.SetActive(timed);
+            UpdateTimer(decision.time_limit, decision.time_limit);
             decisionPanel.SetActive(true);
+            yield return Open();
 
-            // Seçenekler sayaç başlamadan önce de görünür; sayaç ilk karede başlar.
+            // Seçenekler sayaç başlamadan önce de görünür; sayaç açılış bitince başlar.
             pickedIndex = -1;
             float remaining = decision.time_limit;
-            yield return null;
             while (pickedIndex < 0)
             {
                 int key = DialogueInput.ChoicePressed(count);
@@ -186,24 +196,29 @@ namespace AfetUyanisi.Dialogue
                 if (timed)
                 {
                     remaining -= Time.deltaTime;
-                    timerText.text = Mathf.CeilToInt(Mathf.Max(0f, remaining)).ToString();
+                    UpdateTimer(remaining, decision.time_limit);
                     if (remaining <= 0f) break;
                 }
                 yield return null;
             }
 
-            foreach (var b in choiceButtons) b.interactable = false;
+            // Sonuç: seçilen kart ✓/✗, doğru seçenek her durumda yeşil, diğerleri soluk.
             var choice = pickedIndex >= 0 ? decision.choices[pickedIndex] : null;
-            if (choice != null)
+            for (int i = 0; i < count; i++)
             {
-                feedbackText.text = choice.feedback;
-                feedbackText.color = choice.correct ? correctColor : wrongColor;
+                choices[i].Button.interactable = false;
+                var c = decision.choices[i];
+                choices[i].SetState(c.correct ? DecisionChoiceView.State.Correct
+                                  : i == pickedIndex ? DecisionChoiceView.State.Wrong
+                                  : DecisionChoiceView.State.Dimmed);
             }
-            else
-            {
-                feedbackText.text = decision.timeout_feedback;
-                feedbackText.color = wrongColor;
-            }
+
+            bool good = choice != null && choice.correct;
+            feedbackText.text = choice != null ? choice.feedback : decision.timeout_feedback;
+            feedbackAccent.color = good ? correctColor : wrongColor;
+            feedbackIcon.text = good ? "✓" : "!";
+            feedbackIcon.color = good ? correctColor : wrongColor;
+            feedbackPanel.SetActive(true);
 
             yield return null;
             decisionContinueHint.SetActive(true);
@@ -214,6 +229,28 @@ namespace AfetUyanisi.Dialogue
             onDone?.Invoke(choice);
             onDecisionMade?.Invoke(decision.id, choice?.id ?? "", choice != null && choice.correct);
             DecisionMade?.Invoke(decision.id, choice);
+        }
+
+        IEnumerator Open()
+        {
+            for (float t = 0f; t < openDuration; t += Time.deltaTime)
+            {
+                float k = Mathf.SmoothStep(0f, 1f, t / openDuration);
+                decisionGroup.alpha = k;
+                decisionBox.localScale = Vector3.one * Mathf.Lerp(0.94f, 1f, k);
+                yield return null;
+            }
+            decisionGroup.alpha = 1f;
+            decisionBox.localScale = Vector3.one;
+        }
+
+        void UpdateTimer(float remaining, float limit)
+        {
+            if (limit <= 0f) return;
+            float k = Mathf.Clamp01(remaining / limit);
+            timerFill.fillAmount = k;
+            timerFill.color = Color.Lerp(wrongColor, timerStartColor, k);
+            timerText.text = Mathf.CeilToInt(Mathf.Max(0f, remaining)).ToString();
         }
     }
 }

@@ -20,17 +20,17 @@
       "id": "F03_MOTHER",
       "title": "Haber ve Anne",
       "lines": [
-        { "speaker": "Çocuk", "text": "Anne, bu uyarı neden kırmızı? Dışarı çıkmak tehlikeli mi?" },
+        { "speaker": "Çocuk", "text": "Anne, bu uyarı neden <color=#E8392B>kırmızı</color>? Dışarı çıkmak tehlikeli mi?" },
         { "speaker": "Anne", "text": "Yağmur işte canım, hep yağıyor. Bir şey olmaz." },
-        { "speaker": "Çocuk", "text": "Ama haberde yolların su basabileceğini söylediler." }
+        { "speaker": "Çocuk", "text": "Ama haberde <color=#E8392B>yolların su basabileceğini</color> söylediler." }
       ]
     },
     {
       "id": "F04_RAIN",
       "title": "Şiddetli Yağmur",
       "lines": [
-        { "speaker": "Çocuk", "text": "Yağmur iyice arttı. Neden trafik durdu?" },
-        { "speaker": "Görevli", "text": "Yol kapalı. Lütfen bariyerin gerisinde, güvenli alanda bekleyin." }
+        { "speaker": "Çocuk", "text": "Yağmur <color=#E8392B>iyice arttı</color>. Neden trafik durdu?" },
+        { "speaker": "Görevli", "text": "Yol kapalı. Lütfen bariyerin gerisinde, <color=#18A957>güvenli alanda bekleyin</color>." }
       ]
     },
     {
@@ -40,7 +40,7 @@
         { "speaker": "Arkadaş A", "text": "Telefonda bir mesaj gördüm. İleride yol sel yüzünden kapanmış!" },
         { "speaker": "Arkadaş B", "text": "Ben köprünün tamamen yıkıldığını duydum." },
         { "speaker": "Arkadaş C", "text": "Birileri baraj taşmış diyor. Ama kim söyledi bilmiyorum." },
-        { "speaker": "Çocuk", "text": "Hangisi gerçekten doğru? Bu mesajlar aynı şeyi bile söylemiyor." }
+        { "speaker": "Çocuk", "text": "Hangisi gerçekten doğru? Bu mesajlar <color=#E8392B>aynı şeyi bile söylemiyor</color>." }
       ]
     },
     {
@@ -48,17 +48,17 @@
       "title": "Ekipler ve Kapanış",
       "lines": [
         { "speaker": "Görevli", "text": "Ekipler yolu emniyete aldı. Su çekilip kontroller bitene kadar bu yol kapalı kalacak." },
-        { "speaker": "Görevli", "text": "Resmî duyuruları takip edin ve güvenli alanda bekleyin." },
-        { "speaker": "Çocuk", "text": "Sadece çok yağmur yağacak sanmıştım. Bilginin kaynağı da önemliymiş." }
+        { "speaker": "Görevli", "text": "<color=#18A957>Resmî duyuruları</color> takip edin ve <color=#18A957>güvenli alanda</color> bekleyin." },
+        { "speaker": "Çocuk", "text": "Sadece çok yağmur yağacak sanmıştım. <color=#18A957>Bilginin kaynağı</color> da önemliymiş." }
       ]
     },
     {
       "id": "F07_RESULT",
       "title": "Öğrendiklerimiz",
       "lines": [
-        { "speaker": "", "text": "Resmî uyarının içeriğini oku." },
-        { "speaker": "", "text": "Suyla kaplı yola girme." },
-        { "speaker": "", "text": "Söylentiyi paylaşmadan kaynağını doğrula." }
+        { "speaker": "", "text": "<color=#18A957>Resmî uyarının</color> içeriğini oku." },
+        { "speaker": "", "text": "<color=#E8392B>Suyla kaplı yola girme.</color>" },
+        { "speaker": "", "text": "Söylentiyi paylaşmadan <color=#18A957>kaynağını doğrula</color>." }
       ]
     }
   ],

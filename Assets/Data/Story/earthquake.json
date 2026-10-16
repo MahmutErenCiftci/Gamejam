@@ -22,16 +22,16 @@
       "title": "Sarsıntı Sonrası",
       "lines": [
         { "speaker": "Eşi", "text": "Sarsıntı durdu. İyi misin?" },
-        { "speaker": "Yetişkin", "text": "İyiyim. Sakin olalım; önce yaralanan var mı, ona bakalım." }
+        { "speaker": "Yetişkin", "text": "İyiyim. <color=#18A957>Sakin olalım</color>; önce yaralanan var mı, ona bakalım." }
       ]
     },
     {
       "id": "E04_RESULT",
       "title": "Öğrendiklerimiz",
       "lines": [
-        { "speaker": "", "text": "Sarsıntı sırasında kendini koru: Uygun ve güvenli bir noktada Çök–Kapan–Tutun." },
-        { "speaker": "", "text": "Baş ve boynunu koru; camlardan ve devrilebilecek eşyalardan uzak dur." },
-        { "speaker": "", "text": "Sarsıntı sırasında asansöre binme veya merdivene koşma. Her durumda yerel resmî yönlendirmeleri izle." },
+        { "speaker": "", "text": "Sarsıntı sırasında kendini koru: Uygun ve güvenli bir noktada <color=#18A957>Çök–Kapan–Tutun</color>." },
+        { "speaker": "", "text": "<color=#18A957>Baş ve boynunu koru</color>; <color=#E8392B>camlardan ve devrilebilecek eşyalardan</color> uzak dur." },
+        { "speaker": "", "text": "Sarsıntı sırasında <color=#E8392B>asansöre binme veya merdivene koşma</color>. Her durumda yerel resmî yönlendirmeleri izle." },
         { "speaker": "", "text": "Bu bir farkındalık oyunudur. Güncel resmî afet talimatlarını takip edin." }
       ]
     }

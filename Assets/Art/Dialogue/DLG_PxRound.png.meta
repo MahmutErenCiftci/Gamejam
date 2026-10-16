@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c4d8a2f4e9516de4196af05d4246e77b
+guid: 33039dbd86961d54aac9d4cebb00e32c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4157667876383177109
-    second: DLG_Bubble_0
+      213: -8267998124498925367
+    second: DLG_PxRound_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 11, y: 11, z: 11, w: 11}
+  spriteBorder: {x: 3, y: 3, z: 3, w: 3}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DLG_Bubble_0
+      name: DLG_PxRound_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5993fd1c7e003b930800000000000000
-      internalID: 4157667876383177109
+      spriteID: 9c845a1f28b224d80800000000000000
+      internalID: -8267998124498925367
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DLG_Bubble_0: 4157667876383177109
+      DLG_PxRound_0: -8267998124498925367
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

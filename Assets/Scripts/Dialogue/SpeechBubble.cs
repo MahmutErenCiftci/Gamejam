@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,40 +6,53 @@ namespace AfetUyanisi.Dialogue
 {
     // Konuşan karakterin başının üstünde duran balon (konsept: PREVIEW_Mother_Concept / RumorTalk).
     // Boyutu satırın tamamına göre baştan ayarlanır, daktilo yazarken balon büyümez.
-    // Ekran dışına taşmaz; kuyruk her zaman konuşana doğru bakar.
+    // Ekran dışına taşmaz; kuyruk her zaman konuşana doğru bakar. Açılırken hafifçe "pop" yapar.
     public class SpeechBubble : MonoBehaviour
     {
         [SerializeField] RectTransform bubble;
         [SerializeField] RectTransform tail;
         [SerializeField] Text text;
-        [SerializeField] GameObject continueHint;
+        [SerializeField] RectTransform continueHint;
         [SerializeField] float maxWidth = 560f;
         [SerializeField] float minWidth = 160f;
-        [SerializeField] Vector2 padding = new Vector2(28f, 22f);
+        [SerializeField] Vector2 padding = new Vector2(30f, 24f);
         [SerializeField] float screenMargin = 16f;
-        [SerializeField] float tailInset = 30f;
+        [SerializeField] float tailInset = 34f;
+        [SerializeField] float popDuration = 0.18f;
+        [SerializeField] float hintBob = 4f;
 
         public Text Text => text;
-        public GameObject ContinueHint => continueHint;
+        public GameObject ContinueHint => continueHint.gameObject;
 
         RectTransform canvasRect;
         DialogueSpeaker target;
+        DialogueSpeaker lastTarget;
+        Vector2 hintBase;
+        bool hintBaseSet;
 
         // Prefabta kapalı durur; ilk Show'da açılır.
         public void Show(DialogueSpeaker speaker, string fullLine)
         {
-            target = speaker;
+            bool newSpeaker = speaker != lastTarget || !gameObject.activeSelf;
+            target = lastTarget = speaker;
             gameObject.SetActive(true);
             if (canvasRect == null) canvasRect = (RectTransform)GetComponentInParent<Canvas>().transform;
+            if (!hintBaseSet) { hintBase = continueHint.anchoredPosition; hintBaseSet = true; }
+
             Resize(fullLine);
             text.text = "";
-            continueHint.SetActive(false);
+            continueHint.gameObject.SetActive(false);
             Follow();
+
+            // Aynı kişi konuşmaya devam ediyorsa balon zıplamasın.
+            StopAllCoroutines();
+            if (newSpeaker) StartCoroutine(Pop());
+            else bubble.localScale = Vector3.one;
         }
 
         public void Hide()
         {
-            target = null;
+            target = lastTarget = null;
             gameObject.SetActive(false);
         }
 
@@ -51,9 +65,28 @@ namespace AfetUyanisi.Dialogue
             bubble.sizeDelta = new Vector2(inner + padding.x * 2f, height + padding.y * 2f);
         }
 
+        IEnumerator Pop()
+        {
+            for (float t = 0f; t < popDuration; t += Time.deltaTime)
+            {
+                bubble.localScale = Vector3.one * EaseOutBack(t / popDuration, 0.7f);
+                yield return null;
+            }
+            bubble.localScale = Vector3.one;
+        }
+
+        static float EaseOutBack(float x, float from)
+        {
+            const float c1 = 1.70158f, c3 = c1 + 1f;
+            float e = 1f + c3 * Mathf.Pow(x - 1f, 3f) + c1 * Mathf.Pow(x - 1f, 2f);
+            return Mathf.LerpUnclamped(from, 1f, e);
+        }
+
         void LateUpdate()
         {
             if (target != null) Follow();
+            if (continueHint.gameObject.activeSelf)
+                continueHint.anchoredPosition = hintBase + new Vector2(0f, Mathf.Abs(Mathf.Sin(Time.time * 5f)) * hintBob);
         }
 
         void Follow()
