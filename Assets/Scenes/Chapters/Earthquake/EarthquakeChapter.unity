@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ce82c6f87c59b4595c5380b08c4b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.EarthquakeChapterController
-  storyJson: {fileID: 4900000, guid: 7d0618624228d924bb483bbd2a2e70a8, type: 3}
+  storyJson: {fileID: 4900000, guid: ae1efd11e2100154b8a69161a2be8a2d, type: 3}
   dialogue: {fileID: 0}
   decisions: {fileID: 0}
   news: {fileID: 0}

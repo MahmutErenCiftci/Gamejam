@@ -674,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce3bba3f906bc04fa0d113d8c0b5118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Flood.FloodChapterController
-  storyJson: {fileID: 4900000, guid: a21ead3d98699a74f9f788ba07e98868, type: 3}
+  storyJson: {fileID: 4900000, guid: c14b71b047d4e1f4abd049473cad99b9, type: 3}
   dialogue: {fileID: 0}
   decisions: {fileID: 0}
   news: {fileID: 0}
