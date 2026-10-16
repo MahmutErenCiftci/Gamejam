@@ -13,11 +13,11 @@
 
 ## İlk 15 dakikada yapılacaklar
 
-1. Bir kişi PM seçilsin; dört kişi kendine **K1, K2, K3, K4** rolü atasın. İsimleri [`planning/OWNERS_AND_HANDOFFS.md`](planning/OWNERS_AND_HANDOFFS.md) dosyasındaki tabloya yazın.
+1. ~~Rolleri atayın~~ — **yapıldı**: Mahmut (lider/genel), Berk (giriş sayfası + UI), Arda (diyalog), Eren (haber). Bağlayıcı dağılım: [`planning/EKIP_ROLLERI.md`](planning/EKIP_ROLLERI.md). Bu belgedeki "K2/K3/K4 okumalı" sütunu paketin orijinal önerisidir; kendi işinle ilgili belgeleri EKIP_ROLLERI.md'ye göre seç.
 2. ~~Belgeleri Unity GitHub reposunun köküne taşıyın~~ — **yapıldı**: paket repo kökünde. `visuals/` yalnız referanstır; oyunda kullanılacak PNG'leri K3 `Assets/Art/` altına import eder (MENU-02).
 3. Repo Unity sürümünü ve render/input ayarlarını sabitleyin. `Assets/`, `Packages/`, `ProjectSettings/` klasörlerini sıfırdan silip değiştirmeyin.
 4. `planning/TASK_BOARD.csv` dosyasını GitHub Issues/Projects'e aktarın; görevlerin **tek bir sahibi** olsun.
-5. Sadece **K1** ilk sahne ve genel ayarlardan sorumlu. K2, Sel sahnesinde; K3, Deprem sahnesi ve görsel dosyalarda; K4, metin/veri/testte çalışır.
+5. Proje ayarları, Sel ve Deprem sahneleri Mahmut'ta; ana menü sahnesi ve ortak UI Berk'te; diyalog sistemi/metinleri Arda'da; haber parçaları Eren'de (ayrıntı EKIP_ROLLERI.md).
 6. T+4 saat sonunda Unity'de açılan bir başlangıç projesi; T+10'da ilk Windows build hedefleyin.
 
 ## Hangi belgeyi kim okumalı?

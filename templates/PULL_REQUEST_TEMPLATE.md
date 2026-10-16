@@ -1,6 +1,6 @@
 # PR: [TASK-ID] Kısa özellik adı
 
-**Owner:** K__  
+**Sahip:** Mahmut / Berk / Arda / Eren  
 **Hedef branch:** dev  
 **Kapsam (dosya yolları):** ...
 
@@ -19,6 +19,6 @@
 **Çalıştırılan adımlar ve gerçek sonuç:** ...  
 **Ekran görüntüsü:** ...  
 **Blokaj / bilinçli teknik borç:** ...  
-**Birleştiren (K1):** MahmutErenCiftci
+**Birleştiren:** MahmutErenCiftci
 
 > Sahip olmadığım `.unity` scene, `.meta`, `ProjectSettings` veya unrelated dosyaya dokunmadım.

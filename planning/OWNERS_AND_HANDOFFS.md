@@ -2,18 +2,19 @@
 
 > **48 saat için kural:** Bir dosyanın **tek sahibi** vardır. Sorumluluk başka birine devredilebilir ancak yazılı mutabakat ve görev durumu gerektirir. Bu belgeyi kickoff'ta 4 kişi birlikte okuyun.
 
-## Kişi atamaları — doldurun
+## Kişi atamaları
+
+> **Roller paketteki K1–K4 dağılımından farklıdır.** Ayrıntılı dosya sahipliği ve teslimler: [`EKIP_ROLLERI.md`](EKIP_ROLLERI.md). Bu belgedeki aşağıdaki K1–K4 matrisi yalnızca orijinal öneri olarak kalmıştır.
 
 | Rol | İsim / GitHub kullanıcı adı | Çalışma kanalı | Onay |
 |---|---|---|---|
-| K1 — Tech Lead / Menu / Integration | MahmutErenCiftci | ______ | [ ] |
-| K2 — Flood Gameplay | ______ | ______ | [ ] |
-| K3 — Visuals + Earthquake | ______ | ______ | [ ] |
-| K4 — Product / Narrative / QA | ______ | ______ | [ ] |
+| Lider / Genel (K1 + PM): ayarlar, geçişler, Sel + Deprem sahneleri, görsel, ses, test, build | Mahmut — MahmutErenCiftci | ______ | [ ] |
+| Giriş sayfası + UI | Berk — berkatac41 | ______ | [ ] |
+| Diyalog (sistem + metinler) | Arda — ardabekduz123-beep | ______ | [ ] |
+| Haber (TV haberi, söylenti kartları, deprem bildirimi) | Eren — erenatacc41 | ______ | [ ] |
 
-**İnsan PM:** ______ (ürün/kapsam onayı; K1 ile aynı kişi olmak zorunda değil).  
-**Merge/Build yetkilisi:** K1 — MahmutErenCiftci (GitHub kuralıyla `dev`/`main`'e yalnız o birleştirebilir).  
-**K2–K4 adayları (GitHub):** ardabekduz123-beep, erenatacc41, berkatac41 — kickoff'ta rollere yazın.  
+**İnsan PM:** Mahmut.  
+**Merge/Build yetkilisi:** Mahmut — MahmutErenCiftci (GitHub kuralıyla `dev`/`main`'e yalnız o birleştirebilir).  
 **Ana iletişim kanalı:** ______ · **T+0 saati:** ______ · **Son teslim saati:** ______.
 
 ## Dosya sahipliği (çakışma matrisi)

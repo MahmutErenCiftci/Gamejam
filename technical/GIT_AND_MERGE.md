@@ -69,4 +69,4 @@ K1 diğer branch'leri merge ederken zorla overwrite etmez; özellikle sahne GUID
 - Repo: https://github.com/MahmutErenCiftci/Gamejam · varsayılan dal `dev` (bu belgedeki eski `develop` adı = `dev`).
 - `main` ve `dev`: doğrudan push, force push ve dal silme **yasak**; kod yalnızca PR ile girer.
 - `dev`'e ve `main`'e **yalnızca MahmutErenCiftci (K1)** birleştirebilir; diğer üyelerde merge butonu çalışmaz.
-- Dal adı: `feature/K<n>-<iş>` (ör. `feature/K2-flood`). PR açıklaması `.github/pull_request_template.md` ile otomatik gelir.
+- Dal adı: `feature/<isim>-<iş>` (ör. `feature/berk-menu`, `feature/arda-dialogue`). PR açıklaması `.github/pull_request_template.md` ile otomatik gelir.

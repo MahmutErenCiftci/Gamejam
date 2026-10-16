@@ -30,6 +30,8 @@ Bu belge, ekip üyeleri ve kullanılan bütün AI kodlama agent'ları için tek 
 
 ## 3. Tekil dosya ve görev sahipliği
 
+> **GÜNCEL: Bu ekipte roller farklı dağıtıldı.** Kişi, dosya ve sahne sahipliği için [`planning/EKIP_ROLLERI.md`](planning/EKIP_ROLLERI.md) geçerlidir (Mahmut: lider/genel + bölüm sahneleri, Berk: giriş sayfası + UI, Arda: diyalog, Eren: haber). Aşağıdaki K1–K4 tablosu paketin orijinal önerisidir; çelişirse EKIP_ROLLERI.md kazanır. Bu belgedeki diğer kurallar (sahne kilidi mantığı, agent kuralları, güvenlik) aynen geçerlidir.
+
 | Kişi | Ünvan | Sahip olduğu dosyalar | En önemli teslim |
 |---|---|---|---|
 | **K1** | Technical Lead / Menu / Integration | `Assets/Scenes/Menu/`, `Assets/Scripts/Core/`, `Assets/Scripts/Menu/`, `ProjectSettings/`, `Packages/`, build konfigürasyonu | Çalışır menü, sahne geçişi, ilk/final build |
