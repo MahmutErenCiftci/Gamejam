@@ -1,0 +1,84 @@
+{
+  "chapter_id": "earthquake",
+  "version": "1.0",
+  "content_status": "example_data_not_integrated",
+  "choice_time_seconds": 5,
+  "scenes": [
+    {
+      "id": "E01_MORNING",
+      "title": "Sabah",
+      "lines": [
+        {
+          "speaker": "Yetişkin",
+          "text": "Günaydın. Kahveyi koydum."
+        },
+        {
+          "speaker": "Eşi",
+          "text": "Günaydın."
+        }
+      ]
+    },
+    {
+      "id": "E02_WARNING",
+      "title": "Uyarı",
+      "lines": [
+        {
+          "speaker": "Sistem",
+          "text": "Kurgu içi bildirim: Güvenli davranışı seç."
+        }
+      ]
+    },
+    {
+      "id": "E04_RESULT",
+      "title": "Öğrendiklerimiz",
+      "lines": [
+        {
+          "speaker": "Sistem",
+          "text": "Sarsıntı sırasında güvenli yerde Çök–Kapan–Tutun. Camlardan uzak dur; asansör veya merdivene koşma."
+        }
+      ]
+    }
+  ],
+  "decision": {
+    "id": "E_D1",
+    "prompt": "Sarsıntı başlıyor. Ne yaparsın?",
+    "choices": [
+      {
+        "id": "E_D1_1",
+        "key": 1,
+        "text": "Sağlam masanın altına Çök–Kapan–Tutun",
+        "correct": true,
+        "feedback": "Doğru. Uygun, güvenli bir noktada baş-boynunu koru ve tutun."
+      },
+      {
+        "id": "E_D1_2",
+        "key": 2,
+        "text": "Pencereye koş",
+        "correct": false,
+        "feedback": "Camlar ve kırılan parçalar tehlikeli olabilir."
+      },
+      {
+        "id": "E_D1_3",
+        "key": 3,
+        "text": "Merdivene koş",
+        "correct": false,
+        "feedback": "Sarsıntı sırasında koşmak ve merdivene yönelmek risklidir."
+      },
+      {
+        "id": "E_D1_4",
+        "key": 4,
+        "text": "Asansöre git",
+        "correct": false,
+        "feedback": "Sarsıntı sırasında asansör kullanılmamalıdır."
+      },
+      {
+        "id": "E_D1_5",
+        "key": 5,
+        "text": "Balkona çık",
+        "correct": false,
+        "feedback": "Sarsıntı sırasında balkona/dışarı fırlamak risklidir."
+      }
+    ],
+    "timeout_feedback": "Sarsıntı başladı. Baş ve boynunu koru; güvenli bir noktada Çök–Kapan–Tutun davranışını uygula."
+  }
+}
