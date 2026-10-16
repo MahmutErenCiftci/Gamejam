@@ -6,35 +6,41 @@ using UnityEngine.UI;
 
 namespace AfetUyanisi.News
 {
-    // Sel F03 TV haber sekansı (NEWS-01).
-    // Akış: uyarı ekranı -> haber satırları (daktilo) + kayan bant -> bitince OnFinished.
-    // Devam: E / Space / Enter / sol tık. Bölüm sahnesi Play() çağırır ve Finished'i dinler.
+    // Sel F03 TV haber sekansı (NEWS-01), görsel: visuals/previews/PREVIEW_News_Concept.png.
+    // TV'de spiker + yağış haritası + uyarı ölçeği + SON DAKİKA manşeti; spikerin sözleri
+    // altyazıda daktiloyla yazılır, yazarken ağzı oynar. Bitince onFinished / Finished.
+    // Devam: E / Space / Enter / sol tık. Bölüm sahnesi Play() çağırır.
     public class NewsBroadcast : MonoBehaviour
     {
         [Header("Veri")]
         [SerializeField] TextAsset newsJson;
 
-        [Header("Ekranlar")]
+        [Header("UI")]
         [SerializeField] GameObject root;
-        [SerializeField] GameObject warningScreen;
-        [SerializeField] GameObject newsScreen;
-
-        [Header("Uyarı ekranı")]
-        [SerializeField] Text warningTitleText;
-        [SerializeField] Text warningLevelText;
-
-        [Header("Haber ekranı")]
         [SerializeField] Text channelText;
-        [SerializeField] Text headlineText;
-        [SerializeField] Text bodyText;
+        [SerializeField] Text programText;
         [SerializeField] Text fictionNoticeText;
-        [SerializeField] Text tickerText;
+        [SerializeField] Text breakingText;
+        [SerializeField] Text headlineText;
+        [SerializeField] Text subheadlineText;
+        [SerializeField] Text speakerText;
+        [SerializeField] Text subtitleText;
         [SerializeField] GameObject continueHint;
 
+        [Header("Uyarı ölçeği")]
+        [SerializeField] Text legendTitleText;
+        [SerializeField] Text legendNoteText;
+        [SerializeField] Image[] legendSwatches;
+        [SerializeField] Text[] legendLabels;
+
+        [Header("Spiker")]
+        [SerializeField] Image anchorImage;
+        [SerializeField] Sprite anchorIdle;
+        [SerializeField] Sprite anchorTalk;
+        [SerializeField] float mouthInterval = 0.12f;
+
         [Header("Zamanlama")]
-        [SerializeField] float warningDuration = 2.5f;
         [SerializeField] float charsPerSecond = 40f;
-        [SerializeField] float tickerSpeed = 120f;
         [SerializeField] bool playOnStart;
 
         public UnityEvent onFinished;
@@ -43,12 +49,9 @@ namespace AfetUyanisi.News
         public bool IsPlaying { get; private set; }
 
         NewsBroadcastData data;
-        RectTransform tickerRect;
-        float tickerStartX;
 
         void Awake()
         {
-            if (tickerText != null) tickerRect = tickerText.rectTransform;
             if (root != null) root.SetActive(false);
         }
 
@@ -62,39 +65,48 @@ namespace AfetUyanisi.News
             if (IsPlaying) return;
             data = NewsBroadcastData.FromJson(newsJson);
             if (data == null) return;
+
+            channelText.text = data.channelName;
+            programText.text = data.programName;
+            fictionNoticeText.text = data.fictionNotice;
+            breakingText.text = data.breakingLabel;
+            headlineText.text = data.headline;
+            subheadlineText.text = data.subheadline;
+            speakerText.text = data.speakerName;
+            subtitleText.text = "";
+            continueHint.SetActive(false);
+            FillLegend();
+
             StartCoroutine(Run());
+        }
+
+        void FillLegend()
+        {
+            legendTitleText.text = data.legendTitle;
+            legendNoteText.text = data.legendNote;
+            int count = data.legend == null ? 0 : data.legend.Length;
+            for (int i = 0; i < legendSwatches.Length; i++)
+            {
+                bool used = i < count;
+                legendSwatches[i].transform.parent.gameObject.SetActive(used);
+                if (!used) continue;
+                legendLabels[i].text = data.legend[i].label;
+                if (ColorUtility.TryParseHtmlString(data.legend[i].color, out var c))
+                    legendSwatches[i].color = c;
+            }
         }
 
         IEnumerator Run()
         {
             IsPlaying = true;
             root.SetActive(true);
-
-            warningTitleText.text = data.warningTitle;
-            warningLevelText.text = data.warningLevel;
-            warningScreen.SetActive(true);
-            newsScreen.SetActive(false);
-
-            for (float t = 0f; t < warningDuration; t += Time.deltaTime)
-            {
-                if (PressedThisFrame()) break;
-                yield return null;
-            }
             yield return null;
-
-            warningScreen.SetActive(false);
-            newsScreen.SetActive(true);
-            channelText.text = data.channelName;
-            headlineText.text = data.headline;
-            fictionNoticeText.text = data.fictionNotice;
-            tickerText.text = data.ticker;
-            ResetTicker();
 
             foreach (var line in data.lines)
             {
                 yield return TypeLine(line);
                 continueHint.SetActive(true);
-                while (!PressedThisFrame()) yield return null;
+                while (!NewsInput.ContinuePressed()) yield return null;
                 continueHint.SetActive(false);
                 yield return null;
             }
@@ -107,40 +119,35 @@ namespace AfetUyanisi.News
 
         IEnumerator TypeLine(string line)
         {
-            continueHint.SetActive(false);
-            bodyText.text = "";
-            float shown = 0f;
+            subtitleText.text = "";
+            float shown = 0f, mouthTimer = 0f;
+            bool mouthOpen = false;
             while (shown < line.Length)
             {
                 // Yazarken basılırsa satırı tamamla.
-                if (PressedThisFrame()) break;
+                if (NewsInput.ContinuePressed()) break;
                 shown += charsPerSecond * Time.deltaTime;
-                bodyText.text = line.Substring(0, Mathf.Min(line.Length, (int)shown));
+                subtitleText.text = line.Substring(0, Mathf.Min(line.Length, (int)shown));
+
+                mouthTimer += Time.deltaTime;
+                if (mouthTimer >= mouthInterval)
+                {
+                    mouthTimer = 0f;
+                    mouthOpen = !mouthOpen;
+                    SetMouth(mouthOpen);
+                }
                 yield return null;
             }
-            bodyText.text = line;
+            subtitleText.text = line;
+            SetMouth(false);
             yield return null;
         }
 
-        void Update()
+        void SetMouth(bool open)
         {
-            if (!IsPlaying || tickerRect == null || !newsScreen.activeSelf) return;
-
-            var pos = tickerRect.anchoredPosition;
-            pos.x -= tickerSpeed * Time.deltaTime;
-            if (pos.x < -tickerText.preferredWidth) pos.x = tickerStartX;
-            tickerRect.anchoredPosition = pos;
+            if (anchorImage == null) return;
+            var sprite = open ? anchorTalk : anchorIdle;
+            if (sprite != null) anchorImage.sprite = sprite;
         }
-
-        void ResetTicker()
-        {
-            if (tickerRect == null) return;
-            // Bant sağ kenardan girer; Canvas boyutu ancak ekran açıkken kesinleşir.
-            Canvas.ForceUpdateCanvases();
-            tickerStartX = ((RectTransform)tickerRect.parent).rect.width;
-            tickerRect.anchoredPosition = new Vector2(tickerStartX, tickerRect.anchoredPosition.y);
-        }
-
-        static bool PressedThisFrame() => NewsInput.ContinuePressed();
     }
 }

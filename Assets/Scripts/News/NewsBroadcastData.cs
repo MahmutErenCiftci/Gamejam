@@ -5,16 +5,27 @@ namespace AfetUyanisi.News
 {
     // Assets/Data/News/*.json içindeki TV haber yayınının veri modeli.
     [Serializable]
+    public class NewsLegendEntry
+    {
+        public string color;
+        public string label;
+    }
+
+    [Serializable]
     public class NewsBroadcastData
     {
         public string id;
         public string channelName;
+        public string programName;
         public string fictionNotice;
-        public string warningTitle;
-        public string warningLevel;
+        public string speakerName;
+        public string breakingLabel;
         public string headline;
+        public string subheadline;
         public string[] lines;
-        public string ticker;
+        public string legendTitle;
+        public string legendNote;
+        public NewsLegendEntry[] legend;
 
         public static NewsBroadcastData FromJson(TextAsset json)
         {
