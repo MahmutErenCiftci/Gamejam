@@ -1,6 +1,6 @@
 {
   "chapter_id": "flood",
-  "version": "0.1-taslak",
+  "version": "0.2-taslak",
   "scenes": [
     {
       "id": "F01_WAKE",
@@ -21,14 +21,14 @@
       "id": "F03_NEWS",
       "title": "Sabah Haberleri",
       "lines": [
-        { "speaker": "Çocuk", "text": "Şiddetli yağmur mu? Okul yolumuzda hep su birikiyor..." }
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Şiddetli yağmur</color> mu? Okul yolumuzda hep su birikiyor..." }
       ]
     },
     {
       "id": "F04_MOTHER",
       "title": "Anne ile Konuşma",
       "lines": [
-        { "speaker": "Çocuk", "text": "Anne, haberlerde şiddetli yağmur uyarısı var. Okula gitmeli miyim?" },
+        { "speaker": "Çocuk", "text": "Anne, haberlerde <color=#E8392B>şiddetli yağmur uyarısı</color> var. Okula gitmeli miyim?" },
         { "speaker": "Anne", "text": "Gördüm canım. Ne yapacağımıza birlikte karar verelim." }
       ]
     },
@@ -36,15 +36,15 @@
       "id": "F04_CHECK",
       "title": "Resmî Duyuru",
       "lines": [
-        { "speaker": "Anne", "text": "Belediyeyi kontrol edelim. Resmî duyuru gelmeden karar verme." }
+        { "speaker": "Anne", "text": "Belediyeyi kontrol edelim. <color=#18A957>Resmî duyuru</color> gelmeden karar verme." }
       ]
     },
     {
       "id": "F04_PREPARE",
       "title": "Evde Hazırlık",
       "lines": [
-        { "speaker": "Anne", "text": "Okullar açıkmış ama su birikintilerinden uzak durmak gerekiyor." },
-        { "speaker": "Anne", "text": "Şemsiye ve yağmurluk al. Gereksiz yere dışarı çıkma lütfen." },
+        { "speaker": "Anne", "text": "Okullar açıkmış ama <color=#E8392B>su birikintilerinden</color> uzak durmak gerekiyor." },
+        { "speaker": "Anne", "text": "<color=#18A957>Şemsiye ve yağmurluk</color> al. Gereksiz yere dışarı çıkma lütfen." },
         { "speaker": "Çocuk", "text": "Tamam anne, dikkatli olacağım." }
       ]
     },
@@ -52,7 +52,7 @@
       "id": "F05_STREET",
       "title": "Okul Yolunda",
       "lines": [
-        { "speaker": "Çocuk", "text": "Yağmur iyice arttı... Sokaklarda su birikmeye başlamış." }
+        { "speaker": "Çocuk", "text": "Yağmur <color=#E8392B>iyice arttı</color>... Sokaklarda su birikmeye başlamış." }
       ]
     },
     {
@@ -62,30 +62,30 @@
         { "speaker": "Arkadaş 1", "text": "Kanka bu yol açık, rahat geçeriz." },
         { "speaker": "Arkadaş 2", "text": "Sosyal medyada suyun azaldığını söylüyorlar." },
         { "speaker": "Arkadaş 3", "text": "Gel geçelim, zaten biraz su sadece. Abartıyorlar." },
-        { "speaker": "Çocuk", "text": "Herkes farklı bir şey söylüyor... Hangisi doğru?" }
+        { "speaker": "Çocuk", "text": "Herkes <color=#E8392B>farklı bir şey</color> söylüyor... Hangisi doğru?" }
       ]
     },
     {
       "id": "F07_RISK_WARNING",
       "title": "Dur!",
       "lines": [
-        { "speaker": "Çocuk", "text": "Dur! Şu arabaya bak, suyun içinde mahsur kalmış..." },
-        { "speaker": "Çocuk", "text": "Suyun ne kadar derin olduğunu bilemem. Bu yoldan geçmek tehlikeli." }
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Dur!</color> Şu arabaya bak, suyun içinde mahsur kalmış..." },
+        { "speaker": "Çocuk", "text": "Suyun ne kadar derin olduğunu bilemem. Bu yoldan geçmek <color=#E8392B>tehlikeli</color>." }
       ]
     },
     {
       "id": "F07_RISK",
       "title": "Riskli Bölge",
       "lines": [
-        { "speaker": "Çocuk", "text": "Ana yol su altında, araçlar bile geçemiyor. İyi ki bu yoldan gitmedim." }
+        { "speaker": "Çocuk", "text": "Ana yol <color=#E8392B>su altında</color>, araçlar bile geçemiyor. İyi ki bu yoldan gitmedim." }
       ]
     },
     {
       "id": "F08_SAFEROUTE",
       "title": "Güvenli Rota",
       "lines": [
-        { "speaker": "Çocuk", "text": "Köprü üstündeki yaya yolu güvenli. Biraz uzun ama sorun değil." },
-        { "speaker": "Öğretmen", "text": "Günaydın! Güvenli yoldan gelmene çok sevindim." }
+        { "speaker": "Çocuk", "text": "Köprü üstündeki yaya yolu <color=#18A957>güvenli</color>. Biraz uzun ama sorun değil." },
+        { "speaker": "Öğretmen", "text": "Günaydın! <color=#18A957>Güvenli yoldan</color> gelmene çok sevindim." }
       ]
     }
   ],

@@ -7,6 +7,9 @@ namespace AfetUyanisi.Shared
     {
         public string DecisionId;
 
+        /// <summary>Kaç farklı doğru seçenek bulununca karar biter (bölüm akışı veriden doldurur; E_D2 = 2).</summary>
+        public int RequiredCorrect = 1;
+
         /// <summary>Kararı bitiren (son bulunan doğru) seçenek.</summary>
         public ChoiceData FinalChoice;
 

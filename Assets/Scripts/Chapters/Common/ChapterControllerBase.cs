@@ -21,6 +21,10 @@ namespace AfetUyanisi.Chapters
         {
             public string stepId;
             public GameObject root;
+            [Tooltip("Adıma girilince oyuncunun konacağı nokta (boşsa oyuncu yerinde kalır). Noktanın ölçeği oyuncuya da uygulanır.")]
+            public Transform playerSpawn;
+            [Tooltip("Arka planda çocuk zaten çizili (hikâye kartı) ise oyuncuyu gizle.")]
+            public bool hidePlayer;
         }
 
         [Header("Veri")]
@@ -34,6 +38,10 @@ namespace AfetUyanisi.Chapters
         [SerializeField] private InteractionHintBase hint;      // Berk
         [SerializeField] private ScreenFaderBase fader;         // Berk
         [SerializeField] private ResultViewBase resultView;     // Berk
+
+        [Header("Oyuncu")]
+        [Tooltip("Sahnedeki çocuk (Characters/Boy)")]
+        [SerializeField] private GameObject playerObject;
 
         [Header("Adım görselleri")]
         [Tooltip("Adıma girilince eşleşen kök açılır, diğerleri kapanır. Listede olmayan adımda önceki görsel kalır.")]
@@ -85,8 +93,26 @@ namespace AfetUyanisi.Chapters
             // Önce kapat, sonra aç: aynı kök birden fazla adımda kullanılabilir (F05 ve F06 → Street).
             foreach (var v in stepVisuals)
                 if (v?.root != null && v.stepId != stepId) v.root.SetActive(false);
-            foreach (var v in stepVisuals)
-                if (v?.root != null && v.stepId == stepId) v.root.SetActive(true);
+            var matches = stepVisuals.Where(v => v?.root != null && v.stepId == stepId).ToList();
+            foreach (var v in matches)
+                v.root.SetActive(true);
+
+            if (playerObject == null) return;
+            playerObject.SetActive(!matches.Any(v => v.hidePlayer));
+            var spawn = matches.Select(v => v.playerSpawn).FirstOrDefault(t => t != null);
+            if (spawn != null)
+            {
+                playerObject.transform.position = spawn.position;
+                playerObject.transform.localScale = spawn.localScale;
+            }
+        }
+
+        protected GameObject PlayerObject => playerObject;
+
+        /// <summary>Oyuncuyu gösterir/gizler (ör. uyanıştan önce çocuk yatakta, görünmez).</summary>
+        protected void SetPlayerVisible(bool visible)
+        {
+            if (playerObject != null) playerObject.SetActive(visible);
         }
 
         /// <summary>İki bölümün ortak açılışı: Uyanış + Sabah Rutini (OYUN_AKISI §5).</summary>
@@ -134,6 +160,7 @@ namespace AfetUyanisi.Chapters
         {
             result ??= new DecisionResult();
             result.DecisionId = decisionId;
+            result.RequiredCorrect = story?.FindDecision(decisionId)?.GetRequiredCorrect() ?? 1;
 
             if (decisions != null)
                 yield return decisions.Run(decisionId, result, afterEachChoice);
@@ -225,7 +252,7 @@ namespace AfetUyanisi.Chapters
                 : data?.title_with_mistakes ?? "Bölümü tamamladın! Yanlışlarından ders çıkardın.";
             IReadOnlyList<string> learned = data?.learned ?? Array.Empty<string>();
             List<string> wrong = mistakes
-                .Select(m => string.IsNullOrEmpty(m.wrong_example) ? m.text : m.wrong_example)
+                .Select(WrongExampleOf)
                 .Distinct()
                 .ToList();
             string note = data?.note ?? "";
@@ -255,6 +282,17 @@ namespace AfetUyanisi.Chapters
             resultView.MenuClicked -= onMenu;
             if (retry.Value) GameSceneRouter.RestartCurrentChapter();
             else GameSceneRouter.ReturnToMenu();
+        }
+
+        // Sonuç ekranındaki "yanlış davranış" maddesi: seçeneğin kendisinde yoksa hikâye verisinden (ID ile) bulunur.
+        private string WrongExampleOf(ChoiceData choice)
+        {
+            if (!string.IsNullOrEmpty(choice.wrong_example)) return choice.wrong_example;
+            var fromStory = story?.decisions?
+                .Where(d => d.choices != null)
+                .SelectMany(d => d.choices)
+                .FirstOrDefault(c => c.id == choice.id);
+            return !string.IsNullOrEmpty(fromStory?.wrong_example) ? fromStory.wrong_example : choice.text;
         }
     }
 }
