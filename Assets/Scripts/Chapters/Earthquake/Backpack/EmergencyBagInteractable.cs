@@ -1,4 +1,5 @@
 using System;
+using AfetUyanisi.Core;
 using UnityEngine;
 
 namespace AfetUyanisi.Chapters.Earthquake
@@ -136,10 +137,12 @@ namespace AfetUyanisi.Chapters.Earthquake
             Prepared?.Invoke(this);
         }
 
-        /// <summary>Sarsıntıdan sonra hazır çanta alındı: dünyadan kalkar.</summary>
+        /// <summary>Sarsıntıdan sonra hazır çanta alındı: dünyadan kalkar, Cenk'in sırtında görünür (CenkOutfit).</summary>
         public void MarkTaken()
         {
             IsTaken = true;
+            GameSession.MarkQuakeBagTaken();
+            CenkOutfit.RefreshAll();
             if (bagRenderer != null) bagRenderer.enabled = false;
             if (outlineRenderer != null) outlineRenderer.enabled = false;
             if (readyMarker != null) readyMarker.gameObject.SetActive(false);

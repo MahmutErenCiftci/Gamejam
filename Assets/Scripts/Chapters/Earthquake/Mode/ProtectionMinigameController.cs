@@ -10,7 +10,8 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// Çök–Kapan–Tutun mini oyunu (sarsıntı sırasında). Run(oyuncuKonumu):
     ///  • Yalnızca sarsıntı başlangıcında hemen erişilebilir masaya yakınsa altına geçer; uzaktaysa yerinde korunur.
     ///  • Değilse olduğu yerde aynı adımlar (Yerinde Ç-K; masaya koşma yok, ödüllendirilmez).
-    ///  • E ile Çök/Kapan, ardından A/D + Space ile 16 sn denge alıştırması. Space bırakılınca poz bozulmaz.
+    ///  • E ile Çök/Kapan, ardından kısa talimat (SPACE'e basınca başlar) ve A/D + Space ile 16 sn denge alıştırması;
+    ///    bitişte kısa sonuç ("Sarsıntı bitti — iyi tutundun!"). Space bırakılınca poz bozulmaz.
     ///  • Bir adımda noResponseHintAfter sn tepki yoksa ipucu. maxSeconds içinde bitmezse: en az KAPAN yapıldıysa sonuç sayılır
     ///    (tutunma eksik notuyla), yoksa "Korunma yapılmadı" (None).
     /// Pozlar IsoCharacterAnimator.ShowPose ile (sprite boşsa poz değişmez). Sonuç: LastResult / onDone.
@@ -44,6 +45,14 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private float holdSeconds = 6f;
         [Header("Denge alıştırması (A/D + Space)")]
         [SerializeField] private EarthquakeBalanceSettings balanceSettings = new EarthquakeBalanceSettings();
+        [Tooltip("Denge başlamadan talimatın en az görünme süresi (sn). SPACE'e basılınca bu süreden sonra başlar.")]
+        [SerializeField, Min(0f)] private float introMinSeconds = 1.2f;
+        [Tooltip("Oyuncu SPACE'e hiç basmazsa denge yine de bu süreden sonra başlar (sn).")]
+        [SerializeField, Min(0f)] private float introMaxSeconds = 4f;
+        [Tooltip("Bitişte sonucun (\"Sarsıntı bitti — iyi tutundun!\") gösterildiği süre (sn).")]
+        [SerializeField, Min(0f)] private float resultSeconds = 1.5f;
+        [Tooltip("Tutunma görselinin işarete göre en fazla eğilme açısı (derece)")]
+        [SerializeField, Range(0f, 10f)] private float braceTilt = 6f;
         [SerializeField, Range(0f, 0.15f)] private float cameraZoom = 0.06f;
         [SerializeField] private EarthquakeEventController quakeEvents;
         [Tooltip("Bir adımda bu kadar sn tepki yoksa ipucu gösterilir")]
@@ -93,8 +102,23 @@ namespace AfetUyanisi.Chapters.Earthquake
         public EarthquakeBalanceSettings BalanceSettings => balanceSettings;
         public EarthquakeBalanceModel Balance { get; private set; }
 
+        // Denge ayarlarının sürümü. Eski (zor/anlaşılmaz) varsayılanlarla kaydedilmiş ya da editörde bellekte eski
+        // değerleri taşıyan bileşenler bir kez yeni varsayılanlara yükseltilir; sonra Inspector ayarı korunur.
+        private const int BalanceTuningVersion = 2;
+        [SerializeField, HideInInspector] private int balanceTuning;
+
+        private void UpgradeBalanceTuning()
+        {
+            if (balanceTuning >= BalanceTuningVersion) return;
+            balanceTuning = BalanceTuningVersion;
+            balanceSettings = new EarthquakeBalanceSettings();
+        }
+
+        private void OnValidate() => UpgradeBalanceTuning();
+
         private void Awake()
         {
+            UpgradeBalanceTuning();
             if (quakeEvents == null) quakeEvents = FindAnyObjectByType<EarthquakeEventController>();
             if (tables == null || tables.Length == 0)
                 tables = FindObjectsByType<SturdyTable>(FindObjectsInactive.Exclude);
@@ -248,11 +272,25 @@ namespace AfetUyanisi.Chapters.Earthquake
             Show(steps, 2, prompt);
             result.balancePlayed = true;
             Balance = new EarthquakeBalanceModel(balanceSettings);
-            float stepStart = Time.time;
             bool warnedRelease = false;
             Pose(result.table != null ? Or(tableHoldPose, holdPose) : holdPose);
             BeginFeedback();
             if (view != null) view.BeginBalance(balanceSettings, texts.balance ?? new EqBalanceTexts());
+
+            // Kısa talimat: gösterge durur, "işareti yeşilde tut / SPACE'e bas ve basılı tut" görünür.
+            // SPACE'e basılınca (en az introMinSeconds sonra) ya da en geç introMaxSeconds sonra denge başlar.
+            float introStart = Time.time;
+            if (quakeEvents != null) quakeEvents.SetIntensity(0.35f);
+            while (true)
+            {
+                float t = Time.time - introStart;
+                if (t >= introMaxSeconds || (t >= introMinSeconds && Held(introStart, 0f))) break;
+                if (view != null) view.SetBalance(Balance);
+                StepFeedback();
+                yield return null;
+            }
+
+            float stepStart = Time.time;
             while (!Balance.Finished)
             {
                 bool holding = Held(stepStart, Balance.Elapsed * Balance.HeldRatio);
@@ -274,18 +312,33 @@ namespace AfetUyanisi.Chapters.Earthquake
                     view.SetBalance(Balance);
                 }
                 if (quakeEvents != null) quakeEvents.SetIntensity(Balance.Intensity);
-                if (focusCamera != null) focusCamera.orthographicSize = Mathf.Lerp(focusCamera.orthographicSize, originalZoom * (1f - cameraZoom), Time.deltaTime * 4f);
-                if (braceRenderer != null)
-                {
-                    braceRenderer.sprite = originalRenderer.sprite;
-                    braceVisual.transform.localRotation = Quaternion.Euler(0, 0, -Balance.Position * 4f);
-                }
+                StepFeedback();
                 yield return null;
             }
             result.balanceScore = Mathf.RoundToInt(Balance.Score);
             result.heldRatio = Balance.HeldRatio;
-            result.holdCompleted = Balance.HeldRatio >= 0.65f && Balance.Elapsed * Balance.HeldRatio >= Mathf.Min(holdSeconds, balanceSettings.Duration * 0.65f);
+            result.holdCompleted = Balance.HeldRatio >= EarthquakeBalanceModel.GoodHeldRatio
+                && Balance.Elapsed * Balance.HeldRatio >= Mathf.Min(holdSeconds, balanceSettings.Duration * EarthquakeBalanceModel.GoodHeldRatio);
             Debug.Log($"[EQ] denge alıştırması {result.balanceScore}/100, tutuş %{result.heldRatio * 100:0}; korunma pozu sarsıntı bitene kadar sürer.", this);
+
+            // Sonuç: gösterge "Sarsıntı bitti — iyi tutundun!" / "Biraz zorlandın…" der; poz korunur, sarsıntı durulur.
+            if (quakeEvents != null) quakeEvents.SetIntensity(0f);
+            for (float t = 0f; t < resultSeconds; t += Time.deltaTime)
+            {
+                if (view != null) view.SetBalance(Balance);
+                StepFeedback();
+                yield return null;
+            }
+        }
+
+        private void StepFeedback()
+        {
+            if (focusCamera != null) focusCamera.orthographicSize = Mathf.Lerp(focusCamera.orthographicSize, originalZoom * (1f - cameraZoom), Time.deltaTime * 4f);
+            if (braceRenderer != null && Balance != null)
+            {
+                braceRenderer.sprite = originalRenderer.sprite;
+                braceVisual.transform.localRotation = Quaternion.Euler(0, 0, -Balance.Position * braceTilt);
+            }
         }
 
         // --- Girdi (gerçek ya da otomatik) ---

@@ -16,6 +16,14 @@
 
 Masa yalnızca sarsıntı başlangıcında hemen erişilebilir konumdaysa kullanılır. Uzakta olan oyuncu masaya koşturulmaz. Güvenli yerinde korunma ile masa altındaki korunmanın bölüm puanı eşittir. Denge puanı ayrı bir oyun alıştırmasıdır; yaralanma/ölüm veya hayatta kalma olasılığı üretmez.
 
+### Anlaşılırlık güncellemesi (Mahmut, 17 Ekim)
+
+- TUTUN başında kısa talimat: gösterge durur, "İşareti YEŞİLDE tut: A sola, D sağa çeker" + alt şerit "Başlamak için SPACE'e bas ve basılı tut". Denge SPACE'e basılınca başlar (en az 1.2 sn, en geç 4 sn; `introMin/MaxSeconds`).
+- Gösterge: [A] ◄ kırmızı(!) | amber | yeşil | amber | kırmızı(!) ► [D]; yeşilden çıkınca gereken tuş parlar ve "A/D ile ortaya dön", kırmızıda "Dengeni koru!" yazar. Kalan süre "12 sn" + azalan çubuk. Canlı puan gösterilmez.
+- Bitişte 1.5 sn "Sarsıntı bitti — iyi tutundun!" / "Biraz zorlandın…" (`resultSeconds`); kartta "Denge: N/100".
+- Model varsayılanları yumuşatıldı (yeşil 0.35, itme 4, frekans 0.4, düzeltme 6.5, sönüm 8): eskiden girdisiz kalmak yeşilde tutuyor, A/D ise aşırı savuruyordu. Eski değerleri taşıyan bileşenler `balanceTuning` sürümüyle bir kez yeni varsayılanlara yükseltilir.
+- Testler: model menüsüne "girdisiz kalınca yeşilden çıkar", "0.45 / 0.6 sn gecikmeli oyuncu başarır"; entegre teste "talimat SPACE beklenir" ve "bitiş sonucu görünür" eklendi.
+
 ## Bağlantı ve ayarlar
 
 `EarthquakeHome` içindeki mevcut korunma kontrolcüsü/view referansları kullanılır. `ProtectionView` gerektiğinde tek `EarthquakeBalanceHUD` oluşturur. İkinci hazırlık sayacı, hareket sistemi veya ayrı mini oyun sahnesi eklenmedi.

@@ -368,19 +368,33 @@ namespace AfetUyanisi.Chapters.Earthquake
     [Serializable]
     public class EqBalanceTexts
     {
+        // Denge göstergesi (EarthquakeBalanceHUD): başlık / alt başlık, talimat, durum satırı, SPACE şeridi, sonuç.
         public string warning = "DEPREM!";
-        public string title = "ÇÖK – KAPAN – TUTUN";
-        public string controls = "[A] Sola     [D] Sağa     [SPACE] Tutun (basılı tut)";
-        public string note = "Denge alıştırmasıdır; depremi kontrol etmez, güvenliği garanti etmez.";
-        public string initial = "İlk sarsıntılar";
+        public string title = "TUTUN!";
+        public string subtitle = "Sarsıntı bitene kadar tutun ve dengede kal";
+        /// <summary>Talimat (denge başlamadan): durum satırı.</summary>
+        public string controls = "İşareti YEŞİLDE tut:  A sola,  D sağa çeker";
+        /// <summary>Talimat (denge başlamadan): SPACE şeridi.</summary>
+        public string startHint = "Başlamak için SPACE'e bas ve basılı tut";
+        /// <summary>SPACE basılıyken şerit metni.</summary>
+        public string note = "Tutunuyorsun — başını ve enseni koru";
+        /// <summary>SPACE bırakılınca şerit metni.</summary>
+        public string release = "SPACE'i bırakma — tutunmaya devam et!";
+        public string initial = "Sarsıntı başladı";
         public string strong = "Sarsıntı güçleniyor";
-        public string irregular = "Düzensiz dalgalar";
-        public string release = "Korunma pozisyonunu sürdür! SPACE'e yeniden bas.";
-        public string unstable = "Dengeni kaybettin! Korunmaya devam et; A / D ile düzelt.";
-        public string success = "Doğru pozisyonda kaldın!";
-        public string feedback = "Korunmaya devam ettin. Denge alıştırmasını yeniden deneyebilirsin.";
-        public string score = "Denge alıştırması: {0}/100";
-        public string resultNote = "Puan yalnızca oyun girdisini ölçer. Gerçek depremde sarsıntı bitene kadar başını ve enseni koru.";
+        public string irregular = "Sarsıntı düzensiz, dikkat!";
+        public string stable = "Dengedesin, böyle devam!";
+        public string unstable = "Dengeni koru!";
+        public string driftLeft = "A ile ortaya dön";
+        public string driftRight = "D ile ortaya dön";
+        public string timeLeft = "{0} sn";
+        public string resultGood = "Sarsıntı bitti — iyi tutundun!";
+        public string resultHard = "Sarsıntı bitti. Biraz zorlandın ama korunmaya devam ettin.";
+        // Sarsıntı sonrası kart / rapor
+        public string success = "Sarsıntı bitene kadar tutundun ve dengeni korudun.";
+        public string feedback = "Biraz zorlandın: sarsıntı bitene kadar SPACE'i bırakmadan tutunmaya çalış.";
+        public string score = "Denge: {0}/100";
+        public string resultNote = "Gerçek depremde de sarsıntı bitene kadar başını ve enseni koru, tutunmaya devam et.";
     }
 
     [Serializable]

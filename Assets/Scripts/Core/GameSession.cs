@@ -26,6 +26,12 @@ namespace AfetUyanisi.Core
         /// </summary>
         public const string BackpackFlag = "backpack_taken";
 
+        /// <summary>
+        /// Deprem çantası (afet çantası) alındı bayrağının adı (deprem modu). Sarsıntıdan sonra hazırlanmış çanta alınınca
+        /// konur; CenkOutfit bunu okuyup deprem çantalı sprite'lara geçer (Cenk'in sırtında görünür).
+        /// </summary>
+        public const string QuakeBagFlag = "quake_bag_taken";
+
         private static readonly HashSet<string> flags = new HashSet<string>();
 
         public static ChapterId? CurrentChapter { get; private set; }
@@ -38,6 +44,9 @@ namespace AfetUyanisi.Core
 
         /// <summary>Cenk okul çantasını aldı mı (sırtında çanta görünür).</summary>
         public static bool BackpackTaken => HasFlag(BackpackFlag);
+
+        /// <summary>Cenk deprem çantasını aldı mı (sırtında afet çantası görünür).</summary>
+        public static bool QuakeBagTaken => HasFlag(QuakeBagFlag);
 
         /// <summary>Bölümü başlatır; önceki oynanıştan kalan bayraklar (şemsiye vb.) silinir.</summary>
         public static void StartChapter(ChapterId chapter)
@@ -60,6 +69,9 @@ namespace AfetUyanisi.Core
 
         /// <summary>Okul çantasının alındığını kaydeder (yatak odasındaki "[E] Çantanı al").</summary>
         public static void MarkBackpackTaken() => SetFlag(BackpackFlag);
+
+        /// <summary>Deprem çantasının alındığını kaydeder (deprem modu, sarsıntıdan sonra).</summary>
+        public static void MarkQuakeBagTaken() => SetFlag(QuakeBagFlag);
 
         /// <summary>Bu oynanışta bir şeyin yapıldığını kaydeder (bölüm başlayınca silinir).</summary>
         public static void SetFlag(string flag)

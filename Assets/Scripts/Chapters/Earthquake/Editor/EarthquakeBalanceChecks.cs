@@ -59,6 +59,37 @@ namespace AfetUyanisi.Chapters.Earthquake.Editor
             Check(pause.Elapsed == 0 && pause.Position == 0, "Pause sırasında fizik ilerlemez", report);
             pause.Tick(1, 0, false); float score = pause.Score; pause.Tick(1, 0, true);
             Check(pause.Score == score && pause.HeldRatio > 0.4f, "Space bırakma sonrası kayıp durur, toparlanma mümkün", report);
+
+            var defaults = new EarthquakeBalanceSettings();
+            var idle = new EarthquakeBalanceModel(defaults);
+            float idleMax = 0;
+            while (!idle.Finished) { idle.Tick(1f / 60, 0, true); idleMax = Mathf.Max(idleMax, Mathf.Abs(idle.Position)); }
+            Check(idleMax > defaults.greenZone, $"Girdisiz kalınca sarsıntı işareti yeşilden çıkarır; A/D anlamlı (en fazla {idleMax:0.00})", report);
+            var novice = Novice(defaults, 0.45f, 0.4f, out float noviceRed);
+            Check(novice.WentWell && noviceRed < 0.5f && novice.Score >= 80,
+                $"İlk kez oynayan (0.45 sn gecikmeli basit A/D) kırmızıya girmeden başarır: {novice.Score:0}/100, kırmızı {noviceRed:0.0} sn", report);
+            var child = Novice(defaults, 0.6f, 0.5f, out float childRed);
+            Check(child.WentWell && child.Score >= 70,
+                $"Geç tepki veren çocuk oyuncu (0.6 sn) da başarır: {child.Score:0}/100, kırmızı {childRed:0.0} sn", report);
+        }
+
+        /// <summary>İnsan benzeri oyuncu: işareti gecikmeli görür, eşiği aşınca karşı tuşa basar, ortaya yaklaşınca bırakır.</summary>
+        private static EarthquakeBalanceModel Novice(EarthquakeBalanceSettings settings, float delay, float threshold, out float redSeconds)
+        {
+            var model = new EarthquakeBalanceModel(settings);
+            const float dt = 1f / 60;
+            var seen = new System.Collections.Generic.Queue<float>();
+            int lag = Mathf.Max(1, Mathf.RoundToInt(delay / dt));
+            float input = 0; redSeconds = 0;
+            while (!model.Finished)
+            {
+                seen.Enqueue(model.Position);
+                float p = seen.Count > lag ? seen.Dequeue() : 0;
+                if (p > threshold) input = -1; else if (p < -threshold) input = 1; else if (Mathf.Abs(p) < threshold * 0.5f) input = 0;
+                model.Tick(dt, input, true);
+                if (Mathf.Abs(model.Position) > settings.redThreshold) redSeconds += dt;
+            }
+            return model;
         }
 
         private static EarthquakeBalanceModel Simulate(float dt)
@@ -147,7 +178,14 @@ namespace AfetUyanisi.Chapters.Earthquake.Editor
                 events.BeginShake();
                 protection.StartCoroutine(protection.Run(player.transform.position, r => { manualResult = r; callbacks++; }));
                 await Wait(150); Keys(keyboard, Key.E); await Wait(80); Keys(keyboard); await Wait(350);
-                Keys(keyboard, Key.E); await Wait(80); Keys(keyboard, Key.Space, Key.A);
+                Keys(keyboard, Key.E); await Wait(80); Keys(keyboard); await Wait(700);
+                var balanceTexts = (protection.Texts != null ? protection.Texts.balance : null) ?? new EqBalanceTexts();
+                var hud = protection.View is ProtectionView protectionView ? protectionView.BalanceHUD : null;
+                Check(protection.IsRunning && protection.Balance != null && !protection.Balance.Started,
+                    "Talimat: SPACE'e basılmadan denge başlamaz", report);
+                Check(hud != null && hud.IsShown && hud.StatusText == balanceTexts.controls && hud.HoldText == balanceTexts.startHint,
+                    "Talimat ekranı: işareti yeşilde tut + SPACE'e bas ve basılı tut", report);
+                Keys(keyboard, Key.Space, Key.A);
                 await Until(() => protection.Balance != null && protection.Balance.Elapsed > 0.2f, 5);
                 Check(protection.Balance.Velocity < 0, "Gerçek Input System: A + Space sola düzeltir", report);
                 Keys(keyboard, Key.Space, Key.D); await Wait(400);
@@ -157,6 +195,10 @@ namespace AfetUyanisi.Chapters.Earthquake.Editor
                 Check(protection.IsRunning && player.transform.position == protectedPosition && !player.CanMove,
                     "Space bırakılınca oyuncu ayağa kalkmaz, yerinden çıkmaz; oyun sürer", report);
                 Keys(keyboard, Key.Space);
+                await Until(() => protection.Balance.Finished, 6);
+                await Wait(100);
+                Check(protection.IsRunning && (hud.StatusText == balanceTexts.resultGood || hud.StatusText == balanceTexts.resultHard),
+                    "Bitişte sonuç metni görünür (iyi tutundun / zorlandın)", report);
                 await Until(() => !protection.IsRunning, 6);
                 events.EndShake(); await Wait(100);
                 Check(callbacks == 1 && manualResult != null && manualResult.releasedDuringHold && manualResult.holdCompleted,

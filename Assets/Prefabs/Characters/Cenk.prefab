@@ -367,4 +367,126 @@ MonoBehaviour:
     noBag: {fileID: 21300000, guid: 5b79f90a37448614ab3d9f7f82e5d270, type: 3}
   - withBag: {fileID: 21300000, guid: 8c27632a3b16f684fa41a976fbac8ec6, type: 3}
     noBag: {fileID: 21300000, guid: d4c76ea81dcd6f54b998e9d361b422d6, type: 3}
+  quakeBagPairs:
+  - withBag: {fileID: 9108577911678662803, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: 9108577911678662803, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: -5398019469981305501, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: -5398019469981305501, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: 8952650189331082685, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: 8952650189331082685, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: -175281025261011332, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: -175281025261011332, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: -6313485267816607083, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: -6313485267816607083, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: 2264805144689300348, guid: 3fba95128d025e647879030b9365c7a0, type: 3}
+    quakeBag: {fileID: 2264805144689300348, guid: 263d52f9654a45a429650421de7afd5a, type: 3}
+  - withBag: {fileID: -6867723519155685584, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: -6867723519155685584, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: 595523315522633200, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: 595523315522633200, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: 5271311913387952033, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: 5271311913387952033, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: 3448243023561877423, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: 3448243023561877423, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: 2218865492817070247, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: 2218865492817070247, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: 7014621806893806089, guid: 9ba161f05a6189046876d0a7ab159a00, type: 3}
+    quakeBag: {fileID: 7014621806893806089, guid: 3858be163a4636544b3a6815ce689d32, type: 3}
+  - withBag: {fileID: -1078760606343424929, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: -1078760606343424929, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: 631414405701072288, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: 631414405701072288, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: -144912537195809048, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: -144912537195809048, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: 83279700957818560, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: 83279700957818560, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: 5875691989076450725, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: 5875691989076450725, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: -1369282669675680226, guid: 9a0b8ebaa9828ac4cad6a7b99640cd6f, type: 3}
+    quakeBag: {fileID: -1369282669675680226, guid: 6091f1275d42b0b42a3099e0e1a2db19, type: 3}
+  - withBag: {fileID: -6713720332328808647, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: -6713720332328808647, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: 954948591974042357, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: 954948591974042357, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: 2246855754502993498, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: 2246855754502993498, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: 3399406354871696169, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: 3399406354871696169, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: 4819774088411126463, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: 4819774088411126463, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: -6303428276604875671, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+    quakeBag: {fileID: -6303428276604875671, guid: dba2d392c6030e142a47e85a87aab5cc, type: 3}
+  - withBag: {fileID: -3936612443685444822, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: -3936612443685444822, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: 4166384626576490256, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: 4166384626576490256, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: -5852411102339546426, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: -5852411102339546426, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: 7208310750985302901, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: 7208310750985302901, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: 1340007661288437260, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: 1340007661288437260, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: 6803453505817167568, guid: 43a2cf1faae4c1243a33dc15a33e485b, type: 3}
+    quakeBag: {fileID: 6803453505817167568, guid: b5c13660eeaa60544b9e351b24748958, type: 3}
+  - withBag: {fileID: -8197675163520144819, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: -8197675163520144819, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: -564895092500829023, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: -564895092500829023, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: -2973280326001005979, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: -2973280326001005979, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: -2562975085942155736, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: -2562975085942155736, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: -7926461187751640731, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: -7926461187751640731, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: 5788669354728850174, guid: 0af0eb38121e29a428d457547172e4f9, type: 3}
+    quakeBag: {fileID: 5788669354728850174, guid: 18a2ea4e3c6a1b8448c0ddb57dcab794, type: 3}
+  - withBag: {fileID: -6528612900034424214, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -6528612900034424214, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: -1390693902499935467, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -1390693902499935467, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: -8929991253089878803, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -8929991253089878803, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: -2692613428720777008, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -2692613428720777008, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: -8787073624455871288, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -8787073624455871288, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: -6599580783716043144, guid: f2c6c449435a5c44eadb3696cd4e3692, type: 3}
+    quakeBag: {fileID: -6599580783716043144, guid: 8a02eb035da52e444bab3d45d36f8b1d, type: 3}
+  - withBag: {fileID: 5769647596123191558, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: 5769647596123191558, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: -549499762931407216, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: -549499762931407216, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: 649644949063934111, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: 649644949063934111, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: -6135978851622192756, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: -6135978851622192756, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: -5107487132635651567, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: -5107487132635651567, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: 4954072427153939828, guid: 2ede7177770ee3f46958cea65833c08e, type: 3}
+    quakeBag: {fileID: 4954072427153939828, guid: db7c39f04c17a954c9118b4720495152, type: 3}
+  - withBag: {fileID: 21300000, guid: ef6f86dde79a1f74f81484b296a2fc35, type: 3}
+    quakeBag: {fileID: 21300000, guid: acde65cb61815b44ba8673b235c91799, type: 3}
+  - withBag: {fileID: 21300000, guid: 50a519fff48d2f447ad453f75cc64d60, type: 3}
+    quakeBag: {fileID: 21300000, guid: 948042f8ea997054fb714d60c69c5065, type: 3}
+  - withBag: {fileID: 21300000, guid: 09583eefb3c252443b5f88eaa7a3955a, type: 3}
+    quakeBag: {fileID: 21300000, guid: 0697b1f1fc286c74a83c91364f5c9dd8, type: 3}
+  - withBag: {fileID: 21300000, guid: 8970b47ecf0f6ea4c8e817b85b68347b, type: 3}
+    quakeBag: {fileID: 21300000, guid: 8fc909369e2c04e4aa502ac582d7a7c8, type: 3}
+  - withBag: {fileID: 21300000, guid: 3f7f13eaea270724d98c0cf2850f086f, type: 3}
+    quakeBag: {fileID: 21300000, guid: e830febb49d3c9a49b5f28318b48fbd1, type: 3}
+  - withBag: {fileID: 21300000, guid: 0db8ad32662ab2e4eb01a4b94acec646, type: 3}
+    quakeBag: {fileID: 21300000, guid: 4a3c3b7c89e1f0e4ebdb0fd7df1eac52, type: 3}
+  - withBag: {fileID: 21300000, guid: 53e92c535e9f6d940a90a55746c7c7f3, type: 3}
+    quakeBag: {fileID: 21300000, guid: a5170b0a7abdab9459c84d824537d1d4, type: 3}
+  - withBag: {fileID: 21300000, guid: b6b51fe2bde666c4187e93a41844dff6, type: 3}
+    quakeBag: {fileID: 21300000, guid: 2a41c05a01907224a800a18d1c5a7770, type: 3}
+  - withBag: {fileID: 21300000, guid: 35ccce9f067a7234babd2fbb5189fb37, type: 3}
+    quakeBag: {fileID: 21300000, guid: 90c9c1862ad9608408c2d3621b91c14e, type: 3}
+  - withBag: {fileID: 21300000, guid: ae0e726b5c5b8b340a671937cd54778c, type: 3}
+    quakeBag: {fileID: 21300000, guid: cffa336ffa9124847b4f520c2883b3c7, type: 3}
+  - withBag: {fileID: 21300000, guid: 87a692bc802bfe448aee52071285c31c, type: 3}
+    quakeBag: {fileID: 21300000, guid: 460dc69c8177df244b07eb02a5b65ed0, type: 3}
+  - withBag: {fileID: 21300000, guid: 8c27632a3b16f684fa41a976fbac8ec6, type: 3}
+    quakeBag: {fileID: 21300000, guid: f0b4e88825bc18c42a4eb7a0723b6b2f, type: 3}
   forceBackpack: 0
+  forceQuakeBag: 0

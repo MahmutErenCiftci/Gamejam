@@ -893,8 +893,16 @@ namespace AfetUyanisi.Chapters.Earthquake
             Log("D: deprem çantası alındı");
             quakeBag.Point.SetAvailable(false);
             HideBagVisual();
+            WearQuakeBag();
             yield return Say(bagLine);
             Toast("DEPREM ÇANTASI", data.after.bagTaken, toastSeconds);
+        }
+
+        // Alınan deprem çantası Cenk'in sırtında görünür (CenkOutfit: deprem çantalı sprite'lar).
+        private static void WearQuakeBag()
+        {
+            GameSession.MarkQuakeBagTaken();
+            CenkOutfit.RefreshAll();
         }
 
         private void HideBagVisual()

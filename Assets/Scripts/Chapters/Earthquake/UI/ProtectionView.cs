@@ -58,8 +58,12 @@ namespace AfetUyanisi.Chapters.Earthquake
         {
             Hide();
             if (balanceHUD == null) balanceHUD = gameObject.AddComponent<EarthquakeBalanceHUD>();
-            balanceHUD.Begin(settings, texts);
+            EnsureBuilt();
+            balanceHUD.Begin(settings, texts, skin);
         }
+
+        /// <summary>QA/test: TUTUN adımının denge göstergesi (ilk BeginBalance'a kadar null).</summary>
+        public EarthquakeBalanceHUD BalanceHUD => balanceHUD;
 
         public override void SetBalance(EarthquakeBalanceModel state)
         {

@@ -9,12 +9,18 @@ namespace AfetUyanisi.Chapters.Earthquake
         [Min(0.1f)] public float initialSeconds = 4f;
         [Min(0.1f)] public float strongSeconds = 6f;
         [Min(0.1f)] public float irregularSeconds = 6f;
-        [Range(0.1f, 0.6f)] public float greenZone = 0.3f;
+        [Tooltip("Yeşil (güvenli) bölgenin yarı genişliği; 0.35 = ortadan iki yana %35")]
+        [Range(0.1f, 0.6f)] public float greenZone = 0.35f;
+        [Tooltip("Kırmızı bölge eşiği (AudioAutoWiring uyarı sesi de 0.65 kullanır)")]
         [Range(0.4f, 0.9f)] public float redThreshold = 0.65f;
-        [Min(0)] public float waveForce = 2.2f;
-        [Min(0.1f)] public float waveFrequency = 1f;
-        [Min(0.1f)] public float correctionStrength = 5f;
-        [Min(0.1f)] public float damping = 3f;
+        [Tooltip("Sarsıntının işareti itme gücü. Girdisiz kalınca işaret yer yer kırmızıya kayar; A/D ile kolayca geri gelir.")]
+        [Min(0)] public float waveForce = 4f;
+        [Tooltip("Düşük = yavaş, okunabilir itmeler (ilk kez oynayan da yetişir)")]
+        [Min(0.1f)] public float waveFrequency = 0.4f;
+        [Tooltip("A/D düzeltme gücü; en güçlü itmeden belirgin şekilde büyük olmalı")]
+        [Min(0.1f)] public float correctionStrength = 6.5f;
+        [Tooltip("Yüksek = tuş bırakılınca işaret hemen durur (savrulma / aşırı düzeltme olmaz)")]
+        [Min(0.1f)] public float damping = 8f;
         [Min(0)] public float amberDrain = 1f;
         [Min(0)] public float redDrain = 5f;
         [Min(0)] public float releaseDrain = 3f;
@@ -26,6 +32,11 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>Oyun alıştırması; sismik simülasyon veya hayatta kalma olasılığı değildir. Sabit alt adımlarla kararlı.</summary>
     public sealed class EarthquakeBalanceModel
     {
+        /// <summary>"İyi tutundun" için sürenin en az bu oranında SPACE basılı olmalı (holdCompleted ile aynı).</summary>
+        public const float GoodHeldRatio = 0.65f;
+        /// <summary>"İyi tutundun" için en düşük denge puanı (EarthquakeModeController sonuç kartıyla aynı eşik).</summary>
+        public const float GoodScore = 35f;
+
         private readonly EarthquakeBalanceSettings settings;
         private double accumulator;
         private float heldSeconds, releaseSeconds;
@@ -42,6 +53,14 @@ namespace AfetUyanisi.Chapters.Earthquake
         public int Stage => Elapsed < settings.initialSeconds ? 0 : Elapsed < settings.initialSeconds + settings.strongSeconds ? 1 : 2;
         public float Intensity => (Stage == 0 ? 0.3f : Stage == 1 ? 0.72f : 0.9f) * (1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((Progress - 0.92f) / 0.08f)));
         public float Force => Wave(Elapsed);
+        /// <summary>Denge ilerlemeye başladı mı (talimat bitti, ilk Tick geldi).</summary>
+        public bool Started => Elapsed > 0f;
+        public float Duration => settings.Duration;
+        public float RemainingSeconds => Mathf.Max(0f, settings.Duration - Elapsed);
+        /// <summary>İşaretin bölgesi: 0 yeşil, 1 amber, 2 kırmızı.</summary>
+        public int Zone => Mathf.Abs(Position) > settings.redThreshold ? 2 : Mathf.Abs(Position) > settings.greenZone ? 1 : 0;
+        /// <summary>Bitiş değerlendirmesi: yeterince tutundu ve dengeyi çoğunlukla korudu.</summary>
+        public bool WentWell => HeldRatio >= GoodHeldRatio && Score >= GoodScore;
 
         public EarthquakeBalanceModel(EarthquakeBalanceSettings configuration) => settings = configuration ?? new EarthquakeBalanceSettings();
 
