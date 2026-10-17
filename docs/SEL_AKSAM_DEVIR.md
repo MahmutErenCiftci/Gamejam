@@ -1,41 +1,53 @@
 # Akşam Sel Bölümü — Devir Belgesi (FloodEvening)
 
-> Durum: **sağlam temel**. Akış uçtan uca kod olarak kurulu; görseller ve arayüzler geçici/sade. Bu belge ekibin (Berk, Arda, Eren) nereden devam edeceğini anlatır.
+> Durum: **temel kuruldu, zikzak rota ekipte**. Görseller ve arayüzler geçici/sade. Bu belge ekibin (Berk, Arda, Eren) nereden devam edeceğini anlatır.
 > Tasarım ve metin kuralları: [`docs/OYUN_AKISI.md` §6.0](OYUN_AKISI.md). Sahiplik: [`planning/EKIP_ROLLERI.md`](../planning/EKIP_ROLLERI.md).
 
-## 1. Akış
+> **GÜNCEL DURUM (17 Eki 23:55, LEAD):** Lider kararıyla rota **zikzak** olarak yeniden tasarlandı (`S\newflood\PROMPT_ZIGZAG.md`, repo: `docs/SEL_ZIGZAG_*`). Controller bu yeni akışa çevrildi ve derleniyor; **harita (ENV v3 zikzak), ağaç düşüşü (FE_TreeFall) ve E'ye art arda basma işleri ekibe devredildi.** Sahnedeki dünya hâlâ ENV v2 (eski sel sokağı tabanlı, düz rota + bahçe kapısı/şifre).
+
+## 0. Gerçek durum
+
+**Çalışan (Unity'de gerçek girdiyle denendi):**
+- Menü/Deprem → Sel yönlendirmesi kodda: `GameSceneRouter.LoadChapter(Flood)` → `FloodEvening`; deprem raporunda **[Devam: Sel Bölümü]** butonu (kod derleniyor; **deprem raporundan geçiş Unity'de uçtan uca oynanmadı — UNTESTED**).
+- FloodEvening.unity açılıyor: "SEL BÖLÜMÜ" kartı → kararma açılır → FE_INTRO balonu → Eren'in uyarı bildirimi ([E] Devam ile kapanır, tek sefer) → serbest yürüyüş. Console hatası yok (err=0).
+- Kavşak (Fork) → kısa yol kapalı noktası (BarrierZone): Cenk suya girmeden durur, itme/ışınlama yok, kayıt nötr ("kısa yol denendi"); yürüyerek geri dönüp uzun yola (HighRoad) girince durum LongRoad oluyor.
+- Daha önceki sürümde (120 sn'li) süre dolması → sonuç ekranı → fareyle **Menüye Dön** → MainMenu çalıştı; sonuç ekranı ve butonları okunur.
+
+**Yarım / devredilen:**
+- ENV v3 zikzak harita (≥2 dönüş kavşağa kadar, uzun yolda ≥3 dönüş, TreeStopSpot/TreeFallSpot/SafeSpot çapaları) — **yok**, ENV'e devredildi.
+- FE_TreeFall (tek seferlik ağaç düşüşü + kırık dalı E'ye art arda basarak itme, Hub adımları `tree_fell` / `branch_cleared`, "Yol açıldı.") — **yok**, EVENTS'e devredildi. Şu anki sahnede yerine eski `FE_BranchObstacle` (alternatif geçit, E basılı tut) duruyor.
+- `flood_evening.json`'da eksik: `FE_SHORT_CLOSED` sahnesi ("Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım.") ve `FE_RESULT_MISTAKES` içinde `short_road_tried` satırı ("Kısa yolu denedin, kapalıydı — zaman kaybettin."). Controller bunları arıyor; yoksa Console'a uyarı yazıp geçiyor. FE_FORK metni KISA YOL / UZUN YOL'a göre güncellenmeli (Arda).
+- v2 sahnesinde rota hâlâ bahçe kapısı + şifre kapısından geçiyor (ikisi sahnede ve çalışır durumda); zikzak haritada bunlar kaldırılacak.
+- Uçtan uca (uyarı → kısa yol → uzun yol → dal → devam noktası → sonuç → Tekrar Dene) yeni akışla **tek parça oynanmadı — UNTESTED**.
+
+## 1. Akış (zikzak)
 
 ```text
-DEPREM (EarthquakeHome)
-  └─ AFET FARKINDALIK RAPORU ──[Devam: Sel Bölümü]──► GameSceneRouter.ContinueToNextChapter(Earthquake)   (yalnız bir kez)
-        │                     [Tekrar Dene] → deprem baştan     [Menüye Dön] → menü
-        ▼ (kararma)
-MENÜ "Sel" bulutu ──► GameSceneRouter.LoadChapter(Flood) ──► FloodEvening.unity
-        ▼
-FloodEveningController (tek akış/süre/sonuç sorumlusu)
-  Intro ─► Warning ─► RouteChoice ─► SafeRoute ─► Gate ─► CodePanel ─► FinalApproach ─► Success / Timeout ─► Sonuç ekranı
-  "SEL BÖLÜMÜ"  telefon   alçak/yüksek  söylenti,    bahçe     şifre        güvenli        süre/su durur     [Sel Bölümünü Tekrar Dene] → yalnız Sel
-   kartı        uyarısı   yol (bariyer) geçit, rüzgâr kapısı   paneli       bölgeye yürü                     [Menüye Dön]
+DEPREM (EarthquakeHome) ── rapor [Devam: Sel Bölümü] ──► GameSceneRouter.ContinueToNextChapter(Earthquake)  (yalnız bir kez)
+MENÜ "Sel" ──► GameSceneRouter.LoadChapter(Flood) ──► FloodEvening.unity
+FloodEveningController (tek akış/sonuç sorumlusu)
+  Intro ─► Warning ─► RouteChoice ─┬─ kısa yol: köşe → BarrierZone (bir kez FE_SHORT_CLOSED, nötr kayıt) → yürüyerek kavşağa dönüş
+   kart    uyarı (1 kez)  sokaklar  └─ uzun yol (HighRoad) ─► LongRoad ─► Obstacle (tree_fell) ─► FinalApproach (branch_cleared, FE_FINAL)
+                                                                                                    └─► SafeZone/devam noktası ─► Success ─► sonuç
 ```
-
-* **Gizli 120 sn** yalnız uyarı kapanıp kontrol açıldıktan sonra başlar. Diyalog, okuma paneli (`rumor`, `clue`, `sign`, `info`, `read`, `warning` ön ekli paneller), geçiş ve sonuç sırasında durur; aktif mini oyunlarda (`branch`, `gate`, `code`) akar. Sayısal geri sayım yok.
-* **Tek ilerleme değeri:** `FloodEveningHub.Progress01` (0..1) = süre = su seviyesi göstergesi = yağmur yoğunluğu = çevresel su (`FloodEveningWaterRise`).
-* Durum geri gitmez; modüllerin Hub adımlarından ve oyuncunun konumundan (`HighRoad`, `SafeZone` trigger'ları) türetilir. Modül eksikse o adım atlanır.
-* Aynı karede güvenli bölgeye varış + süre dolması → **başarı** (önce güvenli bölge kontrol edilir).
-* Süre dolunca açık mini oyun `ResetModule()` ile kapatılır; Cenk olduğu kuru yerde durur (suya girmez).
+* **Süre baskısı yok:** geri sayım, süre dolması ve başarısızlık kaldırıldı. Zaman kaybı yalnızca gerçek yürüme süresi. Su seviyesi göstergesi varsayılan kapalı (`showWaterGauge`).
+* Ortam ilerlemesi `FloodEveningHub.Progress01` (serbest dolaşmada ~150 sn'de 1'e çıkar): yalnız yağmur ve çevresel su görseli.
+* Durum geri gitmez. Dal itilir itilmez bölüm bitmez; oyuncu devam noktasına yürüyünce biter.
+* Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), rüzgâr (`WindGustZone`, FE_WindPass), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
 
 ## 2. Hub (modüller ↔ controller), `Assets/Scripts/Chapters/FloodEvening/FloodEveningHub.cs`
 
 | Olay / alan | Kim yazar | Değerler |
 |---|---|---|
-| `Progress01`, `Paused`, `FreeRoam` | Controller | 0..1; süre duruyor mu; oyuncu serbest mi (diyalog/panel/mini oyun kapalı) |
-| `NotifyOpened(id)` / `NotifyClosed(id)` | Modül | `rumor`, `branch`, `gate`, `code`, `clue…` |
-| `Complete(id)` | Modül | `warning_read`, `high_road`, `rumor_checked`, `branch_cleared`, `gate_opened`, `code_opened`, `safe_zone` |
-| `ReportMistake(id)` | Modül | `low_road`, `rumor_trusted`, `wrong_code` |
-| `Say(lineId, fallback)` | Modül | Controller diyalogla oynatır (süre durur); veride yoksa uyarı şeridinde `fallback` |
+| `Progress01`, `Paused`, `FreeRoam` | Controller | ortam ilerlemesi 0..1; okuma/diyalog sırasında duruyor mu; oyuncu serbest mi |
+| `NotifyOpened(id)` / `NotifyClosed(id)` | Modül | ör. `treefall`, `branch`; açıkken hareket kilitli |
+| `Complete(id)` | Modül | `warning_read`, `high_road`, `tree_fell`, `branch_cleared`, `safe_zone` (+ eski: `rumor_checked`, `gate_opened`, `code_opened`) |
+| `ReportMistake(id)` | Modül | `low_road` artık hata sayılmaz (nötr "kısa yol denendi"); diğerleri sonuçta listelenir |
+| `Say(lineId, fallback)` | Modül | Controller diyalogla oynatır; veride yoksa uyarı şeridinde `fallback` |
 | `RequestReset()` | Controller | Modüller kendini sıfırlar |
 
-Arayüzler (`FloodEveningContracts.cs`): `IFloodEveningInteraction` ([E] ile kullanılan her parça: `Point`, `CanUse`, `Play()`), `IFloodEveningWarning` (`ShowWarning()`), `IFloodEveningResettable`. Modüller E tuşunu **kendileri okumaz**; [E] ipucunu ve kullanımı controller'ın `RoomInteractor`'ı yönetir.
+Arayüzler (`FloodEveningContracts.cs`): `IFloodEveningInteraction` (`Point`, `CanUse`, `Play()`; E'yi controller'ın RoomInteractor'ı yönetir), `IFloodEveningWarning`, `IFloodEveningResettable`.
+**FE_TreeFall için beklenen:** TreeStopSpot'ta tek sefer: `NotifyOpened("treefall")` → animasyon → `Complete("tree_fell")` → `NotifyClosed`; dal: `IFloodEveningInteraction` (Play içinde E'nin her ayrı basışı ilerletir) → `Complete("branch_cleared")` + `Say("FE_PATH_OPEN", "Yol açıldı.")`.
 
 ## 3. Dosyalar ve sahipler
 
