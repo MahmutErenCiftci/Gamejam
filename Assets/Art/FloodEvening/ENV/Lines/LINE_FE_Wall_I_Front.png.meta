@@ -1,0 +1,652 @@
+fileFormatVersion: 2
+guid: 10972904983e37fd86c7a29829755303
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4276997048678051472
+    second: LINE_FE_Wall_I_Front_0
+  - first:
+      213: 1234632790486324371
+    second: LINE_FE_Wall_I_Front_1
+  - first:
+      213: 1314274712140936555
+    second: LINE_FE_Wall_I_Front_2
+  - first:
+      213: 1683110268741887571
+    second: LINE_FE_Wall_I_Front_3
+  - first:
+      213: 670487030826139921
+    second: LINE_FE_Wall_I_Front_4
+  - first:
+      213: 2848534327655490376
+    second: LINE_FE_Wall_I_Front_5
+  - first:
+      213: 992107179808822599
+    second: LINE_FE_Wall_I_Front_6
+  - first:
+      213: 3465848816974852892
+    second: LINE_FE_Wall_I_Front_7
+  - first:
+      213: 3480929923128691914
+    second: LINE_FE_Wall_I_Front_8
+  - first:
+      213: 4356275759408714744
+    second: LINE_FE_Wall_I_Front_9
+  - first:
+      213: 3371230257636387488
+    second: LINE_FE_Wall_I_Front_10
+  - first:
+      213: 62398504516715868
+    second: LINE_FE_Wall_I_Front_11
+  - first:
+      213: 198521876210025525
+    second: LINE_FE_Wall_I_Front_12
+  - first:
+      213: 3154232056868799133
+    second: LINE_FE_Wall_I_Front_13
+  - first:
+      213: 49750809699826500
+    second: LINE_FE_Wall_I_Front_14
+  - first:
+      213: 1834965615421271234
+    second: LINE_FE_Wall_I_Front_15
+  - first:
+      213: 1135966960959623624
+    second: LINE_FE_Wall_I_Front_16
+  - first:
+      213: 2706904588210235304
+    second: LINE_FE_Wall_I_Front_17
+  - first:
+      213: 3978023235457110348
+    second: LINE_FE_Wall_I_Front_18
+  - first:
+      213: 2009466283883531167
+    second: LINE_FE_Wall_I_Front_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.138889}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fad018a070346f7ab6ce175f82db0007
+      internalID: 4276997048678051472
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 4
+        width: 16
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d825f904007450db48bf8e18c72c2570
+      internalID: 1234632790486324371
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 13
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f0b9a1888fe202f05455254767d2611
+      internalID: 1314274712140936555
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 21
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f80cea4a67c62b6dbf790e1f15d0aab8
+      internalID: 1683110268741887571
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 29
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c3861d29ce2085b64b4a053fe3751f5
+      internalID: 670487030826139921
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 37
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350c7653d1cf39d4f8a5a2d71bb3b729
+      internalID: 2848534327655490376
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 45
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4385a92219d4050ab58386aaafbdbb6
+      internalID: 992107179808822599
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 53
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0aaf6cda0eb9f4466124ff4e38dcf36
+      internalID: 3465848816974852892
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 61
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 908db7d692ba603a40f4464782ad014d
+      internalID: 3480929923128691914
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 69
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb9de5fe7529e6bfd844b9eb08747489
+      internalID: 4356275759408714744
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 77
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a197f72fd04559763f58f690ecc9e82
+      internalID: 3371230257636387488
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 85
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ece065a9d6da855295a00a2ea1246ae
+      internalID: 62398504516715868
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 93
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d284bb5ec9396a13ebbd28e161caeb9
+      internalID: 198521876210025525
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 101
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7406afa38d8ecb83889058a8dba0df4
+      internalID: 3154232056868799133
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 109
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dd53efaa9257d05ed71a013a455237c
+      internalID: 49750809699826500
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_15
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 117
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 556fe4c0913923a84c87aba4b24b191b
+      internalID: 1834965615421271234
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_16
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 125
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3367fdd83982bb34b1bb309b0ac45e72
+      internalID: 1135966960959623624
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_17
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 133
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 821744ba51c1d8cc564669a61ecd1892
+      internalID: 2706904588210235304
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_18
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 141
+        width: 16
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.197368}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 289c3e77986c5ce46ee0853886db5899
+      internalID: 3978023235457110348
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_19
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 148
+        width: 2
+        height: 27
+      alignment: 9
+      pivot: {x: 0.5, y: 0.037037}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b22e702a50102b19cd6b73d61ad981
+      internalID: 2009466283883531167
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LINE_FE_Wall_I_Front_0: 4276997048678051472
+      LINE_FE_Wall_I_Front_1: 1234632790486324371
+      LINE_FE_Wall_I_Front_2: 1314274712140936555
+      LINE_FE_Wall_I_Front_3: 1683110268741887571
+      LINE_FE_Wall_I_Front_4: 670487030826139921
+      LINE_FE_Wall_I_Front_5: 2848534327655490376
+      LINE_FE_Wall_I_Front_6: 992107179808822599
+      LINE_FE_Wall_I_Front_7: 3465848816974852892
+      LINE_FE_Wall_I_Front_8: 3480929923128691914
+      LINE_FE_Wall_I_Front_9: 4356275759408714744
+      LINE_FE_Wall_I_Front_10: 3371230257636387488
+      LINE_FE_Wall_I_Front_11: 62398504516715868
+      LINE_FE_Wall_I_Front_12: 198521876210025525
+      LINE_FE_Wall_I_Front_13: 3154232056868799133
+      LINE_FE_Wall_I_Front_14: 49750809699826500
+      LINE_FE_Wall_I_Front_15: 1834965615421271234
+      LINE_FE_Wall_I_Front_16: 1135966960959623624
+      LINE_FE_Wall_I_Front_17: 2706904588210235304
+      LINE_FE_Wall_I_Front_18: 3978023235457110348
+      LINE_FE_Wall_I_Front_19: 2009466283883531167
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
