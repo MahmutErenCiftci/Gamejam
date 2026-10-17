@@ -13,6 +13,7 @@ Repo: https://github.com/MahmutErenCiftci/Gamejam
    - Arda (ardabekduz123-beep): diyalog sistemi + diyalog metinleri
    - Eren (erenatacc41): haber (TV haberi, söylenti kartları, deprem uyarı bildirimi)
 3. Kullanıcının kim olduğunu `CLAUDE.local.md`'den veya `git config user.name`'den anla; bilmiyorsan **sor**. Kim olduğu bilinmeden `Assets/` altında dosya değiştirme. Görevlerini `planning/TASK_BOARD.csv`'de kendi adına göre bul.
+4. [`docs/OYUN_AKISI.md`](docs/OYUN_AKISI.md) dosyasını oku: oyunun baştan sona akışı, her sahnenin süresi, kararlar, geri bildirimler ve kodun kullandığı ID'ler burada. **Paketteki `docs/GAME_DESIGN_DOCUMENT.md` ve `story/*` ile çelişirse OYUN_AKISI geçerlidir.** İsimlendirme ve klasörler: [`technical/ISIMLENDIRME_VE_KLASORLER.md`](technical/ISIMLENDIRME_VE_KLASORLER.md).
 
 Agent olarak sadece atanmış görev ID'si ve rolünün owner path'lerinde çalış. Önce `Görev ID | değişecek dosyalar | risk` bildir; sonra uygula. Başkasının `.unity` sahnesine veya `ProjectSettings/` dosyalarına izinsiz dokunma. Doğrulamadığın işi "test edildi / çalışıyor" diye raporlama. Bitirince `değişiklikler / gerçek testler / kalan risk / teslim edilen kişi` raporunu ver.
 
@@ -49,9 +50,17 @@ Git ve merge konusunda bu dosya ile `AGENTS.md` çelişirse **bu dosyadaki git k
 - `.unity` sahne ve `.prefab` dosyalarında çakışma çok zor çözülür:
   - Başkasının üzerinde çalıştığı sahneyi düzenleme; kendi işini mümkünse ayrı prefab veya ayrı test sahnesinde yap.
   - Sahne/prefab dosyasında merge conflict çıkarsa **otomatik çözmeye çalışma**, kullanıcıya bildir.
-- Klasör ve sahne sahipliği `planning/EKIP_ROLLERI.md`'dedir: `MainMenu.unity` sadece Berk, `FloodChapter.unity`/`EarthquakeChapter.unity` sadece Mahmut. Arda ve Eren sahne dosyası düzenlemez, **prefab + script** teslim eder (deneme için kendi `Assets/Scenes/Test/<İsim>_*.unity` sahnelerini kullanabilir).
+- Klasör ve sahne sahipliği `planning/EKIP_ROLLERI.md`'dedir: `MainMenu.unity` sadece Berk, `FloodChapter.unity`/`EarthquakeChapter.unity` sadece Mahmut. Arda ve Eren sahne dosyası düzenlemez, **prefab + script** teslim eder (deneme için kendi `Assets/Scenes/Test/Test_<İsim>_<Konu>.unity` sahnelerini kullanabilir).
 - Kök dizindeki `visuals/` klasörü **referans** görsellerdir, kendiliğinden Unity'ye girmez. Bir PNG'yi `Assets/` altına sadece o klasörün sahibi kopyalar (karakter/arka plan → Mahmut, menü/UI → Berk, haber görselleri → Eren) ve `.meta` dosyasıyla commit eder. Aynı PNG'yi iki kişi ayrı ayrı import ederse farklı GUID oluşur ve referanslar kırılır.
-- `data/*.json` örnek içeriktir; oyundaki diyalog verisi `Assets/Data/Story/` (Arda), haber verisi `Assets/Data/News/` (Eren) altındadır.
+- Kök dizindeki `data/*.json` paketin eski örneğidir. Oyunun gerçek diyalog verisi `Assets/Data/Story/*.json` (Arda), haber verisi `Assets/Data/News/` (Eren) altındadır.
+
+## Kod kuralları
+
+- **Tuşları sadece `AfetUyanisi.Core.GameInput` ile oku.** Proje yalnızca yeni Input System'i kullanıyor, `Input.GetKeyDown` gibi eski çağrılar **hata verir**.
+- **Sahne geçişi sadece `AfetUyanisi.Core.GameSceneRouter`** ile yapılır (`LoadChapter`, `RestartCurrentChapter`, `ReturnToMenu`).
+- Başkasının koduna doğrudan bağlanma; `Assets/Scripts/Shared/Contracts/` altındaki `*Base` sınıflarını kullan. Örneğin Berk'in diyalog kutusu `DialogueViewBase`'ten türer, Arda'nın `DialogueRunner`'ı onu Inspector'dan alır. Bu sözleşmeler ve `Shared/StoryData.cs` Mahmut'un onayı olmadan değiştirilmez.
+- Bölüm akışı `Assets/Scripts/Chapters/` altındadır (Mahmut). Bölüm sahnesinde `ChapterController` → **Debug Auto Advance** işaretlenirse akış tuş beklemeden baştan sona akar, adımlar Console'a yazılır. Bağlanmamış parça (diyalog, haber, panel) atlanır, bu yüzden herkes kendi parçasını diğerlerini beklemeden deneyebilir.
+- Namespace `AfetUyanisi.<Alan>`, dosya adı = sınıf adı, Inspector alanları `[SerializeField] private`. Ayrıntılar `technical/ISIMLENDIRME_VE_KLASORLER.md`'de.
 
 ## Unity MCP (Claude'un Unity Editor'ü kontrol etmesi)
 
@@ -68,7 +77,8 @@ Proje `com.unity.ai.assistant` paketini içerir; bu paket Unity MCP sunucusunu s
 
 Claude için Unity MCP kuralları:
 - Unity MCP araçlarıyla sahnede değişiklik yapmadan önce kullanıcıya ne yapacağını söyle; başkasının sahnesini MCP ile de düzenleme.
-- `Unity_AssetGeneration_GenerateAsset` (AI ile asset üretimi) Unity hesabından kredi harcayabilir; kullanıcı açıkça istemedikçe çağırma.
+- `Unity_AssetGeneration_GenerateAsset` (AI ile asset üretimi) Unity hesabından kredi harcayabilir; kullanıcı açıkça istemedikçe çağırma. Bu projede Unity AI aboneliği yok (Console'daki `NoSubscription` bilgisi bundandır), bu araç büyük ihtimalle çalışmaz.
+- `Unity_RunCommand` ile sahne açarken kullanıcının açık sahnesi kaydedilmemişse dokunma. Yeni sahneyi `OpenSceneMode.Additive` ile açıp kapat.
 - Değişiklikten sonra `Unity_GetConsoleLogs` ile hata olup olmadığını kontrol et.
 - MCP araçları bulunamıyorsa: Unity açık mı, Bridge **Running** mi, bağlantıya **Allow** denmiş mi kontrol ettir ve `claude mcp get unity-mcp` çıktısına bak.
 

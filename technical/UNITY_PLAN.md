@@ -1,5 +1,7 @@
 # Unity 2D Teknik Planı ve Sahne Mimarisı
 
+> ⚠️ **Klasör yapısı ve sahne sahipliği güncel değil.** Güncel: [`technical/ISIMLENDIRME_VE_KLASORLER.md`](ISIMLENDIRME_VE_KLASORLER.md) ve [`planning/EKIP_ROLLERI.md`](../planning/EKIP_ROLLERI.md). Teknik ipuçları (pixel art import, sık hatalar) hâlâ geçerli.
+
 **Teknik lider:** K1 · **Sel sahnesi:** K2 · **Deprem sahnesi:** K3 · **Veri/metin:** K4
 
 ## 1. Teknoloji kararları

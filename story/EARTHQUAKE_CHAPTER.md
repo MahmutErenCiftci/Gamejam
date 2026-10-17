@@ -1,5 +1,7 @@
 # Deprem Bölümü — Detaylı Senaryo ve 5 Saniyelik Karar Mekaniği
 
+> ⚠️ **GÜNCEL DEĞİL — paketin ilk senaryosu.** Bağlayıcı Deprem akışı: [`docs/OYUN_AKISI.md` §7](../docs/OYUN_AKISI.md) (kahraman aynı çocuk, deprem evde, 5 sn karar + Çök-Kapan-Tutun). Güncel metinler: `Assets/Data/Story/earthquake.json`.
+
 **Sahip:** K3 (sahne/mekanik/görsel), K4 (senaryo/eğitim), K1 (geçiş) · **P0** · **Hedef:** 1–2 dk · **İlk demo:** T+18 · **Tamamı:** T+28
 
 ## Tasarım amacı

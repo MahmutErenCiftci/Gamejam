@@ -1,6 +1,6 @@
 # Görev Panosu — 48 Saat / Tek Sorumlu
 
-**Toplam 42 görev.** Sahipler `planning/EKIP_ROLLERI.md` dağılımına göredir (Mahmut / Berk / Arda / Eren). Görev başına tek `Owner`. `Status`: TODO, IN_PROGRESS, BLOCKED, IN_REVIEW, DONE. Ayrıntı ve kontratlar AGENTS.md ile planning/OWNERS_AND_HANDOFFS.md içinde.
+**Toplam 42 görev.** Sahipler `planning/EKIP_ROLLERI.md` dağılımına göredir (Mahmut / Berk / Arda / Eren). Görev başına tek `Owner`. `Status`: TODO, IN_PROGRESS, BLOCKED, IN_REVIEW, DONE. Durumlar (TODO/IN_REVIEW/DONE) `TASK_BOARD.csv` içinde. Akış ve ID'ler: `docs/OYUN_AKISI.md`.
 
 | ID | Owner | Pri | Hedef | İş | Teslim testi |
 |---|---|---|---|---|---|
@@ -42,9 +42,9 @@
 | UI-02 | Berk | P0 | T+08 | Türkçe karakterli pixel font | Ç Ğ İ ı Ö Ş Ü doğru görünüyor; lisans net |
 | DIALOG-01 | Arda | P0 | T+12 | Diyalog sistemi + JSON yükleyici | JSON satırları sırayla, konuşan adıyla; E/Space/mouse ile ilerliyor; bitince event |
 | DIALOG-02 | Arda | P0 | T+16 | Seçenekli karar + feedback | 3 ve 5 seçenek; seçim feedback gösterip correct bilgisiyle event atıyor |
-| NEWS-01 | Eren | P0 | T+14 | Sel TV haber sekansı (F03) | Haber bandı + uyarı ekranı + metin; bitince event; sahte kurum logosu yok |
-| NEWS-02 | Eren | P0 | T+16 | Deprem kurgu uyarı bildirimi (EQ02) | Telefon/TV bildirimi prefabı; kurgu olduğu belli; garanti 5 sn iddiası yok |
-| NEWS-03 | Eren | P0 | T+20 | Söylenti/haber kartları (F05) | 3 iddia kartı Kaynak: bilinmiyor; 1 resmî duyuru kartı tarih/saatli |
+| NEWS-01 | Eren | P0 | T+14 | Sel TV haberi (`NEWS_F03_TV`) | Haber bandı + başlık + alt yazı + harita/renk lejantı (kurgu); bitince döner; sahte kurum logosu yok |
+| NEWS-02 | Eren | P0 | T+16 | Deprem TV haberi (`NEWS_E03_TV`) | "Hafif sarsıntılar hissedildi" + hazırlık hatırlatması; deprem tahmini/erken uyarı iddiası yok |
+| NEWS-03 | Eren | P0 | T+20 | Duyuru ve söylenti kartları (`NEWS_F04_OFFICIAL`, `NEWS_F06_RUMORS`, `NEWS_F06_OFFICIAL_ROAD`) | 3 söylenti kartı "Kaynak: bilinmiyor"; 2 resmî duyuru kartı (kurgu kaynak) |
 | NEWS-04 | Eren | P1 | T+24 | Haber metinleri doğruluk kontrolü | Renk kodu evrensel diye anlatılmıyor; gerçek kurum adı/logosu yok |
 
 **CSV:** `planning/TASK_BOARD.csv` doğrudan import edilebilir. Import esnasında sahibi yalnız rol kodu olarak görünür; GitHub kişisine eşleyin.

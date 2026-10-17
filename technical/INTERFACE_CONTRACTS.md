@@ -1,5 +1,7 @@
 # Entegrasyon Kontratları — Kimin Kodu Kimin Koduyla Konuşur?
 
+> ✅ **Sözleşmeler uygulandı:** `Assets/Scripts/Core/` (`GameSceneRouter`, `GameSession`, `GameInput`) ve `Assets/Scripts/Shared/` (`ChapterId`, `StoryData`, `Contracts/*Base`). Bu belgedeki örnek isimler yerine koddakiler geçerlidir; özet: [`docs/OYUN_AKISI.md` §9](../docs/OYUN_AKISI.md).
+
 **İlk yayın sahibi:** K1 · **Dondurma hedefi:** T+6 · **Değişiklik:** K2/K3'e haber verilmeden API kırılmaz.
 
 Bu dosya **tasarım sözleşmesidir**, mevcut Unity repo içinde kod mevcut olduğunu iddia etmez. K1 bu isimleri uygular veya eşdeğer sınıf isimlerini yazılı ilan eder.

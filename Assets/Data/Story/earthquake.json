@@ -1,0 +1,130 @@
+{
+  "chapter_id": "earthquake",
+  "version": "0.2-taslak",
+  "scenes": [
+    {
+      "id": "E01_WAKE",
+      "title": "Uyanış",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Saat yedi olmuş... Hadi bakalım, kalkma vakti." }
+      ]
+    },
+    {
+      "id": "E02_ROUTINE",
+      "title": "Sabah Rutini",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Oh, su buz gibi! Şimdi uyandım işte." },
+        { "speaker": "Çocuk", "text": "Kahvaltı hazır, hadi masaya!" }
+      ]
+    },
+    {
+      "id": "E03_NEWS",
+      "title": "Haber ve İlk İşaretler",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Anne, haberde <color=#E8392B>sarsıntı hissedildi</color> diyorlar. Deprem mi olacak?" },
+        { "speaker": "Anne", "text": "Depremin ne zaman olacağını kimse bilemez. Ama <color=#18A957>hazırlıklı olmak</color> bizim elimizde." },
+        { "speaker": "Anne", "text": "<color=#18A957>Deprem çantamız</color> kapının yanında. <color=#18A957>Toplanma alanımız</color> da parktaki alan, unutma." },
+        { "speaker": "Anne", "text": "Ben işe çıkıyorum. Kahvaltını bitir, okula geç kalma!" },
+        { "speaker": "Çocuk", "text": "Tamam anne, görüşürüz!" }
+      ]
+    },
+    {
+      "id": "E04_QUAKE",
+      "title": "Deprem Anı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Ne oluyor?!</color> Her yer sallanıyor!" }
+      ]
+    },
+    {
+      "id": "E06_AFTER",
+      "title": "Sarsıntı Sonrası",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Sarsıntı durdu... <color=#18A957>Sakin olmalıyım.</color>" },
+        { "speaker": "Çocuk", "text": "Her yer dağılmış. Şimdi ne yapmalıyım?" }
+      ]
+    },
+    {
+      "id": "E07_EXIT",
+      "title": "Binayı Terk Etme",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Çantamı aldım, ocak kapalı.</color> Şimdi binadan çıkmalıyım." }
+      ]
+    },
+    {
+      "id": "E08_ASSEMBLY",
+      "title": "Toplanma Alanı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Toplanma alanına geldim!" },
+        { "speaker": "Anne", "text": "Canım! İyi misin?" },
+        { "speaker": "Çocuk", "text": "İyiyim anne. Masanın altında <color=#18A957>çöktüm, kapandım, tutundum</color>!" },
+        { "speaker": "Komşu", "text": "Herkes iyi mi? <color=#18A957>Resmî açıklamaları</color> takip edelim." },
+        { "speaker": "Görevli", "text": "Binalar kontrol edilmeden <color=#E8392B>kimse içeri girmesin</color>. Duyuruları buradan takip edeceğiz." }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "E_D1",
+      "prompt": "Sarsıntı başladı! Ne yaparsın?",
+      "time_limit": 5,
+      "required_correct": 1,
+      "timeout_feedback": "Sarsıntı başladı! Donup kalma: hemen güvenli bir yerde Çök–Kapan–Tutun.",
+      "choices": [
+        { "id": "E_D1_1", "key": 1, "text": "Sağlam masanın altına Çök–Kapan–Tutun", "correct": true,
+          "feedback": "Doğru! Baş ve boynunu koru, sarsıntı bitene kadar tutun.", "wrong_example": "" },
+        { "id": "E_D1_2", "key": 2, "text": "Pencereye koş", "correct": false,
+          "feedback": "Camlar kırılabilir. Pencerelerden uzak dur.", "wrong_example": "Pencereye koşmak" },
+        { "id": "E_D1_3", "key": 3, "text": "Merdivene koş", "correct": false,
+          "feedback": "Sarsıntı sırasında koşmak düşmene ve yaralanmana yol açabilir. Merdiven, sarsıntı bittikten sonra binadan çıkmak içindir.",
+          "wrong_example": "Sarsıntı sırasında merdivene koşmak" },
+        { "id": "E_D1_4", "key": 4, "text": "Asansöre git", "correct": false,
+          "feedback": "Deprem sırasında asansör kullanılmaz; elektrik kesilirse mahsur kalırsın.", "wrong_example": "Asansör kullanmak" },
+        { "id": "E_D1_5", "key": 5, "text": "Balkona çık", "correct": false,
+          "feedback": "Balkonlar sarsıntıda tehlikeli olabilir. İçeride güvenli bir noktada kal.", "wrong_example": "Balkona çıkmak" }
+      ]
+    },
+    {
+      "id": "E_D2",
+      "prompt": "Sarsıntı durdu. Ne yapmalısın? (2 doğru davranışı bul)",
+      "time_limit": 0,
+      "required_correct": 2,
+      "timeout_feedback": "",
+      "choices": [
+        { "id": "E_D2_A", "key": 1, "text": "Hemen dışarı koş.", "correct": false,
+          "feedback": "Panikle koşmak yaralanmana yol açabilir. Önce sakin ol, çantanı al ve tehlikeleri kontrol et.", "wrong_example": "Aceleyle dışarı koşmak" },
+        { "id": "E_D2_B", "key": 2, "text": "Asansörü kullan.", "correct": false,
+          "feedback": "Deprem sonrası asansör kullanılmaz; elektrik kesilebilir, mahsur kalabilirsin.", "wrong_example": "Asansör kullanmak" },
+        { "id": "E_D2_C", "key": 3, "text": "Acil durum çantasını al.", "correct": true,
+          "feedback": "Doğru! Çantanda su, el feneri, düdük ve ilk yardım malzemeleri var.", "wrong_example": "" },
+        { "id": "E_D2_D", "key": 4, "text": "Ocağı ve doğalgazı kontrol et.", "correct": true,
+          "feedback": "Doğru! Açık ocak yangına yol açabilir. Gaz kokusu varsa hiçbir düğmeye dokunma ve büyüklerine haber ver.", "wrong_example": "" }
+      ]
+    },
+    {
+      "id": "E_D3",
+      "prompt": "Binadan nasıl çıkarsın?",
+      "time_limit": 0,
+      "required_correct": 1,
+      "timeout_feedback": "",
+      "choices": [
+        { "id": "E_D3_A", "key": 1, "text": "Asansörle inerim.", "correct": false,
+          "feedback": "Deprem sonrası asansör kullanılmaz; elektrik kesilirse mahsur kalırsın.", "wrong_example": "Asansör kullanmak" },
+        { "id": "E_D3_B", "key": 2, "text": "Merdivenden sakince inerim.", "correct": true,
+          "feedback": "Doğru! Sarsıntı bittikten sonra merdivenden, sakin şekilde çık ve toplanma alanına git.", "wrong_example": "" }
+      ]
+    }
+  ],
+  "result": {
+    "title_success": "Tebrikler! Doğru davrandın.",
+    "title_with_mistakes": "Bölümü tamamladın! Yanlışlarından ders çıkardın.",
+    "learned": [
+      "Sarsıntı anında ÇÖK – KAPAN – TUTUN.",
+      "Sarsıntı bitince sakin kal.",
+      "Asansör kullanma.",
+      "Acil durum çantanı hazır tut.",
+      "Resmî açıklamaları takip et.",
+      "Toplanma alanına git."
+    ],
+    "note": "Bu bir farkındalık oyunudur. Gerçek bir afette resmî kurumların talimatlarına uy."
+  }
+}
