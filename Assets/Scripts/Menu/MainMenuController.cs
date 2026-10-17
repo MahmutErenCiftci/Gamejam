@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using AfetUyanisi.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace AfetUyanisi.Menu
@@ -33,6 +33,16 @@ namespace AfetUyanisi.Menu
         [SerializeField] Button backButton;
         [SerializeField] float bubbleStagger = 0.25f;
         [SerializeField] float panelFadeDuration = 0.3f;
+        [Tooltip("Seçim sırasında odayı karartan katman.")]
+        [SerializeField] SpriteFader selectionDim;
+        [Tooltip("Seçili rüyanın adı ve kısa açıklaması.")]
+        [SerializeField] Text selectionInfo;
+        [SerializeField] string idleInfo = "Bir bulut seç, sonra Bölümü Başlat'a bas.";
+        [Tooltip("Bulutlarla aynı sırada, her rüyanın kısa açıklaması.")]
+        [SerializeField] string[] bubbleInfo;
+        [SerializeField] Color infoTitleColor = new Color(1f, 0.71f, 0.35f);
+        [Tooltip("Seçimde durdurulur; z harfleri düşünce yolunun üstüne binmesin.")]
+        [SerializeField] SleepZzz sleepZzz;
 
         [Header("Ayarlar")]
         [SerializeField] GameObject settingsPanel;
@@ -82,19 +92,17 @@ namespace AfetUyanisi.Menu
                 fadePanel.blocksRaycasts = false;
             }
             UpdateStartButton();
+            UpdateInfo();
         }
 
         void Update()
         {
             if (!InputEnabled || state == State.Loading)
                 return;
-            Keyboard keyboard = Keyboard.current;
-            if (keyboard == null)
-                return;
 
             if (SettingsOpen)
             {
-                if (keyboard.escapeKey.wasPressedThisFrame) CloseSettings();
+                if (GameInput.BackPressed) CloseSettings();
                 return;
             }
 
@@ -102,20 +110,19 @@ namespace AfetUyanisi.Menu
             {
                 // Yukarı/aşağı ve Enter, EventSystem'in buton gezinmesiyle çalışır; burada sadece odak kaybını toparla.
                 if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == null &&
-                    (keyboard.upArrowKey.wasPressedThisFrame || keyboard.downArrowKey.wasPressedThisFrame ||
-                     keyboard.wKey.wasPressedThisFrame || keyboard.sKey.wasPressedThisFrame))
+                    Mathf.Abs(GameInput.MoveVector.y) > 0f)
                     FocusMainButtons();
                 return;
             }
 
             // Afet seçimi
-            if (keyboard.escapeKey.wasPressedThisFrame)
+            if (GameInput.BackPressed)
                 ExitSelection();
-            else if (keyboard.aKey.wasPressedThisFrame || keyboard.leftArrowKey.wasPressedThisFrame)
+            else if (GameInput.LeftPressed)
                 MoveSelection(-1);
-            else if (keyboard.dKey.wasPressedThisFrame || keyboard.rightArrowKey.wasPressedThisFrame)
+            else if (GameInput.RightPressed)
                 MoveSelection(1);
-            else if (keyboard.enterKey.wasPressedThisFrame || keyboard.numpadEnterKey.wasPressedThisFrame)
+            else if (GameInput.ConfirmPressed)
                 StartSelectedChapter();
         }
 
@@ -138,6 +145,8 @@ namespace AfetUyanisi.Menu
             if (EventSystem.current != null) EventSystem.current.SetSelectedGameObject(null);
 
             if (title != null) StartCoroutine(FadeSprites(title, title.Alpha, 0f));
+            if (selectionDim != null) StartCoroutine(FadeSprites(selectionDim, selectionDim.Alpha, 1f));
+            if (sleepZzz != null) sleepZzz.enabled = false;
             if (thoughtTrail != null) thoughtTrail.Show();
             float delay = thoughtTrail != null ? thoughtTrail.TotalDuration : 0f;
             for (int i = 0; i < bubbles.Length; i++)
@@ -146,6 +155,7 @@ namespace AfetUyanisi.Menu
             CrossFadePanels(mainButtons, selectionPanel);
             selectedIndex = -1;
             UpdateStartButton();
+            UpdateInfo();
         }
 
         public void ExitSelection()
@@ -157,6 +167,8 @@ namespace AfetUyanisi.Menu
             foreach (DisasterBubble bubble in bubbles) bubble.Hide();
             if (thoughtTrail != null) thoughtTrail.Hide();
             if (title != null) StartCoroutine(FadeSprites(title, title.Alpha, 1f));
+            if (selectionDim != null) StartCoroutine(FadeSprites(selectionDim, selectionDim.Alpha, 0f));
+            if (sleepZzz != null) sleepZzz.enabled = true;
             CrossFadePanels(selectionPanel, mainButtons);
             FocusMainButtons();
         }
@@ -187,6 +199,7 @@ namespace AfetUyanisi.Menu
                 bubbles[i].SetSelected(i == index);
             HideTooltip();
             UpdateStartButton();
+            UpdateInfo();
             SelectionChanged?.Invoke(bubbles[index].Chapter);
         }
 
@@ -195,7 +208,22 @@ namespace AfetUyanisi.Menu
             selectedIndex = -1;
             foreach (DisasterBubble bubble in bubbles) bubble.SetSelected(false);
             UpdateStartButton();
+            UpdateInfo();
             SelectionCleared?.Invoke();
+        }
+
+        void UpdateInfo()
+        {
+            if (selectionInfo == null)
+                return;
+            if (selectedIndex < 0)
+            {
+                selectionInfo.text = idleInfo;
+                return;
+            }
+            string name = MenuChapterLoader.DisplayName(bubbles[selectedIndex].Chapter).ToUpperInvariant();
+            string info = bubbleInfo != null && selectedIndex < bubbleInfo.Length ? bubbleInfo[selectedIndex] : "";
+            selectionInfo.text = $"<color=#{ColorUtility.ToHtmlStringRGB(infoTitleColor)}>{name}</color>   {info}";
         }
 
         void UpdateStartButton()

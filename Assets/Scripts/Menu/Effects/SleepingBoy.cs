@@ -24,7 +24,7 @@ namespace AfetUyanisi.Menu
         [SerializeField] Transform blanket;
         [SerializeField] int blanketRisePixels = 1;
 
-        const float PixelsPerUnit = 16f;
+        const float PixelsPerUnit = 64f;
         Vector3 blanketBase;
         int frame;
         int direction = 1;

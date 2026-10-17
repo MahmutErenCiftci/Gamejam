@@ -43,7 +43,7 @@ namespace AfetUyanisi.Menu
         public bool IsVisible { get; private set; }
         public bool IsSelected { get; private set; }
 
-        const float PixelsPerUnit = 16f;
+        const float PixelsPerUnit = 64f;
         Vector3 basePosition;
         float appear;          // 0 gizli, 1 tam görünür
         bool hovered;
