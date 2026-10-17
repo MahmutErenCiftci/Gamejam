@@ -528,6 +528,9 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (mode != null && mode.Stats != null) mode.Stats.bookshelfSecured = true;
             if (anchorsVisual != null) anchorsVisual.SetActive(true);
             if (inspectable != null && inspectable.Point != null) inspectable.Point.Setup(securedLabel, "", false, false);
+            // Sabitlenen kitaplık artık devrilmez: "kitaplıktan uzak dur" uyarısı/maruziyeti kapanır.
+            foreach (var zone in FindObjectsByType<AfetUyanisi.Chapters.Earthquake.HazardZone>(FindObjectsInactive.Include))
+                if (zone.WarningId == "bookshelf" || zone.ExposureKind == "bookshelf") zone.Suppressed = true;
             EarthquakeMinigameHub.CompleteTask(MinigameId);
             Log("GÖREV TAMAM: kitaplık sabitlendi (bookshelfSecured = true)");
         }
@@ -630,12 +633,78 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             fell = true;
             Play(crashClip);
+            bool hit = PlayerInFallPath();
+            if (mode != null && mode.Stats != null)
+            {
+                mode.Stats.bookshelfFell = true;
+                if (hit) mode.Stats.hitByBookshelf = true;
+            }
+            if (hit)
+            {
+                Log("C: kitaplık OYUNCUNUN ÜSTÜNE devrildi → yaralandı");
+                StartCoroutine(ScreenFlash(new Color(0.85f, 0.26f, 0.23f, 0.55f), 0.7f));
+                StartCoroutine(BlinkPlayer());
+            }
+            else StartCoroutine(ScreenFlash(new Color(0.96f, 0.92f, 0.85f, 0.3f), 0.3f));
             // küçük "güm": 2 px yukarıdan oturur
             var ft = fallenVisual.transform;
             Vector3 p = ft.localPosition;
             ft.localPosition = p + new Vector3(0f, 2f / 64f, 0f);
             yield return new WaitForSeconds(0.06f);
             ft.localPosition = p;
+        }
+
+        /// <summary>
+        /// Oyuncu devrilme alanında mı: devrik kitaplığın izi ya da "kitaplıktan uzak dur" tehlike bölgesi.
+        /// Sağlam bir masanın altındaysa korunmuş sayılır.
+        /// </summary>
+        private bool PlayerInFallPath()
+        {
+            if (player == null) return false;
+            Vector3 pos = player.transform.position;
+            var protection = FindAnyObjectByType<ProtectionMinigameController>(FindObjectsInactive.Exclude);
+            if (protection != null && protection.FindTable(pos) != null) return false;
+            if (InsideFallen(pos)) return true;
+            foreach (var zone in FindObjectsByType<HazardZone>(FindObjectsInactive.Exclude))
+                if ((zone.WarningId == "bookshelf" || zone.ExposureKind == "bookshelf") && zone.Contains(pos)) return true;
+            return false;
+        }
+
+        /// <summary>Kısa tam ekran renk parlaması (çarpma/devrilme vurgusu); kendi tuvalini kurar ve sonunda yok eder.</summary>
+        private static IEnumerator ScreenFlash(Color color, float seconds)
+        {
+            var go = new GameObject("EQ_ScreenFlash", typeof(Canvas), typeof(UnityEngine.UI.Image));
+            var canvas = go.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 900;
+            var img = go.GetComponent<UnityEngine.UI.Image>();
+            img.raycastTarget = false;
+            var rt = img.rectTransform;
+            rt.anchorMin = Vector2.zero; rt.anchorMax = Vector2.one; rt.offsetMin = rt.offsetMax = Vector2.zero;
+            for (float k = 0f; k < seconds; k += Time.unscaledDeltaTime)
+            {
+                float a = color.a * (1f - k / seconds);
+                img.color = new Color(color.r, color.g, color.b, Mathf.Round(a * 8f) / 8f); // kademeli (piksel dostu) sönüm
+                yield return null;
+            }
+            Destroy(go);
+        }
+
+        /// <summary>Oyuncu sprite'ı birkaç kez kırmızı yanıp söner (yaralanma geri bildirimi).</summary>
+        private IEnumerator BlinkPlayer()
+        {
+            if (player == null) yield break;
+            var renderers = player.GetComponentsInChildren<SpriteRenderer>();
+            var original = new Color[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++) original[i] = renderers[i].color;
+            var hurt = new Color(1f, 0.45f, 0.42f, 1f);
+            for (int n = 0; n < 4; n++)
+            {
+                for (int i = 0; i < renderers.Length; i++) if (renderers[i] != null) renderers[i].color = original[i] * hurt;
+                yield return new WaitForSeconds(0.12f);
+                for (int i = 0; i < renderers.Length; i++) if (renderers[i] != null) renderers[i].color = original[i];
+                yield return new WaitForSeconds(0.12f);
+            }
         }
 
         private bool InsideFallen(Vector3 world)

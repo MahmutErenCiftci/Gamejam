@@ -35,7 +35,7 @@ namespace AfetUyanisi.Menu
         [SerializeField] AudioClip rumbleClip;
         [SerializeField] float rumbleVolume = 0.6f;
 
-        const float PixelsPerUnit = 16f;
+        const float PixelsPerUnit = 64f;
         Vector3 cameraBase;
         Vector3[] basePositions;
         Quaternion[] baseRotations;

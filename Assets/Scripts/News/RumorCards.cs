@@ -30,6 +30,10 @@ namespace AfetUyanisi.News
         [SerializeField] Text fictionNoticeText;
         [SerializeField] RumorCardView[] cardViews;
         [SerializeField] GameObject continueHint;
+        [Tooltip("İsteğe bağlı: oyuncuya ne yapacağını söyleyen satır (soru balonunun altında). {0} = kart sayısı.")]
+        [SerializeField] Text chooseHintText;
+        [SerializeField] string chooseHint = "[1-{0}] tuşuna bas ya da karta tıkla";
+        [SerializeField] string retryHint = "Bu güvenilir değil. Başka bir kart seç: [1-{0}]";
 
         [SerializeField] bool playOnStart;
 
@@ -79,6 +83,7 @@ namespace AfetUyanisi.News
 
             wrongAttempts = 0;
             choosing = true;
+            SetChooseHint(chooseHint, true);
             IsPlaying = true;
             root.SetActive(true);
         }
@@ -115,12 +120,22 @@ namespace AfetUyanisi.News
             {
                 wrongAttempts++;
                 cardViews[index].SetState(RumorCardView.State.Rejected);
+                SetChooseHint(retryHint, true);
                 return;
             }
 
             choosing = false;
             cardViews[index].SetState(RumorCardView.State.Accepted);
+            SetChooseHint("", false);
             StartCoroutine(WaitAndFinish());
+        }
+
+        void SetChooseHint(string format, bool visible)
+        {
+            if (chooseHintText == null) return;
+            int count = data != null && data.cards != null ? Mathf.Min(data.cards.Length, cardViews.Length, 9) : cardViews.Length;
+            chooseHintText.text = string.IsNullOrEmpty(format) ? "" : string.Format(format, count);
+            chooseHintText.gameObject.SetActive(visible);
         }
 
         IEnumerator WaitAndFinish()

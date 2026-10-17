@@ -205,7 +205,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     steps = new[] { "ÇÖK", "KAPAN", "TUTUN" },
                     promptDrop = "[E] Çök",
                     promptCover = "[E] Başını ve enseni koru",
-                    promptHold = "[E] basılı tut — sarsıntı bitene kadar tutun!",
+                    promptHold = "[SPACE] basılı tut; [A] / [D] ile dengeyi düzelt",
                     promptDropInPlace = "[E] Olduğun yerde çök",
                     promptCoverInPlace = "[E] Kollarınla başını ve enseni koru",
                     releaseWarning = "Sarsıntı bitene kadar tutun!",
@@ -343,6 +343,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     [Serializable]
     public class EqProtectionTexts
     {
+        public EqBalanceTexts balance = new EqBalanceTexts();
         public string[] steps;
         public string promptDrop, promptCover, promptHold;
         public string promptDropInPlace, promptCoverInPlace;
@@ -362,6 +363,24 @@ namespace AfetUyanisi.Chapters.Earthquake
                 default: return exposed.window;
             }
         }
+    }
+
+    [Serializable]
+    public class EqBalanceTexts
+    {
+        public string warning = "DEPREM!";
+        public string title = "ÇÖK – KAPAN – TUTUN";
+        public string controls = "[A] Sola     [D] Sağa     [SPACE] Tutun (basılı tut)";
+        public string note = "Denge alıştırmasıdır; depremi kontrol etmez, güvenliği garanti etmez.";
+        public string initial = "İlk sarsıntılar";
+        public string strong = "Sarsıntı güçleniyor";
+        public string irregular = "Düzensiz dalgalar";
+        public string release = "Korunma pozisyonunu sürdür! SPACE'e yeniden bas.";
+        public string unstable = "Dengeni kaybettin! Korunmaya devam et; A / D ile düzelt.";
+        public string success = "Doğru pozisyonda kaldın!";
+        public string feedback = "Korunmaya devam ettin. Denge alıştırmasını yeniden deneyebilirsin.";
+        public string score = "Denge alıştırması: {0}/100";
+        public string resultNote = "Puan yalnızca oyun girdisini ölçer. Gerçek depremde sarsıntı bitene kadar başını ve enseni koru.";
     }
 
     [Serializable]

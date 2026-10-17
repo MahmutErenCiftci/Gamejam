@@ -10,6 +10,8 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// Telefon bildirimi (maket: S/eqD_mock_phone.png): arka plan kararırken telefon alttan hafif sekerek kayar ve
     /// ±1 px titrer; kilit ekranında büyük saat + tarih, kırmızı başlıklı bildirim kartı ve yeşil [BAŞLA] düğmesi.
     /// E / Enter / Space / fare ile kapanır. Arayüzü kodla kurar (Canvas sıralaması 92).
+    /// Okunabilirlik (640x360 referansı): gövde 8 px, not 7 px, en küçük yazı 7 px; BAŞLA düğmesinde [E] tuş rozeti,
+    /// kartın altında diğer tuşlar yazar.
     /// </summary>
     public class PhoneAlertView : PhoneAlertViewBase
     {
@@ -18,13 +20,15 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private string clockText = "07:00";
         [Tooltip("Boşsa bugünün tarihi Türkçe yazılır (ör. \"Cumartesi, 17 Ekim\").")]
         [SerializeField] private string dateText = "";
-        [SerializeField] private string inputHint = "[E] / Enter / Space / Fare";
+        [Tooltip("Kartın altındaki ikinci ipucu (asıl tuş [E] düğmenin üstünde rozet olarak durur).")]
+        [SerializeField] private string startHint = "Enter, Space ya da tıklama da olur";
         [SerializeField] private float slideSeconds = 0.55f;
         [SerializeField] private float vibrateSeconds = 0.9f;
 
         private static readonly Vector2 PhoneSize = new Vector2(168f, 288f);
         private const float RestY = 36f;
         private const float HiddenY = -300f;
+        private const float ButtonY = 91f;
         private static readonly Color DateColor = EqUi.Hex(0xA9B0CC);
 
         private bool built;
@@ -34,6 +38,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         private Image dim;
         private RectTransform phone;
         private Text appText, titleText, bodyText, noteText, buttonText, statusClock, bigClock, dateLabel, hintText;
+        private RectTransform buttonKey;
         private Image buttonImage;
         private EqButton button;
         private bool clicked;
@@ -71,18 +76,19 @@ namespace AfetUyanisi.Chapters.Earthquake
                 EqUi.TL(bat.rectTransform, 141f, 13f, 10f, 5f);
             }
 
-            statusClock = EqUi.Txt("StatusClock", phone, font, 6, EqUi.Cream, TextAnchor.MiddleLeft);
+            statusClock = EqUi.Txt("StatusClock", phone, font, 7, EqUi.Cream, TextAnchor.MiddleLeft);
             EqUi.TL(statusClock.rectTransform, 14f, 10f, 40f, 9f);
 
             bigClock = EqUi.Txt("BigClock", phone, font, 28, EqUi.Cream, TextAnchor.MiddleCenter, EqUi.A(EqUi.Ink, 0.6f));
-            EqUi.TopBand(bigClock.rectTransform, 8f, 8f, 38f, 32f);
+            EqUi.TopBand(bigClock.rectTransform, 8f, 8f, 34f, 32f);
             bigClock.horizontalOverflow = HorizontalWrapMode.Overflow;
-            dateLabel = EqUi.Txt("Date", phone, font, 7, DateColor, TextAnchor.MiddleCenter);
-            EqUi.TopBand(dateLabel.rectTransform, 8f, 8f, 70f, 11f);
+            dateLabel = EqUi.Txt("Date", phone, font, 8, DateColor, TextAnchor.MiddleCenter);
+            EqUi.TopBand(dateLabel.rectTransform, 8f, 8f, 66f, 12f);
 
-            // Bildirim kartı (144x107, kartın içi: kırmızı başlık y1..12, krem gövde)
+            // Bildirim kartı (144x118, 9-slice: kırmızı başlık y1..12, krem gövde)
+            //  başlık (kimden) → büyük başlık (ne) → kısa mesaj → ayraç → eğitim notu → [E] BAŞLA
             var card = EqUi.Img("NotifCard", phone, EqUi.S(skin, s => s.PhoneNotifCard), EqUi.Ink, skin);
-            var cardRt = EqUi.TL(card.rectTransform, 12f, 92f, 144f, 107f);
+            var cardRt = EqUi.TL(card.rectTransform, 12f, 86f, 144f, 118f);
             if (card.sprite == null)
             {
                 EqUi.Fallback(card, EqUi.Ink, EqUi.Cream, skin, 1f, 12f, EqUi.Red);
@@ -90,31 +96,33 @@ namespace AfetUyanisi.Chapters.Earthquake
                 EqUi.TL(tri.rectTransform, 5f, 3f, 8f, 8f);
             }
 
-            appText = EqUi.Txt("App", cardRt, font, 6, EqUi.White, TextAnchor.MiddleLeft, EqUi.ShadowRed);
+            appText = EqUi.Txt("App", cardRt, font, 7, EqUi.White, TextAnchor.MiddleLeft, EqUi.ShadowRed);
             EqUi.TopBand(appText.rectTransform, 17f, 4f, 1f, 11f);
-            EqUi.BestFit(appText, 5);
+            EqUi.BestFit(appText, 6);
 
             titleText = EqUi.Txt("Title", cardRt, font, 9, EqUi.Ink, TextAnchor.MiddleLeft);
-            EqUi.TopBand(titleText.rectTransform, 6f, 6f, 16f, 13f);
-            EqUi.BestFit(titleText, 7);
+            EqUi.TopBand(titleText.rectTransform, 6f, 6f, 15f, 13f);
+            EqUi.BestFit(titleText, 8);
 
-            bodyText = EqUi.Txt("Body", cardRt, font, 7, EqUi.Navy, TextAnchor.UpperLeft);
-            EqUi.TopBand(bodyText.rectTransform, 6f, 6f, 30f, 23f);
-            EqUi.BestFit(bodyText, 6);
+            bodyText = EqUi.Txt("Body", cardRt, font, 8, EqUi.Navy, TextAnchor.UpperLeft);
+            EqUi.TopBand(bodyText.rectTransform, 6f, 6f, 29f, 24f);
+            EqUi.BestFit(bodyText, 7);
 
             var sep = EqUi.Img("Separator", cardRt, null, EqUi.CreamShade, skin);
             EqUi.TopBand(sep.rectTransform, 6f, 6f, 55f, 1f);
 
-            noteText = EqUi.Txt("Note", cardRt, font, 6, EqUi.Muted, TextAnchor.UpperLeft);
-            EqUi.TopBand(noteText.rectTransform, 6f, 6f, 58f, 17f);
-            EqUi.BestFit(noteText, 5);
+            noteText = EqUi.Txt("Note", cardRt, font, 7, EqUi.Muted, TextAnchor.UpperLeft);
+            EqUi.TopBand(noteText.rectTransform, 6f, 6f, 58f, 28f);
+            EqUi.BestFit(noteText, 6);
 
-            // BAŞLA (yeşil, 72x18, kart içinde ortalı)
+            // [E] BAŞLA (yeşil, 84x18, kart içinde ortalı; solda tuş rozeti)
             buttonImage = EqUi.Img("StartButton", cardRt, EqUi.S(skin, s => s.ButtonStart), EqUi.Ink, skin, true);
-            EqUi.Place(buttonImage.rectTransform, 0.5f, 1f, new Vector2(0f, -80f), new Vector2(72f, 18f));
+            EqUi.Place(buttonImage.rectTransform, 0.5f, 1f, new Vector2(0f, -ButtonY), new Vector2(84f, 18f));
             EqUi.Fallback(buttonImage, EqUi.Ink, EqUi.Green, skin);
+            buttonKey = EqUi.KeyCap(buttonImage.transform, "E", font, skin, 9);
+            EqUi.Place(buttonKey, 0f, 0.5f, new Vector2(4f, 1f), new Vector2(15f, 14f));
             buttonText = EqUi.Txt("Label", buttonImage.transform, font, 9, EqUi.White, TextAnchor.MiddleCenter, EqUi.ShadowGreen);
-            EqUi.StretchOffsets(buttonText.rectTransform, 2f, 6f, 2f, 1f);
+            EqUi.StretchOffsets(buttonText.rectTransform, 18f, 6f, 2f, 1f);
             buttonText.horizontalOverflow = HorizontalWrapMode.Overflow;
 
             button = buttonImage.gameObject.AddComponent<EqButton>();
@@ -122,8 +130,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             button.Clicked += () => clicked = true;
             button.HoverChanged += h => { hovered = h; RefreshButton(false); };
 
-            hintText = EqUi.Txt("Hint", phone, font, 6, DateColor, TextAnchor.MiddleCenter);
-            EqUi.TopBand(hintText.rectTransform, 8f, 8f, 210f, 10f);
+            hintText = EqUi.Txt("Hint", phone, font, 7, DateColor, TextAnchor.MiddleCenter);
+            EqUi.TopBand(hintText.rectTransform, 8f, 8f, 210f, 11f);
 
             group.alpha = 0f;
             canvas.gameObject.SetActive(false);
@@ -139,7 +147,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             else EqUi.FallbackColors(buttonImage, hovered ? EqUi.Cream : EqUi.Ink, hovered ? EqUi.Hex(0x22C46A) : EqUi.Green);
             // Basınca 1 px aşağı (dudak hissi), ölçek yok → pikseller bozulmaz
-            rt.anchoredPosition = new Vector2(0f, pressed ? -81f : -80f);
+            rt.anchoredPosition = new Vector2(0f, pressed ? -ButtonY - 1f : -ButtonY);
         }
 
         public override IEnumerator Show(string app, string title, string body, string note, string buttonLabel)
@@ -153,7 +161,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             statusClock.text = clockText;
             bigClock.text = clockText;
             dateLabel.text = string.IsNullOrEmpty(dateText) ? TurkishDate(DateTime.Now) : dateText;
-            hintText.text = inputHint;
+            hintText.text = startHint;
             clicked = false;
             hovered = false;
             button.Interactable = false;

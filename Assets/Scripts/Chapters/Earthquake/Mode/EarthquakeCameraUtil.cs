@@ -67,6 +67,22 @@ namespace AfetUyanisi.Chapters.Earthquake
             else CutTo(bounds != null ? bounds.transform.position : target.position);
         }
 
+        /// <summary>Yakın kamera: oyuncuyu odanın içerik dikdörtgeninde takip ettirir (RoomFraming). ChapterCamera
+        /// yoksa ya da GameCameraSettings.FollowInRooms kapalıysa odanın noktasına keser.</summary>
+        public static void FollowRoom(Transform target, Transform room, Vector3 anchor, bool cut)
+        {
+            var cam = Main;
+            if (cam == null) return;
+            var chapterCamera = cam.GetComponent<ChapterCamera>();
+            if (chapterCamera == null || target == null || room == null || !GameCameraSettings.FollowInRooms)
+            {
+                CutTo(anchor);
+                return;
+            }
+            var frame = RoomFraming.Frame(room.gameObject.scene, room, anchor, cam);
+            chapterCamera.FollowArea(target, frame, cut);
+        }
+
         private static Vector3 Snap(Vector3 p) =>
             new Vector3(Mathf.Round(p.x * Ppu) / Ppu, Mathf.Round(p.y * Ppu) / Ppu, p.z);
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AfetUyanisi.Core;
+using AfetUyanisi.Cutscenes;
 using AfetUyanisi.Shared;
 using UnityEngine;
 using UnityEngine.Events;
@@ -84,6 +85,9 @@ namespace AfetUyanisi.Chapters.Flood
         [SerializeField] private float routeRainLight = 0.15f;
         [Tooltip("Tabela incelenince açılan büyük tabela (UI overlay, normalde kapalı)")]
         [SerializeField] private GameObject signOverlay;
+        [Tooltip("F_D2_A seçilince oynayan sele kapılma ara sahnesi (Eren, Prefabs/Cutscenes/FloodSweepCutscene; " +
+                 "dünyadan uzakta durur, kendi kamerası var). Boşsa atlanır, akış eskisi gibi sürer.")]
+        [SerializeField] private FloodSweepCutscene sweepCutscene;
 
         [Header("Sonuç (F09)")]
         [Tooltip("Geçici Sel sonuç ekranı (ResultViewBase); bölüme özel ayrıntıları (eşyalar, uyarılar) bu gösterir")]
@@ -106,6 +110,8 @@ namespace AfetUyanisi.Chapters.Flood
         private string pendingWarning;
         private bool streetWalking;
         private int waterWarnings;                       // su birikintisi / suya yaklaşma geri itmeleri (sonuç ekranı)
+        private const string RouteWaterWarning = "F07_WATER_WARNING"; // okul yolunda akan suya girme
+        private int sweptOnRoute;                        // okul yolunda suya girilip sele kapılma ara sahnesi oynadı
         private readonly DecisionResult d1Result = new DecisionResult();
         private readonly DecisionResult d2Result = new DecisionResult();
 
@@ -228,30 +234,44 @@ namespace AfetUyanisi.Chapters.Flood
             var depart = routeBus != null ? StartCoroutine(routeBus.Depart()) : null;
             yield return Say("F07_ARRIVE");
 
-            // Serbest yürüyüş: tabelayı incele (suya yaklaşınca uyarı + geri itme, PuddleHazard)
+            // Serbest yürüyüş okul kapısına kadar. Tabela isteğe bağlı (bonus görev "Tabelayı incele"): okunursa
+            // F07_RISK + F08_BRIDGE replikleri; okunmadan da kapıya gidilebilir (suya yaklaşınca uyarı + geri itme).
             var sign = FindPoint("Sign");
-            if (sign != null && !AutoAdvance)
-                yield return StreetWalk(_ => false, new WalkPoint { Point = sign, Label = "Tabelayı incele", EndsWalk = true });
-            else
+            var gate = FindRoomComponent<Collider2D>("GateZone");
+            if (sign == null || AutoAdvance)
+            {
                 yield return WaitForInteract("Tabelayı incele");
-            NotifyObjective("event", "F07_SIGN");
-            if (sign != null) FacePlayerTowards(sign.transform.position);
-            if (signOverlay != null) signOverlay.SetActive(true);
-            yield return Say("F07_RISK");
-            if (signOverlay != null) signOverlay.SetActive(false);
+                yield return ReadSign(sign);
+            }
+            else
+                yield return StreetWalk(_ => IsPlayerInZone(gate), new WalkPoint { Point = sign, Label = "Tabelayı incele", OnUse = () => ReadSign(sign) });
             if (depart != null) yield return depart;
 
             // F08: yağmur hafifler; köprü üstü yaya yolundan okul kapısına
             EnterStep("F08_SAFEROUTE");
             if (routeRain != null) routeRain.SetIntensity(routeRainLight, 4f);
-            yield return Say("F08_BRIDGE");
-            var gate = FindRoomComponent<Collider2D>("GateZone");
-            yield return StreetWalk(_ => IsPlayerInZone(gate));
+            if (AutoAdvance || sign == null) yield return StreetWalk(_ => IsPlayerInZone(gate));
             NotifyObjective("event", "F08_GATE"); // köprüden geçildi, okul kapısı
             if (Objectives != null) yield return Objectives.WaitForFeedback(0.6f, 3f); // tik öğretmen konuşmadan görünsün
             var teacher = FindRoomObject("Teacher");
             if (teacher != null) FacePlayerTowards(teacher.transform.position);
             yield return Say("F08_SAFEROUTE");
+        }
+
+        // Tabela (isteğe bağlı): okunur, uyarı replikleri; tabela bir daha kullanılamaz, yağmur hafifler.
+        private IEnumerator ReadSign(Interactable sign)
+        {
+            NotifyObjective("event", "F07_SIGN");
+            if (sign != null)
+            {
+                FacePlayerTowards(sign.transform.position);
+                sign.SetAvailable(false);
+            }
+            if (signOverlay != null) signOverlay.SetActive(true);
+            yield return Say("F07_RISK");
+            if (signOverlay != null) signOverlay.SetActive(false);
+            if (routeRain != null) routeRain.SetIntensity(routeRainLight, 4f);
+            yield return Say("F08_BRIDGE");
         }
 
         private FloodResultView.Details BuildResultDetails()
@@ -272,6 +292,12 @@ namespace AfetUyanisi.Chapters.Flood
                 if (d.mistakes.Exists(m => m.title == title)) continue;
                 d.mistakes.Add(new FloodResultView.Mistake { title = title, why = c.feedback });
             }
+            if (sweptOnRoute > 0)
+                d.mistakes.Insert(0, new FloodResultView.Mistake
+                {
+                    title = "Akan suya girmek",
+                    why = "Diz hizasındaki akıntı bile insanı sürükleyebilir. Köprüyü ya da güvenli yolu kullan; şanslıydın."
+                });
             return d;
         }
 
@@ -348,6 +374,7 @@ namespace AfetUyanisi.Chapters.Flood
             if (stepId == "F03_NEWS") PrepareKitchen();
             else if (stepId == "F05_EXIT")
             {
+                EnsureBackpack();
                 // Dışarı çıkınca hafif yağmur zaten yağıyor.
                 if (rain != null) rain.SetIntensity(exitRain, 0f);
                 lastWarningTime.Clear();
@@ -363,10 +390,21 @@ namespace AfetUyanisi.Chapters.Flood
             }
         }
 
+        // Okul çantası normalde yatak odasında (Bedroom sahnesi) alınır. Bölüm doğrudan başlatıldıysa (odalar atlandı)
+        // Cenk mutfağa/sokağa çantasıyla gelmiş sayılır: bayrak konur, Cenk'in görünüşü yenilenir.
+        private static void EnsureBackpack()
+        {
+            if (GameSession.BackpackTaken) return;
+            GameSession.MarkBackpackTaken();
+            CenkOutfit.RefreshAll();
+            Debug.Log("[Flood] çanta odalarda alınmamıştı → otomatik alındı (Cenk çantalı)");
+        }
+
         // Mutfak: yağmurluk askıda, şemsiye (yatak odasında alınmadıysa) şemsiyelikte, deprem çantası Sel'de yok,
         // TV normal yayında.
         private void PrepareKitchen()
         {
+            EnsureBackpack();
             SetRoomObjectVisible("QuakeBag", false);
             tvRenderer = FindRoomComponent<SpriteRenderer>("TV");
             if (tvRenderer != null && tvDefaultSprite == null) tvDefaultSprite = tvRenderer.sprite;
@@ -486,6 +524,13 @@ namespace AfetUyanisi.Chapters.Flood
                         SetPlayerControl(false);
                         var tracker = Player != null ? Player.GetComponent<PlayerHazardTracker>() : null;
                         while (tracker != null && tracker.IsPushing) yield return null;
+                        // Okul yolunda köprü yerine akan suya girildi: sele kapılma ara sahnesi, sonra güvenli kenardan devam.
+                        if (warning == RouteWaterWarning && sweepCutscene != null)
+                        {
+                            sweptOnRoute++;
+                            yield return PlaySweepCutscene();
+                            yield return FadeIn(0.4f);
+                        }
                         yield return Say(warning);
                         pendingWarning = null;
                         SetPlayerControl(true);
@@ -574,9 +619,11 @@ namespace AfetUyanisi.Chapters.Flood
 
         // F_D2'de yanlış seçilirse: o yolun sonu gösterilir — çocuk Okul Caddesi'nin kenarında, suya GİRMEDEN durur
         // (bariyer, tabela, suda mahsur araç), uyarı repliği; sonra otobüse dönülür ve karar tekrar sorulur.
+        // F_D2_A'da ("Arkadaşlarınla geç") önce suya girilirse ne olacağı kısa ara sahneyle gösterilir.
         private IEnumerator ShowRiskAfterWrongChoice(ChoiceData choice)
         {
             if (choice.correct) yield break;
+            if (choice.id == "F_D2_A") yield return PlaySweepCutscene();
 
             // Bu kısa gösterimde çocuk zaten suyun kenarında duruyor: su kenarı alanları onu geri itmesin
             // (geri itme sürerken otobüse dönülürse çocuğu tekrar buraya taşırdı).
@@ -589,6 +636,25 @@ namespace AfetUyanisi.Chapters.Flood
             yield return EnterRoom("F06_RUMORS", 0.5f);
             if (tracker != null) tracker.Suppressed = false;
             LookAtFriends();
+        }
+
+        // Sele kapılma ara sahnesi: perde kararır, ara sahne kendi kamerasıyla (kendi kararmasından açılarak) oynar,
+        // sonunda kendisi kararır. Kamerası kapanmadan perde siyaha alınır ki dünya bir an görünmesin;
+        // ardından gelen EnterRoom zaten siyahtan açılır.
+        private IEnumerator PlaySweepCutscene()
+        {
+            if (sweepCutscene == null) yield break;
+            SetPlayerControl(false);
+            yield return FadeOut(0.4f);
+            HideHint();
+            StartCoroutine(sweepCutscene.Play());
+            yield return null;
+            yield return FadeIn(0.2f);
+            float blackAt = sweepCutscene.Duration - 0.1f;
+            for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
+                yield return null;
+            SetBlack();
+            while (sweepCutscene.IsPlaying) yield return null;
         }
     }
 }

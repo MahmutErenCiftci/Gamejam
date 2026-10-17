@@ -50,6 +50,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         private bool hasRest;
 
         public bool IsShaking => shaking;
+        public void SetIntensity(float value) => intensity = Mathf.Clamp01(value);
         private Transform T => target != null ? target : transform;
 
         private void Awake()
