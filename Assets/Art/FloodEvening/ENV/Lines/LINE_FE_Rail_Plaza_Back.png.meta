@@ -1,0 +1,1406 @@
+fileFormatVersion: 2
+guid: 62af3a250f2e9fb57812c64f6b178498
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 235396054701830948
+    second: LINE_FE_Rail_Plaza_Back_0
+  - first:
+      213: 2965006059647741466
+    second: LINE_FE_Rail_Plaza_Back_1
+  - first:
+      213: 2798446129741476526
+    second: LINE_FE_Rail_Plaza_Back_2
+  - first:
+      213: 837786944528988363
+    second: LINE_FE_Rail_Plaza_Back_3
+  - first:
+      213: 1166595994498079934
+    second: LINE_FE_Rail_Plaza_Back_4
+  - first:
+      213: 1170184174521339104
+    second: LINE_FE_Rail_Plaza_Back_5
+  - first:
+      213: 2683228637621905467
+    second: LINE_FE_Rail_Plaza_Back_6
+  - first:
+      213: 3476331488874413027
+    second: LINE_FE_Rail_Plaza_Back_7
+  - first:
+      213: 2079827909769541334
+    second: LINE_FE_Rail_Plaza_Back_8
+  - first:
+      213: 3773644149708996868
+    second: LINE_FE_Rail_Plaza_Back_9
+  - first:
+      213: 4190237024091817246
+    second: LINE_FE_Rail_Plaza_Back_10
+  - first:
+      213: 3648168122825276858
+    second: LINE_FE_Rail_Plaza_Back_11
+  - first:
+      213: 4420112653961199555
+    second: LINE_FE_Rail_Plaza_Back_12
+  - first:
+      213: 1421469342472071208
+    second: LINE_FE_Rail_Plaza_Back_13
+  - first:
+      213: 4059510054589114816
+    second: LINE_FE_Rail_Plaza_Back_14
+  - first:
+      213: 1162361864754988910
+    second: LINE_FE_Rail_Plaza_Back_15
+  - first:
+      213: 4021704906854141608
+    second: LINE_FE_Rail_Plaza_Back_16
+  - first:
+      213: 3567286300606646568
+    second: LINE_FE_Rail_Plaza_Back_17
+  - first:
+      213: 2953982095973333492
+    second: LINE_FE_Rail_Plaza_Back_18
+  - first:
+      213: 1799770971947841193
+    second: LINE_FE_Rail_Plaza_Back_19
+  - first:
+      213: 1585764868889097438
+    second: LINE_FE_Rail_Plaza_Back_20
+  - first:
+      213: 400228543020437503
+    second: LINE_FE_Rail_Plaza_Back_21
+  - first:
+      213: 3343295952571990123
+    second: LINE_FE_Rail_Plaza_Back_22
+  - first:
+      213: 3132858025090880832
+    second: LINE_FE_Rail_Plaza_Back_23
+  - first:
+      213: 2866670665063798681
+    second: LINE_FE_Rail_Plaza_Back_24
+  - first:
+      213: 194393353818319018
+    second: LINE_FE_Rail_Plaza_Back_25
+  - first:
+      213: 3501930877108837155
+    second: LINE_FE_Rail_Plaza_Back_26
+  - first:
+      213: 2042131411322166165
+    second: LINE_FE_Rail_Plaza_Back_27
+  - first:
+      213: 2029539496739084174
+    second: LINE_FE_Rail_Plaza_Back_28
+  - first:
+      213: 2510754291984713999
+    second: LINE_FE_Rail_Plaza_Back_29
+  - first:
+      213: 4420426887002894286
+    second: LINE_FE_Rail_Plaza_Back_30
+  - first:
+      213: 1833650576218480069
+    second: LINE_FE_Rail_Plaza_Back_31
+  - first:
+      213: 4417793528936860812
+    second: LINE_FE_Rail_Plaza_Back_32
+  - first:
+      213: 1996305428712048755
+    second: LINE_FE_Rail_Plaza_Back_33
+  - first:
+      213: 3107702101273433668
+    second: LINE_FE_Rail_Plaza_Back_34
+  - first:
+      213: 3185142099977012851
+    second: LINE_FE_Rail_Plaza_Back_35
+  - first:
+      213: 1461813214366625807
+    second: LINE_FE_Rail_Plaza_Back_36
+  - first:
+      213: 4599485569582710457
+    second: LINE_FE_Rail_Plaza_Back_37
+  - first:
+      213: 4144450423767798353
+    second: LINE_FE_Rail_Plaza_Back_38
+  - first:
+      213: 2007761604697422533
+    second: LINE_FE_Rail_Plaza_Back_39
+  - first:
+      213: 2848022465603258552
+    second: LINE_FE_Rail_Plaza_Back_40
+  - first:
+      213: 197633285682742555
+    second: LINE_FE_Rail_Plaza_Back_41
+  - first:
+      213: 312577439159316773
+    second: LINE_FE_Rail_Plaza_Back_42
+  - first:
+      213: 124505494872388555
+    second: LINE_FE_Rail_Plaza_Back_43
+  - first:
+      213: 4222550319261880350
+    second: LINE_FE_Rail_Plaza_Back_44
+  - first:
+      213: 2422027562085933247
+    second: LINE_FE_Rail_Plaza_Back_45
+  - first:
+      213: 995109493760330115
+    second: LINE_FE_Rail_Plaza_Back_46
+  - first:
+      213: 399997930456860625
+    second: LINE_FE_Rail_Plaza_Back_47
+  - first:
+      213: 3506597825562639015
+    second: LINE_FE_Rail_Plaza_Back_48
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.160714}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9609bcb9fb275b29e8a9b0fdbb0a15a3
+      internalID: 235396054701830948
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 6
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37f11552e59934f2c31ef98a2aad5120
+      internalID: 2965006059647741466
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 14
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 742b739b37c29ac4bfa41e3a07164862
+      internalID: 2798446129741476526
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 22
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ffff1477c831d149ac14cfbab9227d
+      internalID: 837786944528988363
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 30
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cb99a014641bf350ecae2e5517c0c23
+      internalID: 1166595994498079934
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 38
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b93c0b00d8df818dc1d89d9f8bb0fca
+      internalID: 1170184174521339104
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 46
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 732393b354144ac7d3e8a71ac0416718
+      internalID: 2683228637621905467
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 54
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5913f3d137569f054f445f9cee4ba16d
+      internalID: 3476331488874413027
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 62
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08877c5fa9e1f6a501f8b147648da5d1
+      internalID: 2079827909769541334
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 70
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0fbe56a547c5462401ce96648f769f1
+      internalID: 3773644149708996868
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 78
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 784b49033de83468eaca9d72d361ff70
+      internalID: 4190237024091817246
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 86
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83f30e880c1bc2da0de0b0b4be5a05a8
+      internalID: 3648168122825276858
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 94
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 772ad7cf284367fb37c69dfe211799a0
+      internalID: 4420112653961199555
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 102
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0573d2f62042f7f7b89a5df34035a737
+      internalID: 1421469342472071208
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 110
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84aae63c00373c7764b902a7a9e9b063
+      internalID: 4059510054589114816
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_15
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 118
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a058404dd999d7198662477fa3877f3c
+      internalID: 1162361864754988910
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_16
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 126
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83a8e02286c24081d87e1eb8c0452f81
+      internalID: 4021704906854141608
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_17
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 134
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 938dbea262aa882e7f803699e461ec91
+      internalID: 3567286300606646568
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_18
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 142
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94b1bc0e28d918c540310f53ddf105aa
+      internalID: 2953982095973333492
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_19
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 150
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 175ee7547afe761882fed13a959376c0
+      internalID: 1799770971947841193
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 158
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 651f4861ebefc6358d9b7e65c88835ea
+      internalID: 1585764868889097438
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_21
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 166
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d80d4127566a212f66e264218bec843e
+      internalID: 400228543020437503
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_22
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 174
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00f26d3367b7b4a553df93d4a5be39c3
+      internalID: 3343295952571990123
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_23
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 182
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdc8658d027eb008d3e398aa28e264d2
+      internalID: 3132858025090880832
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_24
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 190
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 128444c1ff19530e8ec1f332cc4fa269
+      internalID: 2866670665063798681
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_25
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 198
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7145209fc3743e8fb0ee2a7199e52e07
+      internalID: 194393353818319018
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_26
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 206
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 988d68c7791a0658e8a41797166171bb
+      internalID: 3501930877108837155
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_27
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 214
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15ae220747baecd3f4c26e227a8e8d63
+      internalID: 2042131411322166165
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_28
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 222
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b24a25d317eeab65b6ca7270e5fea9aa
+      internalID: 2029539496739084174
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_29
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 230
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62883c9171df45ff7abed523c156b872
+      internalID: 2510754291984713999
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_30
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 238
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12878ae1a6662138f82a705ad06f6e36
+      internalID: 4420426887002894286
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_31
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 246
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5afd8f808b612441d67e007af0336ea1
+      internalID: 1833650576218480069
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_32
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 254
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e7c7a06aeb166b68fa872e0612e1cdd
+      internalID: 4417793528936860812
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_33
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 262
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93e033688704730e9eb862020a89ac82
+      internalID: 1996305428712048755
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_34
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 270
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dabeab9782266b10209f56cfe42117d5
+      internalID: 3107702101273433668
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_35
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 278
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de165c679a764d144953c6c0b3c108c1
+      internalID: 3185142099977012851
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_36
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 286
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d2f1d468649500b2725c6b25d84a1c
+      internalID: 1461813214366625807
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_37
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 294
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d9ed179b32ba74d4fa96e51669a2f3
+      internalID: 4599485569582710457
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_38
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 302
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95662c90ae4228e43c098fd6de696b27
+      internalID: 4144450423767798353
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_39
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 310
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a075052e4c6dc3fad801b78c5bcd069a
+      internalID: 2007761604697422533
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_40
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 318
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c02822e65aeb6fe52cebf94fa55c876
+      internalID: 2848022465603258552
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_41
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 326
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4844e21a77ee0ee7b5b8e8278db6600c
+      internalID: 197633285682742555
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_42
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 334
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e37b56f364bf2d6e0c6d8f302237fb8d
+      internalID: 312577439159316773
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_43
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 342
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78c206ea934c84e41b9ab0b524e27737
+      internalID: 124505494872388555
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_44
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 350
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fdcd81d7ec2771607671585ef2c8b45
+      internalID: 4222550319261880350
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_45
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 358
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af864333f7b6813d940b3bdd88e2e210
+      internalID: 2422027562085933247
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_46
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 366
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d78ec91a1ea4e54bdf5e18f6967f1dcd
+      internalID: 995109493760330115
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_47
+      rect:
+        serializedVersion: 2
+        x: 752
+        y: 374
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0c0907eb4f900d719d8686dfd9a6ced
+      internalID: 399997930456860625
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Plaza_Back_48
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 382
+        width: 6
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 0.173913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3df74b438035986e75d516733aaa943d
+      internalID: 3506597825562639015
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LINE_FE_Rail_Plaza_Back_0: 235396054701830948
+      LINE_FE_Rail_Plaza_Back_1: 2965006059647741466
+      LINE_FE_Rail_Plaza_Back_2: 2798446129741476526
+      LINE_FE_Rail_Plaza_Back_3: 837786944528988363
+      LINE_FE_Rail_Plaza_Back_4: 1166595994498079934
+      LINE_FE_Rail_Plaza_Back_5: 1170184174521339104
+      LINE_FE_Rail_Plaza_Back_6: 2683228637621905467
+      LINE_FE_Rail_Plaza_Back_7: 3476331488874413027
+      LINE_FE_Rail_Plaza_Back_8: 2079827909769541334
+      LINE_FE_Rail_Plaza_Back_9: 3773644149708996868
+      LINE_FE_Rail_Plaza_Back_10: 4190237024091817246
+      LINE_FE_Rail_Plaza_Back_11: 3648168122825276858
+      LINE_FE_Rail_Plaza_Back_12: 4420112653961199555
+      LINE_FE_Rail_Plaza_Back_13: 1421469342472071208
+      LINE_FE_Rail_Plaza_Back_14: 4059510054589114816
+      LINE_FE_Rail_Plaza_Back_15: 1162361864754988910
+      LINE_FE_Rail_Plaza_Back_16: 4021704906854141608
+      LINE_FE_Rail_Plaza_Back_17: 3567286300606646568
+      LINE_FE_Rail_Plaza_Back_18: 2953982095973333492
+      LINE_FE_Rail_Plaza_Back_19: 1799770971947841193
+      LINE_FE_Rail_Plaza_Back_20: 1585764868889097438
+      LINE_FE_Rail_Plaza_Back_21: 400228543020437503
+      LINE_FE_Rail_Plaza_Back_22: 3343295952571990123
+      LINE_FE_Rail_Plaza_Back_23: 3132858025090880832
+      LINE_FE_Rail_Plaza_Back_24: 2866670665063798681
+      LINE_FE_Rail_Plaza_Back_25: 194393353818319018
+      LINE_FE_Rail_Plaza_Back_26: 3501930877108837155
+      LINE_FE_Rail_Plaza_Back_27: 2042131411322166165
+      LINE_FE_Rail_Plaza_Back_28: 2029539496739084174
+      LINE_FE_Rail_Plaza_Back_29: 2510754291984713999
+      LINE_FE_Rail_Plaza_Back_30: 4420426887002894286
+      LINE_FE_Rail_Plaza_Back_31: 1833650576218480069
+      LINE_FE_Rail_Plaza_Back_32: 4417793528936860812
+      LINE_FE_Rail_Plaza_Back_33: 1996305428712048755
+      LINE_FE_Rail_Plaza_Back_34: 3107702101273433668
+      LINE_FE_Rail_Plaza_Back_35: 3185142099977012851
+      LINE_FE_Rail_Plaza_Back_36: 1461813214366625807
+      LINE_FE_Rail_Plaza_Back_37: 4599485569582710457
+      LINE_FE_Rail_Plaza_Back_38: 4144450423767798353
+      LINE_FE_Rail_Plaza_Back_39: 2007761604697422533
+      LINE_FE_Rail_Plaza_Back_40: 2848022465603258552
+      LINE_FE_Rail_Plaza_Back_41: 197633285682742555
+      LINE_FE_Rail_Plaza_Back_42: 312577439159316773
+      LINE_FE_Rail_Plaza_Back_43: 124505494872388555
+      LINE_FE_Rail_Plaza_Back_44: 4222550319261880350
+      LINE_FE_Rail_Plaza_Back_45: 2422027562085933247
+      LINE_FE_Rail_Plaza_Back_46: 995109493760330115
+      LINE_FE_Rail_Plaza_Back_47: 399997930456860625
+      LINE_FE_Rail_Plaza_Back_48: 3506597825562639015
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

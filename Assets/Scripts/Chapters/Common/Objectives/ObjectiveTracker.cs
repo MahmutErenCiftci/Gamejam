@@ -395,7 +395,10 @@ namespace AfetUyanisi.Chapters.Objectives
             shown = false;
             if (chapter != ChapterId.Flood && chapter != ChapterId.Earthquake) return false;
             GameSession.SetFlag(sessionKey);
-            string name = chapter == ChapterId.Flood ? "flood" : "earthquake";
+            // Sel: akşam mahalle seli (FloodEvening) kendi görev listesini kullanır; eski sabah akışı objectives_flood.json.
+            string name = chapter == ChapterId.Flood
+                ? (gameObject.scene.name == GameSceneRouter.FloodScene ? "flood_evening" : "flood")
+                : "earthquake";
             var json = Resources.Load<TextAsset>("Objectives/objectives_" + name);
             try
             {

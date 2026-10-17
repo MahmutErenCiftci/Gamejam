@@ -245,10 +245,21 @@ namespace AfetUyanisi.Chapters.Earthquake
             // r.tips boş kalır: kısa maddeler zaten konuyu ve doğru davranışı söylüyor (rapor ekranı en fazla maxLessons madde gösterir).
         }
 
-        /// <summary>Rapordaki seçimi uygular: Retry → RestartCurrentChapter, Menu → ReturnToMenu.</summary>
+        /// <summary>
+        /// Rapordaki seçimi uygular: Next → sıradaki bölüm (DEPREM → SEL, menüsüz, yalnız bir kez),
+        /// Retry → RestartCurrentChapter (depremi baştan), Menu → ReturnToMenu.
+        /// </summary>
         public static void ApplyChoice(string choice)
         {
-            if (choice == "Retry")
+            if (choice == "Next")
+            {
+                if (!GameSceneRouter.ContinueToNextChapter(ChapterId.Earthquake))
+                {
+                    Debug.LogWarning("[EQ] Sonraki bölüm (Sel) yüklenemedi; menüye dönülüyor.");
+                    GameSceneRouter.ReturnToMenu();
+                }
+            }
+            else if (choice == "Retry")
             {
                 if (!GameSession.CurrentChapter.HasValue) GameSession.StartChapter(ChapterId.Earthquake);
                 GameSceneRouter.RestartCurrentChapter();

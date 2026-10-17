@@ -503,6 +503,17 @@ namespace AfetUyanisi.Core
                 wantedAmbience = "AMB_Room_Morning_Loop";
             }
 
+            // Akşam sel bölümü: uyarı okunup süre başlayınca gerilim müziği, ilerledikçe hafif yükselir; yağmur ortamı RainController'dan.
+            if (scene == AfetUyanisi.Core.GameSceneRouter.FloodScene)
+            {
+                float p = AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.Progress01;
+                bool active = p > 0f || AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.FreeRoam;
+                wantedMusic = active ? "MUS_Tension_Loop" : "MUS_Calm_Loop";
+                music = active ? Mathf.Round(Mathf.Lerp(0.55f, 0.9f, p) * 10f) / 10f : 0.5f;
+                wantedAmbience = "AMB_Rain_Light_Loop";
+                ambience = 0.6f;
+            }
+
             var mode = ActiveMode();
             if (mode != null)
             {

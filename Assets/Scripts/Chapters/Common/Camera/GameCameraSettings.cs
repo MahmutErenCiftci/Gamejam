@@ -59,6 +59,8 @@ namespace AfetUyanisi.Chapters
         public static BackdropPalette KitchenPalette = new BackdropPalette("#1A110D", "#2E1C14", "#55321D", "#0C0705");
         /// <summary>Sel dış mekân (sokak, otobüs, okul yolu; kendi gökyüzü önde kalır): fırtına grisi.</summary>
         public static BackdropPalette StormPalette = new BackdropPalette("#10151F", "#1A2331", "#2A3646", "#070A0F");
+        /// <summary>Akşam sel mahallesi: koyu gece mavisi (sıcak sokak lambaları önde).</summary>
+        public static BackdropPalette EveningPalette = new BackdropPalette("#0A1124", "#121E3B", "#1E2F55", "#04070F");
         /// <summary>Deprem evi: koyu lacivert.</summary>
         public static BackdropPalette QuakePalette = new BackdropPalette("#14141F", "#1C2742", "#263559", "#09090F");
         /// <summary>Sarsıntıda vinyetin döndüğü renk (düşük alfa, flaş yok).</summary>
@@ -74,6 +76,8 @@ namespace AfetUyanisi.Chapters
                     return DawnPalette;
                 case "FloodChapter":
                     return cameraPosition.x < 15f ? KitchenPalette : StormPalette;
+                case "FloodEvening":
+                    return EveningPalette;
                 case "EarthquakeHome":
                 case "EarthquakeChapter":
                     return QuakePalette;

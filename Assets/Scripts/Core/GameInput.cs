@@ -93,6 +93,48 @@ namespace AfetUyanisi.Core
             }
         }
 
+        /// <summary>Şifre paneli: bu karede basılan rakam 0..9 (üst sıra veya numpad); basılmadıysa -1.</summary>
+        public static int DigitPressed
+        {
+            get
+            {
+                if (Pressed(Key.Digit0) || Pressed(Key.Numpad0)) return 0;
+                if (Pressed(Key.Digit1) || Pressed(Key.Numpad1)) return 1;
+                if (Pressed(Key.Digit2) || Pressed(Key.Numpad2)) return 2;
+                if (Pressed(Key.Digit3) || Pressed(Key.Numpad3)) return 3;
+                if (Pressed(Key.Digit4) || Pressed(Key.Numpad4)) return 4;
+                if (Pressed(Key.Digit5) || Pressed(Key.Numpad5)) return 5;
+                if (Pressed(Key.Digit6) || Pressed(Key.Numpad6)) return 6;
+                if (Pressed(Key.Digit7) || Pressed(Key.Numpad7)) return 7;
+                if (Pressed(Key.Digit8) || Pressed(Key.Numpad8)) return 8;
+                if (Pressed(Key.Digit9) || Pressed(Key.Numpad9)) return 9;
+                return -1;
+            }
+        }
+
+        /// <summary>Şifre paneli: son rakamı sil (Backspace veya Delete).</summary>
+        public static bool DeletePressed => Pressed(Key.Backspace) || Pressed(Key.Delete);
+
+        /// <summary>Sol fare tuşu basılı tutuluyor (ör. bahçe kapısının kolunu çevirme).</summary>
+        public static bool ClickHeld
+        {
+            get
+            {
+                var mouse = Mouse.current;
+                return mouse != null && mouse.leftButton.isPressed;
+            }
+        }
+
+        /// <summary>Fare imlecinin ekran konumu (piksel, sol alt orijin); fare yoksa (0,0).</summary>
+        public static Vector2 PointerPosition
+        {
+            get
+            {
+                var mouse = Mouse.current;
+                return mouse != null ? mouse.position.ReadValue() : Vector2.zero;
+            }
+        }
+
         // Deprem: Çök – Kapan – Tutun
         public static bool DropPressed => Pressed(Key.S);
         public static bool CoverPressed => Pressed(Key.A);

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AfetUyanisi.Menu
 {
     // Menünün bölüm yükleme noktası. Sahne seçimi GameSceneRouter'dadır:
-    // Sel → Bedroom (odalar) → FloodChapter, Deprem → EarthquakeHome.
+    // Sel → FloodEvening (akşam mahalle seli), Deprem → EarthquakeHome.
     // Menünün geri kalanı sadece bu sınıfı çağırır.
     public static class MenuChapterLoader
     {
@@ -42,13 +42,10 @@ namespace AfetUyanisi.Menu
         }
 
         // GameSceneRouter.LoadChapter'ın açacağı ilk sahne (aynı yedekleme sırasıyla).
+        // (Sel → FloodEvening, Deprem → EarthquakeHome; seçim GameSceneRouter.FirstSceneOf'ta.)
         static string FirstSceneName(Chapter chapter)
         {
-            if (chapter == Chapter.Earthquake && Application.CanStreamedLevelBeLoaded(GameSceneRouter.EarthquakeHomeScene))
-                return GameSceneRouter.EarthquakeHomeScene;
-            if (Application.CanStreamedLevelBeLoaded("Bedroom"))
-                return "Bedroom";
-            return GameSceneRouter.SceneNameOf(ToChapterId(chapter));
+            return GameSceneRouter.FirstSceneOf(ToChapterId(chapter));
         }
     }
 }
