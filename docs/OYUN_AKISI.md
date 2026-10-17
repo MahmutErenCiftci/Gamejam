@@ -124,13 +124,14 @@ Oyuncunun ilk 50 saniyesi iki bölümde de aynıdır ve oyunun tonunu belirler: 
 | 5a | `F05_EXIT` / `F05_EXIT_GEAR` | 2:25–2:30 | Evin önü, kaldırım | Kararma → hafif yağmur. *"Yağmur başlamış bile..."* · yağmurluk/şemsiye alındıysa *"İyi ki yağmurluğumu giydim..."* | — | Mahmut · Arda (replik) |
 | 5b | `F05_STREET` (+ `F05_PUDDLE_WARNING`, `F05_DRAIN_WARNING`) | 2:30–3:00 | Uzun izometrik sokak | Yağmur artar, yol kenarında su birikintileri, rögar. Çocuk: *"Sudan, rögarlardan ve elektrik direklerinden uzak yürümeliyim."* Birikintiye/yola basarsa durur, uyarı balonu ve geri itilir (ceza yok); rögar yakınında da uyarı. | Durağa yürür | Mahmut |
 | 5c | `F05_POSTER` (isteğe bağlı) → `F05_DOWNPOUR` | 3:00–3:20 | Otobüs durağı (cam sundurma) | **[E] Afişi oku:** *"DİKKATLİ OLUN! Sağanak yağışta su birikintilerinden ve rögarlardan uzak durun."* Sundurma altına girince yağmur 5 sn içinde **sağanağa** döner (sahne kararır, su yükselir, şimşek/flaş yok). *"Yağmur iyice arttı... Sundurmanın altında beklemeliyim."* | Afişi okur, sundurmada bekler | Mahmut |
-| 5d | `F05_BUS_ARRIVE` → `F05_BOARD` | 3:20–3:35 | Durak önü | Otobüs gelir, kapısı açılır. *"Otobüs geldi, hemen binelim!"* → **[E] Otobüse bin** → kapı kapanır, otobüs hareket eder, kararma. *"Günaydın! Oh be, içerisi kupkuru."* | **[E] Otobüse bin** | Mahmut |
-| 6 | `F06_RUMORS` | *planlanıyor* | *planlanıyor* (otobüste olabilir) | Üç arkadaş farklı şeyler söyler (söylentiler). Ekranda **söylenti kartları** ("Kaynak: bilinmiyor") → **Karar F_D2** | Söylentileri okur, karar verir | Arda (diyalog+karar) · Eren (kartlar) |
-| 7 | `F07_RISK` | *planlanıyor* | Riskli bölge | Bariyer, **"SU BİRİKİNTİSİ TEHLİKELİDİR"** tabelası, suda mahsur kalmış bir araç. Doğru seçimden sonra **uzaktan, yolun kenarından** görülür. | **[E] Tabelayı incele** | Mahmut |
-| 8 | `F08_SAFEROUTE` | *planlanıyor* | Köprü üstü yaya yolu → okul kapısı | Alternatif güvenli rotadan okula varış. Öğretmen: *"Güvenli yoldan gelmene çok sevindim."* | Yürür | Mahmut |
-| 9 | `F09_RESULT` | ≈20 sn | Sonuç ekranı | Öğrenilenler + yapılan yanlışlar (§8) | Tekrar Dene / Menüye Dön | Berk (ekran) · Mahmut |
+| 5d | `F05_BUS_ARRIVE` | 3:20–3:35 | Durak önü | Otobüs gelir, kapısı açılır. *"Otobüs geldi, hemen binelim!"* → **[E] Otobüse bin** → kapı kapanır, otobüs hareket eder, kararma. | **[E] Otobüse bin** | Mahmut |
+| 6a | `F05_BOARD` → `F06_RUMORS` → `NEWS_F06_RUMORS` → `F_D2` | 3:35–4:15 | **Otobüs içi** (`World/BusInterior`, `BusInterior.prefab`): koltuklar, direkler, yağmurlu camlardan geçen şehir, şoför | Çocuk: *"Günaydın! Oh be, içerisi kupkuru."* Üç arkadaş (Arkadaş 1–3, balonlar) Okul Caddesi hakkında farklı şeyler söyler. Çocuk: *"Telefondan bir bakayım."* → **söylenti kartları** (telefon gibi, "Kaynak: bilinmiyor") → **Karar F_D2**. **Yanlışta (A/B):** kararma → okul durağındaki Okul Caddesi'nin kenarı: çocuk suya **girmeden** bariyerin önünde durur, suda mahsur araç görünür, `F07_RISK_WARNING` → otobüse dönülür, karar tekrar sorulur. **D'de** resmî yol duyurusu (`NEWS_F06_OFFICIAL_ROAD`). | Söylentileri okur, kartı seçer, karar verir | Mahmut (sahne, akış) · Arda (replik) · Eren (kartlar) |
+| 6b | `F06_DECIDED` → `F06_ARRIVE` | 4:15–4:35 | Otobüs içi | *"Sudan geçmeyeceğim. Köprü üstündeki yaya yolundan giderim."* Otobüs yavaşlayıp durur, LED tabela "DURAK: OKUL", şoför: *"Okul durağı!"*, kapı açılır. | **[E] Otobüsten in** (kapıya yürür) | Mahmut |
+| 7 | `F07_ARRIVE` → `F07_RISK` (+ `F07_WATER_WARNING`) | 4:35–5:05 | **Okul yolu** (`World/SchoolRoute`, `SchoolRoute.prefab`): okul durağı, su basmış Okul Caddesi | Kararma → çocuk otobüsten iner, otobüs gider, yağmur hafiflemiş. *"Okul Caddesi tamamen su altında!"* Bariyer, **"SU BİRİKİNTİSİ TEHLİKELİDİR"** tabelası, suda mahsur kalmış araç (dörtlü flaşör) **uzaktan, kaldırımdan** görülür. Suya doğru yürüyünce durur, `F07_WATER_WARNING` balonu ve geri itilir (ceza yok, sonuçta sayılır). | **[E] Tabelayı incele** (büyük tabela açılır) | Mahmut |
+| 8 | `F08_BRIDGE` → `F08_SAFEROUTE` | 5:05–5:35 | Köprü üstü yaya yolu → okul kapısı | *"Köprü üstündeki yaya yolu güvenli."* Çocuk köprüden su basmış caddenin üstünden geçer, okul kapısında öğretmen: *"Günaydın! Güvenli yoldan gelmene çok sevindim."* | Yürür | Mahmut |
+| 9 | `F09_RESULT` | ≈20 sn | Sonuç ekranı (sahnenin üstünde) | Başlık, istatistik şeridi (kararlar, yağmurluk/şemsiye, suya yaklaşma uyarısı sayısı), yeşil **Öğrenilenler**, kırmızı **Yanlış davranışların** (her biri kısa açıklamayla; yanlış/uyarı yoksa gizli) (§8). Geçici görünüm: `FloodResultView` (Mahmut) — Berk kendi `ResultViewBase` panelini bağlayınca yerini alır. | **Tekrar Dene** [1] / **Menüye Dön** [2] (fare veya ← → + Enter) | Berk (ekran) · Mahmut |
 
-> **Otobüse binişten sonrası planlanıyor.** Eski tasarımda F06–F08 yürüyerek geçiyordu (yol kenarında arkadaşlar → riskli bölge → köprü üstü yaya yolu). Yeni akışta çocuk otobüse bindiği için bu kısım yeniden planlanıyor: söylentiler (`F06_RUMORS`, `NEWS_F06_RUMORS`, `F_D2`) büyük ihtimalle **otobüste** geçecek. Karar verilene kadar 6–8. satırlar ve süreleri eski haliyle duruyor; ID'ler değişmez. Mutfak→otobüs kısmı yaklaşık 2:45 sürer, bölümün toplam süresi bu kısım netleşince yeniden hesaplanacak.
+> **Otobüse binişten sonrası (uygulandı).** Söylentiler ve F_D2 **otobüste** geçer; arkadaşlar bir sonraki durakta iner, çocuk okul durağında yalnız iner. Riskli bölge (F07) ve güvenli rota (F08) okul durağının önündedir: Okul Caddesi su altında, köprü üstü yaya yolu caddenin üstünden okul kapısına çıkar. Bölüm toplamı ≈5,5–6 dk (oyuncuya göre).
 
 ### 6.2 Kararlar
 
@@ -301,7 +302,7 @@ Yerleşim, Görsel 2'deki gibi iki kutudur: solda yeşil "Öğrenilenler", sağd
 
 | Tür | Dosya (sahibi) | ID'ler |
 |---|---|---|
-| Diyalog sahneleri — Sel | `Assets/Data/Story/flood.json` (Arda) | `F01_WAKE`, `F02_WASH`, `F03_MOTHER_CHAT`, `F03_TV_JINGLE`, `F03_NEWS`, `F04_MOTHER`, `F04_CHECK`, `F04_PREPARE`, `F05_EXIT`, `F05_EXIT_GEAR`, `F05_STREET`, `F05_PUDDLE_WARNING`, `F05_DRAIN_WARNING`, `F05_POSTER`, `F05_DOWNPOUR`, `F05_BUS_ARRIVE`, `F05_BOARD`, `F06_RUMORS`, `F07_RISK`, `F07_RISK_WARNING`, `F08_SAFEROUTE` |
+| Diyalog sahneleri — Sel | `Assets/Data/Story/flood.json` (Arda) | `F01_WAKE`, `F02_WASH`, `F03_MOTHER_CHAT`, `F03_TV_JINGLE`, `F03_NEWS`, `F04_MOTHER`, `F04_CHECK`, `F04_PREPARE`, `F05_EXIT`, `F05_EXIT_GEAR`, `F05_STREET`, `F05_PUDDLE_WARNING`, `F05_DRAIN_WARNING`, `F05_POSTER`, `F05_DOWNPOUR`, `F05_BUS_ARRIVE`, `F05_BOARD`, `F06_RUMORS`, `F06_DECIDED`, `F06_ARRIVE`, `F07_ARRIVE`, `F07_RISK`, `F07_RISK_WARNING`, `F07_WATER_WARNING`, `F08_BRIDGE`, `F08_SAFEROUTE` |
 | Kararlar — Sel | aynı dosya | `F_D1` (`F_D1_A..C`), `F_D2` (`F_D2_A..D`) |
 | Diyalog sahneleri — Deprem | `Assets/Data/Story/earthquake.json` (Arda) | `E01_WAKE`, `E02_ROUTINE`, `E03_NEWS`, `E04_QUAKE`, `E06_AFTER`, `E07_EXIT`, `E08_ASSEMBLY` |
 | Kararlar — Deprem | aynı dosya | `E_D1` (`E_D1_1..5`), `E_D2` (`E_D2_A..D`), `E_D3` (`E_D3_A..B`) |
@@ -361,14 +362,14 @@ Sözleşmeler `Assets/Scripts/Shared/Contracts/` altındaki soyut sınıflardır
 | Mutfak + TV + sağlam masa | F03/F04, E02–E04 | 🟡 Konsept var, oyun görseli yok |
 | Hasarlı mutfak | E06 | ❌ Yok (mutfak üstüne dağınık eşya katmanı yeterli) |
 | Yağmurlu sokak + durak | F05/F06 | 🟡 Konsept (`PREVIEW_RainyStreet_Concept.png`) |
-| Riskli bölge (bariyer, tabela, araç) | F07 | 🟡 Konsept (Görsel 1, panel 5) |
-| Köprü üstü yaya yolu + okul kapısı | F08 | ❌ Yok |
+| Riskli bölge (bariyer, tabela, araç) | F07 | ✅ `Assets/Art/Props/SchoolRoute/` (su basmış Okul Caddesi, bariyer, tabela, suda araç) |
+| Köprü üstü yaya yolu + okul kapısı | F08 | ✅ `Assets/Art/Props/SchoolRoute/` (köprü, okul cephesi, kapı, bayrak) |
 | Bina koridoru, merdiven, asansör, ACİL ÇIKIŞ | E07 | ❌ Yok |
 | Toplanma alanı (park + tabela) | E08 | ❌ Yok |
 | Çocuk (8 yön yürüme) | Her yer | ✅ `visuals/characters/spritesheets/arda_*` |
 | Çocuk: Çök-Kapan-Tutun pozu | E05 | ❌ Yok |
 | Anne (8 yön yürüme + portreler) | F04, E03, E08 | ✅ `spritesheets/anne_*`, `sprites/CHR_Mother_*` |
-| 3 arkadaş, öğretmen, komşu, görevli | F06, F08, E08 | ❌ Yok (P2: siluet ya da renk değişimi) |
+| 3 arkadaş, öğretmen, komşu, görevli | F06, F08, E08 | 🟡 3 arkadaş + öğretmen: `Assets/Art/Characters/Friends/` (renk değişimi, duruş karesi); komşu/görevli yok |
 | TV haber ekranı, kartlar | F03, F04, F06, E03 | ❌ Eren üretecek |
 | Paneller, sonuç ekranı, ikonlar, font | Her yer | ❌ Berk üretecek |
 

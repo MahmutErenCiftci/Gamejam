@@ -96,5 +96,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         public string labelMessage;
         /// <summary>Alt not ("Bu bir farkındalık simülasyonudur...").</summary>
         public string note;
+        /// <summary>Hazırlık görevleri: tamamlanan / toplam ve eksik kalanların metinleri (PreparationQuestManager).</summary>
+        public int prepDone, prepTotal;
+        public List<string> prepMissed = new();
+        /// <summary>Afet çantası mini oyunu vardı / çanta sarsıntıdan önce hazırlandı.</summary>
+        public bool emergencyBagMinigame, emergencyBagPrepared;
     }
 }

@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1294006536895774006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1609032922899967629}
+  - component: {fileID: 2409975815839785001}
+  m_Layer: 0
+  m_Name: BookshelfAnchorView
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1609032922899967629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294006536895774006}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2409975815839785001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294006536895774006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e514d678243ba245b9b535b440f2bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.BookshelfAnchorView
+  skin: {fileID: 0}
+  sortingOrder: 84
+  dimAmount: 0.78
+  stage: {fileID: 21300000, guid: d4d7495a97861714dbcdaacc11adb20e, type: 3}
+  closeup: {fileID: 21300000, guid: c1a459bb2df130347a199058a1779ac6, type: 3}
+  wobble: {fileID: 21300000, guid: c0dcd799179047f429eede84f689b2f3, type: 3}
+  fallingBooks:
+  - {fileID: 21300000, guid: 71edd8acec8357242a9ca551941d8592, type: 3}
+  - {fileID: 21300000, guid: 377c68024a832784eb8c07e18c03a4a3, type: 3}
+  - {fileID: 21300000, guid: 1425cf1ea319a7a42968c08dbec0e450, type: 3}
+  portrait: {fileID: 21300000, guid: 96e6f322fd3100f49923e308dc6037b1, type: 3}
+  installed:
+  - {fileID: 21300000, guid: 42bb1a436d48ac442841259f10566054, type: 3}
+  - {fileID: 21300000, guid: 1004b07b1db0eb04c992c6094be9ff3c, type: 3}
+  - {fileID: 21300000, guid: f32bcef78fcf62640b8187aec8f5c68d, type: 3}
+  icons:
+  - {fileID: 21300000, guid: c45ec2ba65e690a4489fcaf476561452, type: 3}
+  - {fileID: 21300000, guid: b27b7effb3e05474b8a6b4e3924b8e41, type: 3}
+  - {fileID: 21300000, guid: 0fc8fe3a400206546ab6f289b5bd863e, type: 3}
+  driverA: {fileID: 21300000, guid: 3a544f42bef759a458c51c634e9d6cb9, type: 3}
+  driverB: {fileID: 21300000, guid: cdc1ac0f65a58b14490defcd5e4f9668, type: 3}
+  pointA: {fileID: 21300000, guid: 0e362ead9dc82db45a61fd92d7240ebf, type: 3}
+  pointB: {fileID: 21300000, guid: 6dbffe5d4a3a030448d963a24bf7a45a, type: 3}
+  ring: {fileID: 21300000, guid: 070993f289ab4eb4e9d5840e69fac35f, type: 3}
+  speck: {fileID: 21300000, guid: 24176e444a717a1449b88d49189d31d9, type: 3}
+  badgeOk: {fileID: 21300000, guid: 0152da1919fce74469bac6cdc70598f6, type: 3}
+  badgeWarn: {fileID: 21300000, guid: 26cea151b89e8da44a74398406cf61d5, type: 3}
+  badgeFail: {fileID: 21300000, guid: 6435b2857ae05b1438a73f8e750c4e7d, type: 3}
+  cardNormal: {fileID: 21300000, guid: c2d88a91208a14347a872d04d30dbefb, type: 3}
+  cardHover: {fileID: 21300000, guid: 382f8ecd548a0344da8a02ae5dccaa66, type: 3}
+  cardSelected: {fileID: 21300000, guid: 80dc841cdc52ab24c86d1040e278ba78, type: 3}
+  cardWrong: {fileID: 21300000, guid: dcbea8552ceb75146a8f1c2b513c3251, type: 3}
+  cardRight: {fileID: 21300000, guid: 6b357cabb2948db4ca6db90084502259, type: 3}

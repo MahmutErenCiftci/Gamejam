@@ -128,42 +128,84 @@
     },
     {
       "id": "F05_BOARD",
-      "title": "Otobüse Biniş",
+      "title": "Otobüse Biniş (otobüsün içi)",
       "lines": [
-        { "speaker": "Çocuk", "text": "Günaydın! Oh be, içerisi kupkuru." }
+        { "speaker": "Çocuk", "text": "Günaydın! Oh be, içerisi kupkuru." },
+        { "speaker": "Arkadaş 1", "text": "Günaydın! Gel, buradayız!" }
       ]
     },
     {
       "id": "F06_RUMORS",
-      "title": "Yanlış Bilgi",
+      "title": "Yanlış Bilgi (otobüste)",
       "lines": [
-        { "speaker": "Arkadaş 1", "text": "Kanka bu yol açık, rahat geçeriz." },
-        { "speaker": "Arkadaş 2", "text": "Sosyal medyada suyun azaldığını söylüyorlar." },
-        { "speaker": "Arkadaş 3", "text": "Gel geçelim, zaten biraz su sadece. Abartıyorlar." },
-        { "speaker": "Çocuk", "text": "Herkes <color=#E8392B>farklı bir şey</color> söylüyor... Hangisi doğru?" }
+        { "speaker": "Arkadaş 1", "text": "Duydunuz mu? Okul Caddesi açıkmış, inince rahat geçeriz." },
+        { "speaker": "Arkadaş 2", "text": "Sosyal medyada suyun azaldığını yazıyorlar, bak!" },
+        { "speaker": "Arkadaş 3", "text": "Biraz su var sadece, abartıyorlar. Gel, beraber geçeriz." },
+        { "speaker": "Çocuk", "text": "Herkes <color=#E8392B>farklı bir şey</color> söylüyor... Telefondan bir bakayım." }
+      ]
+    },
+    {
+      "id": "F06_DECIDED",
+      "title": "Karar (otobüste)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Sudan geçmeyeceğim.</color> Köprü üstündeki yaya yolundan giderim." },
+        { "speaker": "Arkadaş 1", "text": "Haklısın. Biz de sudan uzak dururuz." }
+      ]
+    },
+    {
+      "id": "F06_ARRIVE",
+      "title": "Okul Durağı",
+      "lines": [
+        { "speaker": "Şoför", "text": "Okul durağı! İnecek var mı?" },
+        { "speaker": "Çocuk", "text": "Benim durağım! Görüşürüz çocuklar." },
+        { "speaker": "Arkadaş 2", "text": "Bizim okul bir sonraki durakta. Dikkatli git!" }
       ]
     },
     {
       "id": "F07_RISK_WARNING",
-      "title": "Dur!",
+      "title": "Dur! (yanlış seçimde)",
       "lines": [
-        { "speaker": "Çocuk", "text": "<color=#E8392B>Dur!</color> Şu arabaya bak, suyun içinde mahsur kalmış..." },
-        { "speaker": "Çocuk", "text": "Suyun ne kadar derin olduğunu bilemem. Bu yoldan geçmek <color=#E8392B>tehlikeli</color>." }
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Dur!</color> Okul Caddesi su altında... Şu arabaya bak, suyun içinde mahsur kalmış!" },
+        { "speaker": "Çocuk", "text": "Suyun ne kadar derin olduğunu bilemem. Buradan geçmek <color=#E8392B>tehlikeli</color>, başka bir yol düşünmeliyim." }
+      ]
+    },
+    {
+      "id": "F07_ARRIVE",
+      "title": "Okul Durağında İniş",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Okul Caddesi <color=#E8392B>tamamen su altında</color>! Bir araba bile mahsur kalmış." },
+        { "speaker": "Çocuk", "text": "Bariyerin yanındaki tabelaya bakayım. <color=#18A957>Suya yaklaşmayacağım.</color>" }
       ]
     },
     {
       "id": "F07_RISK",
-      "title": "Riskli Bölge",
+      "title": "Riskli Bölge (tabela)",
       "lines": [
-        { "speaker": "Çocuk", "text": "Ana yol <color=#E8392B>su altında</color>, araçlar bile geçemiyor. İyi ki bu yoldan gitmedim." }
+        { "speaker": "Çocuk", "text": "\"<color=#E8392B>SU BİRİKİNTİSİ TEHLİKELİDİR!</color>\" Yol kapatılmış." },
+        { "speaker": "Çocuk", "text": "Araçlar bile geçemiyor. Yürüyerek suya girmek <color=#E8392B>çok tehlikeli</color>." }
+      ]
+    },
+    {
+      "id": "F07_WATER_WARNING",
+      "title": "Suya Yaklaşma",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Suya yaklaşmamalıyım</color>, <color=#E8392B>akıntı ve derinlik belli olmaz!</color>" }
+      ]
+    },
+    {
+      "id": "F08_BRIDGE",
+      "title": "Güvenli Rota",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Köprü üstündeki yaya yolu <color=#18A957>güvenli</color>. Biraz uzun ama sorun değil." }
       ]
     },
     {
       "id": "F08_SAFEROUTE",
-      "title": "Güvenli Rota",
+      "title": "Okul Kapısı",
       "lines": [
-        { "speaker": "Çocuk", "text": "Köprü üstündeki yaya yolu <color=#18A957>güvenli</color>. Biraz uzun ama sorun değil." },
-        { "speaker": "Öğretmen", "text": "Günaydın! <color=#18A957>Güvenli yoldan</color> gelmene çok sevindim." }
+        { "speaker": "Öğretmen", "text": "Günaydın! <color=#18A957>Güvenli yoldan</color> gelmene çok sevindim." },
+        { "speaker": "Çocuk", "text": "Günaydın öğretmenim! Okul Caddesi su altında, köprüden geldim." },
+        { "speaker": "Öğretmen", "text": "Çok doğru yaptın. <color=#18A957>Suyla kaplı yollara asla girilmez.</color> Hadi, içeri gel!" }
       ]
     }
   ],
@@ -190,11 +232,11 @@
       "required_correct": 1,
       "timeout_feedback": "",
       "choices": [
-        { "id": "F_D2_A", "key": 1, "text": "Arkadaşlarınla geç.", "correct": false,
+        { "id": "F_D2_A", "key": 1, "text": "Arkadaşlarını dinle, sudan geç.", "correct": false,
           "feedback": "Suyla kaplı yolun derinliği ve akıntısı görünenden farklı olabilir. Asla girme.", "wrong_example": "Su birikintisinden geçmek" },
-        { "id": "F_D2_B", "key": 2, "text": "Riskli yolu dene.", "correct": false,
+        { "id": "F_D2_B", "key": 2, "text": "Kapalı yolu dene, belki geçilir.", "correct": false,
           "feedback": "Yollar bir sebeple kapatılır. Kapanan yolu kullanma.", "wrong_example": "Kapanan yolları kullanmak" },
-        { "id": "F_D2_C", "key": 3, "text": "Farklı bir rota seç.", "correct": true,
+        { "id": "F_D2_C", "key": 3, "text": "Farklı, güvenli bir rota seç.", "correct": true,
           "feedback": "Doğru! Su birikintilerinden uzak, güvenli bir rota seçtin.", "wrong_example": "" },
         { "id": "F_D2_D", "key": 4, "text": "Resmî duyuruları kontrol et.", "correct": true,
           "feedback": "Doğru! Söylentiye değil, resmî duyuruya güvendin.", "wrong_example": "" }

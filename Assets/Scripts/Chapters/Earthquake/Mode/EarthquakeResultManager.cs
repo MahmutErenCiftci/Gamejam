@@ -68,6 +68,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 exposures = s.Exposures,
                 protection = s.protection,
                 bagTaken = s.bagTaken,
+                emergencyBagMinigame = s.emergencyBagMinigame,
+                emergencyBagPrepared = s.emergencyBagPrepared,
                 elevatorTried = s.elevatorTried,
                 acceleratedReady = s.acceleratedReady,
                 remainingAtQuake = s.acceleratedReady ? s.remainingAtAccelerate : s.remainingAtQuake,
@@ -75,6 +77,9 @@ namespace AfetUyanisi.Chapters.Earthquake
                 totalPenaltySeconds = s.penaltySeconds,
                 note = res.note
             };
+            r.prepDone = s.prepTasksDone.Count;
+            r.prepTotal = s.prepTasksTotal;
+            r.prepMissed.AddRange(s.prepTasksMissedLabels);
 
             // --- Puan ---
             float score = 0f;
@@ -102,6 +107,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (s.protection == ProtectionOutcome.TableDropCoverHold || s.protection == ProtectionOutcome.InPlaceDropCover) correct++;
             else wrong++;
             if (s.bagTaken) correct++; else wrong++;
+            if (s.bookshelfSecured) correct++; else wrong++;
             if (s.elevatorTried) wrong++; else if (s.usedStairs) correct++;
             wrong += s.Exposures;
             r.correctDecisions = correct;
@@ -112,6 +118,12 @@ namespace AfetUyanisi.Chapters.Earthquake
             r.remainingText = s.acceleratedReady ? res.readyText : FormatTime(r.remainingAtQuake);
 
             BuildLessons(r, s, data);
+            if (r.prepTotal > 0 && r.prepMissed.Count > 0)
+            {
+                int shownMissing = Mathf.Min(3, r.prepMissed.Count);
+                string missing = string.Join(", ", r.prepMissed.GetRange(0, shownMissing)) + (r.prepMissed.Count > shownMissing ? "…" : "");
+                r.tips.Add($"Eksik hazırlık ({r.prepDone}/{r.prepTotal}): {missing}.");
+            }
             return r;
         }
 
@@ -147,7 +159,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (!string.IsNullOrEmpty(r.labelMessage)) sb.Append($" ({r.labelMessage})");
             sb.Append($"\n  doğru cevap {r.correctAnswers}, yanlış {r.wrongAnswers}, süre doldu {r.timeouts} · doğru karar {r.correctDecisions}, yanlış karar {r.wrongDecisions}");
             sb.Append($"\n  tehlike {r.hazardsFound}/{r.hazardsTotal}, incelenen {r.inspectedCount}, maruziyet {r.exposures}, korunma {r.protection} ({r.protectionText})");
-            sb.Append($"\n  çanta {(r.bagTaken ? "alındı" : "alınmadı")}, asansör {(r.elevatorTried ? "denendi" : "denenmedi")}, kalan süre {r.remainingText}, ceza toplamı {r.totalPenaltySeconds} sn");
+            if (r.prepTotal > 0) sb.Append($"\n  hazırlık görevleri {r.prepDone}/{r.prepTotal}" + (r.prepMissed.Count > 0 ? " (eksik: " + string.Join(", ", r.prepMissed) + ")" : ""));
+            sb.Append($"\n  çanta {(r.emergencyBagMinigame ? (r.emergencyBagPrepared ? "hazırlandı, " : "hazırlanmadı, ") : "")}{(r.bagTaken ? "alındı" : "alınmadı")}, asansör {(r.elevatorTried ? "denendi" : "denenmedi")}, kalan süre {r.remainingText}, ceza toplamı {r.totalPenaltySeconds} sn");
             foreach (var m in r.mistakes) sb.Append($"\n  ✗ {m}");
             foreach (var t in r.tips) sb.Append($"\n  ipucu: {t}");
             return sb.ToString();
@@ -209,7 +222,9 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             if (s.mirrorPenaltyZones.Count > 0) Add("glass");
             if (s.elevatorTried) Add("elevator");
-            if (!s.bagTaken) Add("bag");
+            if (s.emergencyBagMinigame && !s.emergencyBagPrepared) Add("bagPrep", "Afet çantası: depremden ÖNCE hazırla (su, yiyecek, ilk yardım, fener).");
+            else if (!s.bagTaken) Add("bag");
+            if (!s.bookshelfSecured) Add("bookshelf", "Kitaplık: depremden ÖNCE bir büyüğünle duvara ankraj ve kayışla sabitle.");
             if (s.hazardsTotal > 0 && (float)s.HazardsFound / s.hazardsTotal < fewHazardsRatio) Add("hazards");
             // r.tips boş kalır: kısa maddeler zaten konuyu ve doğru davranışı söylüyor (rapor ekranı en fazla maxLessons madde gösterir).
         }

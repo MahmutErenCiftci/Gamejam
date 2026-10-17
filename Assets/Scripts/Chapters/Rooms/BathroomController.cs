@@ -40,8 +40,8 @@ namespace AfetUyanisi.Chapters.Rooms
         {
             base.Awake();
 
-            SetupPoint(sink, "Yüzünü yıka", WashId, true, true, before: Wash, after: OpenKitchenDoor);
-            SetupPoint(kitchenDoor, "Mutfağa git", "", false, false, before: GoToKitchen);
+            SetupPoint(sink, "Yüzünü yıka", WashId, true, true, before: Wash, after: OpenKitchenDoor, objectiveKey: "Sink");
+            SetupPoint(kitchenDoor, "Mutfağa git", "", false, false, before: GoToKitchen, objectiveKey: "KitchenDoor");
             if (kitchenDoor != null) kitchenDoor.SetAvailable(false);
         }
 
@@ -92,6 +92,7 @@ namespace AfetUyanisi.Chapters.Rooms
             {
                 Log($"kapı → {chapterScene} (mutfaktan devam)");
                 SetFreeRoam(false);
+                yield return Objectives.ObjectiveTracker.Settle(0.45f, 1.5f); // "Mutfağa git" tiki kararmadan görünsün
                 yield return FadeOut(exitFadeSeconds);
                 if (GameSceneRouter.ContinueChapterAfterRooms()) yield break;
                 yield return FadeIn(exitFadeSeconds); // olmadı: odada kal

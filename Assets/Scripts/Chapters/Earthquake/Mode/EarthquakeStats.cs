@@ -39,6 +39,12 @@ namespace AfetUyanisi.Chapters.Earthquake
         public bool protectionIncomplete;
         public bool bagTaken;
         public bool bagInspected;
+        /// <summary>Kitaplık mini oyunu: doğru malzeme + iki bağlantı + TEST ET başarılı (deprem ÖNCESİ hazırlık).</summary>
+        public bool bookshelfSecured;
+        /// <summary>Afet çantası mini oyunu sahnede var (EmergencyBagInteractable).</summary>
+        public bool emergencyBagMinigame;
+        /// <summary>Afet çantası sarsıntıdan ÖNCE hazırlandı (gerekli eşyalar + fermuar kapandı).</summary>
+        public bool emergencyBagPrepared;
         public bool elevatorTried;
         public bool usedStairs;
         public bool acceleratedReady;
@@ -49,6 +55,14 @@ namespace AfetUyanisi.Chapters.Earthquake
         public List<string> droppedQuestions = new List<string>();
         /// <summary>Diğer yanlış davranış notları (ör. "Asansörü kullanmaya çalıştın").</summary>
         public List<string> extraMistakes = new List<string>();
+
+        // --- Hazırlık görevleri (PreparationQuestManager yazar, sonuç raporu okur) ---
+        /// <summary>Hazırlık görevi sayısı (HUD'daki satırlar).</summary>
+        public int prepTasksTotal;
+        /// <summary>Tamamlanan hazırlık görevlerinin id'leri (ör. emergency_bag, secure_bookshelf).</summary>
+        public List<string> prepTasksDone = new List<string>();
+        public List<string> prepTasksDoneLabels = new List<string>();
+        public List<string> prepTasksMissedLabels = new List<string>();
 
         public int CorrectAnswers => answers.FindAll(a => a.correct).Count;
         public int WrongAnswers => answers.FindAll(a => !a.correct && !a.timedOut).Count;

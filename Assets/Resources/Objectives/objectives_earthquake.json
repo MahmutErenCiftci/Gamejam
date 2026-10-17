@@ -1,0 +1,30 @@
+{
+  "chapter": "earthquake",
+  "groups": [
+    { "id": "prepare", "title": "Çevreni tanı", "activateOn": [{ "type": "event", "key": "EQ_PREP" }] },
+    { "id": "protect", "title": "Sarsıntıda korun", "activateOn": [{ "type": "event", "key": "EQ_QUAKE" }] },
+    { "id": "after", "title": "Sarsıntı sonrası", "activateOn": [{ "type": "event", "key": "EQ_AFTER" }] }
+  ],
+  "objectives": [
+    { "id": "E_HAZARDS", "group": "prepare", "text": "Tehlikeleri bul (hedef 4)", "kind": "Main", "max": 7, "target": 4,
+      "completeOn": [
+        { "type": "point", "key": "bedroom_window" }, { "type": "point", "key": "bookshelf" },
+        { "type": "point", "key": "wardrobe" }, { "type": "point", "key": "living_window" },
+        { "type": "point", "key": "mirror" }, { "type": "point", "key": "cabinet" }, { "type": "point", "key": "fridge" }
+      ], "warnOn": [], "badge": "" },
+    { "id": "E_TABLE", "group": "prepare", "text": "Sağlam masayı bul", "kind": "Main", "max": 1, "target": 1,
+      "completeOn": [{ "type": "point", "key": "desk" }, { "type": "point", "key": "dining_table" }], "warnOn": [], "badge": "" },
+    { "id": "E_QUESTIONS", "group": "prepare", "text": "Annenin sorularını cevapla", "kind": "Main", "max": 3, "target": 3,
+      "completeOn": [{ "type": "decision", "key": "Q1" }, { "type": "decision", "key": "Q2" }, { "type": "decision", "key": "Q3" }], "warnOn": [], "badge": "" },
+    { "id": "E_PROTECT", "group": "protect", "text": "Çök–Kapan–Tutun", "kind": "Main", "max": 1, "target": 1,
+      "completeOn": [{ "type": "event", "key": "EQ_PROTECTED" }], "warnOn": [{ "type": "event", "key": "EQ_HOLD_RELEASED" }], "badge": "" },
+    { "id": "E_BAG", "group": "after", "text": "Deprem çantasını al", "kind": "Main", "max": 1, "target": 1,
+      "completeOn": [{ "type": "event", "key": "EQ_BAG_TAKEN" }], "warnOn": [], "badge": "" },
+    { "id": "E_ELEVATOR", "group": "after", "text": "Asansör kullanılmaz", "kind": "Lesson", "max": 1, "target": 1,
+      "completeOn": [{ "type": "event", "key": "EQ_ELEVATOR_LEARNED" }], "warnOn": [{ "type": "event", "key": "EQ_ELEVATOR_TRIED" }], "badge": "" },
+    { "id": "E_STAIRS", "group": "after", "text": "Merdivenden in", "kind": "Main", "max": 1, "target": 1,
+      "completeOn": [{ "type": "event", "key": "EQ_STAIRS_USED" }], "warnOn": [], "badge": "" },
+    { "id": "E_ASSEMBLY", "group": "after", "text": "Toplanma alanına git", "kind": "Main", "max": 1, "target": 1,
+      "completeOn": [{ "type": "event", "key": "EQ_ASSEMBLY_REACHED" }], "warnOn": [], "badge": "Toplanma alanındasın" }
+  ]
+}

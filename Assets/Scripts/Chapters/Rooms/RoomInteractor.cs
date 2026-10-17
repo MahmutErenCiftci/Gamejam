@@ -46,6 +46,9 @@ namespace AfetUyanisi.Chapters.Rooms
         /// <summary>Şu an bir nokta kullanılıyor (diyalog/özel coroutine sürüyor).</summary>
         public bool IsBusy { get; private set; }
 
+        /// <summary>Şu an bir diyalog balonu oynuyor (Say). Görev paneli bu sırada gizlenir.</summary>
+        public bool IsSaying { get; private set; }
+
         /// <summary>İpucu gösterilen en yakın nokta (yoksa null).</summary>
         public Interactable Current => current;
 
@@ -213,7 +216,9 @@ namespace AfetUyanisi.Chapters.Rooms
 
             if (dialogue != null && !AutoAdvance)
             {
-                yield return dialogue.Play(storySceneId);
+                IsSaying = true;
+                try { yield return dialogue.Play(storySceneId); }
+                finally { IsSaying = false; }
                 yield break;
             }
 

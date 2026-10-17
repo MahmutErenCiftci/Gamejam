@@ -62,11 +62,11 @@ namespace AfetUyanisi.Chapters.Rooms
             base.Awake();
 
             if (bedPoint != null) bedPoint.SetAvailable(false);
-            SetupPoint(clockPoint, "Alarmı kapat", ClockId, false, true, before: StopAlarm);
-            SetupPoint(windowPoint, "Dışarı bak", WindowId, true, false);
-            SetupPoint(deskPoint, "Çantaya bak", DeskId, false, false);
-            SetupPoint(umbrellaPoint, "Şemsiyeyi al", UmbrellaId, false, true, before: TakeUmbrella);
-            SetupPoint(doorPoint, "Banyoya git", "", false, false, before: GoToBathroom);
+            SetupPoint(clockPoint, "Alarmı kapat", ClockId, false, true, before: StopAlarm, objectiveKey: "Clock");
+            SetupPoint(windowPoint, "Dışarı bak", WindowId, true, false, objectiveKey: "Window");
+            SetupPoint(deskPoint, "Çantaya bak", DeskId, false, false, objectiveKey: "Desk");
+            SetupPoint(umbrellaPoint, "Şemsiyeyi al", UmbrellaId, false, true, before: TakeUmbrella, objectiveKey: "Umbrella");
+            SetupPoint(doorPoint, "Banyoya git", "", false, false, before: GoToBathroom, objectiveKey: "Door");
 
             // Şemsiye sadece Sel'de; bu oynanışta zaten alındıysa da görünmez.
             bool umbrellaHere = !RoomChapter.IsEarthquake && !GameSession.UmbrellaTaken;
