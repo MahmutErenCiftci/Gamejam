@@ -30,6 +30,9 @@ namespace AfetUyanisi.Chapters
         /// <summary>false iken oyuncu yavaşlayıp durur ve bekleme animasyonuna geçer (diyalog, karar, geçişler).</summary>
         public bool CanMove { get; set; }
 
+        /// <summary>Hız çarpanı (1 = normal). Ör. akşam sel bölümünde rüzgâr geçidi hafifçe yavaşlatır; etkiyi veren geri 1'e koyar.</summary>
+        public float SpeedMultiplier { get; set; } = 1f;
+
         /// <summary>Rigidbody'nin anlık hızı (sadece okuma; testler için).</summary>
         public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
 
@@ -51,7 +54,7 @@ namespace AfetUyanisi.Chapters
         private void Update()
         {
             Vector2 input = CanMove ? GameInput.MoveVector : Vector2.zero;
-            targetVelocity = new Vector2(input.x, input.y * verticalSpeedScale) * speed;
+            targetVelocity = new Vector2(input.x, input.y * verticalSpeedScale) * (speed * Mathf.Clamp(SpeedMultiplier, 0f, 2f));
             if (characterAnimator != null) characterAnimator.SetMotion(input);
         }
 

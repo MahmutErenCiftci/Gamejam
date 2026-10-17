@@ -42,6 +42,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         private bool cardClicked;
         private bool cardOpen;
 
+        /// <summary>Bilgi kartı ekranda mı? (HUD "görev tamamlandı" toast'ı kart kapanana kadar bekler.)</summary>
+        public bool IsCardOpen => cardOpen;
+
         // Toast
         private RectTransform toastRoot;
         private CanvasGroup toastGroup;

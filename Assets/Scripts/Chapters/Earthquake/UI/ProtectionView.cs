@@ -52,6 +52,23 @@ namespace AfetUyanisi.Chapters.Earthquake
         private float clock;
         private float warnT = -1f;
         private Coroutine fadeRoutine;
+        private EarthquakeBalanceHUD balanceHUD;
+
+        public override void BeginBalance(EarthquakeBalanceSettings settings, EqBalanceTexts texts)
+        {
+            Hide();
+            if (balanceHUD == null) balanceHUD = gameObject.AddComponent<EarthquakeBalanceHUD>();
+            EnsureBuilt();
+            balanceHUD.Begin(settings, texts, skin);
+        }
+
+        /// <summary>QA/test: TUTUN adımının denge göstergesi (ilk BeginBalance'a kadar null).</summary>
+        public EarthquakeBalanceHUD BalanceHUD => balanceHUD;
+
+        public override void SetBalance(EarthquakeBalanceModel state)
+        {
+            if (balanceHUD != null) balanceHUD.Draw(state);
+        }
 
         private void Awake() => EnsureBuilt();
 
@@ -206,6 +223,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         public override void Hide()
         {
+            if (balanceHUD != null) balanceHUD.Hide();
             if (!built) return;
             warnT = -1f;
             warnRoot.gameObject.SetActive(false);

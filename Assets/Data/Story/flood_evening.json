@@ -1,0 +1,236 @@
+{
+  "chapter_id": "flood_evening",
+  "version": "0.1",
+  "scenes": [
+    {
+      "id": "FE_TITLE",
+      "title": "Giriş Kartı",
+      "lines": [
+        { "speaker": "SEL BÖLÜMÜ", "text": "Başka bir gün — şiddetli yağışlı bir akşam" }
+      ]
+    },
+    {
+      "id": "FE_INTRO",
+      "title": "Yağmur Bastırıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur birden çok şiddetlendi. Sokaklarda su birikmeye başladı." },
+        { "speaker": "Çocuk", "text": "Telefonum titriyor... Bir bildirim geldi." }
+      ]
+    },
+    {
+      "id": "FE_AFTER_WARNING",
+      "title": "Uyarıdan Sonra",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Suyla kaplı</color> ve <color=#E8392B>kapatılmış</color> yollara girmeyeceğim." },
+        { "speaker": "Çocuk", "text": "<color=#3CCFC4>Belirlenmiş güvenli yüksek bölgeye</color> gitmeliyim. Yol işaretlerini takip edeyim." }
+      ]
+    },
+    {
+      "id": "FE_FORK",
+      "title": "Yol Ayrımı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "İki yol var. Alçak yol kısa ama dere kenarından geçiyor ve <color=#E8392B>kapatılmış</color>." },
+        { "speaker": "Çocuk", "text": "Yüksek yol daha uzun ama kuru. <color=#3CCFC4>Güvenli rota</color> olarak işaretlenmiş." }
+      ]
+    },
+    {
+      "id": "FE_BARRIER_STOP",
+      "title": "Kapalı Yol",
+      "lines": [
+        { "speaker": "Uyarı", "text": "<color=#E8392B>Bu yol kapalı.</color> Suyun derinliğini ve akıntısını bilemezsin. Güvenli rotaya dön." },
+        { "speaker": "Çocuk", "text": "Kısa da olsa bu yoldan gitmeyeceğim. İşaretli yüksek yola döneyim." }
+      ]
+    },
+    {
+      "id": "FE_RUMOR_INTRO",
+      "title": "Söylenti",
+      "lines": [
+        { "speaker": "Komşu", "text": "Mahalle grubuna bir mesaj düştü: \"Kestirme açıkmış, herkes oradan gidiyor.\"" },
+        { "speaker": "Çocuk", "text": "Bu mesajı kim yazmış?" },
+        { "speaker": "Komşu", "text": "Bilmiyorum, biri iletmiş. Kaynağı yazmıyor." },
+        { "speaker": "Çocuk", "text": "O zaman önce <color=#3CCFC4>resmî duyuruya</color> bakalım." }
+      ]
+    },
+    {
+      "id": "FE_RUMOR_CHECKED",
+      "title": "Kaynak Kontrolü",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Resmî duyuruya göre alçak yol <color=#E8392B>kapatılmış</color>. Kestirme açık değil!" },
+        { "speaker": "Komşu", "text": "İyi ki kontrol ettin. Ben de söylentiyi kimseye iletmeyeyim." },
+        { "speaker": "Çocuk", "text": "Yüksek yoldaki <color=#3CCFC4>işaretli güvenli rotadan</color> gideceğim." }
+      ]
+    },
+    {
+      "id": "FE_WIND_ENTER",
+      "title": "Sert Rüzgâr",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Rüzgâr çok sert. Acele etmeden, işaretli rotadan ilerlemeliyim." }
+      ]
+    },
+    {
+      "id": "FE_BRANCH_SEEN",
+      "title": "Düşen Dal",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yola büyük bir dal düşmüş. Ona dokunmayacağım, üstünden de aşmayacağım." },
+        { "speaker": "Çocuk", "text": "Yanda <color=#3CCFC4>işaretli bir geçit</color> var. Oradan geçebilirim." }
+      ]
+    },
+    {
+      "id": "FE_BRANCH_DONE",
+      "title": "Alternatif Geçit",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Geçit açıldı. Ağaçlardan ve dallardan uzak durarak devam edeyim." }
+      ]
+    },
+    {
+      "id": "FE_GATE_HINT",
+      "title": "Bahçe Kapısı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Bu bahçe kapısı güvenli yüksek bölgeye çıkıyor. Kolu çevirip açayım." }
+      ]
+    },
+    {
+      "id": "FE_GATE_OPEN",
+      "title": "Kapı Açıldı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Kapı açıldı! Yukarı doğru devam." }
+      ]
+    },
+    {
+      "id": "FE_CODE_HINT",
+      "title": "Şifreli Giriş",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Giriş şifreli. İpucu levhaları bu güvenli alanda olmalı, onlara bakayım." }
+      ]
+    },
+    {
+      "id": "FE_CODE_WRONG",
+      "title": "Yanlış Şifre",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Olmadı. İpucu levhalarını sırayla bir daha okuyayım." }
+      ]
+    },
+    {
+      "id": "FE_CODE_OPEN",
+      "title": "Şifre Doğru",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Şifre doğru, giriş açıldı!" }
+      ]
+    },
+    {
+      "id": "FE_FINAL",
+      "title": "Son Aşama",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur daha da arttı. <color=#3CCFC4>Belirlenmiş güvenli yüksek bölgeye</color> ulaşmalıyım." },
+        { "speaker": "Çocuk", "text": "Her bina güvenli değil. Toplanma tabelasının gösterdiği yere gideyim." }
+      ]
+    },
+    {
+      "id": "FE_WATER_CUT",
+      "title": "Yol Suyla Kesildi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Önümdeki yol <color=#E8392B>suyla kesilmiş</color>. Suya girmeyeceğim." },
+        { "speaker": "Çocuk", "text": "Bulunduğum güvenli yerde kalıp yardım yönlendirmelerini izleyeceğim." }
+      ]
+    },
+    {
+      "id": "FE_SAFE",
+      "title": "Güvenli Bölge",
+      "lines": [
+        { "speaker": "Görevli", "text": "Burası belirlenmiş güvenli toplanma alanı. Burada bekle, yönlendirmeleri izle." },
+        { "speaker": "Çocuk", "text": "Güvendeyim. Resmî duyuruları takip edeceğim." }
+      ]
+    },
+    {
+      "id": "FE_TIMEOUT",
+      "title": "Süre Doldu",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Burada, güvenli yerde kalacağım. Yardım yönlendirmelerini bekleyip izleyeceğim." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_SUCCESS",
+      "title": "Sonuç: Başarı",
+      "lines": [
+        { "speaker": "Sonuç", "text": "Güvenli bölgeye ulaştın." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_TIMEOUT",
+      "title": "Sonuç: Süre Doldu",
+      "lines": [
+        { "speaker": "Sonuç", "text": "Rota için ayrılan oyun süresi doldu. Güvenli yerde kal ve yardım yönlendirmelerini izle." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_STEPS",
+      "title": "Sonuç: Doğru Kararlar (speaker = Hub adım id'si)",
+      "lines": [
+        { "speaker": "warning_read", "text": "Sel uyarısını okudun." },
+        { "speaker": "rumor_checked", "text": "Söylentinin kaynağını resmî duyurudan kontrol ettin." },
+        { "speaker": "branch_cleared", "text": "Dala dokunmadan işaretli alternatif geçidi kullandın." },
+        { "speaker": "gate_opened", "text": "Güvenli bölgenin bahçe kapısını açtın." },
+        { "speaker": "code_opened", "text": "İpuçlarını okuyup girişin şifresini buldun." },
+        { "speaker": "safe_zone", "text": "Belirlenmiş güvenli yüksek bölgeye ulaştın." },
+        { "speaker": "high_road", "text": "Kuru ve işaretli yüksek yolu seçtin." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_MISTAKES",
+      "title": "Sonuç: Düzeltilen Yanlışlar (speaker = Hub hata id'si)",
+      "lines": [
+        { "speaker": "low_road", "text": "Kapatılmış alçak yola yöneldin; bariyerde durup güvenli rotaya döndün." },
+        { "speaker": "rumor_trusted", "text": "Önce kaynağı belirsiz söylentiye güvendin; resmî duyuruyu görünce düzelttin." },
+        { "speaker": "wrong_code", "text": "Şifreyi önce yanlış girdin; ipuçlarını yeniden okuyup doğrusunu buldun." }
+      ]
+    }
+  ],
+  "decisions": [],
+  "result": {
+    "title_success": "Güvenli bölgeye ulaştın.",
+    "title_with_mistakes": "Güvenli bölgeye ulaştın. Yanlışlarını düzelttin.",
+    "title_timeout": "Rota için ayrılan oyun süresi doldu. Güvenli yerde kal ve yardım yönlendirmelerini izle.",
+    "learned": [
+      "Suyla kaplı yola girme.",
+      "Kapatılmış yolları kullanma.",
+      "Söylentinin kaynağını doğrula.",
+      "Güvenli yüksek bölgelere ilişkin resmî yönlendirmeleri izle.",
+      "Eve ulaşmak uğruna risk alma."
+    ],
+    "note": "Bu bir farkındalık oyunudur. 120 saniye yalnızca bu oyunun süresidir, gerçek afetler için süre garantisi değildir. Gerçek bir afette resmî kurumların yönlendirmelerine uy."
+  },
+  "ui": [
+    { "id": "card_note", "text": "Bu bir farkındalık oyunudur. Sahneler kurgudur." },
+    { "id": "gauge_title", "text": "SU SEVİYESİ" },
+    { "id": "gauge_note", "text": "Çevredeki su\nSuya hiç girme!" },
+    { "id": "stage_1", "text": "Yağmur başladı" },
+    { "id": "stage_2", "text": "Yağmur artıyor" },
+    { "id": "stage_3", "text": "Su yükseliyor" },
+    { "id": "stage_4", "text": "Tehlike artıyor" },
+    { "id": "toast_stage2_title", "text": "YAĞIŞ ARTIYOR" },
+    { "id": "toast_stage2_body", "text": "Yağmur şiddetlendi. Güvenli rota işaretlerini takip et." },
+    { "id": "toast_stage3_title", "text": "SU YÜKSELİYOR" },
+    { "id": "toast_stage3_body", "text": "Alçak yerlerde su birikiyor. Suya hiç girme, yüksek ve kuru yoldan ilerle." },
+    { "id": "toast_stage4_title", "text": "DİKKATLİ OL" },
+    { "id": "toast_stage4_body", "text": "Kuru ve işaretli yoldan ayrılma. Güvenli yüksek bölgeye yönel." },
+    { "id": "toast_final_title", "text": "SON AŞAMA" },
+    { "id": "toast_final_body", "text": "Belirlenmiş güvenli yüksek bölgeye ulaş." },
+    { "id": "toast_safe_title", "text": "GÜVENLİ BÖLGE" },
+    { "id": "toast_safe_body", "text": "Güvenli bölgeye ulaştın. Burada kal ve resmî yönlendirmeleri izle." },
+    { "id": "toast_timeout_title", "text": "OYUN SÜRESİ DOLDU" },
+    { "id": "toast_timeout_body", "text": "Güvenli yerde kal ve yardım yönlendirmelerini izle." },
+    { "id": "toast_say_title", "text": "DİKKAT" },
+    { "id": "warning_fallback_title", "text": "SEL UYARISI (oyun içi kurgu)" },
+    { "id": "warning_fallback_body", "text": "Şiddetli yağış nedeniyle su baskını riski var. Suyla kaplı ve kapatılmış yollara girmeyin. Belirlenmiş güvenli yüksek bölgeye yönelin." },
+    { "id": "result_header", "text": "SEL BÖLÜMÜ · SONUÇ" },
+    { "id": "result_timeout_title", "text": "Oyun süresi doldu." },
+    { "id": "result_success_message", "text": "Belirlenmiş güvenli yüksek bölgedesin. Burada kal, resmî yönlendirmeleri izle." },
+    { "id": "result_correct_header", "text": "Doğru kararların" },
+    { "id": "result_corrected_header", "text": "Düzeltilen yanlışlar" },
+    { "id": "result_lessons_header", "text": "Unutma" },
+    { "id": "result_no_correct", "text": "Henüz doğru karar kaydı yok." },
+    { "id": "result_stayed_dry", "text": "Süre dolunca suya girmedin, kuru ve güvenli yerde kaldın." },
+    { "id": "result_retry", "text": "Sel Bölümünü Tekrar Dene" },
+    { "id": "result_menu", "text": "Menüye Dön" }
+  ]
+}

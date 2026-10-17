@@ -205,7 +205,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     steps = new[] { "ÇÖK", "KAPAN", "TUTUN" },
                     promptDrop = "[E] Çök",
                     promptCover = "[E] Başını ve enseni koru",
-                    promptHold = "[E] basılı tut — sarsıntı bitene kadar tutun!",
+                    promptHold = "[SPACE] basılı tut; [A] / [D] ile dengeyi düzelt",
                     promptDropInPlace = "[E] Olduğun yerde çök",
                     promptCoverInPlace = "[E] Kollarınla başını ve enseni koru",
                     releaseWarning = "Sarsıntı bitene kadar tutun!",
@@ -343,6 +343,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     [Serializable]
     public class EqProtectionTexts
     {
+        public EqBalanceTexts balance = new EqBalanceTexts();
         public string[] steps;
         public string promptDrop, promptCover, promptHold;
         public string promptDropInPlace, promptCoverInPlace;
@@ -362,6 +363,38 @@ namespace AfetUyanisi.Chapters.Earthquake
                 default: return exposed.window;
             }
         }
+    }
+
+    [Serializable]
+    public class EqBalanceTexts
+    {
+        // Denge göstergesi (EarthquakeBalanceHUD): başlık / alt başlık, talimat, durum satırı, SPACE şeridi, sonuç.
+        public string warning = "DEPREM!";
+        public string title = "TUTUN!";
+        public string subtitle = "Sarsıntı bitene kadar tutun ve dengede kal";
+        /// <summary>Talimat (denge başlamadan): durum satırı.</summary>
+        public string controls = "İşareti YEŞİLDE tut:  A sola,  D sağa çeker";
+        /// <summary>Talimat (denge başlamadan): SPACE şeridi.</summary>
+        public string startHint = "Başlamak için SPACE'e bas ve basılı tut";
+        /// <summary>SPACE basılıyken şerit metni.</summary>
+        public string note = "Tutunuyorsun — başını ve enseni koru";
+        /// <summary>SPACE bırakılınca şerit metni.</summary>
+        public string release = "SPACE'i bırakma — tutunmaya devam et!";
+        public string initial = "Sarsıntı başladı";
+        public string strong = "Sarsıntı güçleniyor";
+        public string irregular = "Sarsıntı düzensiz, dikkat!";
+        public string stable = "Dengedesin, böyle devam!";
+        public string unstable = "Dengeni koru!";
+        public string driftLeft = "A ile ortaya dön";
+        public string driftRight = "D ile ortaya dön";
+        public string timeLeft = "{0} sn";
+        public string resultGood = "Sarsıntı bitti — iyi tutundun!";
+        public string resultHard = "Sarsıntı bitti. Biraz zorlandın ama korunmaya devam ettin.";
+        // Sarsıntı sonrası kart / rapor
+        public string success = "Sarsıntı bitene kadar tutundun ve dengeni korudun.";
+        public string feedback = "Biraz zorlandın: sarsıntı bitene kadar SPACE'i bırakmadan tutunmaya çalış.";
+        public string score = "Denge: {0}/100";
+        public string resultNote = "Gerçek depremde de sarsıntı bitene kadar başını ve enseni koru, tutunmaya devam et.";
     }
 
     [Serializable]

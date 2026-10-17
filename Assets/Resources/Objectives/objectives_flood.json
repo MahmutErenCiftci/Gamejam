@@ -11,6 +11,8 @@
   "objectives": [
     { "id": "F_ALARM", "group": "bedroom", "text": "Alarmı kapat", "kind": "Main",
       "completeOn": [{ "type": "point", "key": "Bedroom/Clock" }] },
+    { "id": "F_BACKPACK", "group": "bedroom", "text": "Çantanı al", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Backpack" }, { "type": "point", "key": "F01_WAKE/Door" }] },
     { "id": "F_BATHROOM", "group": "bedroom", "text": "Banyoya git", "kind": "Main",
       "completeOn": [{ "type": "point", "key": "Bedroom/Door" }, { "type": "point", "key": "F01_WAKE/Door" }] },
     { "id": "F_WINDOW", "group": "bedroom", "text": "Pencereden bak", "kind": "Bonus",

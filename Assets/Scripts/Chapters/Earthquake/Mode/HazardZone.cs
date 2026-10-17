@@ -103,8 +103,15 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
         }
 
+        /// <summary>
+        /// true iken bölge hiçbir evrede çalışmaz (uyarı, ceza, maruziyet yok). Ör. kitaplık mini oyunda sabitlenince
+        /// kitaplık bölgesi kapatılır (BookshelfAnchorMinigame).
+        /// </summary>
+        public bool Suppressed { get; set; }
+
         public bool IsActiveIn(EarthquakePhase phase)
         {
+            if (Suppressed) return false;
             switch (phase)
             {
                 case EarthquakePhase.Prep: return activeInPrep;

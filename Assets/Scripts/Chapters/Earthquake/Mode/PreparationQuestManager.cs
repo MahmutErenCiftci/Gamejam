@@ -76,6 +76,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         public event Action Changed;
         /// <summary>Hazırlık evresi bitti (sayaç 0 / sarsıntı); bundan sonra görev tamamlanmaz.</summary>
         public event Action Locked;
+        /// <summary>Flush already committed actions before freezing the preparation snapshot.</summary>
+        public event Action BeforeLock;
 
         public IReadOnlyList<PrepTaskDefinition> Tasks => tasks;
         public int TotalCount => tasks.Count;
@@ -152,6 +154,17 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         public bool IsDone(string id) => !string.IsNullOrEmpty(id) && done.Contains(id);
 
+        public void ConfigureStoveTask()
+        {
+            var task = Find(StoveFireController.TaskId);
+            if (task == null) return;
+            task.label = "Ocağı kapat";
+            task.detail = "Sarsıntı başlamadan açık elektrikli ocağı kapat. Vana ve sigorta yerini bir büyüğünle öğren; tesisata dokunma.";
+            task.source = PrepTaskSource.External;
+            WriteStats();
+            Changed?.Invoke();
+        }
+
         /// <summary>Ara ilerleme (InspectAll/AnswerAll için; diğerlerinde 0/1 ya da 1/1). Görev yoksa false.</summary>
         public bool TryGetProgress(string id, out int current, out int max)
         {
@@ -197,6 +210,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         public void Lock()
         {
             if (IsLocked) return;
+            BeforeLock?.Invoke();
             Poll(true); // aynı karede yapılmış son incelemeler kaçmasın
             IsLocked = true;
             WriteStats();

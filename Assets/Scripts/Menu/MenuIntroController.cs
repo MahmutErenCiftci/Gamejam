@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
+using AfetUyanisi.Core;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace AfetUyanisi.Menu
 {
     // Ana menünün açılışı: karanlıkta kırmızı 07:00 → oda ve uyuyan çocuk belirir → "AFET UYANIŞI" →
     // butonlar. Rüya bulutları burada yok; Yeni Oyun'dan sonra gelir. Her adım bir UI grubunu (CanvasGroup)
     // ya da sprite grubunu (SpriteFader) belirli bir zamanda açar/kapatır; sıra ve süreler Inspector'dan
-    // ayarlanır. Space veya tıklama ile atlanır.
+    // ayarlanır. Space, Enter veya tıklama ile atlanır.
     public class MenuIntroController : MonoBehaviour
     {
         [Serializable]
@@ -98,14 +98,7 @@ namespace AfetUyanisi.Menu
                 Finish();
         }
 
-        static bool SkipPressed()
-        {
-            Keyboard keyboard = Keyboard.current;
-            if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
-                return true;
-            Mouse mouse = Mouse.current;
-            return mouse != null && mouse.leftButton.wasPressedThisFrame;
-        }
+        static bool SkipPressed() => GameInput.SkipPressed || GameInput.ClickPressed;
 
         // Her grubu, ona ait en son biten adımın hedef değerine getirir ve menü girdisini açar.
         void Finish()

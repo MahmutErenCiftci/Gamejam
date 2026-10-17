@@ -215,8 +215,17 @@ namespace AfetUyanisi.Chapters
                 return;
             }
             var anchor = matches.FirstOrDefault(v => v.cameraAnchor != null);
-            if (anchor != null)
-                chapterCamera.ShowPoint(anchor.cameraAnchor.position, cut);
+            if (anchor == null) return;
+            // Yakın kamera (GameCameraSettings): iç mekân odası ekrana sığmayabilir; oyuncuyu oda içeriğinde takip et.
+            if (GameCameraSettings.FollowInRooms && playerObject != null && playerObject.activeInHierarchy
+                && anchor.root != null && !RoomFraming.HasOwnBackdrop(anchor.root.transform))
+            {
+                var frame = RoomFraming.Frame(anchor.root.scene, anchor.root.transform, anchor.cameraAnchor.position,
+                    chapterCamera.GetComponent<Camera>());
+                chapterCamera.FollowArea(playerObject.transform, frame, cut);
+                return;
+            }
+            chapterCamera.ShowPoint(anchor.cameraAnchor.position, cut);
         }
 
         /// <summary>Ortam ışığını (Global Light 2D) verilen renge/şiddete seconds içinde geçirir (0 = hemen).</summary>

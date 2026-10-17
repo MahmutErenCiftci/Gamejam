@@ -181,29 +181,51 @@ namespace AfetUyanisi.Chapters.Flood
             pushRoutine = null;
         }
 
-        // Geçmişte, girilen yerden en az distance (zemin uzaklığı) geride kalan en yeni nokta; yoksa en eski nokta.
+        // Geçmişte, girilen yerden en az distance (zemin uzaklığı) geride kalan ve hiçbir açık tehlike alanının İÇİNDE
+        // OLMAYAN en yeni nokta; yoksa dışarıdaki en eski nokta; o da yoksa alanın en yakın dış noktası.
+        // (Hedef alanın içinde kalırsa OnTriggerStay aynı yere tekrar tekrar iterdi: sonsuz geri itme döngüsü.)
         private Vector2 PickSafeTarget(Vector2 from, float distance, PuddleHazard hazard)
         {
-            if (historyCount == 0) return FallbackOutside(from, hazard, distance);
             for (int i = 0; i < historyCount; i++)
             {
                 Vector2 sample = HistoryAt(i);
-                if (GroundDistance(sample, from) >= distance) return sample;
+                if (GroundDistance(sample, from) >= distance && !InsideAnyHazard(sample, hazard)) return sample;
             }
-            return HistoryAt(historyCount - 1);
+            for (int i = historyCount - 1; i >= 0; i--)
+            {
+                Vector2 sample = HistoryAt(i);
+                if (GroundDistance(sample, from) > 0.01f && !InsideAnyHazard(sample, hazard)) return sample;
+            }
+            return NearestOutside(from, hazard, distance);
         }
 
-        // Geçmiş yoksa (ör. alanın içinde doğdu): alanın merkezinden dışarı doğru, alanın dışına çıkana kadar.
-        private static Vector2 FallbackOutside(Vector2 from, PuddleHazard hazard, float distance)
+        private bool InsideAnyHazard(Vector2 p, PuddleHazard hazard)
         {
-            var area = hazard != null ? hazard.Area : null;
-            if (area == null) return from;
-            Vector2 dir = from - (Vector2)area.bounds.center;
-            if (dir.sqrMagnitude < 0.0001f) dir = Vector2.down;
-            dir.Normalize();
-            Vector2 p = from;
-            for (int i = 0; i < 80 && area.OverlapPoint(p); i++) p += dir * 0.05f;
-            return p + dir * Mathf.Max(0.05f, distance * 0.5f);
+            if (hazard != null && hazard.Area != null && hazard.Area.OverlapPoint(p)) return true;
+            foreach (var h in inside)
+                if (h != null && h.isActiveAndEnabled && h.HazardEnabled && h.Area != null && h.Area.OverlapPoint(p)) return true;
+            return false;
+        }
+
+        // Çocuk alanın içinde kaldıysa (geçmiş yok/geçmiş de içerde): 16 yönde dışarı yürüyüp en kısa çıkışı seçer.
+        private Vector2 NearestOutside(Vector2 from, PuddleHazard hazard, float distance)
+        {
+            Vector2 best = from;
+            float bestSteps = float.MaxValue;
+            Vector2 bestDir = Vector2.down;
+            for (int d = 0; d < 16; d++)
+            {
+                float a = d * Mathf.PI * 2f / 16f;
+                Vector2 dir = new Vector2(Mathf.Cos(a), Mathf.Sin(a) * 0.5f).normalized; // izometrik zemin
+                Vector2 p = from;
+                int steps = 0;
+                while (steps < 120 && InsideAnyHazard(p, hazard)) { p += dir * 0.04f; steps++; }
+                if (steps >= 120 || steps >= bestSteps) continue;
+                bestSteps = steps;
+                best = p;
+                bestDir = dir;
+            }
+            return best + bestDir * Mathf.Max(0.05f, distance * 0.5f);
         }
 
         private void EndBlock()

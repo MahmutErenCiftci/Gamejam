@@ -206,6 +206,14 @@ namespace AfetUyanisi.Chapters.Rooms
             if (!string.IsNullOrEmpty(objectiveKey)) objectiveKeys[point] = objectiveKey;
         }
 
+        /// <summary>Noktanın görev anahtarını sonradan değiştirir (ör. çanta alınınca kapı "Door" olur).</summary>
+        protected void SetObjectiveKey(Interactable point, string objectiveKey)
+        {
+            if (point == null) return;
+            if (string.IsNullOrEmpty(objectiveKey)) objectiveKeys.Remove(point);
+            else objectiveKeys[point] = objectiveKey;
+        }
+
         /// <summary>Otomatik test: noktayı oyuncu E'ye basmış gibi kullanır.</summary>
         protected IEnumerator AutoUse(Interactable point)
         {

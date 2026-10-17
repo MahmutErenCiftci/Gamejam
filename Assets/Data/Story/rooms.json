@@ -52,6 +52,20 @@
       ]
     },
     {
+      "id": "ROOM_DESK_F",
+      "title": "Çantayı al (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Çantamı da alayım, okula geç kalmayayım." }
+      ]
+    },
+    {
+      "id": "ROOM_NEED_BAG",
+      "title": "Kapı: çanta alınmadı (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Önce çantamı almalıyım." }
+      ]
+    },
+    {
       "id": "ROOM_WASH_F",
       "title": "Lavabo (Sel)",
       "lines": [

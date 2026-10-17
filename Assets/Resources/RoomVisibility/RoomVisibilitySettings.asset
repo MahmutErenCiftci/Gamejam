@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065d50f275712ae4c8916bfed4699e59, type: 3}
+  m_Name: RoomVisibilitySettings
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Visibility.RoomVisibilitySettings
+  autoInstall: 1
+  excludedScenes:
+  - MainMenu
+  debugLog: 1
+  darknessEnabled: 1
+  darknessColor: {r: 0.03137255, g: 0.078431375, b: 0.12941177, a: 1}
+  adjacentDarkness: 0.6
+  visitedDarkness: 0.68
+  unexploredDarkness: 0.8
+  otherBuildingDarkness: 0.85
+  darkenSeconds: 0.32
+  brightenSeconds: 0.3
+  adjacencyDistance: 0.5
+  cutawayEnabled: 1
+  cutawayAlpha: 0.22
+  cutawayFadeSeconds: 0.18
+  cutawayRestoreSeconds: 0.24
+  playerBodyHeight: 0.9
+  playerBodyHalfWidth: 0.16
+  upperBodyStart: 0.4
+  coverageEnter: 0.35
+  coverageExit: 0.15
+  depthHysteresis: 0.04
+  minOccluderHeight: 0.5
+  interactionOnlyInActiveRoom: 1

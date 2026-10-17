@@ -9,8 +9,10 @@ namespace AfetUyanisi.Chapters.Rooms
     /// siyah ekran → alarm çalar → 1,5 sn açılış → saat 07:00 kırmızı yanıp söner, çocuk yatakta uyur →
     /// "[E] Kalk" (her yerden) → kısa kararma → yatak boşalır, çocuk yatağın yanında güneye bakar → iç ses balonu →
     /// serbest dolaşma. Alarm, oyuncu saatte kapatana kadar çalar.
-    /// Noktalar: saat "Alarmı kapat" (tek sefer), pencere "Dışarı bak", masa "Çantaya bak",
-    /// şemsiye "Şemsiyeyi al" (sadece Sel, tek sefer), kapı "Banyoya git" (→ Bathroom sahnesi).
+    /// Noktalar: saat "Alarmı kapat" (tek sefer), pencere "Dışarı bak", masa Sel'de "Çantanı al" (tek sefer: yerdeki
+    /// çanta kaybolur, Cenk çantalı olur — GameSession.BackpackTaken + CenkOutfit), Deprem'de "Çantaya bak",
+    /// şemsiye "Şemsiyeyi al" (sadece Sel, tek sefer), kapı "Banyoya git" (→ Bathroom sahnesi; Sel'de çanta
+    /// alınmadıysa Cenk "Önce çantamı almalıyım." der ve geçmez).
     /// Etiket ve diyalog ID'leri koddan kurulur (Interactable'lardaki Inspector değerlerinin yerine geçer);
     /// replikler Assets/Data/Story/rooms.json'dadır.
     /// Yatak: bedRenderer'ın sprite'ı bedSleeping ↔ bedEmpty değişir; ayrıca (veya bunun yerine)
@@ -23,6 +25,9 @@ namespace AfetUyanisi.Chapters.Rooms
         private const string WindowId = "ROOM_WINDOW";   // + _F / _E
         private const string DeskId = "ROOM_DESK";
         private const string UmbrellaId = "ROOM_UMBRELLA";
+        private const string TakeBackpackId = "ROOM_DESK_F";  // Sel: "Çantamı da alayım..."
+        private const string NeedBackpackId = "ROOM_NEED_BAG";
+        private const string BackpackObjectPath = "Furniture/Backpack";
 
         [Header("Yatak ve uyanış")]
         [Tooltip("Yatağın SpriteRenderer'ı (uyuyan çocuklu ↔ boş sprite değişir)")]
@@ -48,6 +53,8 @@ namespace AfetUyanisi.Chapters.Rooms
         [SerializeField] private Interactable doorPoint;
         [Tooltip("Şemsiyenin görseli + noktası (alınınca/Deprem'de gizlenir). Boşsa umbrellaPoint'in objesi kullanılır.")]
         [SerializeField] private GameObject umbrellaRoot;
+        [Tooltip("Yerdeki okul çantası (Sel'de alınınca gizlenir). Boşsa sahnede \"Furniture/Backpack\" aranır.")]
+        [SerializeField] private GameObject backpackRoot;
 
         [Header("Geçişler")]
         [SerializeField] private string bathroomScene = GameSceneRouter.BathroomScene;
@@ -64,9 +71,21 @@ namespace AfetUyanisi.Chapters.Rooms
             if (bedPoint != null) bedPoint.SetAvailable(false);
             SetupPoint(clockPoint, "Alarmı kapat", ClockId, false, true, before: StopAlarm, objectiveKey: "Clock");
             SetupPoint(windowPoint, "Dışarı bak", WindowId, true, false, objectiveKey: "Window");
-            SetupPoint(deskPoint, "Çantaya bak", DeskId, false, false, objectiveKey: "Desk");
+            if (backpackRoot == null) backpackRoot = GameObject.Find(BackpackObjectPath);
+
+            // Sel: masanın yanındaki okul çantası alınır (Cenk çantasız başlar). Deprem: eskisi gibi "Çantaya bak".
+            bool backpackHere = !RoomChapter.IsEarthquake && !GameSession.BackpackTaken;
+            if (RoomChapter.IsEarthquake)
+                SetupPoint(deskPoint, "Çantaya bak", DeskId, false, false, objectiveKey: "Desk");
+            else if (backpackHere)
+                SetupPoint(deskPoint, "Çantanı al", TakeBackpackId, false, true, before: TakeBackpack, objectiveKey: "Backpack");
+            else if (deskPoint != null)
+                deskPoint.SetAvailable(false);
             SetupPoint(umbrellaPoint, "Şemsiyeyi al", UmbrellaId, false, true, before: TakeUmbrella, objectiveKey: "Umbrella");
-            SetupPoint(doorPoint, "Banyoya git", "", false, false, before: GoToBathroom, objectiveKey: "Door");
+            // Çanta alınmadan kapı "Bedroom/Door" görevini işaretlemesin (TakeBackpack anahtarı "Door" yapar).
+            SetupPoint(doorPoint, "Banyoya git", "", false, false, before: GoToBathroom,
+                objectiveKey: backpackHere ? "DoorNeedsBackpack" : "Door");
+            SetBackpackVisible(RoomChapter.IsEarthquake || backpackHere);
 
             // Şemsiye sadece Sel'de; bu oynanışta zaten alındıysa da görünmez.
             bool umbrellaHere = !RoomChapter.IsEarthquake && !GameSession.UmbrellaTaken;
@@ -116,7 +135,7 @@ namespace AfetUyanisi.Chapters.Rooms
         {
             yield return AutoUse(clockPoint);
             yield return AutoUse(windowPoint);
-            yield return AutoUse(deskPoint);
+            if (deskPoint != null && deskPoint.Available) yield return AutoUse(deskPoint);
             if (umbrellaPoint != null && umbrellaPoint.Available) yield return AutoUse(umbrellaPoint);
             Log($"otomatik tur bitti (alarm çalıyor mu: {(clock != null && clock.IsRinging)}, şemsiye: {GameSession.UmbrellaTaken})");
             yield return AutoUse(doorPoint);
@@ -137,7 +156,32 @@ namespace AfetUyanisi.Chapters.Rooms
             yield break;
         }
 
-        private IEnumerator GoToBathroom() => ExitTo(bathroomScene, exitFadeSeconds);
+        // Sel: yerdeki çanta kaybolur, Cenk aynı anda çantalı görünür (CenkOutfit), kapı artık geçer.
+        private IEnumerator TakeBackpack()
+        {
+            GameSession.MarkBackpackTaken();
+            SetBackpackVisible(false);
+            CenkOutfit.RefreshAll();
+            SetObjectiveKey(doorPoint, "Door");
+            Log("çanta alındı (Cenk çantalı)");
+            yield break;
+        }
+
+        private IEnumerator GoToBathroom()
+        {
+            if (!RoomChapter.IsEarthquake && !GameSession.BackpackTaken)
+            {
+                Log("kapı: önce çanta alınmalı");
+                yield return Say(NeedBackpackId);
+                yield break;
+            }
+            yield return ExitTo(bathroomScene, exitFadeSeconds);
+        }
+
+        private void SetBackpackVisible(bool visible)
+        {
+            if (backpackRoot != null) backpackRoot.SetActive(visible);
+        }
 
         private void SetUmbrellaVisible(bool visible)
         {

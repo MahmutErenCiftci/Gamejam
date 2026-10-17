@@ -2221,6 +2221,74 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3820767510429057768, guid: 3694a587fcb12184ab1c7647abefffde, type: 3}
   m_PrefabInstance: {fileID: 1183401896}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1276004494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1088701191346949500, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_Name
+      value: FloodSweepCutscene
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501799834930822438, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+--- !u!114 &1276004495 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7331702035367046529, guid: bd922b260d6581f439c881bada9f5003, type: 3}
+  m_PrefabInstance: {fileID: 1276004494}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e573df2ea1a3140b00fde1b916c5ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Cutscenes.FloodSweepCutscene
 --- !u!1001 &1358403430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3263,6 +3331,7 @@ MonoBehaviour:
   routeRainArrive: 0.35
   routeRainLight: 0.15
   signOverlay: {fileID: 476416085}
+  sweepCutscene: {fileID: 1276004495}
   floodResult: {fileID: 571347907}
 --- !u!4 &1801533196
 Transform:
@@ -3475,3 +3544,4 @@ SceneRoots:
   - {fileID: 1440580756}
   - {fileID: 366158985}
   - {fileID: 40392002}
+  - {fileID: 1276004494}

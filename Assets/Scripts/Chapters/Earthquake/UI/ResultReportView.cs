@@ -10,8 +10,10 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>
     /// "AFET FARKINDALIK RAPORU" (maket: S/eqD_mock_report.png): lacivert başlık bandı, rozet + etiket + puan,
     /// ✓/✗ ikonlu 8 istatistik satırı, "Öğrenilecekler" listesi (yanlışlar + ipuçları), [Tekrar Dene] / [Menüye Dön].
-    /// Klavye: ←/→ (A/D) seçim, Enter/Space/E onay, 1 = Tekrar Dene, 2 = Menüye Dön; fare ile tıklanır.
-    /// Seçim report.choice'a "Retry" ya da "Menu" olarak yazılır; sahne geçişini sistem yapar (ekran açık kalır).
+    /// Butonlar: [Devam: Sel Bölümü] (birincil; DEPREM → SEL, Sel sahnesi build listesindeyse) [Tekrar Dene] [Menüye Dön].
+    /// Klavye: ←/→ (A/D) seçim, Enter/Space/E onay, 1/2/3 = soldan sağa buton; fare ile tıklanır.
+    /// Seçim report.choice'a "Next", "Retry" ya da "Menu" olarak yazılır ("Next"te önce ekran kararır);
+    /// sahne geçişini sistem yapar (EarthquakeResultManager.ApplyChoice; ekran açık kalır).
     /// Arayüzü kodla kurar (Canvas sıralaması 95).
     /// </summary>
     public class ResultReportView : ResultReportViewBase
@@ -22,6 +24,11 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private string notesTitle = "Öğrenilecekler";
         [SerializeField] private string retryLabel = "Tekrar Dene";
         [SerializeField] private string menuLabel = "Menüye Dön";
+        [Tooltip("Birincil buton: menüye dönmeden sıradaki bölüme (DEPREM → SEL) geçer. Sonraki bölüm sahnesi yoksa gizlenir.")]
+        [SerializeField] private string continueLabel = "Devam: Sel Bölümü";
+        [SerializeField] private bool showContinue = true;
+        [Tooltip("Devam seçilince ekranın kararma süresi (sn); sonra yeni bölüm kendi giriş kartıyla açılır")]
+        [SerializeField] private float continueFadeSeconds = 0.6f;
         [Tooltip("Rozet seçimi için puan eşikleri: USTA, HAZIRLIKLI, GELİŞİYOR, DAHA FAZLA ÖĞREN (veri dosyasındaki etiket eşikleriyle aynı tutun).")]
         [SerializeField] private int[] tierMinScores = { 85, 65, 40, 0 };
         [Tooltip("'Öğrenilecekler' listesinde en fazla kaç madde (tekrarlar ayıklanır)")]
@@ -31,6 +38,8 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         public const string ChoiceRetry = "Retry";
         public const string ChoiceMenu = "Menu";
+        /// <summary>"Devam: Sel Bölümü" (EarthquakeResultManager.ApplyChoice → GameSceneRouter.ContinueToNextChapter).</summary>
+        public const string ChoiceNext = "Next";
 
         private const float PanelW = 440f, PanelH = 330f;
         private const int RowCount = 9;
@@ -59,8 +68,12 @@ namespace AfetUyanisi.Chapters.Earthquake
         private Text labelText, scoreText;
         private readonly List<Row> rows = new List<Row>();
         private Text notesText;
-        private readonly Image[] buttons = new Image[2];
-        private readonly EqButton[] eqButtons = new EqButton[2];
+        // Buton sırası: 0 = Devam (yalnız sonraki bölüm varsa), 1 = Tekrar Dene, 2 = Menüye Dön.
+        private const int BtnNext = 0, BtnRetry = 1, BtnMenu = 2;
+        private readonly Image[] buttons = new Image[3];
+        private readonly EqButton[] eqButtons = new EqButton[3];
+        private readonly List<int> order = new List<int>(); // görünen butonlar, soldan sağa
+        private Image blackout;
         private int focus;
         private int clicked = -1;
 
@@ -116,8 +129,14 @@ namespace AfetUyanisi.Chapters.Earthquake
             EqUi.TL(notesText.rectTransform, 40f, notesY + 17f, 384f, PanelH - 36f - (notesY + 17f));
             EqUi.BestFit(notesText, 7);
 
-            BuildButton(0, retryLabel, 94f);
-            BuildButton(1, menuLabel, 230f);
+            BuildButton(BtnNext, continueLabel);
+            BuildButton(BtnRetry, retryLabel);
+            BuildButton(BtnMenu, menuLabel);
+
+            // Devam seçilince kararma (yeni bölüm siyahtan kendi giriş kartıyla açılır)
+            blackout = EqUi.Img("Blackout", canvas.transform, null, new Color(0f, 0f, 0f, 0f), skin, false);
+            EqUi.Stretch(blackout.rectTransform);
+            blackout.gameObject.SetActive(false);
 
             group.alpha = 0f;
             canvas.gameObject.SetActive(false);
@@ -145,14 +164,19 @@ namespace AfetUyanisi.Chapters.Earthquake
             return r;
         }
 
-        private void BuildButton(int i, string label, float x)
+        /// <summary>Birincil (yeşil) buton: Devam varsa o, yoksa Tekrar Dene (eski görünüm).</summary>
+        private bool IsPrimary(int i) => order.Count > 0 && order[0] == i;
+
+        private static string ButtonName(int i) => i == BtnNext ? "ContinueButton" : i == BtnRetry ? "RetryButton" : "MenuButton";
+
+        private readonly Text[] buttonLabels = new Text[3];
+
+        private void BuildButton(int i, string label)
         {
-            var sprite = i == 0 ? EqUi.S(skin, s => s.ButtonStart) : EqUi.S(skin, s => s.Button);
-            var img = EqUi.Img(i == 0 ? "RetryButton" : "MenuButton", panel, sprite, EqUi.Ink, skin, true);
-            EqUi.TL(img.rectTransform, x, PanelH - 34f, 116f, 18f);
-            EqUi.Fallback(img, EqUi.Ink, i == 0 ? EqUi.Green : EqUi.Navy, skin);
-            var t = EqUi.Txt("Label", img.transform, font, 9, i == 0 ? EqUi.White : EqUi.Cream, TextAnchor.MiddleCenter,
-                i == 0 ? EqUi.ShadowGreen : EqUi.Ink);
+            var img = EqUi.Img(ButtonName(i), panel, EqUi.S(skin, s => s.Button), EqUi.Ink, skin, true);
+            EqUi.TL(img.rectTransform, 0f, PanelH - 34f, 116f, 18f);
+            EqUi.Fallback(img, EqUi.Ink, EqUi.Navy, skin);
+            var t = EqUi.Txt("Label", img.transform, font, 9, EqUi.Cream, TextAnchor.MiddleCenter, EqUi.Ink);
             EqUi.StretchOffsets(t.rectTransform, 2f, 6f, 2f, 1f);
             t.horizontalOverflow = HorizontalWrapMode.Overflow;
             t.text = label;
@@ -163,22 +187,58 @@ namespace AfetUyanisi.Chapters.Earthquake
             b.HoverChanged += h => { if (h) { focus = idx; RefreshButtons(); } };
             buttons[i] = img;
             eqButtons[i] = b;
+            buttonLabels[i] = t;
+        }
+
+        /// <summary>
+        /// Görünen butonları dizer: sonraki bölüm (DEPREM → SEL) yüklenebiliyorsa [Devam: Sel Bölümü] [Tekrar Dene] [Menüye Dön],
+        /// yoksa eskisi gibi [Tekrar Dene] [Menüye Dön]. Birincil (yeşil) buton en soldaki.
+        /// </summary>
+        private void LayoutButtons()
+        {
+            order.Clear();
+            bool next = showContinue && GameSceneRouter.NextChapterAfter(AfetUyanisi.Shared.ChapterId.Earthquake).HasValue &&
+                        Application.CanStreamedLevelBeLoaded(GameSceneRouter.FirstSceneOf(AfetUyanisi.Shared.ChapterId.Flood));
+            if (next) order.Add(BtnNext);
+            order.Add(BtnRetry);
+            order.Add(BtnMenu);
+            buttons[BtnNext].gameObject.SetActive(next);
+
+            float[] widths = next ? new[] { 136f, 116f, 116f } : new[] { 116f, 116f };
+            float[] xs = next ? new[] { 26f, 172f, 298f } : new[] { 94f, 230f };
+            for (int k = 0; k < order.Count; k++)
+            {
+                int id = order[k];
+                EqUi.TL(buttons[id].rectTransform, xs[k], PanelH - 34f, widths[k], 18f);
+                bool primary = k == 0;
+                buttonLabels[id].color = primary ? EqUi.White : EqUi.Cream;
+                var shadow = buttonLabels[id].GetComponent<Shadow>();
+                if (shadow != null) shadow.effectColor = primary ? EqUi.ShadowGreen : EqUi.Ink;
+            }
         }
 
         private void RefreshButtons()
         {
-            for (int i = 0; i < 2; i++)
+            foreach (int i in order)
             {
                 bool f = focus == i;
+                bool primary = IsPrimary(i);
                 var img = buttons[i];
                 if (img.sprite != null && skin != null)
                 {
-                    Sprite normal = i == 0 ? skin.ButtonStart : skin.Button;
-                    Sprite hover = i == 0 ? skin.ButtonStartHover : skin.ButtonHover;
+                    Sprite normal = primary ? skin.ButtonStart : skin.Button;
+                    Sprite hover = primary ? skin.ButtonStartHover : skin.ButtonHover;
                     EqUi.Skin(img, f && hover != null ? hover : normal, EqUi.Green, skin);
                 }
-                else EqUi.FallbackColors(img, f ? EqUi.Amber : EqUi.Ink, i == 0 ? EqUi.Green : EqUi.Navy);
+                else EqUi.FallbackColors(img, f ? EqUi.Amber : EqUi.Ink, primary ? EqUi.Green : EqUi.Navy);
             }
+        }
+
+        private void MoveFocus(int dir)
+        {
+            int k = Mathf.Max(0, order.IndexOf(focus));
+            focus = order[Mathf.Clamp(k + dir, 0, order.Count - 1)];
+            RefreshButtons();
         }
 
         public override IEnumerator Show(EarthquakeReport report)
@@ -215,10 +275,11 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             notesText.text = BuildNotes(report, maxNotes);
 
-            focus = 0;
+            LayoutButtons();
+            focus = order[0];
             clicked = -1;
             RefreshButtons();
-            for (int i = 0; i < 2; i++) eqButtons[i].Interactable = false;
+            for (int i = 0; i < 3; i++) eqButtons[i].Interactable = false;
 
             canvas.gameObject.SetActive(true);
             group.blocksRaycasts = true;
@@ -251,23 +312,24 @@ namespace AfetUyanisi.Chapters.Earthquake
             yield return Pop(badge.rectTransform);
 
             // Seçim
-            for (int i = 0; i < 2; i++) eqButtons[i].Interactable = true;
+            foreach (int i in order) eqButtons[i].Interactable = true;
             int choiceFrame = Time.frameCount;
             int chosen = -1;
             while (chosen < 0)
             {
-                if (clicked >= 0) chosen = clicked;
+                if (clicked >= 0 && order.Contains(clicked)) chosen = clicked;
                 else if (Time.frameCount > choiceFrame)
                 {
+                    // Tuşlar soldan sağa: 1 = birincil (Devam ya da Tekrar Dene), 2, 3
                     int k = GameInput.ChoiceKeyPressed;
-                    if (k == 1 || k == 2) chosen = k - 1;
-                    else if (GameInput.LeftPressed) { focus = 0; RefreshButtons(); }
-                    else if (GameInput.RightPressed) { focus = 1; RefreshButtons(); }
+                    if (k >= 1 && k <= order.Count) chosen = order[k - 1];
+                    else if (GameInput.LeftPressed) MoveFocus(-1);
+                    else if (GameInput.RightPressed) MoveFocus(1);
                     else if (GameInput.ConfirmPressed || GameInput.InteractPressed) chosen = focus;
                 }
                 yield return null;
             }
-            for (int i = 0; i < 2; i++) eqButtons[i].Interactable = false;
+            for (int i = 0; i < 3; i++) eqButtons[i].Interactable = false;
             focus = chosen;
             RefreshButtons();
             // Basılma: 1 px aşağı
@@ -276,7 +338,23 @@ namespace AfetUyanisi.Chapters.Earthquake
             brt.anchoredPosition = p + new Vector2(0f, -1f);
             for (float t = 0f; t < 0.12f; t += Time.unscaledDeltaTime) yield return null;
             brt.anchoredPosition = p;
-            report.choice = chosen == 0 ? ChoiceRetry : ChoiceMenu;
+
+            if (chosen == BtnNext)
+            {
+                // Menüye dönmeden kısa kararma; Sel bölümü siyahtan "SEL BÖLÜMÜ" kartıyla açılır.
+                group.blocksRaycasts = true;
+                blackout.gameObject.SetActive(true);
+                blackout.transform.SetAsLastSibling();
+                float dur = Mathf.Max(0.05f, continueFadeSeconds);
+                for (float t = 0f; t < dur; t += Time.unscaledDeltaTime)
+                {
+                    blackout.color = new Color(0f, 0f, 0f, Mathf.Clamp01(t / dur));
+                    yield return null;
+                }
+                blackout.color = Color.black;
+                report.choice = ChoiceNext;
+            }
+            else report.choice = chosen == BtnRetry ? ChoiceRetry : ChoiceMenu;
         }
 
         /// <summary>Raporu kapatır (sistem sahneyi değiştirmeden devam edecekse).</summary>

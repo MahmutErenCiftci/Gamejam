@@ -11,7 +11,10 @@ namespace AfetUyanisi.Core
     public static class GameSceneRouter
     {
         public const string MainMenuScene = "MainMenu";
-        public const string FloodScene = "FloodChapter";
+        /// <summary>Sel bölümü: akşam mahalle seli (Assets/Scenes/Chapters/Flood/FloodEvening.unity). Eski sabah akışının yerine geçer.</summary>
+        public const string FloodScene = "FloodEvening";
+        /// <summary>Eski sabah sel akışının bölüm sahnesi (Bedroom → Bathroom → FloodChapter). Artık oyunda kullanılmıyor, silinmedi.</summary>
+        public const string LegacyFloodScene = "FloodChapter";
         public const string EarthquakeScene = "EarthquakeChapter";
         /// <summary>Deprem modu (120 sn farkındalık simülasyonu) sahnesi: Assets/Scenes/Chapters/Earthquake/EarthquakeHome.unity.</summary>
         public const string EarthquakeHomeScene = "EarthquakeHome";
@@ -32,8 +35,8 @@ namespace AfetUyanisi.Core
 
         /// <summary>
         /// Bölümü başlatır. Kilitli bölümde hiçbir şey yapmaz (menü "Yakında" gösterir).
-        /// Gerçek akış: Bedroom → Bathroom → bölüm sahnesi (mutfaktan, bkz. ContinueChapterAfterRooms).
-        /// Bedroom sahnesi Build Settings'te yoksa eskisi gibi doğrudan bölüm sahnesi açılır (açılış orada oynar).
+        /// Sel → FloodEvening (akşam mahalle seli), Deprem → EarthquakeHome. Bu sahneler build listesinde yoksa eski akış:
+        /// Bedroom → Bathroom → bölüm sahnesi (mutfaktan, bkz. ContinueChapterAfterRooms), o da yoksa doğrudan bölüm sahnesi.
         /// </summary>
         public static void LoadChapter(ChapterId chapter)
         {
@@ -44,6 +47,14 @@ namespace AfetUyanisi.Core
             }
 
             GameSession.StartChapter(chapter);
+
+            // Sel: akşam mahalle seli kendi sahnesinde baştan sona oynar (yatak odası/banyo açılışı yok).
+            if (chapter == ChapterId.Flood && Application.CanStreamedLevelBeLoaded(FloodScene))
+            {
+                Debug.Log($"[GameSceneRouter] Sel bölümü başlıyor: '{FloodScene}'.");
+                SceneManager.LoadScene(FloodScene);
+                return;
+            }
 
             // Deprem modu kendi sahnesinde baştan sona oynar (yatak odası + salon + koridor + toplanma alanı).
             if (chapter == ChapterId.Earthquake && Application.CanStreamedLevelBeLoaded(EarthquakeHomeScene))
@@ -60,16 +71,19 @@ namespace AfetUyanisi.Core
                 return;
             }
 
+            string direct = chapter == ChapterId.Flood ? LegacyFloodScene : SceneNameOf(chapter);
             Debug.Log($"[GameSceneRouter] {chapter} başlıyor: '{BedroomScene}' Build Settings'te yok, " +
-                      $"doğrudan '{SceneNameOf(chapter)}' açılıyor (sabah açılışı bölüm sahnesinde oynar).");
-            SceneManager.LoadScene(SceneNameOf(chapter));
+                      $"doğrudan '{direct}' açılıyor (sabah açılışı bölüm sahnesinde oynar).");
+            SceneManager.LoadScene(direct);
         }
 
         /// <summary>Oda sahnelerinden sonra açılacak bölüm sahnesi (bölüm seçili değilse ya da yüklenemiyorsa null).</summary>
         public static string ChapterSceneAfterRooms()
         {
             if (!GameSession.CurrentChapter.HasValue) return null;
-            string scene = SceneNameOf(GameSession.CurrentChapter.Value);
+            var current = GameSession.CurrentChapter.Value;
+            // Odalar yalnız eski sabah akışında kullanılır: Sel için eski bölüm sahnesine devam eder.
+            string scene = current == ChapterId.Flood ? LegacyFloodScene : SceneNameOf(current);
             return !string.IsNullOrEmpty(scene) && Application.CanStreamedLevelBeLoaded(scene) ? scene : null;
         }
 
@@ -95,7 +109,53 @@ namespace AfetUyanisi.Core
             return true;
         }
 
-        /// <summary>Sonuç ekranındaki "Tekrar Dene" (Bedroom varsa bölüm yatak odasından yeniden başlar).</summary>
+        /// <summary>LoadChapter'ın açacağı ilk sahnenin adı (menü build listesini bununla kontrol eder).</summary>
+        public static string FirstSceneOf(ChapterId chapter)
+        {
+            if (chapter == ChapterId.Flood && Application.CanStreamedLevelBeLoaded(FloodScene)) return FloodScene;
+            if (chapter == ChapterId.Earthquake && Application.CanStreamedLevelBeLoaded(EarthquakeHomeScene)) return EarthquakeHomeScene;
+            if (Application.CanStreamedLevelBeLoaded(BedroomScene)) return BedroomScene;
+            return chapter == ChapterId.Flood ? LegacyFloodScene : SceneNameOf(chapter);
+        }
+
+        /// <summary>Bölüm sırası kesindir: DEPREM → SEL. Bitirilen bölümden sonraki bölüm (yoksa null).</summary>
+        public static ChapterId? NextChapterAfter(ChapterId finished) =>
+            finished == ChapterId.Earthquake ? ChapterId.Flood : (ChapterId?)null;
+
+        private static bool nextChapterRequested;
+
+        /// <summary>
+        /// Deprem raporundaki "Devam: Sel Bölümü": menüye dönmeden sıradaki bölümü başlatır. Yalnız bir kez çalışır
+        /// (çift tıklama / aynı karede iki girdi ikinci yüklemeyi başlatmaz; yeni sahne yüklenince sıfırlanır).
+        /// Sonraki bölüm yoksa ya da sahnesi yüklenemiyorsa false döner.
+        /// </summary>
+        public static bool ContinueToNextChapter(ChapterId finished)
+        {
+            var next = NextChapterAfter(finished);
+            if (!next.HasValue || !Application.CanStreamedLevelBeLoaded(FirstSceneOf(next.Value))) return false;
+            if (nextChapterRequested)
+            {
+                Debug.Log("[GameSceneRouter] Sonraki bölüm zaten yükleniyor, ikinci istek yok sayıldı.");
+                return true;
+            }
+            nextChapterRequested = true;
+            SceneManager.sceneLoaded -= ClearNextRequest;
+            SceneManager.sceneLoaded += ClearNextRequest;
+            Debug.Log($"[GameSceneRouter] {finished} bitti → {next.Value} (menüsüz geçiş).");
+            LoadChapter(next.Value);
+            return true;
+        }
+
+        private static void ClearNextRequest(Scene scene, LoadSceneMode mode)
+        {
+            nextChapterRequested = false;
+            SceneManager.sceneLoaded -= ClearNextRequest;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics() => nextChapterRequested = false;
+
+        /// <summary>Sonuç ekranındaki "Tekrar Dene": şu anki bölümü baştan açar (Sel → FloodEvening; Sel tekrarı depremi başlatmaz).</summary>
         public static void RestartCurrentChapter()
         {
             if (GameSession.CurrentChapter.HasValue)

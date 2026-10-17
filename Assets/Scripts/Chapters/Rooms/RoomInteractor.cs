@@ -123,23 +123,29 @@ namespace AfetUyanisi.Chapters.Rooms
             var best = CanInteract() ? FindNearest() : null;
             if (best != current)
             {
-                ClearCurrent();
+                if (current != null) current.SetHighlighted(false);
                 current = best;
                 if (current != null)
                 {
                     current.SetHighlighted(true);
                     string label = string.IsNullOrEmpty(current.ActionLabel) ? current.name : current.ActionLabel;
-                    if (hint != null) hint.Show(current.KeyLabel, label);
+                    if (hint != null) hint.Show(current.KeyLabel, label, current.PromptAnchor, current.PromptOffset);
                     else Debug.Log($"[RoomInteractor]   [{current.KeyLabel}] {label}", current);
                 }
+                else if (hint != null) hint.Hide();
             }
+
+            // Etiketi evre/görev değiştirebilir; aynı hedefte eski yazı kalmasın.
+            if (current != null && hint != null)
+                hint.Show(current.KeyLabel, string.IsNullOrEmpty(current.ActionLabel) ? current.name : current.ActionLabel,
+                    current.PromptAnchor, current.PromptOffset);
 
             if (current != null && Time.frameCount > ignoreInputUntilFrame && GameInput.InteractPressed)
                 StartCoroutine(Use(current));
         }
 
         private bool CanInteract() =>
-            interactionEnabled && player != null && player.isActiveAndEnabled && player.CanMove;
+            interactionEnabled && !IsSaying && player != null && player.isActiveAndEnabled && player.CanMove;
 
         private Interactable FindNearest()
         {
@@ -149,6 +155,7 @@ namespace AfetUyanisi.Chapters.Rooms
             foreach (var p in points)
             {
                 if (p == null || !p.Available || !p.isActiveAndEnabled) continue;
+                if (!Visibility.RoomVisibilityManager.AllowsInteraction(p)) continue; // karanlık (aktif olmayan) odadaki nokta
                 float d = player.GroundDistanceTo(p.transform.position);
                 if (d <= p.UseRadius && d < bestDistance)
                 {
@@ -180,6 +187,7 @@ namespace AfetUyanisi.Chapters.Rooms
             }
 
             IsBusy = true;
+            if (hint != null) hint.Press();
             ClearCurrent();
             SetPlayerControl(false);
             Debug.Log($"[RoomInteractor] {Time.timeSinceLevelLoad:0.0} sn → {target.name} ({target.ActionLabel})", target);
@@ -263,5 +271,7 @@ namespace AfetUyanisi.Chapters.Rooms
         {
             if (player != null) player.CanMove = canMove;
         }
+
+        private void OnDisable() => ClearCurrent();
     }
 }

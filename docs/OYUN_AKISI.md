@@ -33,6 +33,8 @@ Ana Menü (≈10 sn)
        └─ Sonuç ve bilgilendirme (≈20 sn) → Tekrar Dene / Menüye Dön
 ```
 
+> **Güncel sıra (17 Eki):** Deprem (`EarthquakeHome`, §7.4) → rapor → **[Devam: Sel Bölümü]** → kararma → "SEL BÖLÜMÜ" kartı → Sel (`FloodEvening`, §6.0, akşam mahalle seli) → sonuç → Tekrar Dene (yalnız Sel) / Menü. Menüden Sel ve Deprem ayrı ayrı da başlatılabilir. Aşağıdaki "ortak açılış" (uyanış + sabah rutini) yalnız eski sabah sel akışı içindir ve artık oynanmaz.
+
 - **Olay seçimi menüdedir:** oyuncu bulutu seçer, bölüm o anda başlar. Görsel 1'deki "Olay Seçimi" adımı budur.
 - **Uyanış ve Sabah Rutini iki bölümde ortaktır.** Aynı oda, banyo ve mutfak sahneleri kullanılır, bu da çizim ve iş yükünü yarıya indirir. Hikâye mutfaktaki **TV haberi** ile ayrışır: Sel'de yağmur uyarısı, Deprem'de sarsıntı haberi.
 - Kilitli bulutlar (Orman Yangını, Heyelan) hiçbir sahneye gitmez, sadece "Yakında" yazar.
@@ -110,7 +112,35 @@ Oyuncunun ilk 50 saniyesi iki bölümde de aynıdır ve oyunun tonunu belirler: 
 
 ## 6. SEL bölümü — "Bilinçli ol, güvende kal"
 
-### 6.1 Zaman çizelgesi
+> **Not (güncel, lider kararı 17 Eki):** Oynanış için geçerli Sel akışı artık **§6.0 Akşam mahalle seli**dir. Aşağıdaki §6.1–6.3 eski sabah akışıdır (Bedroom → Bathroom → FloodChapter: mutfak, sokak, otobüs, okul yolu); başvuru için korunmuştur, dosyaları silinmedi ama oyunda kullanılmaz (Build Settings'te kapalı).
+
+### 6.0 Akşam mahalle seli (yeni, uygulanıyor)
+
+Sahne: `Assets/Scenes/Chapters/Flood/FloodEvening.unity`, kod `Assets/Scripts/Chapters/FloodEvening/` (tek akış/süre/sonuç sorumlusu `FloodEveningController`). `GameSceneRouter.LoadChapter(ChapterId.Flood)` bu sahneyi açar (menüdeki Sel bulutu ve depremden sonra "Devam: Sel Bölümü"). Ana karakter **Cenk**, deprem modundaki görünümüyle (çantasız yelekli; lider kararı: yağmurluk/çanta yok, `Cenk.prefab` aynen). Toplam ≈ 3–4 dk.
+
+**Bölüm sırası kesindir: DEPREM → SEL.** Deprem raporu (AFET FARKINDALIK RAPORU) okunduktan sonra birincil buton **[Devam: Sel Bölümü]** (1 / Enter / fare): menüye dönmeden kısa kararma → Sel sahnesi. **[Tekrar Dene]** depremi baştan açar, **[Menüye Dön]** menüye döner. Geçiş yalnız bir kez tetiklenir (`GameSceneRouter.ContinueToNextChapter`). Sel'in "Tekrar Dene"si yalnız Sel'i yeniden açar, depremi başlatmaz.
+
+**Akış (durumlar: Intro → Warning → RouteChoice → SafeRoute → Gate → CodePanel → FinalApproach → Success / Timeout)**
+
+| # | Durum | Ne olur | Oyuncu |
+|---|---|---|---|
+| A0 | Intro | Siyah ekranda **"SEL BÖLÜMÜ"** kartı + *"Başka bir gün — şiddetli yağışlı bir akşam"* (depremin seli tetiklediği ya da hasarlı eve dönüldüğü izlenimi yok). Kararma açılır: akşam, koyu mavi mahalle, sıcak sokak lambaları, hafif yağmur; kamera mahalleden Cenk'e kayar (`FE_INTRO`). | E/Space/Enter/tık ile kart geçilebilir |
+| A | Warning | Cenk kuru ve güvenli noktada; telefon bildirimi (oyun içi kurgu, kurum logosu yok): *"Şiddetli yağış nedeniyle su baskını riski var. Suyla kaplı ve kapatılmış yollara girmeyin. Belirlenmiş güvenli yüksek bölgeye yönelin."* (`AlertNotification`, `FloodWarningPhone`) | **[Tamam]** fare/klavye; aynı girdi sonraki etkileşimi tetiklemez |
+| B | (gizli süre) | Uyarı kapanıp kontrol açılınca **120 sn** aktif oynanış süresi başlar. Sayısal geri sayım YOK; sağda **"SU SEVİYESİ"** çevresel göstergesi (altında "Suya hiç girme!"), yağmur, çevredeki su ve aşamalı uyarılar (≈%33 *Yağış artıyor*, ≈%66 *Su yükseliyor*, ≈%85 *Dikkatli ol*). Süre diyalog, okuma paneli (söylenti, ipucu), geçiş ve sonuç ekranında durur; aktif mini oyunlarda (dal, kapı, şifre) akar. Süre, su göstergesi, yağmur ve çevresel su aynı ilerleme değerini kullanır (`FloodEveningHub.Progress01`). | Dolaşır |
+| C | RouteChoice | Yol ayrımı: **alçak yol** (kısa, su basmış, kapatılmış) ve **yüksek yol** (uzun, kuru, işaretli güvenli rota). Alçak yola yönelen Cenk suya ulaşmadan bariyerde durdurulur ve geri itilir: *"Bu yol kapalı. Suyun derinliğini ve akıntısını bilemezsin. Güvenli rotaya dön."* Yanlış tercih sonuç için kaydedilir; kısa yol hiçbir avantaj vermez. | Yüksek yola yürür |
+| D | SafeRoute | **Söylenti kontrolü:** *"Kestirme açıkmış, herkes oradan gidiyor."* — Kaynak: bilinmiyor. Duyuru kontrol edilince kapalı yol ve güvenli rota bilgisi gösterilir; doğrulanmamış söylenti doğru seçenek değildir. | [E] panoyu incele |
+| E | SafeRoute | **Geçit:** kuru ve korunaklı geçitte devrilmiş ağaç/dal çocuğa taşıtılmaz; *engeli aşmaya çalışma, işaretli alternatif geçidi aç* — [E] + kısa ilerleme çubuğu, bir kez. | [E] |
+| F | SafeRoute | **Rüzgâr:** açık ve kuru geçitte yön ikonu + kısa açıklama; hareketi hafifçe yavaşlatır, suya/tehlikeye itmez; diyalog/UI sırasında ve korunaklı alanda kapalı. "Rüzgârı takip et" mesajı verilmez; güvenli rota işaretleri belirleyicidir. | Yürür |
+| G | Gate | **Bahçe kapısı** (güvenli yüksek bölgenin kuru girişi): [E] Kapıyı aç → kolu fareyle dairesel çevir ya da klavye eşdeğeri, net ilerleme göstergesi; tamamlanınca kalıcı açık; uzaklaşma/iptalde kontrol geri gelir. | Fare / klavye |
+| H | CodePanel | **Şifre paneli** (korunaklı giriş): 4 hane (**4725**), ipuçları aynı güvenli alanda, okunur ve tekrar incelenebilir, tek anlamlı; fare + klavye rakamları, Sil / Onayla / Kapat; yanlış kod açıklama verir, kilitlenme yok; panel açıkken yürüme yok. Oyuncu ipucu için sel bölgesine gönderilmez. | Rakamlar |
+| I | FinalApproach | Yağmur ve ses artar, su yalnız çevresel tehlike alanlarında yükselir. Hedef: **"Belirlenmiş güvenli yüksek bölgeye ulaş."** Herhangi bir ev/apartman otomatik güvenli sayılmaz; hedef oyun içinde işaretli, selden etkilenmeyen, deprem hasarı olmayan alandır. | Yürür |
+| J1 | Success | Güvenli alana girince süre ve çevresel tehlike durur: **"Güvenli bölgeye ulaştın."**, doğru kararlar ve düzeltilen yanlışlar | — |
+| J2 | Timeout | Karakter boğulurken/suya girerken gösterilmez; olduğu kuru noktada durur: *"Rota için ayrılan oyun süresi doldu. Güvenli yerde kal ve yardım yönlendirmelerini izle."* Aynı karede varış ve süre dolması → başarı (tek sonuç). | — |
+| J | Sonuç | Öğrenilenler: Suyla kaplı yola girme · Kapatılmış yolları kullanma · Söylentinin kaynağını doğrula · Güvenli yüksek bölgelere ilişkin resmî yönlendirmeleri izle · Eve ulaşmak uğruna risk alma. Alt not: 120 sn yalnızca oyunun süresidir. | **[Sel Bölümünü Tekrar Dene]** [1] / **[Menüye Dön]** [2] (fare, ←/→ + Enter) |
+
+**ID'ler:** diyalog `Assets/Data/Story/flood_evening.json` (`FE_*`); görevler `Assets/Resources/Objectives/objectives_flood_evening.json` (`FE_WARN`, `FE_HIGH`, `FE_RUMOR` bonus, `FE_PASSAGE`, `FE_GATE`, `FE_CODE`, `FE_SAFE`); modül adımları (Hub): `warning_read`, `high_road`, `rumor_checked`, `branch_cleared`, `gate_opened`, `code_opened`, `safe_zone`; yanlışlar: `low_road`, `rumor_trusted`, `wrong_code`.
+
+### 6.1 Zaman çizelgesi (ESKİ sabah akışı — oyunda kullanılmıyor)
 
 | # | ID | Süre | Mekân | Olay | Oyuncu ne yapar | Kim yapar |
 |---|---|---|---|---|---|---|
@@ -253,7 +283,7 @@ Bu bölüm, oynanışta **§7.1'deki eski akışın yerini alır** (eski metin b
 | D | Sarsıntı sonrası | Toz çöker; yerde kitaplar, pencere ve ayna önünde cam kırıkları. Anne: *"Cenk! İyi misin?"* (`EQH_AFTER_MOTHER`) → **Q4** (5 sn). Cam kırıklarının üstünden geçince uyarı (ceza yok, kayıt). Deprem çantası **şimdi** alınır (`EQH_BAG`); sarsıntı sırasında asla. Daire kapısı açılır (sarsıntıdan önce kilitliydi: "Sarsıntı sırasında dışarı koşulmaz"). | Tehlikeleri kontrol eder, çantayı alır, çıkar |
 | D1 | Koridor | **Asansör**: E → *"Asansör kullanılmaz!"* (yanlış karar kaydı, ilerletmez). **Merdiven** + ACİL ÇIKIŞ işareti: E → *"Merdivenden sakince inelim."* (`EQH_EXIT`) | Merdiveni seçer |
 | D2 | Toplanma alanı | Park, TOPLANMA ALANI tabelası. Anne ile kısa konuşma (`EQH_ASSEMBLY`): bina kontrol edilmeden içeri girilmez, resmî duyurular takip edilir. | Diyaloğu geçer |
-| E | Rapor | **AFET FARKINDALIK RAPORU** (aşağıda) | Tekrar Dene / Menüye Dön |
+| E | Rapor | **AFET FARKINDALIK RAPORU** (aşağıda) | **Devam: Sel Bölümü** (birincil, menüsüz Sel'e geçer, §6.0) / Tekrar Dene (deprem baştan) / Menüye Dön |
 
 **Anne soruları** (metinler birebir, ✅ doğru)
 
@@ -292,7 +322,7 @@ Raporda: doğru/yanlış cevap ve süre dolması sayısı, bulunan tehlikeler (i
 | **✅ Öğrenilenler** | Sel uyarılarını ciddiye al · Sosyal medyadaki bilgileri sorgula · Su birikintilerinden uzak dur · Kapanan yolları kullanma · Güvenli alternatif rota seç · Resmî kurumların duyurularını takip et | Sarsıntı anında ÇÖK – KAPAN – TUTUN · Sarsıntı bitince sakin kal · Asansör kullanma · Acil durum çantanı hazır tut · Resmî açıklamaları takip et · Toplanma alanına git |
 | **❌ Yanlış davranışların** | Oyuncunun bu oynanışta seçtiği yanlış seçeneklerin "yanlış davranış" maddeleri (§6.2). Yanlış yoksa bu kutu gizlenir. | Aynı şekilde (§7.2) |
 | **Alt not** | *Bu bir farkındalık oyunudur. Gerçek bir afette resmî kurumların talimatlarına uy.* | aynı |
-| **Butonlar** | **Tekrar Dene** (`GameSceneRouter.RestartCurrentChapter`) · **Menüye Dön** (`GameSceneRouter.ReturnToMenu`) | aynı |
+| **Butonlar** | **Sel Bölümünü Tekrar Dene** (`GameSceneRouter.RestartCurrentChapter`, yalnız Sel) · **Menüye Dön** (`GameSceneRouter.ReturnToMenu`) | **Devam: Sel Bölümü** (`GameSceneRouter.ContinueToNextChapter`) · **Tekrar Dene** · **Menüye Dön** |
 
 Yerleşim, Görsel 2'deki gibi iki kutudur: solda yeşil "Öğrenilenler", sağda kırmızı "Yanlış Davranışların".
 
@@ -339,6 +369,7 @@ Sözleşmeler `Assets/Scripts/Shared/Contracts/` altındaki soyut sınıflardır
 | 8 | Sel'in sonu | Görsel 2 "Yanlış Bilgi"de (160–200 sn) bitiyor, paneli 6 yerine "8" numaralı · Görsel 1'de Riskli Bölge + Güvenli Rota var | **Görsel 1'in devamı eklendi** (F07, F08) | Görsel 2'deki numara yazım hatası olarak kabul edildi. |
 | 9 | Olay seçimi ne zaman? | Görsel 2 akışında 4. adım (rutinden sonra) | **Menüdeki bulutla** | Kullanıcı isteği: "Sel'e/Deprem'e tıklayınca başlayan oyun". Açılış iki bölümde ortak, hikâye haber sahnesinde ayrışıyor. |
 | 10 | Telefon "erken uyarı" bildirimi | Paket: kurgu içi uyarı (P0) | **Kullanılmıyor** | Görsellerde yok ve uyarının hep geleceği izlenimini verebilir. Eren'in NEWS-02 görevi Deprem TV haberine çevrildi. |
+| 11 | Sel bölümünün içeriği ve sırası (17 Eki) | AGENTS P0 #3: uyanma + el-yüz yıkama + TV hava uyarısı + bilinçsiz anne diyaloğu + okul yolu + söylenti + güvenli karar · Lider master prompt'u: depremden sonra akşam mahalle seli | **Akşam mahalle seli (§6.0) eski sabah akışının yerine geçer; sıra DEPREM → SEL** | Lider kararı. Eski akışın zorunlu maddelerinden **uyanma, el-yüz yıkama, TV haberi, anne diyaloğu (F_D1), otobüs ve F_D2 kararı yeni akışta yok**; söylenti/kaynak kontrolü, kapalı yol, güvenli karar ve öğrenme ekranı korunuyor. AGENTS.md §1 P0 #3 ve §8'deki "MainMenu → Flood → Result → MainMenu → Earthquake → Result" test sırası bu karara göre güncellenmeli (sahibi: Mahmut). Sel telefon uyarısı kurgu içi sel uyarısıdır, deprem erken uyarısı değildir (#10 geçerli). |
 
 ---
 

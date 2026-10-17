@@ -59,6 +59,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private UnityEvent onAftermath = new UnityEvent();
         [Tooltip("İsteğe bağlı gürleme sesi (klibi varsa döngüde çalar)")]
         [SerializeField] private AudioSource rumbleAudio;
+        [SerializeField, Range(0f, 1f)] private float generatedRumbleVolume = 0.22f;
+        private AudioClip generatedRumble;
+        private float rumbleBaseVolume;
 
         [Header("Performans ölçümü")]
         [Tooltip("Sarsıntı boyunca ortalama kare süresini ölçüp bitince Console'a yazar (kabul testi 19)")]
@@ -95,6 +98,27 @@ namespace AfetUyanisi.Chapters.Earthquake
                     if (l.lightType == Light2D.LightType.Global) { globalLight = l; break; }
             }
             if (globalLight != null) baseLightIntensity = globalLight.intensity;
+            if (rumbleAudio == null)
+            {
+                rumbleAudio = gameObject.AddComponent<AudioSource>();
+                rumbleAudio.playOnAwake = false;
+                rumbleAudio.spatialBlend = 0;
+                rumbleAudio.volume = generatedRumbleVolume;
+                const int rate = 22050;
+                var samples = new float[rate * 2];
+                var noise = new System.Random(19);
+                float filtered = 0;
+                for (int i = 0; i < samples.Length; i++)
+                {
+                    filtered = Mathf.Lerp(filtered, (float)noise.NextDouble() * 2f - 1f, 0.04f);
+                    float t = (float)i / rate;
+                    samples[i] = (Mathf.Sin(t * 40f * Mathf.PI * 2f) + 0.5f * Mathf.Sin(t * 63f * Mathf.PI * 2f) + filtered) * 0.25f;
+                }
+                generatedRumble = AudioClip.Create("EarthquakeRumble_Original", samples.Length, 1, rate, false);
+                generatedRumble.SetData(samples, 0);
+                rumbleAudio.clip = generatedRumble;
+            }
+            if (rumbleAudio != null) rumbleBaseVolume = rumbleAudio.volume;
             foreach (var d in dust)
                 if (d != null) d.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
@@ -122,6 +146,24 @@ namespace AfetUyanisi.Chapters.Earthquake
                 rumbleAudio.Play();
             }
             if (onRumbleStart != null) onRumbleStart.Invoke();
+            SetIntensity(0.3f);
+        }
+
+        /// <summary>Evre şiddeti değişir; eşya sayaçları ve kitaplık sonuçları yeniden başlatılmaz.</summary>
+        public void SetIntensity(float value)
+        {
+            value = Mathf.Clamp01(value);
+            if (cameraShake != null) cameraShake.Intensity = value;
+            foreach (var prop in props) if (prop != null) prop.SetIntensity(value);
+            if (rumbleAudio != null) rumbleAudio.volume = rumbleBaseVolume * value;
+        }
+
+        public void FocusProtection(Vector3 point)
+        {
+            if (cameraShake == null) return;
+            Vector3 offset = point - cameraShake.transform.position;
+            offset.z = 0;
+            cameraShake.FocusOffset = Vector3.ClampMagnitude(offset * 0.15f, 0.25f);
         }
 
         /// <summary>Sarsıntıyı bitirir: kamera yerine döner, eşyalar durulur, toz yayılmayı bırakır, ışık geri gelir.</summary>
@@ -223,8 +265,13 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         private void OnDisable()
         {
+            IsShaking = false;
             if (globalLight != null) globalLight.intensity = baseLightIntensity;
             if (cameraShake != null) cameraShake.Shaking = false;
+            foreach (var prop in props) if (prop != null) prop.EndShake();
+            if (rumbleAudio != null) rumbleAudio.Stop();
         }
+
+        private void OnDestroy() { if (generatedRumble != null) Destroy(generatedRumble); }
     }
 }

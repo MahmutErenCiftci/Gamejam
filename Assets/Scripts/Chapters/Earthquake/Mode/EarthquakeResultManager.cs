@@ -46,6 +46,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField, Range(0f, 1f)] private float fewHazardsRatio = 0.5f;
         [Tooltip("Rapordaki 'Öğrenilecekler' listesinin en fazla madde sayısı (konu başına bir kısa madde)")]
         [SerializeField, Range(1, 8)] private int maxLessons = 5;
+        [Tooltip("Sabitlenmemiş kitaplık devrildiyse (oyuncu uzaktaydı) eksi")]
+        [SerializeField] private int fallenShelfMinus = 5;
+        [Tooltip("Kitaplık oyuncunun üstüne devrildiyse puanın üst sınırı (bölüm başarısız)")]
+        [SerializeField] private int injuredScoreCap = 15;
 
         public ResultReportViewBase View { get => view; set => view = value; }
 
@@ -88,7 +92,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             switch (s.protection)
             {
                 case ProtectionOutcome.TableDropCoverHold: score += tableProtection; break;
-                case ProtectionOutcome.InPlaceDropCover: score += inPlaceProtection; break;
+                // Masadan uzaktayken yerinde güvenli biçimde korunmak daha az doğru değildir.
+                case ProtectionOutcome.InPlaceDropCover: score += Mathf.Max(inPlaceProtection, tableProtection); break;
                 case ProtectionOutcome.Exposed: score += exposedProtection; break;
             }
             if (s.protection != ProtectionOutcome.None && s.protectionIncomplete) score -= incompleteHoldMinus;
@@ -97,9 +102,17 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (!s.elevatorTried && s.usedStairs) score += noElevatorPoints;
             score += timeWeight * (1f - Mathf.Clamp01((float)s.penaltySeconds / Mathf.Max(1, timePenaltyForZero)));
             score -= Mathf.Min(exposureMinusMax, exposureMinus * s.Exposures);
+            if (s.bookshelfFell && !s.hitByBookshelf) score -= fallenShelfMinus;
             r.score = Mathf.Clamp(Mathf.RoundToInt(score), 0, 100);
             r.label = res.LabelFor(r.score);
             r.labelMessage = res.MessageFor(r.score);
+            if (s.hitByBookshelf)
+            {
+                // Kitaplık üstüne devrildi: bölüm başarısız sayılır (puan tavanı), oyuncu tekrar denemeye yönlendirilir.
+                r.score = Mathf.Min(r.score, injuredScoreCap);
+                r.label = "YARALANDIN";
+                r.labelMessage = "Sabitlenmemiş kitaplık üstüne devrildi. Tekrar dene: önce sabitle, sarsıntıda uzak dur.";
+            }
 
             // --- Kararlar ---
             int correct = s.CorrectAnswers;
@@ -118,6 +131,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             r.remainingText = s.acceleratedReady ? res.readyText : FormatTime(r.remainingAtQuake);
 
             BuildLessons(r, s, data);
+            if (s.protectionBalancePlayed)
+                r.tips.Add(string.Format((data.protection.balance ?? new EqBalanceTexts()).score, s.protectionBalanceScore));
             if (r.prepTotal > 0 && r.prepMissed.Count > 0)
             {
                 int shownMissing = Mathf.Min(3, r.prepMissed.Count);
@@ -202,6 +217,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 if (!string.IsNullOrEmpty(line) && !r.mistakes.Contains(line)) r.mistakes.Add(line);
             }
 
+            if (s.hitByBookshelf) Add("bookshelfHit", "Kitaplık üstüne devrildi: uzun mobilyaları depremden ÖNCE duvara sabitle, sarsıntıda yanlarında durma.");
             if (s.protection == ProtectionOutcome.None) Add("protect");
             foreach (var a in s.answers)
             {
@@ -229,10 +245,21 @@ namespace AfetUyanisi.Chapters.Earthquake
             // r.tips boş kalır: kısa maddeler zaten konuyu ve doğru davranışı söylüyor (rapor ekranı en fazla maxLessons madde gösterir).
         }
 
-        /// <summary>Rapordaki seçimi uygular: Retry → RestartCurrentChapter, Menu → ReturnToMenu.</summary>
+        /// <summary>
+        /// Rapordaki seçimi uygular: Next → sıradaki bölüm (DEPREM → SEL, menüsüz, yalnız bir kez),
+        /// Retry → RestartCurrentChapter (depremi baştan), Menu → ReturnToMenu.
+        /// </summary>
         public static void ApplyChoice(string choice)
         {
-            if (choice == "Retry")
+            if (choice == "Next")
+            {
+                if (!GameSceneRouter.ContinueToNextChapter(ChapterId.Earthquake))
+                {
+                    Debug.LogWarning("[EQ] Sonraki bölüm (Sel) yüklenemedi; menüye dönülüyor.");
+                    GameSceneRouter.ReturnToMenu();
+                }
+            }
+            else if (choice == "Retry")
             {
                 if (!GameSession.CurrentChapter.HasValue) GameSession.StartChapter(ChapterId.Earthquake);
                 GameSceneRouter.RestartCurrentChapter();

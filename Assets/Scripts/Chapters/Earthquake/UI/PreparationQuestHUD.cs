@@ -815,10 +815,19 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (built && (compactK > 0f && compactK < 1f)) ApplyBar();
         }
 
+        private InfoCardView infoCards;
+
+        // İnceleme kartı açıkken "GÖREV TAMAMLANDI!" toast'ı kartın üstüne çıkmasın: kart kapanınca oynar.
+        private bool InfoCardOpen()
+        {
+            if (infoCards == null) infoCards = FindAnyObjectByType<InfoCardView>(FindObjectsInactive.Include);
+            return infoCards != null && infoCards.IsCardOpen;
+        }
+
         private void UpdateFx(float dt)
         {
             if (fxCooldown > 0f) fxCooldown -= dt;
-            if (pendingFx.Count > 0 && fxCooldown <= 0f && (mode == Mode.Shown || mode == Mode.Reveal))
+            if (pendingFx.Count > 0 && fxCooldown <= 0f && (mode == Mode.Shown || mode == Mode.Reveal) && !InfoCardOpen())
             {
                 string id = pendingFx.Dequeue();
                 PlayCompletion(id);
