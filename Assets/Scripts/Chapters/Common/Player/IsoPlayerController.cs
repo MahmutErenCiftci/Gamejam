@@ -4,24 +4,34 @@ using UnityEngine;
 namespace AfetUyanisi.Chapters
 {
     /// <summary>
-    /// İzometrik oyuncu: W/A/S/D (veya oklar) ile 8 yöne yürür. Rigidbody2D sayesinde duvar ve eşya
-    /// collider'larına çarpar, kaymadan durur. Diyalog, haber ve karar sırasında bölüm akışı CanMove = false yapar.
-    /// Pivot ayaktadır: derinlik sıralaması ve etkileşim mesafesi ayak noktasına göre hesaplanır.
+    /// İzometrik oyuncu: W/A/S/D (veya oklar) ile 8 yöne yürür; hız ivmelenerek artar ve yavaşlayarak durur.
+    /// Rigidbody2D sayesinde duvar ve eşya collider'larına çarpar. Diyalog, haber ve karar sırasında bölüm akışı
+    /// CanMove = false yapar. Pivot ayaktadır: derinlik sıralaması ve etkileşim mesafesi ayak noktasına göre hesaplanır.
+    /// Animasyon yönü hızdan değil girdiden gelir; duvara doğru basılınca da o yöne bakıp yürür.
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     public class IsoPlayerController : MonoBehaviour
     {
         [Tooltip("Yürüme hızı (dünya birimi / sn)")]
         [SerializeField] private float speed = 2f;
-        [Tooltip("Dikey hız çarpanı: izometrik zeminde yukarı-aşağı yürüme daha kısa görünür (1 = yatayla eşit)")]
-        [SerializeField] private float verticalSpeedScale = 0.75f;
+        [Tooltip("Dikey hız çarpanı. 0.5 ile çapraz girdi tam 2:1 izometrik eksen boyunca ilerler ve zemindeki hız 8 yönde de eşit olur (1 = yatayla eşit ekran hızı)")]
+        [SerializeField] private float verticalSpeedScale = 0.5f;
+        [Tooltip("Hedef hıza doğru ivmelenme (birim / sn²)")]
+        [SerializeField] private float acceleration = 30f;
+        [Tooltip("Tuş bırakılınca yavaşlama (birim / sn²)")]
+        [SerializeField] private float deceleration = 40f;
         [SerializeField] private IsoCharacterAnimator characterAnimator;
+        [Tooltip("Açıksa oyuncu sahne başlar başlamaz yürüyebilir (test sahneleri için). Bölümlerde kapalı kalır, CanMove'u bölüm akışı açar.")]
+        [SerializeField] private bool controlOnStart;
 
         private Rigidbody2D body;
-        private Vector2 velocity;
+        private Vector2 targetVelocity;
 
-        /// <summary>false iken oyuncu yerinde durur (diyalog, karar, geçişler).</summary>
+        /// <summary>false iken oyuncu yavaşlayıp durur ve bekleme animasyonuna geçer (diyalog, karar, geçişler).</summary>
         public bool CanMove { get; set; }
+
+        /// <summary>Rigidbody'nin anlık hızı (sadece okuma; testler için).</summary>
+        public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
 
         private void Awake()
         {
@@ -29,31 +39,39 @@ namespace AfetUyanisi.Chapters
             body.gravityScale = 0f;
             body.freezeRotation = true;
             body.interpolation = RigidbodyInterpolation2D.Interpolate;
+            body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             if (characterAnimator == null) characterAnimator = GetComponent<IsoCharacterAnimator>();
+        }
+
+        private void Start()
+        {
+            if (controlOnStart) CanMove = true;
         }
 
         private void Update()
         {
             Vector2 input = CanMove ? GameInput.MoveVector : Vector2.zero;
-            velocity = new Vector2(input.x, input.y * verticalSpeedScale) * speed;
+            targetVelocity = new Vector2(input.x, input.y * verticalSpeedScale) * speed;
             if (characterAnimator != null) characterAnimator.SetMotion(input);
         }
 
         private void FixedUpdate()
         {
-            body.linearVelocity = velocity;
+            Vector2 current = body.linearVelocity;
+            float rate = targetVelocity.sqrMagnitude > 0.0001f ? acceleration : deceleration;
+            body.linearVelocity = Vector2.MoveTowards(current, targetVelocity, rate * Time.fixedDeltaTime);
         }
 
         private void OnDisable()
         {
-            velocity = Vector2.zero;
+            targetVelocity = Vector2.zero;
             if (body != null) body.linearVelocity = Vector2.zero;
         }
 
         /// <summary>Oyuncuyu ışınlar ve yüzünü verilen yöne çevirir (oda değişince).</summary>
         public void PlaceAt(Vector3 position, Vector2 facing)
         {
-            velocity = Vector2.zero;
+            targetVelocity = Vector2.zero;
             if (body != null)
             {
                 body.linearVelocity = Vector2.zero;

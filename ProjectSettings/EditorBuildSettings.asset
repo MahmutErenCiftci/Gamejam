@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/MainMenu.unity
     guid: 9180b6ecd3cdd2248ad4a4399ddf5ab7
   - enabled: 1
+    path: Assets/Scenes/Rooms/Bedroom.unity
+    guid: 55fd79ffa9f31f34a9a184363df14ebe
+  - enabled: 1
+    path: Assets/Scenes/Rooms/Bathroom.unity
+    guid: 54ef15808a1df9a44a89d43161ef0215
+  - enabled: 1
     path: Assets/Scenes/Chapters/Flood/FloodChapter.unity
     guid: 6dbf3c68fe66f5c4eb4533fdcf5a4398
   - enabled: 1

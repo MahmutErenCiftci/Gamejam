@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using AfetUyanisi.Core;
 using AfetUyanisi.Shared;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AfetUyanisi.Chapters
 {
@@ -9,6 +11,8 @@ namespace AfetUyanisi.Chapters
     /// Dünyada E ile kullanılan nokta: yatak ("Kalk"), kapı ("Banyoya git"), lavabo ("Yüzünü yıka")...
     /// Oyuncu zeminde useRadius kadar yaklaşınca "[E] ..." ipucu ve vurgu açılır, uzaklaşınca kapanır.
     /// Bölüm akışı obje adıyla bulur ve bekler: <c>yield return UsePoint("Bed", "Kalk");</c>
+    /// Odalarda (Rooms/RoomInteractor) serbest dolaşmada da kullanılır: en yakın Available nokta ipucunu gösterir,
+    /// E ile kullanılınca Used/onUsed tetiklenir, dialogueId varsa o diyalog oynar, oneShot ise bir daha kullanılamaz.
     /// </summary>
     public class Interactable : MonoBehaviour
     {
@@ -20,7 +24,54 @@ namespace AfetUyanisi.Chapters
         [Tooltip("İsteğe bağlı: sadece kullanılabilirken açık olan vurgu (bu objenin bir çocuğu)")]
         [SerializeField] private GameObject highlight;
 
+        [Header("Oda etkileşimi (RoomInteractor)")]
+        [Tooltip("Kapalıysa RoomInteractor bu noktayı yok sayar (ör. lavabo kullanılmadan mutfak kapısı)")]
+        [SerializeField] private bool available = true;
+        [Tooltip("Kullanılınca oynatılacak Story JSON sahnesi (ör. ROOM_DESK). Boşsa diyalog yok.")]
+        [SerializeField] private string dialogueId = "";
+        [Tooltip("İşaretliyse dialogueId'nin sonuna bölüm eki eklenir: Sel _F, Deprem _E (ROOM_WINDOW → ROOM_WINDOW_F)")]
+        [SerializeField] private bool appendChapterSuffix;
+        [Tooltip("İşaretliyse bir kez kullanılınca Available kapanır (alarm, şemsiye, lavabo)")]
+        [SerializeField] private bool oneShot;
+        [Tooltip("Kullanıldığı anda (diyalogdan önce) çağrılır: ses, efekt...")]
+        [SerializeField] private UnityEvent onUsed = new UnityEvent();
+
+        /// <summary>Kullanıldığı anda (diyalogdan önce) tetiklenir.</summary>
+        public event Action<Interactable> Used;
+
         public string ActionLabel => actionLabel;
+        public string KeyLabel => keyLabel;
+        public float UseRadius => useRadius;
+        public bool Available => available;
+        public string DialogueId => dialogueId;
+        public bool AppendChapterSuffix => appendChapterSuffix;
+        public bool OneShot => oneShot;
+
+        /// <summary>RoomInteractor'ın bu noktayı önerip önermeyeceği.</summary>
+        public void SetAvailable(bool value)
+        {
+            available = value;
+            if (!value) SetHighlight(false);
+        }
+
+        /// <summary>Oda akışının noktayı koddan kurması için (Inspector'daki etiket/diyalog/oneShot değerlerinin yerine geçer).</summary>
+        public void Setup(string label, string dialogue, bool chapterSuffix, bool isOneShot)
+        {
+            actionLabel = label ?? "";
+            dialogueId = dialogue ?? "";
+            appendChapterSuffix = chapterSuffix;
+            oneShot = isOneShot;
+        }
+
+        /// <summary>Vurguyu açar/kapatır (RoomInteractor en yakın noktayı vurgular).</summary>
+        public void SetHighlighted(bool visible) => SetHighlight(visible);
+
+        /// <summary>Used olayını ve onUsed UnityEvent'ini tetikler (RoomInteractor çağırır).</summary>
+        public void RaiseUsed()
+        {
+            Used?.Invoke(this);
+            if (onUsed != null) onUsed.Invoke();
+        }
 
         private void Awake()
         {

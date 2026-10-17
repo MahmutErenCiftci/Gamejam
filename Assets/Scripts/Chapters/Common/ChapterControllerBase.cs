@@ -86,6 +86,8 @@ namespace AfetUyanisi.Chapters
 
         protected virtual void Start()
         {
+            // Banyodan karartılarak gelindiyse ilk kare de siyah olsun (mutfak EnterRoom ile açılır).
+            if (GameSession.MorningDoneInRooms) SetBlack();
             StartCoroutine(RunChapter());
         }
 
@@ -190,9 +192,19 @@ namespace AfetUyanisi.Chapters
         /// <summary>
         /// İki bölümün ortak açılışı (OYUN_AKISI §5.1): yatakta uyanış → odada yürüme → banyo → mutfağa çıkış.
         /// Bitince ekran karanlıktır; bölüm bir sonraki odaya EnterRoom ile geçer.
+        /// Açılış oda sahnelerinde (Bedroom → Bathroom) zaten oynandıysa (GameSession.MorningDoneInRooms) atlanır:
+        /// ekran siyah, oyuncu görünür bırakılır, bölüm doğrudan mutfaktan (EnterRoom F03/E03 ile açılarak) başlar.
         /// </summary>
         protected IEnumerator PlayMorningIntro(string wakeStepId, string routineStepId)
         {
+            if (GameSession.MorningDoneInRooms)
+            {
+                Debug.Log($"[{Chapter}] Sabah açılışı ({wakeStepId}, {routineStepId}) oda sahnelerinde oynandı, atlandı → mutfak.");
+                SetBlack(); // banyo karartarak çıktı; sonraki EnterRoom siyahtan açılsın (pat diye görünmesin)
+                SetPlayerVisible(true);
+                yield break;
+            }
+
             // 1–3: siyah ekran, oda açılır, çocuk yatakta uyuyor
             EnterStep(wakeStepId);
             SetBlack();

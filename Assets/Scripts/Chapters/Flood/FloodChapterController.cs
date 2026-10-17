@@ -1,4 +1,5 @@
 using System.Collections;
+using AfetUyanisi.Core;
 using AfetUyanisi.Shared;
 
 namespace AfetUyanisi.Chapters.Flood
@@ -27,7 +28,9 @@ namespace AfetUyanisi.Chapters.Flood
             yield return Say("F04_PREPARE");
             // TODO(Mahmut): alınan eşya HUD ikonu (P1)
             yield return UsePoint("Coat", "Yağmurluğu al");
-            yield return UsePoint("Umbrella", "Şemsiyeyi al");
+            // Şemsiye yatak odasında alındıysa mutfakta tekrar sorulmaz
+            if (GameSession.UmbrellaTaken) SetRoomObjectVisible("Umbrella", false);
+            else yield return UsePoint("Umbrella", "Şemsiyeyi al");
             yield return UsePoint("ExitDoor", "Dışarı çık");
 
             // F05 (1:50–2:30) yağmurlu sokak

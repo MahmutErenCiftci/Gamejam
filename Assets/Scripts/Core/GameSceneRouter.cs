@@ -28,7 +28,11 @@ namespace AfetUyanisi.Core
             }
         }
 
-        /// <summary>Bölümü başlatır. Kilitli bölümde hiçbir şey yapmaz (menü "Yakında" gösterir).</summary>
+        /// <summary>
+        /// Bölümü başlatır. Kilitli bölümde hiçbir şey yapmaz (menü "Yakında" gösterir).
+        /// Gerçek akış: Bedroom → Bathroom → bölüm sahnesi (mutfaktan, bkz. ContinueChapterAfterRooms).
+        /// Bedroom sahnesi Build Settings'te yoksa eskisi gibi doğrudan bölüm sahnesi açılır (açılış orada oynar).
+        /// </summary>
         public static void LoadChapter(ChapterId chapter)
         {
             if (!IsUnlocked(chapter))
@@ -38,10 +42,50 @@ namespace AfetUyanisi.Core
             }
 
             GameSession.StartChapter(chapter);
+
+            if (Application.CanStreamedLevelBeLoaded(BedroomScene))
+            {
+                Debug.Log($"[GameSceneRouter] {chapter} başlıyor: önce oda sahnesi '{BedroomScene}'.");
+                SceneManager.LoadScene(BedroomScene);
+                return;
+            }
+
+            Debug.Log($"[GameSceneRouter] {chapter} başlıyor: '{BedroomScene}' Build Settings'te yok, " +
+                      $"doğrudan '{SceneNameOf(chapter)}' açılıyor (sabah açılışı bölüm sahnesinde oynar).");
             SceneManager.LoadScene(SceneNameOf(chapter));
         }
 
-        /// <summary>Sonuç ekranındaki "Tekrar Dene".</summary>
+        /// <summary>Oda sahnelerinden sonra açılacak bölüm sahnesi (bölüm seçili değilse ya da yüklenemiyorsa null).</summary>
+        public static string ChapterSceneAfterRooms()
+        {
+            if (!GameSession.CurrentChapter.HasValue) return null;
+            string scene = SceneNameOf(GameSession.CurrentChapter.Value);
+            return !string.IsNullOrEmpty(scene) && Application.CanStreamedLevelBeLoaded(scene) ? scene : null;
+        }
+
+        /// <summary>
+        /// Banyodaki "[E] Mutfağa git": sabah açılışının odalarda bittiğini kaydeder (GameSession.MorningDoneInRooms)
+        /// ve şu anki bölümün sahnesini açar; bölüm kendi açılışını atlayıp mutfaktan (F03/E03) başlar.
+        /// Bölüm sahnesi yüklenemiyorsa hata yazar, hiçbir şey yapmaz ve false döner.
+        /// </summary>
+        public static bool ContinueChapterAfterRooms()
+        {
+            string scene = ChapterSceneAfterRooms();
+            if (scene == null)
+            {
+                Debug.LogError($"[GameSceneRouter] Odalardan sonra bölüm sahnesi açılamadı (bölüm: " +
+                               $"{(GameSession.CurrentChapter.HasValue ? GameSession.CurrentChapter.Value.ToString() : "yok")}); " +
+                               "sahne Build Settings listesinde mi?");
+                return false;
+            }
+
+            GameSession.MarkMorningDoneInRooms();
+            Debug.Log($"[GameSceneRouter] Odalar bitti → '{scene}' (mutfaktan devam).");
+            SceneManager.LoadScene(scene);
+            return true;
+        }
+
+        /// <summary>Sonuç ekranındaki "Tekrar Dene" (Bedroom varsa bölüm yatak odasından yeniden başlar).</summary>
         public static void RestartCurrentChapter()
         {
             if (GameSession.CurrentChapter.HasValue)
@@ -55,6 +99,25 @@ namespace AfetUyanisi.Core
         {
             GameSession.Clear();
             SceneManager.LoadScene(MainMenuScene);
+        }
+
+        public const string BedroomScene = "Bedroom";
+        public const string BathroomScene = "Bathroom";
+
+        /// <summary>
+        /// Bölüm içinde bir odadan diğerine geçer (yatak odası → banyo → ...). Bölüm bilgisi (GameSession) korunur.
+        /// Sahne Build Settings listesinde yoksa hata yazar ve hiçbir şey yapmaz.
+        /// </summary>
+        public static void LoadRoom(string sceneName)
+        {
+            if (string.IsNullOrEmpty(sceneName) || !Application.CanStreamedLevelBeLoaded(sceneName))
+            {
+                Debug.LogError($"[GameSceneRouter] Oda sahnesi '{sceneName}' Build Settings listesinde yok, yüklenmedi.");
+                return;
+            }
+
+            Debug.Log($"[GameSceneRouter] Oda yükleniyor: {sceneName}");
+            SceneManager.LoadScene(sceneName);
         }
     }
 }
