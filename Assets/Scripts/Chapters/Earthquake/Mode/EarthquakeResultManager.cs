@@ -46,6 +46,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField, Range(0f, 1f)] private float fewHazardsRatio = 0.5f;
         [Tooltip("Rapordaki 'Öğrenilecekler' listesinin en fazla madde sayısı (konu başına bir kısa madde)")]
         [SerializeField, Range(1, 8)] private int maxLessons = 5;
+        [Tooltip("Sabitlenmemiş kitaplık devrildiyse (oyuncu uzaktaydı) eksi")]
+        [SerializeField] private int fallenShelfMinus = 5;
+        [Tooltip("Kitaplık oyuncunun üstüne devrildiyse puanın üst sınırı (bölüm başarısız)")]
+        [SerializeField] private int injuredScoreCap = 15;
 
         public ResultReportViewBase View { get => view; set => view = value; }
 
@@ -97,9 +101,17 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (!s.elevatorTried && s.usedStairs) score += noElevatorPoints;
             score += timeWeight * (1f - Mathf.Clamp01((float)s.penaltySeconds / Mathf.Max(1, timePenaltyForZero)));
             score -= Mathf.Min(exposureMinusMax, exposureMinus * s.Exposures);
+            if (s.bookshelfFell && !s.hitByBookshelf) score -= fallenShelfMinus;
             r.score = Mathf.Clamp(Mathf.RoundToInt(score), 0, 100);
             r.label = res.LabelFor(r.score);
             r.labelMessage = res.MessageFor(r.score);
+            if (s.hitByBookshelf)
+            {
+                // Kitaplık üstüne devrildi: bölüm başarısız sayılır (puan tavanı), oyuncu tekrar denemeye yönlendirilir.
+                r.score = Mathf.Min(r.score, injuredScoreCap);
+                r.label = "YARALANDIN";
+                r.labelMessage = "Sabitlenmemiş kitaplık üstüne devrildi. Tekrar dene: önce sabitle, sarsıntıda uzak dur.";
+            }
 
             // --- Kararlar ---
             int correct = s.CorrectAnswers;
@@ -202,6 +214,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 if (!string.IsNullOrEmpty(line) && !r.mistakes.Contains(line)) r.mistakes.Add(line);
             }
 
+            if (s.hitByBookshelf) Add("bookshelfHit", "Kitaplık üstüne devrildi: uzun mobilyaları depremden ÖNCE duvara sabitle, sarsıntıda yanlarında durma.");
             if (s.protection == ProtectionOutcome.None) Add("protect");
             foreach (var a in s.answers)
             {

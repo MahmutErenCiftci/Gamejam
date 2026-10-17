@@ -110,6 +110,8 @@ namespace AfetUyanisi.Chapters.Flood
         private string pendingWarning;
         private bool streetWalking;
         private int waterWarnings;                       // su birikintisi / suya yaklaşma geri itmeleri (sonuç ekranı)
+        private const string RouteWaterWarning = "F07_WATER_WARNING"; // okul yolunda akan suya girme
+        private int sweptOnRoute;                        // okul yolunda suya girilip sele kapılma ara sahnesi oynadı
         private readonly DecisionResult d1Result = new DecisionResult();
         private readonly DecisionResult d2Result = new DecisionResult();
 
@@ -232,30 +234,44 @@ namespace AfetUyanisi.Chapters.Flood
             var depart = routeBus != null ? StartCoroutine(routeBus.Depart()) : null;
             yield return Say("F07_ARRIVE");
 
-            // Serbest yürüyüş: tabelayı incele (suya yaklaşınca uyarı + geri itme, PuddleHazard)
+            // Serbest yürüyüş okul kapısına kadar. Tabela isteğe bağlı (bonus görev "Tabelayı incele"): okunursa
+            // F07_RISK + F08_BRIDGE replikleri; okunmadan da kapıya gidilebilir (suya yaklaşınca uyarı + geri itme).
             var sign = FindPoint("Sign");
-            if (sign != null && !AutoAdvance)
-                yield return StreetWalk(_ => false, new WalkPoint { Point = sign, Label = "Tabelayı incele", EndsWalk = true });
-            else
+            var gate = FindRoomComponent<Collider2D>("GateZone");
+            if (sign == null || AutoAdvance)
+            {
                 yield return WaitForInteract("Tabelayı incele");
-            NotifyObjective("event", "F07_SIGN");
-            if (sign != null) FacePlayerTowards(sign.transform.position);
-            if (signOverlay != null) signOverlay.SetActive(true);
-            yield return Say("F07_RISK");
-            if (signOverlay != null) signOverlay.SetActive(false);
+                yield return ReadSign(sign);
+            }
+            else
+                yield return StreetWalk(_ => IsPlayerInZone(gate), new WalkPoint { Point = sign, Label = "Tabelayı incele", OnUse = () => ReadSign(sign) });
             if (depart != null) yield return depart;
 
             // F08: yağmur hafifler; köprü üstü yaya yolundan okul kapısına
             EnterStep("F08_SAFEROUTE");
             if (routeRain != null) routeRain.SetIntensity(routeRainLight, 4f);
-            yield return Say("F08_BRIDGE");
-            var gate = FindRoomComponent<Collider2D>("GateZone");
-            yield return StreetWalk(_ => IsPlayerInZone(gate));
+            if (AutoAdvance || sign == null) yield return StreetWalk(_ => IsPlayerInZone(gate));
             NotifyObjective("event", "F08_GATE"); // köprüden geçildi, okul kapısı
             if (Objectives != null) yield return Objectives.WaitForFeedback(0.6f, 3f); // tik öğretmen konuşmadan görünsün
             var teacher = FindRoomObject("Teacher");
             if (teacher != null) FacePlayerTowards(teacher.transform.position);
             yield return Say("F08_SAFEROUTE");
+        }
+
+        // Tabela (isteğe bağlı): okunur, uyarı replikleri; tabela bir daha kullanılamaz, yağmur hafifler.
+        private IEnumerator ReadSign(Interactable sign)
+        {
+            NotifyObjective("event", "F07_SIGN");
+            if (sign != null)
+            {
+                FacePlayerTowards(sign.transform.position);
+                sign.SetAvailable(false);
+            }
+            if (signOverlay != null) signOverlay.SetActive(true);
+            yield return Say("F07_RISK");
+            if (signOverlay != null) signOverlay.SetActive(false);
+            if (routeRain != null) routeRain.SetIntensity(routeRainLight, 4f);
+            yield return Say("F08_BRIDGE");
         }
 
         private FloodResultView.Details BuildResultDetails()
@@ -276,6 +292,12 @@ namespace AfetUyanisi.Chapters.Flood
                 if (d.mistakes.Exists(m => m.title == title)) continue;
                 d.mistakes.Add(new FloodResultView.Mistake { title = title, why = c.feedback });
             }
+            if (sweptOnRoute > 0)
+                d.mistakes.Insert(0, new FloodResultView.Mistake
+                {
+                    title = "Akan suya girmek",
+                    why = "Diz hizasındaki akıntı bile insanı sürükleyebilir. Köprüyü ya da güvenli yolu kullan; şanslıydın."
+                });
             return d;
         }
 
@@ -490,6 +512,13 @@ namespace AfetUyanisi.Chapters.Flood
                         SetPlayerControl(false);
                         var tracker = Player != null ? Player.GetComponent<PlayerHazardTracker>() : null;
                         while (tracker != null && tracker.IsPushing) yield return null;
+                        // Okul yolunda köprü yerine akan suya girildi: sele kapılma ara sahnesi, sonra güvenli kenardan devam.
+                        if (warning == RouteWaterWarning && sweepCutscene != null)
+                        {
+                            sweptOnRoute++;
+                            yield return PlaySweepCutscene();
+                            yield return FadeIn(0.4f);
+                        }
                         yield return Say(warning);
                         pendingWarning = null;
                         SetPlayerControl(true);

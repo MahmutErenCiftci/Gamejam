@@ -41,6 +41,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         public bool bagInspected;
         /// <summary>Kitaplık mini oyunu: doğru malzeme + iki bağlantı + TEST ET başarılı (deprem ÖNCESİ hazırlık).</summary>
         public bool bookshelfSecured;
+        /// <summary>Sabitlenmemiş kitaplık sarsıntıda devrildi.</summary>
+        public bool bookshelfFell;
+        /// <summary>Devrilen kitaplık oyuncunun üstüne düştü (yanındaydı, masa altında değildi) → bölüm "YARALANDIN" ile biter.</summary>
+        public bool hitByBookshelf;
         /// <summary>Afet çantası mini oyunu sahnede var (EmergencyBagInteractable).</summary>
         public bool emergencyBagMinigame;
         /// <summary>Afet çantası sarsıntıdan ÖNCE hazırlandı (gerekli eşyalar + fermuar kapandı).</summary>
