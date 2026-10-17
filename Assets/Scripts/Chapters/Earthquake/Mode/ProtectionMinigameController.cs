@@ -87,6 +87,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         private GameObject braceVisual;
 
         public bool IsRunning { get; private set; }
+
+        /// <summary>Oyuncu Çök ile masanın altına geçti mi (sarsıntı sonrası RestoreAfter'a kadar).</summary>
+        public bool IsUnderTable => slidUnder;
         public Result LastResult { get; private set; }
 
         /// <summary>Otomatik test girdisi (Manual = gerçek tuşlar).</summary>

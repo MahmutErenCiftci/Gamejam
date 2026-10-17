@@ -647,14 +647,18 @@ namespace AfetUyanisi.Chapters.Flood
             SetPlayerControl(false);
             yield return FadeOut(0.4f);
             HideHint();
-            StartCoroutine(sweepCutscene.Play());
-            yield return null;
-            yield return FadeIn(0.2f);
-            float blackAt = sweepCutscene.Duration - 0.1f;
-            for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
+            // Görev paneli ara sahnenin üstünde görünmesin (okul yolunda serbest yürüyüşteyken açık kalıyordu).
+            using (Objectives != null ? Objectives.DeferFeedback() : null)
+            {
+                StartCoroutine(sweepCutscene.Play());
                 yield return null;
-            SetBlack();
-            while (sweepCutscene.IsPlaying) yield return null;
+                yield return FadeIn(0.2f);
+                float blackAt = sweepCutscene.Duration - 0.1f;
+                for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
+                    yield return null;
+                SetBlack();
+                while (sweepCutscene.IsPlaying) yield return null;
+            }
         }
     }
 }

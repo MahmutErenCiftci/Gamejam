@@ -632,6 +632,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 if (shake != null) shake.enabled = false;
             }
             fell = true;
+            // Devrik kitaplık artık sabitlenemez: ipucu "Kitaplığı sabitle" kalmasın.
+            if (inspectable != null && inspectable.Point != null) inspectable.Point.Setup(securedLabel, "", false, false);
             Play(crashClip);
             bool hit = PlayerInFallPath();
             if (mode != null && mode.Stats != null)
@@ -663,7 +665,9 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (player == null) return false;
             Vector3 pos = player.transform.position;
             var protection = FindAnyObjectByType<ProtectionMinigameController>(FindObjectsInactive.Exclude);
-            if (protection != null && protection.FindTable(pos) != null) return false;
+            // Yalnızca gerçekten masanın altına geçtiyse korunur. (Masanın 1.2'lik yaklaşma yarıçapı kitaplığın önünü
+            // kapladığı için eskiden kitaplığın dibinde duran oyuncu hiç yaralanmıyordu.)
+            if (protection != null && protection.IsUnderTable) return false;
             if (InsideFallen(pos)) return true;
             foreach (var zone in FindObjectsByType<HazardZone>(FindObjectsInactive.Exclude))
                 if ((zone.WarningId == "bookshelf" || zone.ExposureKind == "bookshelf") && zone.Contains(pos)) return true;
