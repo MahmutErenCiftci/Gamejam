@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d05f2c8743d9d40a093324eed960cc, type: 3}
+  m_Name: BAGITEM_07_clothes
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.EmergencyItemData
+  id: clothes
+  displayName: "K\u0131yafet"
+  fullName: "Yedek k\u0131yafet"
+  icon: {fileID: 21300000, guid: 08347d6ab464aa8488b121ab262bf9a9, type: 3}
+  category: 0
+  feedback: "Islan\u0131r ya da \xFC\u015F\xFCrsen giyece\u011Fin yedek k\u0131yafet."
+  slotCost: 1

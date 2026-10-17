@@ -176,6 +176,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         private bool timeScaleChanged;
         private float freeSinceQuestion = 999f;
         private string pendingQuestionLogged;
+        private EmergencyBagInteractable emergencyBag;
 
         // --- Testler için okunur durum ---
         public EarthquakePhase Phase => phase;
@@ -374,6 +375,18 @@ namespace AfetUyanisi.Chapters.Earthquake
                 registered.Add(i.Point);
                 if (!i.HasData) Log($"uyarı: '{i.Id}' için JSON inspectables kaydı yok, yedek metin kullanılıyor");
             }
+            // Afet çantası (mini oyun): hazırlıkta sayaç DURMADAN mini oyun açılır; sarsıntıdan sonra çanta alınır.
+            foreach (var bag in FindObjectsByType<EmergencyBagInteractable>(FindObjectsInactive.Include))
+            {
+                if (bag.Point == null || registered.Contains(bag.Point)) continue;
+                var b = bag;
+                if (emergencyBag == null) emergencyBag = b;
+                b.ApplyLabel(EarthquakePhase.Prep);
+                interactor.Register(b.Point, before: () => UseEmergencyBag(b));
+                registered.Add(b.Point);
+                specialPoints.Add(b.Point);
+                stats.emergencyBagMinigame = true;
+            }
             stats.hazardsTotal = inspectables.FindAll(x => x.IsHazard).Count;
             stats.questionsTotal = data.questions != null ? data.questions.Length : 4;
 
@@ -528,10 +541,12 @@ namespace AfetUyanisi.Chapters.Earthquake
                 yield return null;
             }
 
-            // Sarsıntı: açık bir etkileşim varsa bitmesini bekle (normalde sayaç o sırada duraklatılmış olur).
+            // Sarsıntı: açık mini oyunlar (afet çantası...) anında kesilir; açık bir etkileşim varsa bitmesini bekle.
+            Mode.EarthquakeMinigameHub.RequestInterruptAll();
             SetFreeRoam(false);
             DropUnaskedQuestions();
             while (interactor.IsBusy || decisions.IsAsking || transitioning) yield return null;
+            for (float t = 0f; Mode.EarthquakeMinigameHub.AnyOpen && t < 2f; t += Time.unscaledDeltaTime) yield return null;
         }
 
         private string NextDueQuestion()
@@ -686,6 +701,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             Toast("ÖNCE TEHLİKELERİ KONTROL ET", data.after.checkHazards, toastSeconds + 1f);
 
             if (quakeBag != null && quakeBag.Point != null) quakeBag.Point.Setup("Deprem çantasını al", "", false, false);
+            if (emergencyBag != null) emergencyBag.ApplyLabel(EarthquakePhase.After);
             if (apartmentDoorPoint != null)
             {
                 string exitLabel = apartmentDoor != null ? apartmentDoor.Label : null;
@@ -710,7 +726,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         {
             phase = EarthquakePhase.Report;
             stats.penaltySeconds = penalties.TotalSeconds();
-            if (!stats.bagTaken) stats.AddMistake("Deprem çantasını almadın.");
+            if (!stats.bagTaken)
+                stats.AddMistake(emergencyBag != null && !stats.emergencyBagPrepared ? "Afet çantasını depremden önce hazırlamadın." : "Deprem çantasını almadın.");
             var report = results.Build(stats, data);
             LastReport = report;
             Log($"E: rapor (puan {report.score}, {report.label})");
@@ -812,6 +829,52 @@ namespace AfetUyanisi.Chapters.Earthquake
             foreach (var r in quakeBag.GetComponentsInChildren<SpriteRenderer>(true)) r.enabled = false;
         }
 
+        /// <summary>
+        /// Afet çantası (EmergencyBagInteractable). Hazırlıkta mini oyunu açar ve hemen döner: sayaç DURMAZ, serbest dolaşma
+        /// mini oyun kapanana kadar kapalıdır (sorular/olaylar araya girmez). Sarsıntıdan sonra: hazırsa çanta alınır
+        /// (bagTaken), değilse "çanta boş" ders kartı. Sarsıntı sırasında kullanılamaz (öncelik Çök–Kapan–Tutun).
+        /// </summary>
+        private IEnumerator UseEmergencyBag(EmergencyBagInteractable bag)
+        {
+            if (phase == EarthquakePhase.Prep && !countdown.HasExpired && !bag.IsPrepared && bag.Minigame != null)
+            {
+                SetFreeRoam(false);
+                bool opened = bag.OpenMinigame(completedBag =>
+                {
+                    if (completedBag)
+                    {
+                        stats.emergencyBagPrepared = true;
+                        stats.AddInspected("emergency_bag", false);
+                        Log("B: afet çantası hazırlandı (mini oyun tamamlandı)");
+                    }
+                    bag.ApplyLabel(phase);
+                    if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+                });
+                Log(opened ? "B: afet çantası mini oyunu açıldı (sayaç akmaya devam ediyor)" : "B: afet çantası mini oyunu açılamadı");
+                if (!opened && phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+                yield break;
+            }
+            if (phase == EarthquakePhase.After)
+            {
+                if (bag.IsPrepared)
+                {
+                    if (stats.bagTaken) yield break;
+                    stats.bagTaken = true;
+                    stats.AddInspected("emergency_bag", false);
+                    Log("D: hazırlanan afet çantası alındı");
+                    bag.MarkTaken();
+                    yield return Say(bagLine);
+                    Toast("AFET ÇANTASI", bag.TakenToast, toastSeconds);
+                    yield break;
+                }
+                bag.MarkEmptyChecked();
+                Log("D: afet çantası hazırlanmamıştı → ders kartı");
+                yield return ShowCard("AFET ÇANTASI HAZIR DEĞİL", bag.EmptyAfterText, HazardClass.Hazard);
+                yield break;
+            }
+            yield return ShowCard(bag.Title, bag.IsPrepared ? bag.ReadyText : "Afet çantası boş. Sarsıntıdan önce hazırlamalısın.", HazardClass.Safety);
+        }
+
         private IEnumerator UseElevator()
         {
             if (phase != EarthquakePhase.After)
@@ -849,7 +912,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                     {
                         bagReminderShown = true;
                         Log("D: çanta alınmadan çıkış denendi → hatırlatma");
-                        yield return ShowCard("DEPREM ÇANTASI", data.after.bagReminder, HazardClass.Safety);
+                        yield return ShowCard(emergencyBag != null ? "AFET ÇANTASI" : "DEPREM ÇANTASI",
+                            emergencyBag != null ? emergencyBag.ExitReminder : data.after.bagReminder, HazardClass.Safety);
                         yield break;
                     }
                     Log("D: daire kapısı → koridor");
@@ -1010,7 +1074,8 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         private void Update()
         {
-            if (interactorPaused && !interactor.IsBusy)
+            // Mini oyunlar (kitaplık, afet çantası) sayacı DURDURMAZ: açık bir mini oyun varsa etkileşim duraklatması kalkar.
+            if (interactorPaused && (!interactor.IsBusy || Mode.EarthquakeMinigameHub.AnyOpen))
             {
                 countdown.PopPause(interactorToken);
                 interactorPaused = false;
@@ -1161,6 +1226,13 @@ namespace AfetUyanisi.Chapters.Earthquake
                 yield return AutoUse(insp.Point);
             }
             if (apartmentDoorPoint != null && thorough) yield return AutoUse(apartmentDoorPoint);
+            if (emergencyBag != null && thorough && !emergencyBag.IsPrepared)
+            {
+                Log("OTO: afet çantası hazır sayıldı (mini oyun otomatik testte oynanmaz)");
+                emergencyBag.MarkPrepared();
+                stats.emergencyBagPrepared = true;
+                emergencyBag.ApplyLabel(phase);
+            }
 
             // 6) Sarsıntıyı bekleyeceği yer
             yield return WaitIdle();
@@ -1198,6 +1270,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     yield return new WaitForSeconds(0.3f);
                 }
             }
+            else if (emergencyBag != null) yield return AutoUse(emergencyBag.Point);
             else if (quakeBag != null) yield return AutoUse(quakeBag.Point);
 
             // Daire kapısı (AllWrong: çantasız ilk deneme hatırlatma verir, ikinci denemede çıkar)

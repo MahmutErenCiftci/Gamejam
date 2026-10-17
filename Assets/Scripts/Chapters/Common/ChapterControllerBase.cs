@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AfetUyanisi.Chapters.Objectives;
 using AfetUyanisi.Chapters.TempUI;
 using AfetUyanisi.Core;
 using AfetUyanisi.Shared;
@@ -82,7 +83,28 @@ namespace AfetUyanisi.Chapters
         private IsoCharacterAnimator playerAnimator;
         private Coroutine ambientBlend;
 
+        private ObjectiveTracker objectives;
+
         protected abstract ChapterId Chapter { get; }
+
+        /// <summary>
+        /// Bölüm görev panelini (ObjectiveTracker + sol üst HUD) kullanıyor mu? Kullanıyorsa adımlar ("step"), etkileşim
+        /// noktaları ("point", "F04_MOTHER/Coat"), diyaloglar ("say"), kararlar ("decision", success = ilk denemede doğru)
+        /// ve haberler ("news") otomatik bildirilir; diyalog/karar/haber açıkken panel gizlenir.
+        /// </summary>
+        protected virtual bool UsesObjectives => false;
+
+        /// <summary>Görev takipçisi (UsesObjectives değilse null).</summary>
+        protected ObjectiveTracker Objectives => objectives;
+
+        /// <summary>Görev olayı bildirir (ör. NotifyObjective("event", "F05_BOARD")).</summary>
+        protected void NotifyObjective(string kind, string key, bool success = true)
+        {
+            if (objectives != null) objectives.Notify(kind, key, success);
+        }
+
+        // Panel bu kapsam boyunca gizli; biten görevler sırada bekler ve sonra oynatılır.
+        private IDisposable HideObjectives() => objectives != null ? objectives.DeferFeedback() : null;
 
         /// <summary>Bölümün baştan sona akışı.</summary>
         protected abstract IEnumerator RunChapter();
@@ -126,6 +148,7 @@ namespace AfetUyanisi.Chapters
         {
             // Banyodan karartılarak gelindiyse ilk kare de siyah olsun (mutfak EnterRoom ile açılır).
             if (GameSession.MorningDoneInRooms) SetBlack();
+            if (UsesObjectives) objectives = ObjectiveTracker.Ensure();
             StartCoroutine(RunChapter());
         }
 
@@ -141,6 +164,7 @@ namespace AfetUyanisi.Chapters
             Debug.Log($"[{Chapter}] {Time.timeSinceLevelLoad:0.0} sn → {stepId}");
             ShowVisualFor(stepId, cut);
             OnStepEntered(stepId);
+            NotifyObjective("step", stepId);
         }
 
         /// <summary>
@@ -259,6 +283,7 @@ namespace AfetUyanisi.Chapters
         protected IEnumerator EnterRoom(string stepId, float fadeSeconds = 0.35f)
         {
             SetPlayerControl(false);
+            if (objectives != null) yield return objectives.WaitForFeedback(0.45f, 1.2f); // son tik kararmadan görünsün
             yield return FadeOut(fadeSeconds);
             EnterStep(stepId, true);
             yield return FadeIn(fadeSeconds);
@@ -268,7 +293,12 @@ namespace AfetUyanisi.Chapters
         /// Açık adımın odasındaki etkileşim noktasını (ör. "Bed", "Door") adıyla bulur; oyuncu oraya yürüyüp E'ye
         /// basana kadar bekler. Bekleme sırasında oyuncu yürüyebilir. Nokta sahnede yoksa her yerden E ile geçilir.
         /// </summary>
-        protected IEnumerator UsePoint(string pointName, string label) => UsePoint(FindPoint(pointName), label);
+        protected IEnumerator UsePoint(string pointName, string label)
+        {
+            string step = currentStep;
+            yield return UsePoint(FindPoint(pointName), label);
+            NotifyObjective("point", step + "/" + pointName);
+        }
 
         /// <summary>Verilen etkileşim noktası için UsePoint (ör. otobüsün kapısı). Nokta null ise her yerden E ile geçilir.</summary>
         protected IEnumerator UsePoint(Interactable point, string label)
@@ -387,6 +417,13 @@ namespace AfetUyanisi.Chapters
         /// <summary>Story JSON'daki diyalog sahnesini oynatır (Arda'nın DialogueRunner'ı).</summary>
         protected IEnumerator Say(string storySceneId)
         {
+            using (HideObjectives())
+                yield return SayInner(storySceneId);
+            NotifyObjective("say", storySceneId);
+        }
+
+        private IEnumerator SayInner(string storySceneId)
+        {
             if (dialogue != null)
             {
                 yield return dialogue.Play(storySceneId);
@@ -413,12 +450,18 @@ namespace AfetUyanisi.Chapters
             result.DecisionId = decisionId;
             result.RequiredCorrect = story?.FindDecision(decisionId)?.GetRequiredCorrect() ?? 1;
 
-            if (decisions != null)
-                yield return decisions.Run(decisionId, result, afterEachChoice);
-            else
-                yield return AskPlaceholder(decisionId, result, afterEachChoice);
+            using (HideObjectives())
+            {
+                if (decisions != null)
+                    yield return decisions.Run(decisionId, result, afterEachChoice);
+                else
+                    yield return AskPlaceholder(decisionId, result, afterEachChoice);
+            }
 
             mistakes.AddRange(result.WrongChoices);
+            // Yanlış deneme varsa görev önce uyarı alır ("1 UYARI"), doğru seçimle yine tamamlanır.
+            if (result.WrongChoices.Count > 0) NotifyObjective("decision", decisionId, false);
+            NotifyObjective("decision", decisionId);
         }
 
         // DecisionRunner bağlı değilken: soruyu Console'a yazar, doğru seçenek(ler)i kendisi seçer.
@@ -446,13 +489,12 @@ namespace AfetUyanisi.Chapters
         /// <summary>Haberi / kartı gösterir (Eren'in haber oynatıcısı).</summary>
         protected IEnumerator ShowNews(string newsId)
         {
-            if (news != null)
+            using (HideObjectives())
             {
-                yield return news.Play(newsId);
-                yield break;
+                if (news != null) yield return news.Play(newsId);
+                else Debug.Log($"[{Chapter}] (haber yok) {newsId}");
             }
-
-            Debug.Log($"[{Chapter}] (haber yok) {newsId}");
+            NotifyObjective("news", newsId);
         }
 
         /// <summary>"[E] {label}" ipucu gösterir ve oyuncu E'ye basana kadar bekler.</summary>
@@ -497,6 +539,14 @@ namespace AfetUyanisi.Chapters
         /// <summary>Sonuç ekranı (OYUN_AKISI §8): öğrenilenler + bu oynanışta yapılan yanlışlar, sonra tekrar/menü.</summary>
         protected IEnumerator ShowResult()
         {
+            // Son görevin tiki ve çubuk dolumu sonuç ekranından önce oynasın; ekran açıkken panel gizli kalır.
+            if (objectives != null) yield return objectives.WaitForFeedback(1.4f, 6f);
+            using (HideObjectives())
+                yield return ShowResultInner();
+        }
+
+        private IEnumerator ShowResultInner()
+        {
             var data = story?.result;
             string title = mistakes.Count == 0
                 ? data?.title_success ?? "Tebrikler! Doğru davrandın."
@@ -536,7 +586,7 @@ namespace AfetUyanisi.Chapters
         }
 
         // Sonuç ekranındaki "yanlış davranış" maddesi: seçeneğin kendisinde yoksa hikâye verisinden (ID ile) bulunur.
-        private string WrongExampleOf(ChoiceData choice)
+        protected string WrongExampleOf(ChoiceData choice)
         {
             if (!string.IsNullOrEmpty(choice.wrong_example)) return choice.wrong_example;
             var fromStory = story?.decisions?

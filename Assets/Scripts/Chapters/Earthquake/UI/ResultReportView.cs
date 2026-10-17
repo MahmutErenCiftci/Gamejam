@@ -33,7 +33,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         public const string ChoiceMenu = "Menu";
 
         private const float PanelW = 440f, PanelH = 330f;
-        private const int RowCount = 8;
+        private const int RowCount = 9;
         private const float RowTop = 90f, RowStep = 13f;
 
         private enum Mark { Ok, Bad, Time }
@@ -324,8 +324,19 @@ namespace AfetUyanisi.Chapters.Earthquake
             bool protectedOk = r.protection == ProtectionOutcome.TableDropCoverHold || r.protection == ProtectionOutcome.InPlaceDropCover;
             list.Add(("Korunma", string.IsNullOrEmpty(r.protectionText) ? ProtectionText(r.protection) : r.protectionText,
                 protectedOk ? Mark.Ok : Mark.Bad, protectedOk ? navy : bad));
-            list.Add(("Deprem çantası", r.bagTaken ? "Alındı" : "Alınmadı", r.bagTaken ? Mark.Ok : Mark.Bad, r.bagTaken ? navy : bad));
+            if (r.emergencyBagMinigame)
+            {
+                bool bagOk = r.emergencyBagPrepared && r.bagTaken;
+                string bagText = !r.emergencyBagPrepared ? "Hazırlanmadı" : r.bagTaken ? "Hazırlandı, alındı" : "Hazırlandı, alınmadı";
+                list.Add(("Afet çantası", bagText, bagOk ? Mark.Ok : Mark.Bad, bagOk ? navy : bad));
+            }
+            else list.Add(("Deprem çantası", r.bagTaken ? "Alındı" : "Alınmadı", r.bagTaken ? Mark.Ok : Mark.Bad, r.bagTaken ? navy : bad));
             list.Add(("Asansör", r.elevatorTried ? "Denendi" : "Kullanılmadı", r.elevatorTried ? Mark.Bad : Mark.Ok, r.elevatorTried ? bad : navy));
+            if (r.prepTotal > 0)
+            {
+                bool prepOk = r.prepDone * 2 >= r.prepTotal;
+                list.Add(("Hazırlık görevleri", r.prepDone + " / " + r.prepTotal, prepOk ? Mark.Ok : Mark.Bad, prepOk ? navy : bad));
+            }
             string remain = !string.IsNullOrEmpty(r.remainingText) ? r.remainingText
                 : r.acceleratedReady ? "Hazırlık tamam" : EqUi.Clock(r.remainingAtQuake);
             list.Add(("Depremden önce kalan süre", remain, Mark.Time, navy));

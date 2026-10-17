@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d05f2c8743d9d40a093324eed960cc, type: 3}
+  m_Name: BAGITEM_12_console
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.EmergencyItemData
+  id: console
+  displayName: Oyun konsolu
+  fullName: Oyun konsolu
+  icon: {fileID: 21300000, guid: cf4c2afed03e10d40a29b6736555c993, type: 3}
+  category: 2
+  feedback: "A\u011F\u0131r ve b\xFCy\xFCk. Bu e\u015Fya gerekli malzemeler i\xE7in yer b\u0131rakmayabilir."
+  slotCost: 1

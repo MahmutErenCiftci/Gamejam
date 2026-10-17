@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3216403354928783833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1333013860359949245}
+  - component: {fileID: 2367426187290893625}
+  m_Layer: 0
+  m_Name: PreparationQuestHUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1333013860359949245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216403354928783833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2367426187290893625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216403354928783833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23bfc0f7c430ebb4e8bdbf1682fbf365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.PreparationQuestHUD
+  skin: {fileID: 0}
+  quests: {fileID: 0}
+  sortingOrder: 86
+  pixelFont: {fileID: 12800000, guid: ae43cb7d54303e2408266e708838ff9d, type: 3}
+  pixelFontBold: {fileID: 12800000, guid: ae43cb7d54303e2408266e708838ff9d, type: 3}
+  titleSize: 10
+  taskSize: 8
+  timerSize: 12
+  smallSize: 8
+  panelSprite: {fileID: 21300000, guid: fe89b533c31a79b448be3fa6c81c7fa5, type: 3}
+  innerSprite: {fileID: 21300000, guid: 579d5b790bd31c349b3a196d9f1106fd, type: 3}
+  rowGlowSprite: {fileID: 21300000, guid: b7d4ee9e6b4299d44acb122938db7e4d, type: 3}
+  dotEmpty: {fileID: 21300000, guid: 12adacbbbda12d849a46d9b7f6c2b751, type: 3}
+  dotActive: {fileID: 21300000, guid: 59c53378fa099db42b8dbee00114ce82, type: 3}
+  dotDone: {fileID: 21300000, guid: 8300493ea1f5dd04c97e0439e5d606c2, type: 3}
+  alarmIcon: {fileID: 21300000, guid: 5d224aabe36baf74ba9da837f4c1dbd1, type: 3}
+  bannerSprite: {fileID: 21300000, guid: af0b11f2d8184604488aa0627fe09920, type: 3}
+  toastSprite: {fileID: 21300000, guid: 35636fc135064c4488d2ec8b3e4c10f0, type: 3}
+  barBack: {fileID: 21300000, guid: 5ae7c2b65cd42d141ba8e246638c46cc, type: 3}
+  barFill: {fileID: 21300000, guid: d732ded314f8f14479af09cdde250699, type: 3}
+  margin: {x: 8, y: 8}
+  panelWidth: 180
+  compactWidth: 98
+  rowHeight: 13
+  title: "AFET HAZIRLI\u011EI"
+  alarmText: "DEPREM HAZIRLIK S\u0130M\xDCLASYONU"
+  completeText: "G\xD6REV TAMAMLANDI!"
+  allDoneText: HAZIRLIK TAMAM!
+  penaltyFormat: "-{0} SAN\u0130YE"
+  alarmSeconds: 0.5
+  revealSeconds: 0.35
+  rowStagger: 0.05
+  checkPopSeconds: 0.15
+  rowHighlightSeconds: 0.3
+  barFillSeconds: 0.35
+  toastSeconds: 0.7
+  compactSeconds: 0.25
+  hideSeconds: 0.3
+  completionGap: 0.3
+  dropTweenSeconds: 0.5
+  penaltyFloatSeconds: 1.4
+  amberAt: 30
+  redAt: 10
+  alarmClip: {fileID: 0}
+  completeClip: {fileID: 0}
+  warningClip: {fileID: 0}
+  volume: 0.35
+  synthFallback: 1
+  onTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onAlarm:
+    m_PersistentCalls:
+      m_Calls: []
+  onTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
