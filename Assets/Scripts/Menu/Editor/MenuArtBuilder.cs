@@ -9,10 +9,10 @@ namespace AfetUyanisi.Menu.EditorTools
     // Mahmut). Tekrar çalıştırılabilir: aynı PNG'lerin üzerine yazar, .meta (GUID) korunduğu için sahnedeki
     // referanslar bozulmaz.
     //  1) Source~ altındaki sayfalardan (beyaz arka plan, 4x4 piksel blok) logo ve düşünce baloncuklarını keser.
-    //  2) Rüya bulutlarını, gökyüzünü, "z" harflerini, saat parıltısını, pencere cam maskesini ve UI panellerini
-    //     kodla üretir.
+    //  2) Rüya bulutlarını, "z" harflerini, saat parıltısını, pencere cam maskesini, UI panellerini ve arka plandaki
+    //     izometrik şehirle apartmanı (MenuArtBuilder.City.cs) kodla üretir.
     //  3) Hepsini Point filtre, PPU 64 (odanın sanatıyla aynı yoğunluk), sıkıştırmasız sprite olarak içe aktarır.
-    public static class MenuArtBuilder
+    public static partial class MenuArtBuilder
     {
         public const int PixelsPerUnit = 64;
         const string SourceDir = "Assets/Art/Menu/Source~/";
@@ -42,8 +42,8 @@ namespace AfetUyanisi.Menu.EditorTools
             // Düşünce baloncukları (ui_kit.png): düşünce yollarının kaynağı
             new Piece("ui_kit", "UI/ThoughtLarge", 150, 42, 60, 64, Center),
             new Piece("ui_kit", "UI/ThoughtSmall", 272, 63, 30, 38, Center),
-            // Logo (logo.png) — yarı boyut
-            new Piece("logo", "UI/LogoStacked", 10, 42, 294, 151, Center, step: 2),
+            // Logo (logo.png) — tam çözünürlük (menü 960x540 sanal ekranda)
+            new Piece("logo", "UI/LogoStacked", 10, 42, 294, 151, Center),
         };
 
         [MenuItem("AfetUyanisi/Menü/Sanatı Kur (kes + üret + içe aktar)")]
@@ -452,7 +452,7 @@ namespace AfetUyanisi.Menu.EditorTools
             yield return Save(Solid(1, 1, Color.white), "Fx/Pixel");
             yield return Save(RainDrop(), "Fx/RainDrop");
             yield return Save(Rubble(new Color32(120, 110, 104, 255)), "Fx/Rubble");
-            yield return Save(Sky(), "Fx/Sky");
+            foreach (string city in BuildCity()) yield return city;
             yield return Save(Letter(SmallZ), "Fx/ZSmall");
             yield return Save(Letter(BigZ), "Fx/ZBig");
             yield return Save(ClockGlow(), "Fx/ClockGlow");
@@ -479,21 +479,6 @@ namespace AfetUyanisi.Menu.EditorTools
             var t = New(3, 3);
             var dark = new Color32((byte)(c.r / 2), (byte)(c.g / 2), (byte)(c.b / 2), 255);
             Px(t, 1, 0, c); Px(t, 0, 1, c); Px(t, 1, 1, c); Px(t, 2, 1, dark); Px(t, 1, 2, dark);
-            return Done(t);
-        }
-
-        // Saat 07:00, şafak: üstte gece laciverti, altta mor-pembe aydınlık. Piksel sanata uygun basamaklı bantlar;
-        // ekran yüksekliğine esnetilir (1x90 → 360 piksel, bant başına 4 satır).
-        static Texture2D Sky()
-        {
-            Color32[] bands =
-            {
-                new Color32(10, 12, 28, 255), new Color32(14, 16, 36, 255), new Color32(19, 20, 46, 255),
-                new Color32(25, 24, 56, 255), new Color32(33, 28, 66, 255), new Color32(43, 32, 76, 255),
-                new Color32(56, 37, 84, 255), new Color32(72, 42, 90, 255), new Color32(92, 48, 94, 255),
-            };
-            var t = New(1, 90);
-            for (int y = 0; y < 90; y++) Px(t, 0, y, bands[Mathf.Min(bands.Length - 1, y * bands.Length / 90)]);
             return Done(t);
         }
 

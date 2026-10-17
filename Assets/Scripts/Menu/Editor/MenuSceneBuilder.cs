@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -16,10 +17,15 @@ namespace AfetUyanisi.Menu.EditorTools
     // şafak gökyüzü, yıldızlar, uyuyan çocuğun "z" harfleri, rüya bulutları, düşünce yolları ve piksel fontlu arayüz
     // eklenir. Çalıştırıldığında MainMenu sahnesinin üzerine yazar (sahnede elle yapılan değişiklikler kaybolur).
     //
-    // Konumlar 640x360'lık sanal ekranda, sol alt köşeden piksel cinsindendir (1 birim = 64 piksel, odanın
-    // sanatıyla aynı yoğunluk; 1080p'de tam 3 kat büyür). Sıralama tek "Default" sorting layer'ında:
-    //   -200 gökyüzü · -190 yıldızlar · -150 fırtına yağmuru (odanın arkasında)
-    //   odanın kendi sıraları (-90 halı … 0-1 eşyalar) · pencere fırtınası pencerenin
+    // Oda, şehrin üstünde yükselen bir apartmanın en üst katıdır: altında apartmanın cephesi ekranın altına kadar
+    // iner, arkada şafakta izometrik şehir uzanır (şehir ve cephe MenuArtBuilder.City.cs'de kodla çizilir).
+    //
+    // Dünya konumları 960x540'lık sanal ekranda, sol alt köşeden piksel cinsindendir (1 birim = 64 piksel, odanın
+    // sanatıyla aynı yoğunluk; 1080p'de tam 2 kat büyür). Arayüz ayrı: 640x360 referanslı Canvas (1080p'de 3 kat).
+    // Sıralama tek "Default" sorting layer'ında:
+    //   -180 şehir · -179 yanıp sönen pencereler · -175 yıldızlar · -165 apartman cephesi
+    //   -150 fırtına yağmuru · -145 arayüz arkası karartma
+    //   odanın kendi sıraları (-100 zemin, -90 halı … 0-1 eşyalar) · pencere fırtınası pencerenin
     //   hemen üstünde · 60 "z" harfleri · 80-81 oda ışığı · 95 seçim karartması · 99 düşünce yolları
     //   100-109 bulutlar · 120 logo · 900 karanlık · 958-960 açılış saati
     public static class MenuSceneBuilder
@@ -29,11 +35,15 @@ namespace AfetUyanisi.Menu.EditorTools
         const string Art = "Assets/Art/Menu/";
         const string RoomArt = "Assets/Art/Props/Bedroom/";
         const float PPU = 64f;
-        const int ScreenW = 640, ScreenH = 360;
+        const int WorldW = MenuArtBuilder.WorldWidth, WorldH = MenuArtBuilder.WorldHeight;
+        const int UiW = 640, UiH = 360;
 
-        // Oda: Bedroom sahnesindeki dünya koordinatları bu kadar kaydırılır; oda ekranda x 199-614, y 20-321
-        // arasına gelir, solda başlık ve butonlara yer kalır.
-        static readonly Vector3 RoomOffset = new Vector3(71f / PPU, -162f / PPU, 0f);
+        // Oda: Bedroom sahnesindeki dünya koordinatları bu kadar kaydırılır. Zeminin ön ucu (Bedroom'da 0,0)
+        // ekranda (666, 140)'a gelir; oda x 474-890, y 140-444 arasında kalır, solda başlık ve butonlara, altta
+        // apartmanın cephesine yer kalır.
+        static readonly Vector3 RoomOffset = new Vector3(186f / PPU, -130f / PPU, 0f);
+        // Rüya bulutları, çocuğun başının üstüne göre (piksel).
+        static readonly Vector2 QuakeBubbleFromHead = new Vector2(-75f, 86f), FloodBubbleFromHead = new Vector2(83f, 86f);
 
         static readonly Color Ink = new Color(0.95f, 0.92f, 0.85f);
         static readonly Color Warm = new Color(1f, 0.74f, 0.4f);
@@ -42,8 +52,9 @@ namespace AfetUyanisi.Menu.EditorTools
         static Material unlit;
         static Font regular, bold;
 
-        static Vector3 P(float x, float y) => new Vector3((x - ScreenW / 2f) / PPU, (y - ScreenH / 2f) / PPU, 0f);
-        static Vector2 V(float x, float y) => new Vector2(x - ScreenW / 2f, y - ScreenH / 2f); // UI: ekran ortasına göre
+        static Vector3 P(float x, float y) => new Vector3((x - WorldW / 2f) / PPU, (y - WorldH / 2f) / PPU, 0f);
+        static Vector2 V(float x, float y) => new Vector2(x - UiW / 2f, y - UiH / 2f); // UI: ekran ortasına göre
+        static Vector2 Px(Vector3 world) => new Vector2(world.x * PPU + WorldW / 2f, world.y * PPU + WorldH / 2f);
         static Sprite S(string path) => AssetDatabase.LoadAssetAtPath<Sprite>(Art + path + ".png");
 
         [MenuItem("AfetUyanisi/Menü/Sahneyi Kur (MainMenu.unity üzerine yazar)")]
@@ -72,13 +83,13 @@ namespace AfetUyanisi.Menu.EditorTools
             camGo.transform.localPosition = new Vector3(0, 0, -10);
             var cam = camGo.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.orthographicSize = ScreenH / 2f / PPU;
+            cam.orthographicSize = WorldH / 2f / PPU;
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color(0.04f, 0.05f, 0.11f);
             var ppc = camGo.AddComponent<PixelPerfectCamera>();
             ppc.assetsPPU = (int)PPU;
-            ppc.refResolutionX = ScreenW;
-            ppc.refResolutionY = ScreenH;
+            ppc.refResolutionX = WorldW;
+            ppc.refResolutionY = WorldH;
             ppc.gridSnapping = PixelPerfectCamera.GridSnapping.UpscaleRenderTexture;
             ppc.cropFrame = PixelPerfectCamera.CropFrame.StretchFill;
             camGo.AddComponent<Physics2DRaycaster>();
@@ -91,15 +102,35 @@ namespace AfetUyanisi.Menu.EditorTools
             es.AddComponent<EventSystem>();
             es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
 
-            // ---------------- Gökyüzü ve yıldızlar
+            // ---------------- Şehir, gökyüzü ve yıldızlar
             var world = Group(null, "World");
-            Stretched(world, "Sky", "Fx/Sky", -16, -16, ScreenW + 32, ScreenH + 32, -200);
+            var city = Group(world, "City");
+            Place(city, "Skyline", "Fx/City", WorldW / 2f, WorldH / 2f, -180);
+            var lightsRoot = Group(city, "Lights");
+            var lightLayers = new Object[MenuArtBuilder.CityLightLayers];
+            for (int i = 0; i < lightLayers.Length; i++)
+                lightLayers[i] = Place(lightsRoot, "Lights" + i, "Fx/CityLights" + i, WorldW / 2f, WorldH / 2f, -179);
+            SetArray(lightsRoot.gameObject.AddComponent<CityLights>(), "layers", lightLayers);
             Stars(world);
+            Birds(world);
+            var cityQuake = BuildCityQuake(city, lightsRoot.gameObject);
+            var cityFlood = BuildCityFlood(city);
+            var streetLife = BuildStreetLife(city, cityFlood);
 
-            // ---------------- Oda (Bedroom.unity'den)
+            // ---------------- Oda (Bedroom.unity'den), en üst kat
             var room = Group(world, "Room");
             room.position = RoomOffset;
             var parts = CopyRoom(room);
+            // Apartmanın cephesi zeminin ön ucundan aşağı iner (pivot = zemin karolarının ön ucu).
+            var floorMap = room.GetComponentsInChildren<Tilemap>(true).FirstOrDefault(t => t.name == "Floor");
+            var apartment = Place(world, "Apartment", "Fx/Apartment", 0, 0, -165);
+            if (floorMap != null)
+            {
+                floorMap.CompressBounds();
+                apartment.transform.position = floorMap.CellToWorld(floorMap.cellBounds.min);
+            }
+            else Debug.LogWarning("[MenuSceneBuilder] Odada 'Floor' tilemap yok; apartman cephesi hizalanamadı.");
+            Stretched(world, "UiShade", "Fx/ShadeLeft", -16, -16, 520, WorldH + 32, -145);
             SpriteRenderer bed = parts["Bed"];
             bed.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RoomArt + "PROP_Bedroom_Bed_Sleeping.png");
             SpriteRenderer clock = parts["AlarmClock"];
@@ -115,13 +146,13 @@ namespace AfetUyanisi.Menu.EditorTools
 
             // ---------------- Oda ışığı (fırtınada kararır, şimşekte parlar)
             var light = Group(world, "RoomLight");
-            var roomTint = Fill(light, "RoomTint", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.08f, 0.12f, 0.3f, 0f), 80);
-            var roomFlash = Fill(light, "RoomFlash", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.85f, 0.9f, 1f, 0f), 81);
+            var roomTint = Fill(light, "RoomTint", -16, -16, WorldW + 32, WorldH + 32, new Color(0.08f, 0.12f, 0.3f, 0f), 80);
+            var roomFlash = Fill(light, "RoomFlash", -16, -16, WorldW + 32, WorldH + 32, new Color(0.85f, 0.9f, 1f, 0f), 81);
             var windowController = BuildWeather(world, window, roomTint, roomFlash);
 
             // ---------------- Rüya seçimi
             var dreams = Group(null, "DreamSelection");
-            var dim = Fill(dreams, "SelectionDim", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.03f, 0.04f, 0.1f, 0.62f), 95);
+            var dim = Fill(dreams, "SelectionDim", -16, -16, WorldW + 32, WorldH + 32, new Color(0.03f, 0.04f, 0.1f, 0.4f), 95);
             var dimFader = dim.gameObject.AddComponent<SpriteFader>();
             SetFloat(dimFader, "alpha", 0f);
             var thought = Group(dreams, "ThoughtTrail");
@@ -134,13 +165,13 @@ namespace AfetUyanisi.Menu.EditorTools
             floodPath.transform.position = headTop + new Vector3(6f, 6f, 0f) / PPU;
             var trail = thought.gameObject.AddComponent<ThoughtTrail>();
             SetArray(trail, "dots", quakePath, floodPath);
-            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", 184, 254, 100, false, 0f);
-            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", 342, 254, 105, true, 0.5f);
+            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", Px(headTop).x + QuakeBubbleFromHead.x, Px(headTop).y + QuakeBubbleFromHead.y, 100, false, 0f);
+            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", Px(headTop).x + FloodBubbleFromHead.x, Px(headTop).y + FloodBubbleFromHead.y, 105, true, 0.5f);
 
             // ---------------- Logo, karanlık, açılış saati
-            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 120, 290, 120);
+            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 180, 446, 120);
             var title = titleRenderer.gameObject.AddComponent<SpriteFader>();
-            var darkness = Fill(null, "Darkness", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.01f, 0.01f, 0.03f, 1f), 900);
+            var darkness = Fill(null, "Darkness", -16, -16, WorldW + 32, WorldH + 32, new Color(0.01f, 0.01f, 0.03f, 1f), 900);
             var darkFader = darkness.gameObject.AddComponent<SpriteFader>();
             // Karanlıkta yalnızca komodindeki saat parlar: odadaki saatin kopyası karanlığın üstünde, arkasında kırmızı hale.
             var introClock = Group(null, "IntroClock");
@@ -153,7 +184,14 @@ namespace AfetUyanisi.Menu.EditorTools
             // ---------------- Arayüz
             var canvas = BuildCanvas(out RectTransform root);
             var mainButtons = Panel(root, "MainButtons");
-            Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 11, Muted, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
+            // Slogan şehrin üstünde: koyu yarı saydam şerit ve dış çizgiyle okunur.
+            var sloganBack = UiImage(mainButtons.transform, "SloganBack", S("UI/Panel"), V(120, 232), new Vector2(150, 30));
+            sloganBack.type = UnityEngine.UI.Image.Type.Sliced;
+            sloganBack.color = new Color(1f, 1f, 1f, 0.85f);
+            var slogan = Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 11, Ink, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
+            var sloganOutline = slogan.gameObject.AddComponent<Outline>();
+            sloganOutline.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.8f);
+            sloganOutline.effectDistance = new Vector2(1f, -1f);
             var newGame = MenuButton(mainButtons.transform, "NewGameButton", "Yeni Oyun", V(120, 186), new Vector2(128, 22));
             var settings = MenuButton(mainButtons.transform, "SettingsButton", "Ayarlar", V(120, 158), new Vector2(128, 22));
             var exit = MenuButton(mainButtons.transform, "ExitButton", "Çıkış", V(120, 130), new Vector2(128, 22));
@@ -242,6 +280,7 @@ namespace AfetUyanisi.Menu.EditorTools
             var earthquake = quakeGo.AddComponent<EarthquakePreview>();
             SetRef(earthquake, "cameraTransform", camGo.transform);
             SetRef(earthquake, "rumbleSource", rumble);
+            SetFloat(earthquake, "duration", 2.6f); // şehirdeki binalar çökerken oda da sarsılsın
             var props = new List<(string name, EarthquakePreview.Reaction reaction, float strength)>
             {
                 ("Bed", EarthquakePreview.Reaction.Jitter, 1f),
@@ -275,6 +314,16 @@ namespace AfetUyanisi.Menu.EditorTools
             SetRef(effects, "menu", menu);
             SetRef(effects, "window", windowController);
             SetRef(effects, "earthquake", earthquake);
+            SetRef(effects, "cityQuake", cityQuake);
+            SetRef(effects, "cityFlood", cityFlood);
+            SetRef(effects, "streetLife", streetLife);
+            // Sel önizlemesi fırtına yağmurunun şiddetini su yükseldikçe artırır.
+            var skyRain = Object.FindObjectsByType<ParticleSystem>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault(p => p.name == "SkyRain");
+            SetRef(cityFlood, "rain", skyRain);
+            var weatherGo = GameObject.Find("Weather");
+            SetRef(cityFlood, "rainAudio", weatherGo != null ? weatherGo.GetComponent<AudioSource>() : null);
+            var windowRain = Object.FindObjectsByType<ParticleSystem>(FindObjectsInactive.Include, FindObjectsSortMode.None).FirstOrDefault(p => p.name == "Rain" && p.transform.parent != null && p.transform.parent.name == "WindowStorm");
+            SetRef(cityFlood, "windowRain", windowRain);
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -325,11 +374,205 @@ namespace AfetUyanisi.Menu.EditorTools
             return parts;
         }
 
+        // DEPREM önizlemesi: enkaz ve çatlak katmanları (kapalı başlar) ve ikiye kırılacak binalar. Her bina kendi
+        // SortingGroup'unda: alt parça şehirdeki görünür silueti olan maskenin içinde çöker (maske yalnızca kendi
+        // grubunu etkiler); üst parça kırık çizgisinin dış köşesindeki menteşede (TopPivot) maskesiz devrilir;
+        // tabanında toz bulutu. Kutular, menteşeler ve yükseklikler MenuArtBuilder'ın yazdığı collapse.txt'den okunur.
+        static CityQuake BuildCityQuake(Transform city, GameObject cityLights)
+        {
+            var root = Group(city, "Quake");
+            var ruins = Place(root, "Ruins", "Fx/CityRuins", WorldW / 2f, WorldH / 2f, -178);
+            var cracks = Place(root, "Cracks", "Fx/CityCracks", WorldW / 2f, WorldH / 2f, -178);
+            cracks.enabled = false;
+            ruins.gameObject.SetActive(false);
+            var quake = root.gameObject.AddComponent<CityQuake>();
+            var so = new SerializedObject(quake);
+            var pieces = so.FindProperty("pieces");
+            string[] lines = File.Exists(MenuArtBuilder.CollapseData) ? File.ReadAllLines(MenuArtBuilder.CollapseData) : new string[0];
+            pieces.arraySize = 0;
+            foreach (string line in lines)
+            {
+                string[] f = line.Split(' ');
+                if (f.Length < 12) continue;
+                float Num(int i) => float.Parse(f[i], System.Globalization.CultureInfo.InvariantCulture);
+                int k = (int)Num(0);
+                Vector2 box = new Vector2(Num(1), Num(2)), hinge = new Vector2(Num(7), Num(8));
+                var group = Group(root, "Collapse" + k);
+                group.position = P(box.x, box.y);
+                group.gameObject.AddComponent<UnityEngine.Rendering.SortingGroup>().sortingOrder = -177;
+                var mask = new GameObject("Mask", typeof(SpriteMask)).GetComponent<SpriteMask>();
+                mask.transform.SetParent(group, false);
+                mask.sprite = S("Fx/Collapse/CollapseMask" + k);
+                mask.alphaCutoff = 0.5f;
+                var bottom = Place(group, "Bottom", "Fx/Collapse/CollapseBottom" + k, 0, 0, 0, local: true);
+                bottom.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                var pivot = Group(group, "TopPivot");
+                pivot.localPosition = (Vector3)(hinge - box) / PPU;
+                Place(pivot, "Top", "Fx/Collapse/CollapseTop" + k, box.x - hinge.x, box.y - hinge.y, 1, local: true);
+
+                pieces.arraySize++;
+                var e = pieces.GetArrayElementAtIndex(pieces.arraySize - 1);
+                e.FindPropertyRelative("bottom").objectReferenceValue = bottom.transform;
+                e.FindPropertyRelative("topPivot").objectReferenceValue = pivot;
+                e.FindPropertyRelative("breakPixels").floatValue = Num(10);
+                e.FindPropertyRelative("topPixels").floatValue = Num(11);
+                e.FindPropertyRelative("direction").floatValue = Num(9);
+                // Yıkılma tarzı binadan binaya değişir: çökme, kat kat çökme, ufalanma (bina hep tek parça).
+                e.FindPropertyRelative("style").enumValueIndex = k % 3;
+                e.FindPropertyRelative("dust").objectReferenceValue = Dust(root, "Dust" + k, Num(5), Num(6), Num(3));
+            }
+            so.FindProperty("ruins").objectReferenceValue = ruins.gameObject;
+            so.FindProperty("cracks").objectReferenceValue = cracks;
+            so.FindProperty("cityLights").objectReferenceValue = cityLights;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return quake;
+        }
+
+        // Sokak hayatı: önünde engel olmayan şeritlerde arabalar, kaldırımlarda insanlar (yollar street.txt'den).
+        // Arabalar suyun ve enkazın üstünde (yüzebilsinler), toz bulutunun altında.
+        static StreetLife BuildStreetLife(Transform city, CityFlood flood)
+        {
+            var root = Group(city, "Street");
+            var life = root.gameObject.AddComponent<StreetLife>();
+            var so = new SerializedObject(life);
+            var cars = so.FindProperty("cars");
+            var people = so.FindProperty("people");
+            cars.arraySize = 0;
+            people.arraySize = 0;
+            string[] lines = File.Exists(MenuArtBuilder.StreetData) ? File.ReadAllLines(MenuArtBuilder.StreetData) : new string[0];
+            var rng = new System.Random(5);
+            int carIndex = 0, personIndex = 0;
+            foreach (string line in lines)
+            {
+                string[] f = line.Split(' ');
+                if (f.Length < 6) continue;
+                float Num(int i) => float.Parse(f[i], System.Globalization.CultureInfo.InvariantCulture);
+                bool car = f[0] == "car";
+                int axis = (int)Num(1);
+                Vector2 a = new Vector2(Num(2), Num(3)) - new Vector2(WorldW / 2f, WorldH / 2f);
+                Vector2 b = new Vector2(Num(4), Num(5)) - new Vector2(WorldW / 2f, WorldH / 2f);
+                if (rng.Next(2) == 0) { var tmp = a; a = b; b = tmp; }
+                // Uzun yollara birden fazla yürüyen düşer.
+                int count = car ? 1 : Mathf.Clamp(Mathf.RoundToInt(Vector2.Distance(a, b) / 45f), 1, 3);
+                for (int c = 0; c < count; c++)
+                {
+                    var list = car ? cars : people;
+                    list.arraySize++;
+                    var e = list.GetArrayElementAtIndex(list.arraySize - 1);
+                    SpriteRenderer r;
+                    if (car)
+                    {
+                        string sprite = "Fx/Street/Car" + (axis == 0 ? "X" : "Y") + (carIndex++ % MenuArtBuilder.CarColorCount);
+                        r = Place(root, "Car" + list.arraySize, sprite, a.x, a.y, -173, local: true);
+                        e.FindPropertyRelative("speed").floatValue = 10f + (float)rng.NextDouble() * 8f;
+                    }
+                    else
+                    {
+                        int v = personIndex++ % MenuArtBuilder.PersonColorCount;
+                        r = Place(root, "Person" + list.arraySize, "Fx/Street/Person" + v + "_0", a.x, a.y, -173, local: true);
+                        e.FindPropertyRelative("stepA").objectReferenceValue = S("Fx/Street/Person" + v + "_0");
+                        e.FindPropertyRelative("stepB").objectReferenceValue = S("Fx/Street/Person" + v + "_1");
+                        e.FindPropertyRelative("speed").floatValue = 3f + (float)rng.NextDouble() * 2.5f;
+                    }
+                    e.FindPropertyRelative("renderer").objectReferenceValue = r;
+                    e.FindPropertyRelative("from").vector2Value = a;
+                    e.FindPropertyRelative("to").vector2Value = b;
+                }
+            }
+            so.FindProperty("flood").objectReferenceValue = flood;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return life;
+        }
+
+        // Çöken binanın tabanından kalkan toz: tek seferlik patlama, büyüyerek söner.
+        static ParticleSystem Dust(Transform parent, string name, float x, float y, float width)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = P(x, y + 6f);
+            var ps = go.AddComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = ps.main;
+            main.playOnAwake = false;
+            main.loop = false;
+            main.duration = 1.2f;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(1.4f, 2.4f);
+            main.startSpeed = 0f;
+            main.startSize = new ParticleSystem.MinMaxCurve(6f / PPU, 10f / PPU);
+            main.maxParticles = 40;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+            main.startColor = new ParticleSystem.MinMaxGradient(new Color(0.78f, 0.7f, 0.62f, 0.9f), new Color(0.62f, 0.56f, 0.54f, 0.9f));
+            var emission = ps.emission;
+            emission.rateOverTime = 22f;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(width * 0.6f / PPU, 4f / PPU, 0.1f);
+            var velocity = ps.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.space = ParticleSystemSimulationSpace.Local;
+            velocity.x = new ParticleSystem.MinMaxCurve(-0.25f, 0.25f);
+            velocity.y = new ParticleSystem.MinMaxCurve(0.15f, 0.55f);
+            velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
+            var size = ps.sizeOverLifetime;
+            size.enabled = true;
+            size.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.Linear(0f, 0.8f, 1f, 2.6f));
+            var col = ps.colorOverLifetime;
+            col.enabled = true;
+            var gradient = new Gradient();
+            gradient.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                new[] { new GradientAlphaKey(0.9f, 0f), new GradientAlphaKey(0.6f, 0.5f), new GradientAlphaKey(0f, 1f) });
+            col.color = gradient;
+            var sheet = ps.textureSheetAnimation;
+            sheet.enabled = true;
+            sheet.mode = ParticleSystemAnimationMode.Sprites;
+            if (sheet.spriteCount == 0) sheet.AddSprite(S("Fx/Dust")); else sheet.SetSprite(0, S("Fx/Dust"));
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = unlit;
+            renderer.sortingOrder = -172;
+            return ps;
+        }
+
+        // SEL önizlemesi: şehrin üstünde su katmanı (yükselen seviyeler + dalga kareleri).
+        static CityFlood BuildCityFlood(Transform city)
+        {
+            var water = Place(city, "Flood", "Fx/Flood0", WorldW / 2f, WorldH / 2f, -176);
+            water.enabled = false;
+            var flood = water.gameObject.AddComponent<CityFlood>();
+            SetRef(flood, "water", water);
+            var rising = new Object[MenuArtBuilder.FloodRiseFrames];
+            for (int i = 0; i < rising.Length; i++) rising[i] = S("Fx/Flood" + i);
+            var waves = new Object[MenuArtBuilder.FloodWaveFrames];
+            for (int i = 0; i < waves.Length; i++) waves[i] = S("Fx/FloodWave" + i);
+            SetArray(flood, "rising", rising);
+            SetArray(flood, "waves", waves);
+            var so = new SerializedObject(flood);
+            var levels = so.FindProperty("levels");
+            levels.arraySize = MenuArtBuilder.FloodRiseFrames;
+            for (int i = 0; i < levels.arraySize; i++) levels.GetArrayElementAtIndex(i).floatValue = MenuArtBuilder.FloodLevel(i);
+            so.FindProperty("waveLevel").floatValue = MenuArtBuilder.FloodWaveLevel;
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return flood;
+        }
+
+        // Gökyüzünde, ufkun üstünde ağır ağır geçen kuş sürüsü.
+        static void Birds(Transform parent)
+        {
+            var root = Group(parent, "Birds");
+            var flock = root.gameObject.AddComponent<BirdFlock>();
+            var offsets = new[] { new Vector2(120, 500), new Vector2(132, 506), new Vector2(141, 497), new Vector2(150, 510), new Vector2(110, 493), new Vector2(600, 515), new Vector2(611, 509) };
+            var birds = new Object[offsets.Length];
+            for (int i = 0; i < offsets.Length; i++)
+                birds[i] = Place(root, "Bird" + i, "Fx/Bird0", offsets[i].x - WorldW / 2f, offsets[i].y - WorldH / 2f, -174, local: true);
+            SetArray(flock, "birds", birds);
+            SetRef(flock, "wingsUp", S("Fx/Bird0"));
+            SetRef(flock, "wingsDown", S("Fx/Bird1"));
+        }
+
         static void Stars(Transform parent)
         {
             var go = new GameObject("Stars");
             go.transform.SetParent(parent, false);
-            go.transform.position = P(ScreenW / 2f, ScreenH / 2f);
+            go.transform.position = P(WorldW / 2f, WorldH - 26f);
             var ps = go.AddComponent<ParticleSystem>();
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = ps.main;
@@ -338,14 +581,14 @@ namespace AfetUyanisi.Menu.EditorTools
             main.startLifetime = new ParticleSystem.MinMaxCurve(3f, 6f);
             main.startSpeed = 0f;
             main.startSize = 1f / PPU;
-            main.maxParticles = 70;
+            main.maxParticles = 30;
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             main.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 1f), new Color(0.75f, 0.82f, 1f, 1f));
             var emission = ps.emission;
-            emission.rateOverTime = 12f;
+            emission.rateOverTime = 6f;
             var shape = ps.shape;
             shape.shapeType = ParticleSystemShapeType.Box;
-            shape.scale = new Vector3(ScreenW / PPU, ScreenH / PPU, 0.1f);
+            shape.scale = new Vector3(WorldW / PPU, 48f / PPU, 0.1f);
             var col = ps.colorOverLifetime;
             col.enabled = true;
             var gradient = new Gradient();
@@ -358,7 +601,7 @@ namespace AfetUyanisi.Menu.EditorTools
             if (sheet.spriteCount == 0) sheet.AddSprite(S("Fx/Pixel")); else sheet.SetSprite(0, S("Fx/Pixel"));
             var renderer = go.GetComponent<ParticleSystemRenderer>();
             renderer.sharedMaterial = unlit;
-            renderer.sortingOrder = -190;
+            renderer.sortingOrder = -175;
         }
 
         // Sel önizlemesindeki fırtına. Pencerenin camında: gün batımı fırtına tonlarına döner, yağmur yalnızca camın
@@ -447,17 +690,17 @@ namespace AfetUyanisi.Menu.EditorTools
         {
             var go = new GameObject("SkyRain");
             go.transform.SetParent(parent, false);
-            go.transform.position = P(ScreenW / 2f + 30f, ScreenH + 8f);
+            go.transform.position = P(WorldW / 2f + 40f, WorldH + 8f);
             var ps = go.AddComponent<ParticleSystem>();
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = ps.main;
             main.playOnAwake = true;
             main.loop = true;
             main.prewarm = true;
-            main.startLifetime = 2f;
+            main.startLifetime = 3.4f;
             main.startSpeed = 0f;
             main.startSize = 1f / PPU;
-            main.maxParticles = 260;
+            main.maxParticles = 1600;
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             main.startColor = new ParticleSystem.MinMaxGradient(new Color(0.7f, 0.8f, 1f, 0.55f), new Color(0.75f, 0.85f, 1f, 0.9f));
             var velocity = ps.velocityOverLifetime;
@@ -467,10 +710,10 @@ namespace AfetUyanisi.Menu.EditorTools
             velocity.y = new ParticleSystem.MinMaxCurve(-3.3f);
             velocity.z = new ParticleSystem.MinMaxCurve(0f);
             var emission = ps.emission;
-            emission.rateOverTime = 110f;
+            emission.rateOverTime = 180f;
             var shape = ps.shape;
             shape.shapeType = ParticleSystemShapeType.Box;
-            shape.scale = new Vector3((ScreenW + 80f) / PPU, 0.1f, 0.1f);
+            shape.scale = new Vector3((WorldW + 120f) / PPU, 0.1f, 0.1f);
             var sheet = ps.textureSheetAnimation;
             sheet.enabled = true;
             sheet.mode = ParticleSystemAnimationMode.Sprites;
@@ -654,7 +897,7 @@ namespace AfetUyanisi.Menu.EditorTools
             canvas.pixelPerfect = true;
             var scaler = go.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(ScreenW, ScreenH);
+            scaler.referenceResolution = new Vector2(UiW, UiH);
             scaler.matchWidthOrHeight = 0.5f;
             go.AddComponent<GraphicRaycaster>();
             root = (RectTransform)go.transform;
@@ -668,7 +911,7 @@ namespace AfetUyanisi.Menu.EditorTools
             go.transform.SetParent(parent, false);
             var rt = (RectTransform)go.transform;
             rt.anchoredPosition = Vector2.zero;
-            rt.sizeDelta = new Vector2(ScreenW, ScreenH);
+            rt.sizeDelta = new Vector2(UiW, UiH);
             return go.AddComponent<CanvasGroup>();
         }
 

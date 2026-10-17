@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 67b7a09f158d6e747abde530b0aa6da1
+guid: 2d118ffe926a99d4c910bebf9f09b168
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2410671940745902572
-    second: Sky_0
+      213: -1856496609805635459
+    second: CollapseBottom6_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0.5}
+  spritePivot: {x: 0, y: 0}
   spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sky_0
+      name: CollapseBottom6_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1
-        height: 90
+        width: 121
+        height: 83
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce9392a9b5d647120800000000000000
-      internalID: 2410671940745902572
+      spriteID: d7071d56b266c36e0800000000000000
+      internalID: -1856496609805635459
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sky_0: 2410671940745902572
+      CollapseBottom6_0: -1856496609805635459
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
