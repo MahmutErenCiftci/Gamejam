@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace AfetUyanisi.Core
@@ -9,7 +10,21 @@ namespace AfetUyanisi.Core
     /// </summary>
     public static class GameInput
     {
-        /// <summary>Yürüme yönü: -1 sol, 0 dur, +1 sağ (A/D veya ←/→).</summary>
+        /// <summary>
+        /// İzometrik yürüme: W/A/S/D veya ok tuşları, ekran yönünde 8 yön. Uzunluğu en fazla 1 (çaprazda normalize).
+        /// </summary>
+        public static Vector2 MoveVector
+        {
+            get
+            {
+                var v = new Vector2(MoveX, 0f);
+                if (Held(Key.W) || Held(Key.UpArrow)) v.y += 1f;
+                if (Held(Key.S) || Held(Key.DownArrow)) v.y -= 1f;
+                return v.sqrMagnitude > 1f ? v.normalized : v;
+            }
+        }
+
+        /// <summary>Yatay yürüme yönü: -1 sol, 0 dur, +1 sağ (A/D veya ←/→).</summary>
         public static float MoveX
         {
             get

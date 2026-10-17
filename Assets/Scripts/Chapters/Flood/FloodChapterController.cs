@@ -13,8 +13,8 @@ namespace AfetUyanisi.Chapters.Flood
             // F01–F02 (0:00–0:50) ortak açılış: uyanış + sabah rutini
             yield return PlayMorningIntro("F01_WAKE", "F02_WASH");
 
-            // F03 (0:50–1:20) TV haberi
-            EnterStep("F03_NEWS");
+            // F03 (0:50–1:20) mutfak, TV haberi
+            yield return EnterRoom("F03_NEWS");
             yield return ShowNews("NEWS_F03_TV");
             yield return Say("F03_NEWS");
 
@@ -25,16 +25,16 @@ namespace AfetUyanisi.Chapters.Flood
             yield return Say("F04_CHECK");
             yield return ShowNews("NEWS_F04_OFFICIAL");
             yield return Say("F04_PREPARE");
-            // TODO(Mahmut): yağmurluk ve şemsiye sahnede obje olsun, alınınca HUD ikonu (P1)
-            yield return WaitForInteract("Yağmurluğu al");
-            yield return WaitForInteract("Şemsiyeyi al");
-            yield return WaitForInteract("Dışarı çık");
+            // TODO(Mahmut): alınan eşya HUD ikonu (P1)
+            yield return UsePoint("Coat", "Yağmurluğu al");
+            yield return UsePoint("Umbrella", "Şemsiyeyi al");
+            yield return UsePoint("ExitDoor", "Dışarı çık");
 
             // F05 (1:50–2:30) yağmurlu sokak
-            EnterStep("F05_STREET");
-            // TODO(Mahmut): yağmur 5 sn içinde şiddetlenir, sağa yürüme (GameInput.MoveX)
+            yield return EnterRoom("F05_STREET");
+            // TODO(Mahmut): yağmur 5 sn içinde şiddetlenir
             yield return Say("F05_STREET");
-            yield return WaitForInteract("Yürümeye devam et");
+            yield return UsePoint("WalkEnd", "Yürümeye devam et");
 
             // F06 (2:30–3:10) söylentiler + karar 2
             EnterStep("F06_RUMORS");
@@ -46,13 +46,12 @@ namespace AfetUyanisi.Chapters.Flood
                 yield return ShowNews("NEWS_F06_OFFICIAL_ROAD");
 
             // F07 (3:10–3:40) riskli bölge, yolun kenarından
-            EnterStep("F07_RISK");
+            yield return EnterRoom("F07_RISK");
             yield return Say("F07_RISK");
-            yield return WaitForInteract("Tabelayı incele");
+            yield return UsePoint("Sign", "Tabelayı incele");
 
             // F08 (3:40–4:10) güvenli rota → okul kapısı
-            EnterStep("F08_SAFEROUTE");
-            // TODO(Mahmut): köprü üstünde yürüme
+            yield return EnterRoom("F08_SAFEROUTE");
             yield return Say("F08_SAFEROUTE");
 
             // F09 (4:10–4:30) sonuç
@@ -65,9 +64,9 @@ namespace AfetUyanisi.Chapters.Flood
         {
             if (choice.correct) yield break;
 
-            EnterStep("F07_RISK");
+            yield return EnterRoom("F07_RISK");
             yield return Say("F07_RISK_WARNING");
-            EnterStep("F06_RUMORS");
+            yield return EnterRoom("F06_RUMORS");
         }
     }
 }

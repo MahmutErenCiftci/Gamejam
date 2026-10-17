@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AfetUyanisi.Chapters.TempUI;
 using AfetUyanisi.Core;
 using AfetUyanisi.Shared;
 using UnityEngine;
@@ -21,9 +22,11 @@ namespace AfetUyanisi.Chapters
         {
             public string stepId;
             public GameObject root;
-            [Tooltip("Adıma girilince oyuncunun konacağı nokta (boşsa oyuncu yerinde kalır). Noktanın ölçeği oyuncuya da uygulanır.")]
+            [Tooltip("Adıma girilince oyuncunun konacağı nokta (boşsa oyuncu yerinde kalır).")]
             public Transform playerSpawn;
-            [Tooltip("Arka planda çocuk zaten çizili (hikâye kartı) ise oyuncuyu gizle.")]
+            [Tooltip("Doğunca oyuncunun bakacağı yön (ekran yönü; (0,-1) = güney/aşağı).")]
+            public Vector2 spawnFacing = new Vector2(0f, -1f);
+            [Tooltip("Görselde çocuk zaten çizili (hikâye kartı) ise oyuncuyu gizle.")]
             public bool hidePlayer;
         }
 
@@ -54,6 +57,7 @@ namespace AfetUyanisi.Chapters
 
         private readonly List<ChoiceData> mistakes = new List<ChoiceData>();
         private StoryData story;
+        private IsoPlayerController player;
 
         protected abstract ChapterId Chapter { get; }
 
@@ -70,6 +74,14 @@ namespace AfetUyanisi.Chapters
 
             if (storyJson != null)
                 story = JsonUtility.FromJson<StoryData>(storyJson.text);
+
+            // Arayüz ekibinin gerçek ipucu/kararma prefabı bağlı değilse geçicileri kullan.
+            if (hint == null) hint = new GameObject("TempInteractionHint").AddComponent<TempInteractionHint>();
+            if (fader == null) fader = new GameObject("TempScreenFader").AddComponent<TempScreenFader>();
+
+            if (playerObject != null)
+                player = playerObject.GetComponent<IsoPlayerController>();
+            SetPlayerControl(false);
         }
 
         protected virtual void Start()
@@ -99,11 +111,11 @@ namespace AfetUyanisi.Chapters
 
             if (playerObject == null) return;
             playerObject.SetActive(!matches.Any(v => v.hidePlayer));
-            var spawn = matches.Select(v => v.playerSpawn).FirstOrDefault(t => t != null);
-            if (spawn != null)
+            var entry = matches.FirstOrDefault(v => v.playerSpawn != null);
+            if (entry != null)
             {
-                playerObject.transform.position = spawn.position;
-                playerObject.transform.localScale = spawn.localScale;
+                if (player != null) player.PlaceAt(entry.playerSpawn.position, entry.spawnFacing);
+                else playerObject.transform.position = entry.playerSpawn.position;
             }
         }
 
@@ -115,22 +127,99 @@ namespace AfetUyanisi.Chapters
             if (playerObject != null) playerObject.SetActive(visible);
         }
 
-        /// <summary>İki bölümün ortak açılışı: Uyanış + Sabah Rutini (OYUN_AKISI §5).</summary>
+        /// <summary>Oyuncunun yürüyüp yürüyemeyeceği. Sadece bir etkileşim noktası beklenirken açılır.</summary>
+        protected void SetPlayerControl(bool canMove)
+        {
+            if (player != null) player.CanMove = canMove;
+        }
+
+        /// <summary>Oda değiştirir: ekran kararır, yeni adımın görseli ve oyuncu yerleşir, ekran açılır.</summary>
+        protected IEnumerator EnterRoom(string stepId, float fadeSeconds = 0.35f)
+        {
+            SetPlayerControl(false);
+            yield return FadeOut(fadeSeconds);
+            EnterStep(stepId);
+            yield return FadeIn(fadeSeconds);
+        }
+
+        /// <summary>
+        /// Açık adımın odasındaki etkileşim noktasını (ör. "Bed", "Door") adıyla bulur; oyuncu oraya yürüyüp E'ye
+        /// basana kadar bekler. Bekleme sırasında oyuncu yürüyebilir. Nokta sahnede yoksa her yerden E ile geçilir.
+        /// </summary>
+        protected IEnumerator UsePoint(string pointName, string label)
+        {
+            var point = FindPoint(pointName);
+            if (point == null)
+            {
+                yield return WaitForInteract(label);
+                yield break;
+            }
+
+            SetPlayerControl(true);
+            if (debugAutoAdvance)
+                yield return null;
+            else
+                yield return point.WaitForUse(player, hint, label);
+            SetPlayerControl(false);
+        }
+
+        private Interactable FindPoint(string pointName)
+        {
+            if (stepVisuals == null) return null;
+            foreach (var v in stepVisuals)
+            {
+                if (v?.root == null || v.stepId != currentStep || !v.root.activeInHierarchy) continue;
+                var found = v.root.GetComponentsInChildren<Interactable>(true).FirstOrDefault(i => i.name == pointName);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        /// <summary>Açık odadaki adı verilen objeyi gösterir/gizler (ör. yataktaki uyuyan çocuk "SleepingBoy").</summary>
+        protected void SetRoomObjectVisible(string objectName, bool visible)
+        {
+            if (stepVisuals == null) return;
+            foreach (var v in stepVisuals)
+            {
+                if (v?.root == null || v.stepId != currentStep) continue;
+                var t = v.root.GetComponentsInChildren<Transform>(true).FirstOrDefault(c => c.name == objectName);
+                if (t != null) t.gameObject.SetActive(visible);
+            }
+        }
+
+        /// <summary>
+        /// İki bölümün ortak açılışı (OYUN_AKISI §5.1): yatakta uyanış → odada yürüme → banyo → mutfağa çıkış.
+        /// Bitince ekran karanlıktır; bölüm bir sonraki odaya EnterRoom ile geçer.
+        /// </summary>
         protected IEnumerator PlayMorningIntro(string wakeStepId, string routineStepId)
         {
+            // 1–3: siyah ekran, oda açılır, çocuk yatakta uyuyor
             EnterStep(wakeStepId);
             SetBlack();
-            // TODO(Mahmut): 07:00 alarm sesi, çocuğun gözünü açması
+            SetPlayerVisible(false);
+            SetRoomObjectVisible("SleepingBoy", true);
+            // TODO(Mahmut): 07:00 alarm sesi
             yield return FadeIn(1.5f);
-            yield return WaitForInteract("Kalk");
-            yield return Say(wakeStepId);
-            // TODO(Mahmut): kapıya yürüme (GameInput.MoveX); şimdilik etkileşimle geçiliyor
-            yield return WaitForInteract("Banyoya git");
+            yield return UsePoint("Bed", "Kalk");
 
-            EnterStep(routineStepId);
-            yield return WaitForInteract("Yüzünü yıka");
-            // TODO(Mahmut): 1 sn su efekti
+            // 4: kısa kararma, çocuk yatağın yanında belirir
+            yield return FadeOut(0.25f);
+            SetRoomObjectVisible("SleepingBoy", false);
+            SetPlayerVisible(true);
+            EnterStep(wakeStepId); // oyuncuyu doğma noktasına koyar
+            yield return FadeIn(0.25f);
+
+            // 5–6: iç ses, sonra serbest dolaşma ve kapı
+            yield return Say(wakeStepId);
+            yield return UsePoint("Door", "Banyoya git");
+
+            // 7–10: banyo, lavabo, mutfağa çıkış
+            yield return EnterRoom(routineStepId);
+            yield return UsePoint("Sink", "Yüzünü yıka");
+            // TODO(Mahmut): 1 sn su efekti (flaş yok)
             yield return Say(routineStepId);
+            yield return UsePoint("Door", "Mutfağa git");
+            yield return FadeOut(0.35f);
         }
 
         /// <summary>Story JSON'daki diyalog sahnesini oynatır (Arda'nın DialogueRunner'ı).</summary>

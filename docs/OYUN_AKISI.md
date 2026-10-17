@@ -12,7 +12,7 @@
 | | |
 |---|---|
 | **Slogan** | *Küçük kararlar, büyük fark yaratır.* |
-| **Tür** | 2D yandan görünüşlü (side view), kısa, seçimli hikâye oyunu — pixel art, Türkçe |
+| **Tür** | **İzometrik 2D pixel art**, kısa, seçimli hikâye oyunu (Tilemap ile kurulan odalar), Türkçe |
 | **Ana karakter** | Sarı yağmurluklu, sırt çantalı çocuk (sprite: `visuals/characters/arda_yuruyus`). Her iki bölümde de aynı çocuk. |
 | **Yan karakterler** | Anne (sprite hazır), 3 arkadaş (Sel), öğretmen (Sel sonu), komşu + görevli (Deprem sonu) |
 | **Hedef** | Afetlere karşı doğru davranışları öğretmek · yanlış bilginin risklerini göstermek · kısa ama etkili bir deneyim sunmak |
@@ -43,12 +43,12 @@ Ana Menü (≈10 sn)
 
 | Mekanik | Tuş | Nerede | Not |
 |---|---|---|---|
-| Hareket | **A / D** veya **← / →** | Ev içi, sokak | Yandan görünüş: sadece sağ-sol |
+| Hareket | **W / A / S / D** veya **ok tuşları** | Ev içi, sokak | İzometrik: 8 yöne yürüme; duvar ve eşyalara çarpar |
 | Etkileşim | **E** | Kalk, yüzünü yıka, eşya al, tabela incele | Ekranda ipucu: `[E] Kalk` |
 | Diyaloğu ilerlet | **E**, **Space**, **Enter** veya **sol tık** | Tüm konuşmalar | |
 | Seçim yap | **1–5** veya **fare** | Tüm kararlar | Seçenek numaraları ekranda yazar |
 | Zamanlı seçim | 1–5 / fare | Deprem anı (E_D1) | **5 saniye**, sayaç çubuğu; seçenekler sayaç başlamadan görünür |
-| Çök – Kapan – Tutun | **S** (Çök) → **A** (Kapan) → **D** basılı (Tutun) | Deprem (E05) | Hareket o sırada kapalı; D sarsıntı bitene kadar basılı tutulur |
+| Çök – Kapan – Tutun | **S** (Çök) → **A** (Kapan) → **D** basılı (Tutun) | Deprem (E05) | Hareket o sırada kapalı (S/A/D yürümez); D sarsıntı bitene kadar basılı tutulur |
 | Önemli eşyalar | **E** | Yağmurluk, şemsiye (Sel), deprem çantası (Deprem) | Alınan eşya HUD'da ikon olarak görünür (P1) |
 | Menü | **A / D**, **← / →** bulut seç · **Enter** başlat · **Esc** geri · **Space** introyu atla | Ana menü | Fareyle bulut tıklamak doğrudan başlatır |
 
@@ -86,6 +86,25 @@ Ana Menü (≈10 sn)
 | 2 | `F02_WASH` / `E02_ROUTINE` | 0:20–0:50 | Banyo → mutfak | Lavaboda yüzünü yıkar (1 sn su efekti). *"Oh, su buz gibi! Şimdi uyandım işte."* · *"Bakalım kahvaltıda ne var?"* | **[E] Yüzünü yıka** |
 
 Mutfakta **TV açıktır**. Bölümler buradan sonra ayrışır.
+
+### 5.1 İlk sahnenin ayrıntılı kurgusu (uygulanan)
+
+Oyuncunun ilk 50 saniyesi iki bölümde de aynıdır ve oyunun tonunu belirler: sakin, sıcak bir sabah. Afet henüz yok, oyuncu sadece hareketi ve etkileşimi öğrenir.
+
+| Vuruş | Ekranda | Oyuncu | Uygulama notu |
+|---|---|---|---|
+| 1. Siyah | Ekran kapkaranlık (alarm sesi P2) | — | `SetBlack()` |
+| 2. Açılış (1,5 sn) | İzometrik yatak odası (Tilemap), çocuk yatakta uyuyor | — | `World/Bedroom` + varsa `SleepingBoy` objesi |
+| 3. Uyan | Ekranın altında `[E] Kalk` | **E** | Oyuncu henüz görünmez, E her yerden çalışır |
+| 4. Kalkış (0,25 sn) | Kısa kararma; çocuk yatağın yanında, güneye bakarak belirir | — | `SleepingBoy` gizlenir, `Characters/Boy` doğma noktasına konur |
+| 5. İç ses | Çocuğun başının üstünde balon: *"Saat yedi olmuş... Yine okula geç kalmayayım."* | E/Space ile geçer | Eren'in konuşma balonu (`DialogueSpeaker` "Çocuk") |
+| 6. Serbest dolaşma | Oda; kapıya yaklaşınca `[E] Banyoya git` | **W/A/S/D** ile 8 yöne yürür, kapıda **E** | `Bedroom/Door` etkileşim noktası (`Interactable`); duvar ve eşyalara çarpar |
+| 7. Geçiş | Kararma → banyo açılır, çocuk kapının önünde | — | `World/Bathroom`, `Bathroom/Spawn` |
+| 8. Lavabo | Lavaboya yaklaşınca `[E] Yüzünü yıka` | Yürür, **E** | `Bathroom/Sink` |
+| 9. Rutin | Balon: *"Oh, su buz gibi! Şimdi uyandım işte."* → *"Bakalım kahvaltıda ne var?"* | E/Space | (P1: 1 sn su efekti, flaş yok) |
+| 10. Çıkış | Kapıda `[E] Mutfağa git` → kararma → mutfak (bölüm burada ayrışır) | Yürür, **E** | `Bathroom/Door` |
+
+**Kurallar:** Oyuncu sadece bir etkileşim noktasını beklerken yürüyebilir (`UsePoint`). Diyalog, haber ve karar sırasında hareket kapalıdır. Odalar arası geçişte ekran kısa kararır (`EnterRoom`). Karo ölçüsü, piksel ölçeği ve kamera değerleri karo seti gelince `technical/ISIMLENDIRME_VE_KLASORLER.md`'ye yazılacak.
 
 ---
 

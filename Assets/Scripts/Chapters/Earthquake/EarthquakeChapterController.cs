@@ -21,8 +21,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             yield return PlayMorningIntro("E01_WAKE", "E02_ROUTINE");
 
             // E03 (0:50–1:30) kahvaltı, TV haberi; anne çantayı ve toplanma alanını hatırlatıp işe çıkar
-            EnterStep("E03_NEWS");
-            yield return WaitForInteract("Kahvaltı yap");
+            yield return EnterRoom("E03_NEWS");
+            yield return UsePoint("Table", "Kahvaltı yap");
             yield return ShowNews("NEWS_E03_TV");
             yield return Say("E03_NEWS");
 
@@ -38,17 +38,17 @@ namespace AfetUyanisi.Chapters.Earthquake
             SetShaking(false);
 
             // E06 (2:05–2:45) sarsıntı sonrası: çanta + ocak (2 doğru)
-            EnterStep("E06_AFTER");
+            yield return EnterRoom("E06_AFTER", 0.6f);
             yield return Say("E06_AFTER");
             yield return Ask("E_D2");
 
             // E07 (2:45–3:15) binadan çıkış: merdiven mi asansör mü
-            EnterStep("E07_EXIT");
+            yield return EnterRoom("E07_EXIT");
             yield return Say("E07_EXIT");
             yield return Ask("E_D3");
 
             // E08 (3:15–3:45) toplanma alanı
-            EnterStep("E08_ASSEMBLY");
+            yield return EnterRoom("E08_ASSEMBLY");
             yield return Say("E08_ASSEMBLY");
 
             // E09 (3:45–4:05) sonuç

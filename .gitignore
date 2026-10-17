@@ -46,3 +46,7 @@ Thumbs.db
 
 # Claude kişisel notlar
 CLAUDE.local.md
+
+# Claude Code yerel dosyaları (kişisel izinler, ajan çalışma kopyaları)
+.claude/settings.local.json
+.claude/worktrees/
