@@ -138,6 +138,14 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private string exitLine = "EQH_EXIT";
         [SerializeField] private string assemblyLine = "EQH_ASSEMBLY";
 
+        [Header("Toplanma alanı")]
+        [Tooltip("Toplanma alanına varınca oyuncu serbest yürür; annesine bu kadar yaklaşınca son konuşma başlar (0 = yürümeden hemen konuşma)")]
+        [SerializeField] private float assemblyMeetRadius = 1.1f;
+        [Tooltip("Oyuncu annesinin yanına gitmezse konuşma en çok bu kadar sn sonra kendiliğinden başlar")]
+        [SerializeField] private float assemblyMeetTimeout = 30f;
+        [Tooltip("İlk bilgi kartından sonra, oyuncu hâlâ yürüyorsa gösterilen ipucu")]
+        [SerializeField] private string assemblyMeetHint = "Annen tabelanın yanında seni bekliyor. Yanına git.";
+
         [Header("Hata ayıklama / otomatik test")]
         [Tooltip("İşaretliyse bütün akışı kendisi oynar (tuş gerekmez), adımlar Console'a yazılır")]
         [SerializeField] private bool debugAutoPlay;
@@ -793,10 +801,43 @@ namespace AfetUyanisi.Chapters.Earthquake
             while (!reachedAssembly) yield return null;
             while (interactor.IsBusy || transitioning) yield return null;
 
-            SetFreeRoam(false);
             Log("D: toplanma alanı");
             Toast("TOPLANMA ALANI", data.after.assembly, toastSeconds + 1f);
+            yield return WaitAssemblyMeet();
+            SetFreeRoam(false);
+            FacePlayerToMother();
             yield return Say(assemblyLine);
+        }
+
+        /// <summary>Toplanma alanında oyuncu annesinin yanına yürüyene kadar (ya da süre dolana kadar) bekler.
+        /// Otomatik oyunda ve assemblyMeetRadius 0 iken beklemez.</summary>
+        private IEnumerator WaitAssemblyMeet()
+        {
+            Transform target = assemblyMother != null ? assemblyMother.transform
+                : mother != null && mother.gameObject.activeInHierarchy ? mother.transform : null;
+            if (target == null)
+            {
+                var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+                target = assembly != null ? assembly.FindChild("MotherSpot") : null;
+            }
+            if (debugAutoPlay || assemblyMeetRadius <= 0f || target == null || player == null) yield break;
+
+            Log("D: toplanma alanında annesine yürüyor");
+            float hintAt = toastSeconds + 1.5f;
+            bool hinted = false;
+            for (float t = 0f; t < assemblyMeetTimeout; t += Time.deltaTime)
+            {
+                bool busy = interactor.IsBusy || transitioning;
+                if (!busy && Vector2.Distance(player.transform.position, target.position) <= assemblyMeetRadius) break;
+                if (!hinted && !busy && t >= hintAt)
+                {
+                    hinted = true;
+                    Toast("ANNENİ BUL", assemblyMeetHint, toastSeconds + 1f);
+                }
+                yield return null;
+            }
+            while (interactor.IsBusy || transitioning) yield return null;
+            Log("D: anneyle buluştu");
         }
 
         // ---------------- E. Rapor ----------------
