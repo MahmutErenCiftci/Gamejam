@@ -53,6 +53,8 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>ÇÖK / KAPAN / TUTUN adım göstergesi + basılı tutma çubuğu.</summary>
     public abstract class ProtectionViewBase : MonoBehaviour
     {
+        public virtual void BeginBalance(EarthquakeBalanceSettings settings, EqBalanceTexts texts) { }
+        public virtual void SetBalance(EarthquakeBalanceModel state) { }
         public abstract void Show(string[] steps, int currentStep, string prompt);
         public abstract void SetHoldProgress(float t01);
         public abstract void Warn(string text);

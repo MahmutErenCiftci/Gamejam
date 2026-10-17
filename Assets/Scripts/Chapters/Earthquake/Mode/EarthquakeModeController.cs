@@ -180,6 +180,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         // --- Testler için okunur durum ---
         public EarthquakePhase Phase => phase;
+        public EarthquakeRoom CurrentRoom => currentRoom;
         public EarthquakeStats Stats => stats;
         public EarthquakeReport LastReport { get; private set; }
         public bool IsFinished { get; private set; }
@@ -362,7 +363,22 @@ namespace AfetUyanisi.Chapters.Earthquake
                 inspectables.Add(insp);
                 if (registered.Contains(insp.Point)) continue;
                 var i = insp;
-                if (i == quakeBag)
+                if (i.Id == "stove")
+                {
+                    var stove = i.GetComponent<StoveFireController>();
+                    if (stove == null) stove = i.gameObject.AddComponent<StoveFireController>();
+                    if (stove.Configure(i, this, FindAnyObjectByType<PreparationQuestManager>(), countdown, () =>
+                    {
+                        i.MarkInspected(); stats.AddInspected(i.Id, i.IsHazard);
+                        if (!countdown.HasExpired) Toast("OCAK KAPATILDI", "Plaka hâlâ sıcak olabilir. Dokunma.", 2f);
+                    })) interactor.Register(i.Point, before: stove.Use);
+                    else
+                    {
+                        Debug.LogError("[EQ] Ocak görseli veya görev bağlantısı bulunamadı.", i);
+                        i.Point.SetAvailable(false);
+                    }
+                }
+                else if (i == quakeBag)
                 {
                     i.Point.Setup("Deprem çantasına bak", "", false, false);
                     interactor.Register(i.Point, before: UseBag);
@@ -636,7 +652,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         // ---------------- C. Sarsıntı + korunma ----------------
         private IEnumerator QuakePhase()
         {
+            if (phase == EarthquakePhase.Quake || phase == EarthquakePhase.After || phase == EarthquakePhase.Report) yield break;
             phase = EarthquakePhase.Quake;
+            SetFreeRoam(false);
+            countdown.SetVisible(false);
             stats.remainingAtQuake = countdown.GetRemainingTime();
             countdown.SetStatusText("SARSINTI!");
             Log("C: SARSINTI başlıyor");
@@ -662,6 +681,9 @@ namespace AfetUyanisi.Chapters.Earthquake
             stats.protectionUnderTable = result != null && result.table != null && outcome == ProtectionOutcome.TableDropCoverHold;
             stats.protectionHoldReleased = result != null && result.releasedDuringHold;
             stats.protectionIncomplete = result != null && outcome != ProtectionOutcome.None && !result.holdCompleted;
+            stats.protectionBalancePlayed = result != null && result.balancePlayed;
+            stats.protectionBalanceScore = result != null ? result.balanceScore : 0;
+            stats.protectionHeldRatio = result != null ? result.heldRatio : 0;
 
             var feedback = new List<string>();
             switch (outcome)
@@ -671,6 +693,13 @@ namespace AfetUyanisi.Chapters.Earthquake
                 default: feedback.Add(data.protection.none); break;
             }
             if (stats.protectionIncomplete) feedback.Add(data.protection.releaseWarning);
+            if (result != null && result.balancePlayed)
+            {
+                var balanceText = data.protection.balance ?? new EqBalanceTexts();
+                feedback.Add(result.holdCompleted && result.balanceScore >= 35 ? balanceText.success : balanceText.feedback);
+                feedback.Add(string.Format(balanceText.score, result.balanceScore));
+                feedback.Add(balanceText.resultNote);
+            }
             foreach (var z in exposedZones)
             {
                 string text = data.protection.ExposedText(z.ExposureKind);
@@ -1067,6 +1096,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         private void OnPointUsed(Interactable point)
         {
+            if (point != null && point.GetComponent<StoveFireController>() != null) return;
             if (interactorPaused) return;
             countdown.PushPause(interactorToken);
             interactorPaused = true;

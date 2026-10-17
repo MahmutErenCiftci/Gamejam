@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2673324755070061033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1857976355780129866}
+  - component: {fileID: 2800138378046187767}
+  m_Layer: 0
+  m_Name: InteractionPromptUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1857976355780129866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673324755070061033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2800138378046187767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673324755070061033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c30404896b1ef438d9ec1fa44f02bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.UI.InteractionPromptUI
+  font: {fileID: 11400000, guid: 5cb2d8cfc69faa442b0a200e27f42d5a, type: 2}
+  fontSize: 12
+  padding: 5
+  keySize: 18
+  gap: 5
+  minimumWidth: 65
+  maximumWidth: 300
+  screenMargin: 6
+  verticalOffset: 6
+  pointerSize: 4
+  backgroundColor: {r: 0.039215688, g: 0.09803922, b: 0.17254902, a: 1}
+  borderColor: {r: 0.18431373, g: 0.41568628, b: 0.54901963, a: 1}
+  textColor: {r: 0.9529412, g: 0.9254902, b: 0.8666667, a: 1}
+  keyColor: {r: 0.9647059, g: 0.7764706, b: 0.49019608, a: 1}
+  pointerColor: {r: 0.5137255, g: 0.8509804, b: 0.94509804, a: 1}
+  appearSeconds: 0.15
+  disappearSeconds: 0.12
+  travelPixels: 4

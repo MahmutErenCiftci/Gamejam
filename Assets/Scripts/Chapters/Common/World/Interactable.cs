@@ -24,6 +24,11 @@ namespace AfetUyanisi.Chapters
         [Tooltip("İsteğe bağlı: sadece kullanılabilirken açık olan vurgu (bu objenin bir çocuğu)")]
         [SerializeField] private GameObject highlight;
 
+        [Header("Etkileşim ipucu")]
+        [Tooltip("Boşsa nesnenin Transform'u kullanılır; görselin üstüne ayrı bir anchor konabilir.")]
+        [SerializeField] private Transform promptAnchor;
+        [SerializeField] private Vector3 promptOffset = new Vector3(0f, 0.4f, 0f);
+
         [Header("Oda etkileşimi (RoomInteractor)")]
         [Tooltip("Kapalıysa RoomInteractor bu noktayı yok sayar (ör. lavabo kullanılmadan mutfak kapısı)")]
         [SerializeField] private bool available = true;
@@ -46,6 +51,8 @@ namespace AfetUyanisi.Chapters
         public string DialogueId => dialogueId;
         public bool AppendChapterSuffix => appendChapterSuffix;
         public bool OneShot => oneShot;
+        public Transform PromptAnchor => promptAnchor != null ? promptAnchor : transform;
+        public Vector3 PromptOffset { get => promptOffset; set => promptOffset = value; }
 
         /// <summary>RoomInteractor'ın bu noktayı önerip önermeyeceği.</summary>
         public void SetAvailable(bool value)
@@ -107,7 +114,7 @@ namespace AfetUyanisi.Chapters
                         SetHighlight(inRange);
                         if (hint != null)
                         {
-                            if (inRange) hint.Show(keyLabel, text);
+                            if (inRange) hint.Show(keyLabel, text, PromptAnchor, PromptOffset);
                             else hint.Hide();
                         }
                         else if (inRange)
@@ -116,7 +123,11 @@ namespace AfetUyanisi.Chapters
                         }
                     }
 
-                    if (inRange && GameInput.InteractPressed) yield break;
+                    if (inRange && GameInput.InteractPressed)
+                    {
+                        if (hint != null) hint.Press();
+                        yield break;
+                    }
                     yield return null;
                 }
             }
