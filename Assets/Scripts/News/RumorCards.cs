@@ -23,6 +23,10 @@ namespace AfetUyanisi.News
         [SerializeField] GameObject root;
         [SerializeField] Text promptText;
         [SerializeField] Text feedbackText;
+        [SerializeField] Image feedbackFrame;
+        [SerializeField] Text feedbackIcon;
+        [SerializeField] Color correctColor = new Color(0.09f, 0.66f, 0.34f, 1f);
+        [SerializeField] Color wrongColor = new Color(0.91f, 0.22f, 0.17f, 1f);
         [SerializeField] Text fictionNoticeText;
         [SerializeField] RumorCardView[] cardViews;
         [SerializeField] GameObject continueHint;
@@ -64,6 +68,7 @@ namespace AfetUyanisi.News
             promptText.text = data.prompt;
             fictionNoticeText.text = data.fictionNotice;
             feedbackText.text = "";
+            if (feedbackFrame != null) feedbackFrame.gameObject.SetActive(false);
             continueHint.SetActive(false);
             for (int i = 0; i < cardViews.Length; i++)
             {
@@ -98,6 +103,13 @@ namespace AfetUyanisi.News
             if (!choosing || index >= data.cards.Length) return;
             var card = data.cards[index];
             feedbackText.text = card.feedback;
+            if (feedbackFrame != null)
+            {
+                feedbackFrame.gameObject.SetActive(true);
+                feedbackFrame.color = card.official ? correctColor : wrongColor;
+                feedbackIcon.text = card.official ? "✓" : "!";
+                feedbackIcon.color = feedbackFrame.color;
+            }
 
             if (!card.official)
             {
