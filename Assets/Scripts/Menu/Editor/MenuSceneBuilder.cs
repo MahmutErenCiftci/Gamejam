@@ -36,6 +36,11 @@ namespace AfetUyanisi.Menu.EditorTools
         [MenuItem("AfetUyanisi/Menü/Sahneyi Kur (MainMenu.unity üzerine yazar)")]
         public static void Build()
         {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                Debug.LogWarning("[MenuSceneBuilder] Play modundayken sahne kurulamaz; önce Play'den çıkın.");
+                return;
+            }
             unlit = AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat");
             font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -89,7 +94,6 @@ namespace AfetUyanisi.Menu.EditorTools
             var decor = Group(room, "WallDecor");
             var posterRocket = Place(decor, "PosterRocket", "Decor/PosterRocket", 206, 186, 5);
             var posterSaturn = Place(decor, "PosterSaturn", "Decor/PosterSaturn", 252, 202, 5);
-            var photoWall = Place(decor, "PhotoWall", "Decor/PhotoWall", 178, 140, 5);
             var worldMap = Place(decor, "WorldMap", "Decor/WorldMap", 268, 150, 5);
             var starFrame = Place(decor, "StarFrame", "Decor/StarFrame", 288, 214, 5);
             var hangingPlant = Place(decor, "HangingPlant", "Decor/HangingPlant", 470, 262, 22);
@@ -105,21 +109,26 @@ namespace AfetUyanisi.Menu.EditorTools
             var globe = Place(furniture, "Globe", "Decor/Globe", 356, 106, 31);
             var bookStack = Place(furniture, "BookStack", "Decor/BookStack", 430, 106, 31);
             var bookshelf = Place(furniture, "Bookshelf", "Room/Bookshelf", 474, 30, 32);
-            var backpack = Place(furniture, "Backpack", "Room/Backpack", 286, 26, 33);
+            var backpack = Place(furniture, "Backpack", "Room/Backpack", 290, 26, 33);
+            Place(furniture, "Plant", "Room/Plant", 30, 20, 33);
             var chair = Place(furniture, "Chair", "Room/Chair", 394, 14, 40);
-            var nightstand = Place(furniture, "Nightstand", "Room/Nightstand", 36, 22, 30);
-            var moonLamp = Place(furniture, "MoonLamp", "Decor/MoonLamp", 18, 78, 31);
-            var bed = Place(furniture, "Bed", "Room/Bed", 150, 16, 35);
-            var blanket = Place(furniture, "Blanket", "Room/Blanket", 182, 22, 36);
-            var boyRenderer = Place(furniture, "SleepingBoy", "Boy/BoySleep1", 80, 38, 37);
-            var roomClock = Place(furniture, "RoomClock", "Room/RoomClock", 50, 86, 31); // introda karanlığın altında; büyük saat gösterilir
+            var nightstand = Place(furniture, "Nightstand", "Room/Nightstand", 108, 22, 30);
+            var moonLamp = Place(furniture, "MoonLamp", "Decor/MoonLamp", 88, 78, 31);
+            var roomClock = Place(furniture, "RoomClock", "Room/RoomClock", 124, 87, 31); // introda karanlığın altında; büyük saat gösterilir
+
+            // Yatak önden görünür: çocuk kareleri başlık + yastık + battaniyeyi içerir, altına ahşap ray ve bacaklar
+            // gelir. Çocuk yatağın çocuğu: sarsıntıda birlikte hareket ederler. Kare pivotu yatağın alt-ortası.
+            // Yatak, sol sütundaki butonların altına girmesin diye x=201'de.
+            var bedFront = Place(furniture, "Bed", "Room/BedFront", 201, 12, 35);
+            var boyRenderer = Place(bedFront.transform, "SleepingBoy", "Boy/BoySleep1", 0, bedFront.sprite.rect.height, 37, local: true);
 
             var boy = boyRenderer.gameObject.AddComponent<SleepingBoy>();
             SetRef(boy, "body", boyRenderer);
+            // Üst sıra: zzz'li uyku, ağzı açık, sakin uyku (nefes); göz ovuşturma (kıpırdanma).
+            // Alt sıra: gerinme, gözler açık, etrafa bakma (irkilme).
             SetArray(boy, "breathFrames", S("Boy/BoySleep1"), S("Boy/BoySleep2"), S("Boy/BoySleep3"));
-            SetArray(boy, "stirFrames", S("Boy/BoySleep4"), S("Boy/BoyWake1"));
-            SetArray(boy, "startledFrames", S("Boy/BoyWake2"), S("Boy/BoyWake3"), S("Boy/BoyWake3"), S("Boy/BoyWake2"));
-            SetRef(boy, "blanket", blanket.transform);
+            SetArray(boy, "stirFrames", S("Boy/BoySleep4"));
+            SetArray(boy, "startledFrames", S("Boy/BoyWake2"), S("Boy/BoyWake4"), S("Boy/BoyWake3"), S("Boy/BoyWake2"));
 
             // ---------------- Oda ışığı
             var light = Group(room, "RoomLight");
@@ -131,12 +140,13 @@ namespace AfetUyanisi.Menu.EditorTools
             // ---------------- Rüya seçimi
             var dreams = Group(null, "DreamSelection");
             var thought = Group(dreams, "ThoughtTrail");
-            var dot1 = Place(thought, "Thought1", "UI/ThoughtSmall", 124, 124, 99);
-            var dot2 = Place(thought, "Thought2", "UI/ThoughtMedium", 148, 136, 99);
+            // Çocuğun başından iki bulutun arasındaki boşluğa doğru yükselir.
+            var dot1 = Place(thought, "Thought1", "UI/ThoughtSmall", 190, 154, 99);
+            var dot2 = Place(thought, "Thought2", "UI/ThoughtMedium", 178, 186, 99);
             var trail = thought.gameObject.AddComponent<ThoughtTrail>();
             SetArray(trail, "dots", dot1, dot2);
-            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", 92, 200, 100, false, 0f);
-            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", 246, 200, 105, true, 0.5f);
+            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", "Bubbles/LabelQuake", 100, 200, 100, false, 0f);
+            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", "Bubbles/LabelFlood", 266, 200, 105, true, 0.5f);
 
             // ---------------- Logo, karanlık, büyük saat
             var titleRenderer = Place(null, "Title", "UI/LogoStacked", 90, 222, 120);
@@ -158,7 +168,7 @@ namespace AfetUyanisi.Menu.EditorTools
             var startChapter = MenuButton(selection.transform, "StartChapterButton", "Bölümü Başlat", new Vector2(208, 4));
             var back = MenuButton(selection.transform, "BackButton", "Geri", new Vector2(60, 4));
             ((RectTransform)back.transform).sizeDelta = new Vector2(100, 26);
-            Label(selection.transform, "Hint", "Rüyanı seç: fare ya da A/D  ·  Enter: başla  ·  Esc: geri", 11, new Vector2(-170, 4), new Vector2(300, 20), TextAnchor.MiddleLeft);
+            Label(selection.transform, "Hint", "Rüyanı seç: fare ya da A/D  ·  Enter: başla  ·  Esc: geri", 11, new Vector2(140, 32), new Vector2(300, 20), TextAnchor.MiddleCenter);
 
             var settingsPanel = UiImage(root, "SettingsPanel", S("UI/ButtonBar"), Vector2.zero, new Vector2(300, 150));
             settingsPanel.type = UnityEngine.UI.Image.Type.Sliced;
@@ -233,7 +243,7 @@ namespace AfetUyanisi.Menu.EditorTools
             SetRef(earthquake, "rumbleSource", rumble);
             var props = new (Component target, EarthquakePreview.Reaction reaction, float strength)[]
             {
-                (bed, EarthquakePreview.Reaction.Jitter, 1f),
+                (bedFront, EarthquakePreview.Reaction.Jitter, 1f), // çocuk yatağın çocuğu, birlikte titrer
                 (nightstand, EarthquakePreview.Reaction.Jitter, 1f),
                 (roomClock, EarthquakePreview.Reaction.Jitter, 1f),
                 (moonLamp, EarthquakePreview.Reaction.Tilt, 6f),
@@ -246,7 +256,6 @@ namespace AfetUyanisi.Menu.EditorTools
                 (backpack, EarthquakePreview.Reaction.Tilt, 4f),
                 (posterRocket, EarthquakePreview.Reaction.Tilt, 3f),
                 (posterSaturn, EarthquakePreview.Reaction.Tilt, 3f),
-                (photoWall, EarthquakePreview.Reaction.Tilt, 2f),
                 (worldMap, EarthquakePreview.Reaction.Tilt, 3f),
                 (starFrame, EarthquakePreview.Reaction.Tilt, 4f),
                 (pendantLamp, EarthquakePreview.Reaction.Sway, 14f),
@@ -399,7 +408,7 @@ namespace AfetUyanisi.Menu.EditorTools
         }
 
         // ---------------------------------------------------------------- bulut
-        static DisasterBubble Bubble(Transform parent, string name, MenuChapterLoader.Chapter chapter, string artPath, string glowPath, float x, float y, int baseOrder, bool rainInside, float phase)
+        static DisasterBubble Bubble(Transform parent, string name, MenuChapterLoader.Chapter chapter, string artPath, string glowPath, string labelPath, float x, float y, int baseOrder, bool rainInside, float phase)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
@@ -409,6 +418,8 @@ namespace AfetUyanisi.Menu.EditorTools
             visual.SetParent(go.transform, false);
             var glow = Place(visual, "Glow", glowPath, 0, 0, baseOrder, local: true);
             var art = Place(visual, "Art", artPath, 0, 0, baseOrder + 1, local: true);
+            // Etiket bulutun altında; bulutla birlikte yüzer ve büyür, maskeden etkilenmez.
+            Place(visual, "Label", labelPath, 0, -(art.sprite.rect.height / 2f + 8f), baseOrder + 4, local: true);
 
             var mask = new GameObject("Mask", typeof(SpriteMask)).GetComponent<SpriteMask>();
             mask.transform.SetParent(visual, false);

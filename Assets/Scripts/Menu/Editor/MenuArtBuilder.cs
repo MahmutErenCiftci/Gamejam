@@ -16,7 +16,6 @@ namespace AfetUyanisi.Menu.EditorTools
         public const int PixelsPerUnit = 16;
         const string SourceDir = "Assets/Art/Menu/Source~/";
         const string OutDir = "Assets/Art/Menu/";
-        const int Block = 4;
 
         static readonly Vector2 Bottom = new Vector2(0.5f, 0f);
         static readonly Vector2 Center = new Vector2(0.5f, 0.5f);
@@ -41,10 +40,7 @@ namespace AfetUyanisi.Menu.EditorTools
 
         static readonly Piece[] Pieces =
         {
-            // Mobilya (furniture.png)
-            new Piece("furniture", "Room/Bed", 12, 29, 165, 94, Bottom),
-            new Piece("furniture", "Room/Blanket", 180, 61, 129, 75, Bottom),
-            new Piece("furniture", "Room/Pillow", 10, 118, 77, 41, Bottom),
+            // Mobilya (furniture.png). Yatak artık önden görünen çocuk karelerinin içinde (boy_front_frames.png).
             new Piece("furniture", "Room/Chair", 247, 146, 58, 86, Bottom),
             new Piece("furniture", "Room/Nightstand", 11, 169, 71, 58, Bottom),
             new Piece("furniture", "Room/Desk", 92, 157, 144, 70, Bottom),
@@ -85,11 +81,7 @@ namespace AfetUyanisi.Menu.EditorTools
             new Piece("ui_kit", "UI/IconHome", 96, 185, 55, 55, Center),
             new Piece("ui_kit", "UI/IconSettings", 164, 185, 55, 55, Center),
 
-            // Rüya bulutları (dream_bubbles.png)
-            new Piece("dream_bubbles", "Bubbles/BubbleQuake", 6, 15, 151, 109, Center),
-            new Piece("dream_bubbles", "Bubbles/BubbleFlood", 159, 15, 149, 109, Center),
-            new Piece("dream_bubbles", "Bubbles/BubbleQuakeGlow", 2, 125, 156, 119, Center),
-            new Piece("dream_bubbles", "Bubbles/BubbleFloodGlow", 158, 125, 154, 119, Center),
+            // Rüya bulutları 128x128 hazır piksel sanattan gelir (BuildBubbles).
 
             // Logo (logo.png) — yarı boyut
             new Piece("logo", "UI/LogoStacked", 10, 42, 294, 151, Center, step: 2),
@@ -104,12 +96,13 @@ namespace AfetUyanisi.Menu.EditorTools
             {
                 if (!sheets.TryGetValue(piece.sheet, out Sheet sheet))
                 {
-                    sheet = Sheet.Load(SourceDir + piece.sheet + ".png");
+                    sheet = Sheet.Load(SourceDir + piece.sheet + ".png", 4);
                     sheets[piece.sheet] = sheet;
                 }
                 written.Add(Save(sheet.Extract(piece.cells, piece.step, piece.punchCenter), piece.output));
             }
-            written.AddRange(ExtractBoyFrames(Sheet.Load(SourceDir + "boy_frames.png")));
+            written.AddRange(ExtractBoyFrames(Sheet.Load(SourceDir + "boy_front_frames.png", 6, alignTop: true)));
+            written.AddRange(BuildBubbles());
             written.AddRange(GenerateProcedural());
 
             AssetDatabase.Refresh();
@@ -143,28 +136,168 @@ namespace AfetUyanisi.Menu.EditorTools
             importer.SaveAndReimport();
         }
 
-        // Çocuğun 8 karesi düzenli bir ızgarada (sütun ~78.4 hücre). Hepsi aynı kutu boyutuyla kesilir ki
-        // kareler değişirken çocuk yerinde dursun.
+        // Kare başına hesaplanan pivotlar (çocuk kareleri yatağın alt-ortasından hizalanır).
+        static readonly Dictionary<string, Vector2> customPivots = new Dictionary<string, Vector2>();
+
+        // Önden görünen çocuk kareleri: 4x2 ızgara, kaynakta 6 px'lik bloklar (kare ~64 sanat pikseli).
+        // Bu boyutta yatak komodinden küçük kalıyordu; kareler tam 2 kat büyütülür (piksel bozulmaz).
+        // zzz ve ses işaretleri küçültülünce kırık noktalara dönüştüğü için atılır; hizalama yalnızca yatak
+        // gövdesine göre yapılır ki kareler değişirken yatak yerinde dursun.
+        const int BoyScale = 2;
+        static int bedWidthCells;
+
         static IEnumerable<string> ExtractBoyFrames(Sheet sheet)
         {
-            const float column = 313f / 4f;
+            const int columnCells = 64, rowCells = 85;
             for (int row = 0; row < 2; row++)
-            {
-                int y = row == 0 ? 58 : 155;
-                int h = row == 0 ? 82 : 103;
                 for (int i = 0; i < 4; i++)
                 {
-                    int x = Mathf.RoundToInt(i * column);
-                    int w = Mathf.Min(79, 313 - x);
+                    var region = new RectInt(i * columnCells, row * rowCells, columnCells, rowCells);
+                    Texture2D frame = sheet.ExtractFrame(region, BoyScale, out Vector2 pivot, out int bedWidth);
+                    if (row == 0 && i == 0) bedWidthCells = bedWidth;
                     string name = row == 0 ? $"Boy/BoySleep{i + 1}" : $"Boy/BoyWake{i + 1}";
-                    yield return Save(sheet.Extract(new RectInt(x, y, w, h), 1, false), name);
+                    customPivots[name.Substring(name.IndexOf('/') + 1)] = pivot;
+                    yield return Save(frame, name);
                 }
+            yield return Save(BedFront(bedWidthCells), "Room/BedFront");
+        }
+
+        // Yatağın önü (karelerde yok): ahşap ray ve iki bacak. Çocuk kareleriyle aynı yoğunlukta (2x) çizilir.
+        static Texture2D BedFront(int widthCells)
+        {
+            int w = Mathf.Max(8, widthCells), h = 11;
+            var small = New(w, h);
+            var light = new Color32(156, 96, 56, 255);
+            var wood = new Color32(116, 64, 38, 255);
+            var dark = new Color32(66, 36, 24, 255);
+            for (int x = 0; x < w; x++)
+            {
+                Px(small, x, 0, x == 0 || x == w - 1 ? dark : light);
+                for (int y = 1; y < 4; y++) Px(small, x, y, x == 0 || x == w - 1 ? dark : ((x + y) % 9 == 0 ? light : wood));
+                Px(small, x, 4, dark);
             }
+            foreach (int lx in new[] { 1, w - 5 })
+                for (int y = 5; y < h; y++)
+                    for (int x = lx; x < lx + 4; x++)
+                        Px(small, x, y, x == lx ? light : x == lx + 3 ? dark : wood);
+            small.Apply();
+            var big = Upscale(small, BoyScale);
+            Object.DestroyImmediate(small);
+            return big;
+        }
+
+        static Texture2D Upscale(Texture2D src, int scale)
+        {
+            var dst = new Texture2D(src.width * scale, src.height * scale, TextureFormat.RGBA32, false);
+            var sp = src.GetPixels32();
+            var dp = new Color32[dst.width * dst.height];
+            for (int y = 0; y < dst.height; y++)
+                for (int x = 0; x < dst.width; x++)
+                    dp[y * dst.width + x] = sp[(y / scale) * src.width + x / scale];
+            dst.SetPixels32(dp);
+            dst.Apply();
+            return dst;
+        }
+
+        // Rüya bulutları: 128x128 hazır piksel sanat (kendi bulut çerçevesiyle). Kenar yumuşatması kaldırılır,
+        // seçili hali için şekle uyan turuncu/mavi hale ve altına piksel yazılı etiket üretilir.
+        static IEnumerable<string> BuildBubbles()
+        {
+            var defs = new (string source, string name, Color32 glow, string label)[]
+            {
+                ("bubble_quake_128", "Quake", new Color32(255, 150, 50, 255), "DEPREM"),
+                ("bubble_flood_128", "Flood", new Color32(90, 175, 255, 255), "SEL"),
+            };
+            foreach (var d in defs)
+            {
+                var art = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                art.LoadImage(File.ReadAllBytes(SourceDir + d.source + ".png"));
+                var px = art.GetPixels32();
+                for (int i = 0; i < px.Length; i++) px[i].a = px[i].a >= 128 ? (byte)255 : (byte)0;
+                art.SetPixels32(px);
+                art.Apply();
+                yield return Save(Halo(art, d.glow, 6), $"Bubbles/Bubble{d.name}Glow");
+                yield return Save(art, $"Bubbles/Bubble{d.name}");
+                yield return Save(Label(d.label), $"Bubbles/Label{d.name}");
+            }
+        }
+
+        // Şeklin dışına doğru sönen renkli hale (merkez saydam; bulut görseli üstte çizilir).
+        static Texture2D Halo(Texture2D art, Color32 color, int radius)
+        {
+            int w = art.width + radius * 2, h = art.height + radius * 2;
+            var src = art.GetPixels32();
+            var dst = new Color32[w * h];
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                {
+                    float best = 99f;
+                    for (int dy = -radius; dy <= radius && best > 0; dy++)
+                        for (int dx = -radius; dx <= radius; dx++)
+                        {
+                            int sx = x - radius + dx, sy = y - radius + dy;
+                            if (sx < 0 || sy < 0 || sx >= art.width || sy >= art.height || src[sy * art.width + sx].a == 0) continue;
+                            best = Mathf.Min(best, Mathf.Sqrt(dx * dx + dy * dy));
+                        }
+                    if (best > radius) continue;
+                    // Piksel sanata uygun: yumuşak geçiş yerine 3 basamak
+                    float k = best <= 2f ? 1f : best <= 4f ? 0.6f : 0.3f;
+                    dst[y * w + x] = new Color32(color.r, color.g, color.b, (byte)(230 * k));
+                }
+            var t = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            t.SetPixels32(dst);
+            t.Apply();
+            return t;
+        }
+
+        // 5x7 piksel yazıyla etiket: koyu lacivert bant, krem çerçeve.
+        static Texture2D Label(string text)
+        {
+            var glyphs = new Dictionary<char, string[]>
+            {
+                ['D'] = new[] { "####.", "#...#", "#...#", "#...#", "#...#", "#...#", "####." },
+                ['E'] = new[] { "#####", "#....", "#....", "####.", "#....", "#....", "#####" },
+                ['P'] = new[] { "####.", "#...#", "#...#", "####.", "#....", "#....", "#...." },
+                ['R'] = new[] { "####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#" },
+                ['M'] = new[] { "#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#" },
+                ['S'] = new[] { ".####", "#....", "#....", ".###.", "....#", "....#", "####." },
+                ['L'] = new[] { "#....", "#....", "#....", "#....", "#....", "#....", "#####" },
+            };
+            int textW = text.Length * 6 - 1;
+            int w = textW + 12, h = 15;
+            var t = New(w, h);
+            var border = new Color32(232, 222, 196, 255);
+            var fill = new Color32(18, 26, 44, 255);
+            var ink = new Color32(246, 240, 224, 255);
+            var shadow = new Color32(70, 84, 112, 255);
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                {
+                    bool corner = (x == 0 || x == w - 1) && (y == 0 || y == h - 1);
+                    if (corner) continue;
+                    bool edge = x == 0 || y == 0 || x == w - 1 || y == h - 1;
+                    Px(t, x, y, edge ? border : fill);
+                }
+            for (int c = 0; c < text.Length; c++)
+            {
+                string[] g = glyphs[text[c]];
+                for (int gy = 0; gy < 7; gy++)
+                    for (int gx = 0; gx < 5; gx++)
+                        if (g[gy][gx] == '#')
+                        {
+                            int x = 6 + c * 6 + gx, y = 4 + gy;
+                            Px(t, x, y + 1, shadow);
+                            Px(t, x, y, ink);
+                        }
+            }
+            return Done(t);
         }
 
         static Vector2 PivotFor(string path)
         {
             string name = Path.GetFileNameWithoutExtension(path);
+            if (customPivots.TryGetValue(name, out Vector2 custom)) return custom;
+            if (name == "BedFront") return Bottom;
             foreach (Piece piece in Pieces)
                 if (piece.output.EndsWith(name))
                     return piece.pivot;
@@ -212,10 +345,13 @@ namespace AfetUyanisi.Menu.EditorTools
         class Sheet
         {
             Color32[] pixels;
-            int width, height, cellsW, cellsH;
+            int width, height, cellsW, cellsH, block, gridTop;
             bool[] background;
 
-            public static Sheet Load(string path)
+            // block: kaynakta bir sanat pikselinin kaç görsel pikseli olduğu (Codex sayfaları 4, önden çocuk sayfası 6).
+            // alignTop: ızgara görselin üstünden başlar. Codex sayfalarında ızgara alta hizalı (yükseklik bloğun katı
+            // değilse artan satırlar üstte kalır); önden çocuk sayfasında üste hizalı, alta hizalamak bir blok kaydırıyordu.
+            public static Sheet Load(string path, int block, bool alignTop = false)
             {
                 var texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
                 texture.LoadImage(File.ReadAllBytes(path));
@@ -224,8 +360,10 @@ namespace AfetUyanisi.Menu.EditorTools
                     pixels = texture.GetPixels32(),
                     width = texture.width,
                     height = texture.height,
-                    cellsW = texture.width / Block,
-                    cellsH = texture.height / Block,
+                    block = block,
+                    gridTop = alignTop ? 0 : texture.height % block,
+                    cellsW = texture.width / block,
+                    cellsH = texture.height / block,
                 };
                 Object.DestroyImmediate(texture);
                 sheet.background = sheet.FloodWhite(EdgeSeeds(sheet.cellsW, sheet.cellsH));
@@ -235,8 +373,8 @@ namespace AfetUyanisi.Menu.EditorTools
             // Hücre merkezindeki renk; y üstten.
             Color32 Cell(int x, int yTop)
             {
-                int py = (cellsH - 1 - yTop) * Block + Block / 2;
-                int px = x * Block + Block / 2;
+                int py = height - 1 - (gridTop + yTop * block + block - 1 - block / 2);
+                int px = x * block + block / 2;
                 return pixels[py * width + px];
             }
 
@@ -280,9 +418,22 @@ namespace AfetUyanisi.Menu.EditorTools
             // taşan kırıntılar (yastık kenarı, yan karedeki çizgi) atılır. 2 hücrelik boşluklar köprülenir.
             bool[] KeepMask(RectInt cells, bool[] hole)
             {
+                int[] label = Components(cells, hole, out List<int> sizes);
+                int largest = 0;
+                foreach (int s in sizes) largest = Mathf.Max(largest, s);
+                var keep = new bool[label.Length];
+                for (int i = 0; i < keep.Length; i++)
+                    keep[i] = label[i] != 0 && sizes[label[i]] >= largest * 0.15f;
+                return keep;
+            }
+
+            // Dikdörtgendeki dolu hücrelerin bağlı parçaları ('bridge' hücre uzaklığa kadar boşluklar köprülenir;
+            // 1 = sadece komşu hücreler). sizes[0] kullanılmaz.
+            int[] Components(RectInt cells, bool[] hole, out List<int> sizes, int bridge = 2)
+            {
                 int w = cells.width, h = cells.height;
                 var label = new int[w * h];
-                var sizes = new List<int> { 0 };
+                sizes = new List<int> { 0 };
                 var stack = new Stack<int>();
                 bool Solid(int lx, int ly)
                 {
@@ -301,8 +452,8 @@ namespace AfetUyanisi.Menu.EditorTools
                     {
                         int c = stack.Pop(); size++;
                         int lx = c % w, ly = c / w;
-                        for (int dy = -2; dy <= 2; dy++)
-                            for (int dx = -2; dx <= 2; dx++)
+                        for (int dy = -bridge; dy <= bridge; dy++)
+                            for (int dx = -bridge; dx <= bridge; dx++)
                             {
                                 int nx = lx + dx, ny = ly + dy;
                                 if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
@@ -312,12 +463,106 @@ namespace AfetUyanisi.Menu.EditorTools
                     }
                     sizes.Add(size);
                 }
-                int largest = 0;
-                foreach (int s in sizes) largest = Mathf.Max(largest, s);
+                return label;
+            }
+
+            // zzz ve ses işaretleri: zemine değen küçük lacivert ya da koyu gri lekeler. Bazıları başlığa/saça bitişik
+            // olduğu için parça boyutuyla ayrılamıyor; delik olarak işaretlenir. Saç, ten ve ahşap sıcak renkli olduğundan
+            // dokunulmaz; gözler yüzün, yastık başlığın içinde kaldığından zemine değmez. Açık gri kenar halesi sayılmaz:
+            // çizimin çevresini saran tek parça olup işaretleri büyük bir lekeye bağlıyordu.
+            bool[] MarkCells(RectInt region)
+            {
+                const int MaxMarkCells = 60;
+                int w = region.width, h = region.height;
+                var marks = new bool[cellsW * cellsH];
+                var seen = new bool[w * h];
+                var stack = new Stack<int>();
+                var blob = new List<int>();
+                bool Inside(int lx, int ly) => lx >= 0 && ly >= 0 && lx < w && ly < h && region.x + lx < cellsW && region.y + ly < cellsH;
+                bool Background(int lx, int ly) => !Inside(lx, ly) || background[(region.y + ly) * cellsW + region.x + lx];
+                bool Cool(int lx, int ly)
+                {
+                    if (Background(lx, ly)) return false;
+                    Color32 c = Cell(region.x + lx, region.y + ly);
+                    bool gray = Mathf.Abs(c.r - c.b) <= 16 && Mathf.Abs(c.r - c.g) <= 16 && c.r + c.g + c.b < 480;
+                    return c.b > c.r + 20 || gray;
+                }
+                for (int start = 0; start < w * h; start++)
+                {
+                    if (seen[start] || !Cool(start % w, start / w)) continue;
+                    blob.Clear();
+                    bool touchesBackground = false;
+                    seen[start] = true;
+                    stack.Push(start);
+                    while (stack.Count > 0)
+                    {
+                        int c = stack.Pop();
+                        blob.Add(c);
+                        int lx = c % w, ly = c / w;
+                        for (int dy = -1; dy <= 1; dy++)
+                            for (int dx = -1; dx <= 1; dx++)
+                            {
+                                int nx = lx + dx, ny = ly + dy;
+                                if (Background(nx, ny)) { touchesBackground = true; continue; }
+                                int n = ny * w + nx;
+                                if (!seen[n] && Cool(nx, ny)) { seen[n] = true; stack.Push(n); }
+                            }
+                    }
+                    if (!touchesBackground || blob.Count > MaxMarkCells) continue;
+                    foreach (int c in blob)
+                        marks[(region.y + c / w) * cellsW + region.x + c % w] = true;
+                }
+                return marks;
+            }
+
+            // Bir animasyon karesini keser: küçük parçalar (zzz, ses işaretleri) atılır, kare içerik kutusuna göre
+            // kırpılır ve 'scale' kat büyütülür. Pivot en büyük parçanın (yatağın) alt-ortasıdır; böylece kareler
+            // arasında yatak kıpırdamaz. bedWidth: yatağın hücre cinsinden genişliği.
+            public Texture2D ExtractFrame(RectInt region, int scale, out Vector2 pivot, out int bedWidth)
+            {
+                // Köprüleme yok: zzz harfleri başlığa tek hücrelik boşlukla duruyor, köprülenirse yatağa katılıyordu.
+                bool[] marks = MarkCells(region);
+                int[] label = Components(region, marks, out List<int> sizes, bridge: 1);
+                int largestId = 1;
+                for (int id = 1; id < sizes.Count; id++)
+                    if (sizes[id] > sizes[largestId]) largestId = id;
+                int w = region.width, h = region.height;
+                // Kaynaktaki ince zzz/ses çizgileri bir bloktan ince; örneklenince kırık noktalara dönüşüyordu. Yatak +
+                // çocuk (en büyük parça) ve ona yakın büyüklükteki parçalar tutulur, kırıntılar atılır.
                 var keep = new bool[w * h];
                 for (int i = 0; i < keep.Length; i++)
-                    keep[i] = label[i] != 0 && sizes[label[i]] >= largest * 0.15f;
-                return keep;
+                    keep[i] = label[i] != 0 && sizes[label[i]] >= sizes[largestId] * 0.1f;
+                ErodeLightFringe(region, null, keep);
+
+                int bx0 = w, bx1 = -1, by1 = -1, ux0 = w, ux1 = -1, uy0 = h, uy1 = -1;
+                for (int ly = 0; ly < h; ly++)
+                    for (int lx = 0; lx < w; lx++)
+                    {
+                        int i = ly * w + lx;
+                        if (!keep[i]) continue;
+                        ux0 = Mathf.Min(ux0, lx); ux1 = Mathf.Max(ux1, lx); uy0 = Mathf.Min(uy0, ly); uy1 = Mathf.Max(uy1, ly);
+                        if (label[i] == largestId) { bx0 = Mathf.Min(bx0, lx); bx1 = Mathf.Max(bx1, lx); by1 = Mathf.Max(by1, ly); }
+                    }
+                int uw = ux1 - ux0 + 1, uh = uy1 - uy0 + 1;
+                bedWidth = bx1 - bx0 + 1;
+                pivot = new Vector2(((bx0 + bx1 + 1) / 2f - ux0) / uw, (uy1 - by1) / (float)uh);
+
+                var texture = new Texture2D(uw * scale, uh * scale, TextureFormat.RGBA32, false);
+                var output = new Color32[texture.width * texture.height];
+                for (int ly = uy0; ly <= uy1; ly++)
+                    for (int lx = ux0; lx <= ux1; lx++)
+                    {
+                        if (!keep[ly * w + lx]) continue;
+                        Color32 c = Cell(region.x + lx, region.y + ly);
+                        c.a = 255;
+                        int ox = (lx - ux0) * scale, oyTop = (ly - uy0) * scale;
+                        for (int sy = 0; sy < scale; sy++)
+                            for (int sx = 0; sx < scale; sx++)
+                                output[(texture.height - 1 - (oyTop + sy)) * texture.width + ox + sx] = c;
+                    }
+                texture.SetPixels32(output);
+                texture.Apply();
+                return texture;
             }
 
             // Kaynakta beyaz zeminle nesne arasında kalan açık gri yumuşatma pikselleri sprite'ın etrafında

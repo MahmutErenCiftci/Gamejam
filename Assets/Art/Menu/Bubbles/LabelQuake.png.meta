@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 337f08dfd2856a44baab906885c46ac4
+guid: 4d89632eb7a5d8b4b9b88b746a8b1fe1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6216394963698368553
-    second: Pillow_0
+      213: 7465290411574919850
+    second: LabelQuake_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0}
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pillow_0
+      name: LabelQuake_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 77
-        height: 41
+        width: 47
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 920c4ca9842154650800000000000000
-      internalID: 6216394963698368553
+      spriteID: aa28d07931a0a9760800000000000000
+      internalID: 7465290411574919850
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Pillow_0: 6216394963698368553
+      LabelQuake_0: 7465290411574919850
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
