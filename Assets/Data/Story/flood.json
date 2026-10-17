@@ -1,6 +1,6 @@
 {
   "chapter_id": "flood",
-  "version": "0.2-taslak",
+  "version": "0.3-taslak",
   "scenes": [
     {
       "id": "F01_WAKE",
@@ -18,6 +18,24 @@
       ]
     },
     {
+      "id": "F03_MOTHER_CHAT",
+      "title": "Mutfakta Sabah",
+      "lines": [
+        { "speaker": "Anne", "text": "Günaydın canım! Kahvaltı hazır, gel otur." },
+        { "speaker": "Çocuk", "text": "Günaydın anne! Mmm, menemen mi yaptın?" },
+        { "speaker": "Anne", "text": "Evet, sıcacık. Erkenden kalkmışsın, aferin sana." },
+        { "speaker": "Çocuk", "text": "Bugün ilk ders resim, geç kalmak istemedim." }
+      ]
+    },
+    {
+      "id": "F03_TV_JINGLE",
+      "title": "Haberler Başlıyor",
+      "lines": [
+        { "speaker": "Anne", "text": "Aa, haberler başladı. Bir bakalım." },
+        { "speaker": "Çocuk", "text": "Bakalım bugün hava nasıl olacak..." }
+      ]
+    },
+    {
       "id": "F03_NEWS",
       "title": "Sabah Haberleri",
       "lines": [
@@ -28,15 +46,16 @@
       "id": "F04_MOTHER",
       "title": "Anne ile Konuşma",
       "lines": [
-        { "speaker": "Çocuk", "text": "Anne, haberlerde <color=#E8392B>şiddetli yağmur uyarısı</color> var. Okula gitmeli miyim?" },
-        { "speaker": "Anne", "text": "Gördüm canım. Ne yapacağımıza birlikte karar verelim." }
+        { "speaker": "Anne", "text": "Duydun mu canım? Bugün <color=#E8392B>şiddetli yağmur</color> bekleniyormuş." },
+        { "speaker": "Çocuk", "text": "Duydum anne. Sence okula gitmeli miyim?" },
+        { "speaker": "Anne", "text": "Ne yapacağımıza birlikte karar verelim." }
       ]
     },
     {
       "id": "F04_CHECK",
       "title": "Resmî Duyuru",
       "lines": [
-        { "speaker": "Anne", "text": "Belediyeyi kontrol edelim. <color=#18A957>Resmî duyuru</color> gelmeden karar verme." }
+        { "speaker": "Anne", "text": "Telefondan belediyeye bakalım. <color=#18A957>Resmî duyuru</color> gelmeden karar vermeyelim." }
       ]
     },
     {
@@ -44,15 +63,74 @@
       "title": "Evde Hazırlık",
       "lines": [
         { "speaker": "Anne", "text": "Okullar açıkmış ama <color=#E8392B>su birikintilerinden</color> uzak durmak gerekiyor." },
-        { "speaker": "Anne", "text": "<color=#18A957>Şemsiye ve yağmurluk</color> al. Gereksiz yere dışarı çıkma lütfen." },
+        { "speaker": "Anne", "text": "<color=#18A957>Şemsiye ve yağmurluk</color> al. Yolda oyalanma, sudan uzak dur lütfen." },
         { "speaker": "Çocuk", "text": "Tamam anne, dikkatli olacağım." }
       ]
     },
     {
-      "id": "F05_STREET",
-      "title": "Okul Yolunda",
+      "id": "F05_EXIT",
+      "title": "Dışarı Çıkış",
       "lines": [
-        { "speaker": "Çocuk", "text": "Yağmur <color=#E8392B>iyice arttı</color>... Sokaklarda su birikmeye başlamış." }
+        { "speaker": "Çocuk", "text": "Yağmur başlamış bile... Durağa dikkatli yürümeliyim." }
+      ]
+    },
+    {
+      "id": "F05_EXIT_GEAR",
+      "title": "Dışarı Çıkış (yağmurluklu)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "İyi ki yağmurluğumu giydim... Hadi, durağa!" }
+      ]
+    },
+    {
+      "id": "F05_STREET",
+      "title": "Durağa Yürüyüş",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur hızlanıyor... Yol kenarında su birikmeye başlamış." },
+        { "speaker": "Çocuk", "text": "<color=#18A957>Sudan, rögarlardan ve elektrik direklerinden</color> uzak yürümeliyim." }
+      ]
+    },
+    {
+      "id": "F05_PUDDLE_WARNING",
+      "title": "Su Birikintisi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Su birikintisine girmemeliyim</color>, <color=#E8392B>derinliği belli olmaz!</color>" }
+      ]
+    },
+    {
+      "id": "F05_DRAIN_WARNING",
+      "title": "Rögar",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Rögarın kapağı açılmış olabilir</color>, <color=#18A957>uzak durmalıyım!</color>" }
+      ]
+    },
+    {
+      "id": "F05_POSTER",
+      "title": "Durak Afişi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "\"DİKKATLİ OLUN!\" yazıyor..." },
+        { "speaker": "Çocuk", "text": "\"Sağanak yağışta <color=#18A957>su birikintilerinden ve rögarlardan uzak durun.</color>\"" }
+      ]
+    },
+    {
+      "id": "F05_DOWNPOUR",
+      "title": "Sağanak",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur <color=#E8392B>iyice arttı</color>... Sundurmanın altında beklemeliyim." },
+        { "speaker": "Çocuk", "text": "Yol kenarında su yükseliyor. <color=#18A957>Yola ve suya yaklaşmayacağım.</color>" }
+      ]
+    },
+    {
+      "id": "F05_BUS_ARRIVE",
+      "title": "Otobüs Geldi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Otobüs geldi, hemen binelim!" }
+      ]
+    },
+    {
+      "id": "F05_BOARD",
+      "title": "Otobüse Biniş",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Günaydın! Oh be, içerisi kupkuru." }
       ]
     },
     {

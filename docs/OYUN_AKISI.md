@@ -115,13 +115,22 @@ Oyuncunun ilk 50 saniyesi iki bölümde de aynıdır ve oyunun tonunu belirler: 
 | # | ID | Süre | Mekân | Olay | Oyuncu ne yapar | Kim yapar |
 |---|---|---|---|---|---|---|
 | 1–2 | `F01_WAKE`, `F02_WASH` | 0:00–0:50 | Oda, banyo | Ortak açılış (§5) | E ile kalk, yüzünü yıka | Mahmut |
-| 3 | `F03_NEWS` | 0:50–1:20 | Mutfak (TV) | TV: **SON DAKİKA — BÖLGEDE ŞİDDETLİ YAĞMUR BEKLENİYOR**, renk lejantı, alt yazı. Çocuk: *"Şiddetli yağmur mu? Okul yolumuzda hep su birikiyor..."* | Haberi izler, diyaloğu geçer | Eren (TV) · Arda (replik) |
-| 4 | `F04_MOTHER` | 1:20–1:50 | Mutfak | Çocuk anneye uyarıyı söyler → **Karar F_D1**. Anne: *"Belediyeyi kontrol edelim. Resmî duyuru gelmeden karar verme."* → **resmî duyuru kartı** (okullar açık, su birikintilerinden uzak durun) → Anne: *"Şemsiye ve yağmurluk al. Gereksiz yere dışarı çıkma lütfen."* | Karar verir, **[E] yağmurluğu al**, **[E] şemsiyeyi al**, kapıdan çıkar | Arda (diyalog+karar) · Eren (kart) · Mahmut |
-| 5 | `F05_STREET` | 1:50–2:30 | Yağmurlu sokak, durak | Hafif yağmur 5 sn içinde şiddetlenir, sokakta su birikintileri, durakta "DİKKATLİ OLUN" afişi. *"Yağmur iyice arttı..."* | Sağa yürür | Mahmut |
-| 6 | `F06_RUMORS` | 2:30–3:10 | Yol kenarı | Üç arkadaş farklı şeyler söyler (söylentiler). Ekranda **söylenti kartları** ("Kaynak: bilinmiyor") → **Karar F_D2** | Söylentileri okur, karar verir | Arda (diyalog+karar) · Eren (kartlar) |
-| 7 | `F07_RISK` | 3:10–3:40 | Riskli bölge | Bariyer, **"SU BİRİKİNTİSİ TEHLİKELİDİR"** tabelası, suda mahsur kalmış bir araç. Doğru seçimden sonra **uzaktan, yolun kenarından** görülür. | **[E] Tabelayı incele** | Mahmut |
-| 8 | `F08_SAFEROUTE` | 3:40–4:10 | Köprü üstü yaya yolu → okul kapısı | Alternatif güvenli rotadan okula varış. Öğretmen: *"Güvenli yoldan gelmene çok sevindim."* | Yürür | Mahmut |
-| 9 | `F09_RESULT` | 4:10–4:30 | Sonuç ekranı | Öğrenilenler + yapılan yanlışlar (§8) | Tekrar Dene / Menüye Dön | Berk (ekran) · Mahmut |
+| 3a | `F03_MOTHER_CHAT` | 0:50–1:05 | Mutfak | Çocuk mutfağa girer, anne masanın yanında. Sıcak sabah sohbeti: Anne *"Günaydın canım! Kahvaltı hazır, gel otur."* → kahvaltı, okul. | Diyaloğu geçer | Mahmut (sahne, akış) · Arda (replik) |
+| 3b | `F03_TV_JINGLE` | 1:05–1:10 | Mutfak (TV) | TV'den haber **jingle**'ı (ses kancası `UnityEvent`, dosya gerekmez). Anne: *"Aa, haberler başladı. Bir bakalım."* Çocuk TV'ye döner. | Diyaloğu geçer | Mahmut (jingle kancası) · Arda (replik) |
+| 3c | `NEWS_F03_TV` → `F03_NEWS` | 1:10–1:35 | Mutfak (TV) | TV: **SON DAKİKA — BUGÜN ŞİDDETLİ YAĞMUR BEKLENİYOR**, renk lejantı, alt yazı. Çocuk: *"Şiddetli yağmur mu? Okul yolumuzda hep su birikiyor..."* | Haberi izler, diyaloğu geçer | Eren (TV) · Arda (replik) |
+| 4a | `F04_MOTHER` → `F_D1` | 1:35–1:55 | Mutfak | **Anne tekrar sorar:** *"Duydun mu canım? Bugün şiddetli yağmur bekleniyormuş."* Çocuk: *"Sence okula gitmeli miyim?"* → **Karar F_D1** | Karar verir | Arda (diyalog+karar) · Mahmut |
+| 4b | `F04_CHECK` → `NEWS_F04_OFFICIAL` → `F04_PREPARE` | 1:55–2:15 | Mutfak | Anne: *"Telefondan belediyeye bakalım. Resmî duyuru gelmeden karar vermeyelim."* → **resmî duyuru kartı** (okullar açık, su birikintilerinden uzak durun) → Anne: *"Şemsiye ve yağmurluk al. Yolda oyalanma, sudan uzak dur lütfen."* | Diyaloğu geçer | Eren (kart) · Arda (replik) · Mahmut |
+| 4c | (Coat, Umbrella, ExitDoor) | 2:15–2:25 | Mutfak kapısı | Askıda sarı yağmurluk, şemsiyelikte şemsiye (yatak odasında alındıysa şemsiye adımı atlanır). | **[E] Yağmurluğu al**, **[E] Şemsiyeyi al**, **[E] Dışarı çık** | Mahmut |
+| 5a | `F05_EXIT` / `F05_EXIT_GEAR` | 2:25–2:30 | Evin önü, kaldırım | Kararma → hafif yağmur. *"Yağmur başlamış bile..."* · yağmurluk/şemsiye alındıysa *"İyi ki yağmurluğumu giydim..."* | — | Mahmut · Arda (replik) |
+| 5b | `F05_STREET` (+ `F05_PUDDLE_WARNING`, `F05_DRAIN_WARNING`) | 2:30–3:00 | Uzun izometrik sokak | Yağmur artar, yol kenarında su birikintileri, rögar. Çocuk: *"Sudan, rögarlardan ve elektrik direklerinden uzak yürümeliyim."* Birikintiye/yola basarsa durur, uyarı balonu ve geri itilir (ceza yok); rögar yakınında da uyarı. | Durağa yürür | Mahmut |
+| 5c | `F05_POSTER` (isteğe bağlı) → `F05_DOWNPOUR` | 3:00–3:20 | Otobüs durağı (cam sundurma) | **[E] Afişi oku:** *"DİKKATLİ OLUN! Sağanak yağışta su birikintilerinden ve rögarlardan uzak durun."* Sundurma altına girince yağmur 5 sn içinde **sağanağa** döner (sahne kararır, su yükselir, şimşek/flaş yok). *"Yağmur iyice arttı... Sundurmanın altında beklemeliyim."* | Afişi okur, sundurmada bekler | Mahmut |
+| 5d | `F05_BUS_ARRIVE` → `F05_BOARD` | 3:20–3:35 | Durak önü | Otobüs gelir, kapısı açılır. *"Otobüs geldi, hemen binelim!"* → **[E] Otobüse bin** → kapı kapanır, otobüs hareket eder, kararma. *"Günaydın! Oh be, içerisi kupkuru."* | **[E] Otobüse bin** | Mahmut |
+| 6 | `F06_RUMORS` | *planlanıyor* | *planlanıyor* (otobüste olabilir) | Üç arkadaş farklı şeyler söyler (söylentiler). Ekranda **söylenti kartları** ("Kaynak: bilinmiyor") → **Karar F_D2** | Söylentileri okur, karar verir | Arda (diyalog+karar) · Eren (kartlar) |
+| 7 | `F07_RISK` | *planlanıyor* | Riskli bölge | Bariyer, **"SU BİRİKİNTİSİ TEHLİKELİDİR"** tabelası, suda mahsur kalmış bir araç. Doğru seçimden sonra **uzaktan, yolun kenarından** görülür. | **[E] Tabelayı incele** | Mahmut |
+| 8 | `F08_SAFEROUTE` | *planlanıyor* | Köprü üstü yaya yolu → okul kapısı | Alternatif güvenli rotadan okula varış. Öğretmen: *"Güvenli yoldan gelmene çok sevindim."* | Yürür | Mahmut |
+| 9 | `F09_RESULT` | ≈20 sn | Sonuç ekranı | Öğrenilenler + yapılan yanlışlar (§8) | Tekrar Dene / Menüye Dön | Berk (ekran) · Mahmut |
+
+> **Otobüse binişten sonrası planlanıyor.** Eski tasarımda F06–F08 yürüyerek geçiyordu (yol kenarında arkadaşlar → riskli bölge → köprü üstü yaya yolu). Yeni akışta çocuk otobüse bindiği için bu kısım yeniden planlanıyor: söylentiler (`F06_RUMORS`, `NEWS_F06_RUMORS`, `F_D2`) büyük ihtimalle **otobüste** geçecek. Karar verilene kadar 6–8. satırlar ve süreleri eski haliyle duruyor; ID'ler değişmez. Mutfak→otobüs kısmı yaklaşık 2:45 sürer, bölümün toplam süresi bu kısım netleşince yeniden hesaplanacak.
 
 ### 6.2 Kararlar
 
@@ -158,6 +167,8 @@ Hiçbir kartta gerçek kurum adı veya logosu (AFAD, MGM, valilik logosu vb.) ku
 ---
 
 ## 7. DEPREM bölümü — "Sarsıldığımızda doğru hareket et"
+
+> **Not (güncel):** Oynanış için geçerli akış artık **§7.4 Deprem modu: 120 sn farkındalık simülasyonu**dur. Aşağıdaki §7.1–7.3 eski akıştır; başvuru için korunmuştur ve yeni sahnede (`EarthquakeHome.unity`) kullanılmaz.
 
 ### 7.1 Zaman çizelgesi
 
@@ -215,6 +226,60 @@ Doğru seçilen seçenek işaretli kalır, iki doğru da bulununca karar biter.
 
 Depremler önceden tahmin edilemez. Haber "deprem olacak" demez, sadece **hazırlık** hatırlatır. Telefona gelen "erken uyarı" bildirimi kullanılmaz, çünkü oyuncuya uyarının her zaman geleceği izlenimini verir.
 
+### 7.4 Deprem modu: 120 sn farkındalık simülasyonu (yeni, uygulanıyor)
+
+Bu bölüm, oynanışta **§7.1'deki eski akışın yerini alır** (eski metin başvuru için yukarıda duruyor). Sahne: `Assets/Scenes/Chapters/Earthquake/EarthquakeHome.unity`; `GameSceneRouter.LoadChapter(ChapterId.Earthquake)` bu sahneyi açar. Ana karakter Cenk'tir. Toplam süre ≈ 3–5 dk.
+
+**Veri dosyaları**
+
+| Dosya | İçerik |
+|---|---|
+| `Assets/Data/Earthquake/earthquake_mode.json` | Telefon bildirimi, 18 incelenebilir nesne (ad, açıklama, tehlike sınıfı), uyarılar, anne soruları Q1–Q4, korunma (Ç-K-T) metinleri, sarsıntı sonrası metinleri, rapor etiketleri ve ipuçları |
+| `Assets/Data/Story/earthquake_home.json` | Konuşma balonları (`EQH_*`, konuşanlar "Çocuk" ve "Anne") |
+
+**Akış**
+
+| # | Evre | Ne olur | Oyuncu ne yapar |
+|---|---|---|---|
+| A | Uyanış + telefon | Saat 07:00, Cenk uyuyor. Komodindeki telefon titrer ve çalar (`EQH_WAKE`). Cenk uyanır, kamera telefona kayar. Ekrana bildirim gelir: **AFET FARKINDALIK SİMÜLASYONU** / **DEPREM SENARYOSU: 02:00** / *Çevreni incele, riskleri belirle ve güvenli davranışları seç!* Alt not: *Bu bir eğitim simülasyonudur. Depremler önceden kesin olarak tahmin edilemez.* | **[BAŞLA]** (E / Enter / Space / fare) |
+| B | 120 sn hazırlık | Sağ üstte geri sayım başlar (`EQH_PHONE_AFTER`). Sayaç rengi: 120–61 beyaz, 60–31 amber, 30–11 kırmızı, 10–0 hafif nabız + tik sesi. Bilgi kartı açıkken, soru sırasında ve oda geçişlerinde sayaç **durur**. | Yatak odası ve salon-mutfakta gezer, E ile nesneleri inceler |
+| B1 | İnceleme | Her nesnenin kısa öğretici kartı vardır. Sınıflar: **Tehlike** (pencereler, ayna, kitaplık, gardırop, vitrin, buzdolabı), **Korunma yeri** (çalışma masası, yemek masası), **Güvenlik** (deprem çantası, ocak, merdiven, toplanma tabelası), **Bilgi** (telefon, anne), **Çıkış** (kapılar, asansör). İncelemek hiçbir zaman cezalı değildir. | E |
+| B2 | Ayna tehlike bölgesi | Aynanın önüne girince uyarı: **CAM TEHLİKESİ!** *Deprem sırasında cam ve kırılabilecek eşyalardan uzak dur.* Uyarıdan sonra bölgede 3 sn daha kalırsa **bir kerelik −10 sn**. Çıkıp tekrar girmek yeni ceza getirmez. | Bölgeden uzaklaşır |
+| B3 | Annenin soruları | Anne her soruda portresiyle çıkar, **5 sn** soru sayacı akar (120 sn sayacı durur). Doğru: ceza yok, kısa olumlu geri bildirim. Yanlış: **−30 sn** + kısa açıklama. Süre dolarsa: **SÜRE DOLDU!**, **−30 sn**, doğru cevap açıklanır. Tetikleme: Q1 oyuncu anneye ilk kez E ile konuştuğunda ya da sayaç 95'e indiğinde (anne seslenir: `EQH_MOTHER_CALL`), Q2 sayaç 65'te, Q3 sayaç 35'te. | 1–4 tuşları veya fare |
+| B4 | Hazırlık tamam | Q1–Q3 soruldu ve en az 4 nesne incelendiyse ipucu çıkar: *Hazırlığın tamam! Güvenli bir yerde bekle. [Space] Simülasyonu hızlandır* (`EQH_READY`). Space kalan süreyi 5 sn'ye indirir, ceza değildir. | İsterse Space |
+| C | Sarsıntı | Sayaç 0 olunca **SARSINTI!** (`EQH_QUAKE`): kamera sarsılır, gürleme, eşyalar titrer, lamba sallanır, kitaplıktan kitaplar düşer, toz; flaş yok. Sarsıntı ≈ 8 sn. | Korunur (aşağıda) |
+| C1 | Korunma | Cenk sağlam masaya yakınsa (≈1,2 birim) masanın altında: **ÇÖK** (E) → **KAPAN** (E, başını ve enseni koru) → **TUTUN** (E basılı ≈ 6 sn). Bırakırsa *"Sarsıntı bitene kadar tutun!"* uyarısı çıkar, ilerleme durur. Masadan uzaksa olduğu yerde **ÇÖK–KAPAN** (doğru davranış, puanı masadan az). Sarsıntı başladıktan sonra masaya koşmak ödüllendirilmez. Pencere/ayna/kitaplık bölgesindeyse ek geri bildirim ve "tehlikeye maruz kalma" kaydı (yaralanma animasyonu yok). 3 sn tepki yoksa ipucu; hiç korunmazsa raporda "Korunma yapılmadı". | E, E, E basılı |
+| D | Sarsıntı sonrası | Toz çöker; yerde kitaplar, pencere ve ayna önünde cam kırıkları. Anne: *"Cenk! İyi misin?"* (`EQH_AFTER_MOTHER`) → **Q4** (5 sn). Cam kırıklarının üstünden geçince uyarı (ceza yok, kayıt). Deprem çantası **şimdi** alınır (`EQH_BAG`); sarsıntı sırasında asla. Daire kapısı açılır (sarsıntıdan önce kilitliydi: "Sarsıntı sırasında dışarı koşulmaz"). | Tehlikeleri kontrol eder, çantayı alır, çıkar |
+| D1 | Koridor | **Asansör**: E → *"Asansör kullanılmaz!"* (yanlış karar kaydı, ilerletmez). **Merdiven** + ACİL ÇIKIŞ işareti: E → *"Merdivenden sakince inelim."* (`EQH_EXIT`) | Merdiveni seçer |
+| D2 | Toplanma alanı | Park, TOPLANMA ALANI tabelası. Anne ile kısa konuşma (`EQH_ASSEMBLY`): bina kontrol edilmeden içeri girilmez, resmî duyurular takip edilir. | Diyaloğu geçer |
+| E | Rapor | **AFET FARKINDALIK RAPORU** (aşağıda) | Tekrar Dene / Menüye Dön |
+
+**Anne soruları** (metinler birebir, ✅ doğru)
+
+| ID | Soru | Şıklar |
+|---|---|---|
+| Q1 | Deprem sırasında ne yapmalıyız? | Pencereye koşmalıyız / **Sağlam bir masanın altında Çök–Kapan–Tutun yapmalıyız** ✅ / Asansöre binmeliyiz / Merdivene koşmalıyız |
+| Q2 | Deprem sırasında asansörü kullanmak doğru mu? | Evet, daha hızlı ineriz / **Hayır, asansörden uzak durmalıyız** ✅ / Sadece elektrik varsa kullanabiliriz |
+| Q3 | Deprem sırasında camlara yakın durmalı mıyız? | Evet / **Hayır, camlardan uzak durmalıyız** ✅ / Pencereden dışarı bakmalıyız |
+| Q4 | Sarsıntı bittikten sonra ilk ne yapmalıyız? (sarsıntı sonrası) | **Çevremizdeki tehlikeleri kontrol etmeliyiz** ✅ / Hemen asansöre binmeliyiz / Hasarlı binaya geri dönmeliyiz |
+
+Her yanlış şıkkın kısa açıklaması `earthquake_mode.json` içindedir.
+
+**Süre cezaları** (Inspector'dan ayarlanır): yanlış cevap −30 sn, süre dolması −30 sn, aynada uzun kalma −10 sn (bir kez), doğru cevap ve inceleme 0. Sayaç asla negatife düşmez; aynı olay üst üste ceza vermez.
+
+**Rapor ve etiketler**
+
+Raporda: doğru/yanlış cevap ve süre dolması sayısı, bulunan tehlikeler (incelenen/toplam), gereksiz tehlike maruziyeti, korunma (*Masa altında Ç-K-T* / *Yerinde Ç-K* / *Yapılmadı*), çanta alındı mı, asansör denendi mi, depremden önce kalan süre (hızlandırma kullanıldıysa "Hazırlık tamam"). Her yanlış için kısa açıklama ve ipucu gösterilir. Puan çoğunlukla doğru kararlardan ve tehlike tanımadan gelir; kalan süre puanın küçük bir kısmıdır.
+
+| Puan | Etiket |
+|---|---|
+| 85+ | AFET BİLİNCİ USTASI |
+| 65–84 | HAZIRLIKLI |
+| 40–64 | GELİŞİYOR |
+| 0–39 | DAHA FAZLA ÖĞREN |
+
+**Güvenlik ilkeleri (metinlerin uyduğu kurallar):** depremlerin önceden tahmin edilebileceği hiçbir yerde ima edilmez (120 sn yalnızca eğitim sayacıdır); deprem anında sağlam masanın altında Çök–Kapan–Tutun, masa yoksa olduğun yerde başı ve enseyi korumak; pencere, cam, ayna ve sabitlenmemiş uzun eşyalardan uzak durmak; uzun mobilyalar depremden **önce** duvara sabitlenir (çocuk bunu bir büyüğüne söyler), sarsıntı sırasında sabitlemeye çalışılmaz; sarsıntıda dışarı veya merdivene koşulmaz, asansör hiç kullanılmaz; sarsıntıdan sonra cam kırıkları ve gaz kokusu kontrol edilir (gaz kokusu varsa düğmelere dokunulmaz), deprem çantası alınır, merdivenden sakince inilir, toplanma alanına gidilir, resmî duyurular takip edilir ve hasarlı binaya geri dönülmez. Kapı eşiği, merdiven veya pencere hiçbir yerde "güvenli yer" olarak gösterilmez.
+
 ---
 
 ## 8. Sonuç ekranı (Berk ekranı yapar, içerik veriden gelir)
@@ -236,7 +301,7 @@ Yerleşim, Görsel 2'deki gibi iki kutudur: solda yeşil "Öğrenilenler", sağd
 
 | Tür | Dosya (sahibi) | ID'ler |
 |---|---|---|
-| Diyalog sahneleri — Sel | `Assets/Data/Story/flood.json` (Arda) | `F01_WAKE`, `F02_WASH`, `F03_NEWS`, `F04_MOTHER`, `F04_CHECK`, `F04_PREPARE`, `F05_STREET`, `F06_RUMORS`, `F07_RISK`, `F07_RISK_WARNING`, `F08_SAFEROUTE` |
+| Diyalog sahneleri — Sel | `Assets/Data/Story/flood.json` (Arda) | `F01_WAKE`, `F02_WASH`, `F03_MOTHER_CHAT`, `F03_TV_JINGLE`, `F03_NEWS`, `F04_MOTHER`, `F04_CHECK`, `F04_PREPARE`, `F05_EXIT`, `F05_EXIT_GEAR`, `F05_STREET`, `F05_PUDDLE_WARNING`, `F05_DRAIN_WARNING`, `F05_POSTER`, `F05_DOWNPOUR`, `F05_BUS_ARRIVE`, `F05_BOARD`, `F06_RUMORS`, `F07_RISK`, `F07_RISK_WARNING`, `F08_SAFEROUTE` |
 | Kararlar — Sel | aynı dosya | `F_D1` (`F_D1_A..C`), `F_D2` (`F_D2_A..D`) |
 | Diyalog sahneleri — Deprem | `Assets/Data/Story/earthquake.json` (Arda) | `E01_WAKE`, `E02_ROUTINE`, `E03_NEWS`, `E04_QUAKE`, `E06_AFTER`, `E07_EXIT`, `E08_ASSEMBLY` |
 | Kararlar — Deprem | aynı dosya | `E_D1` (`E_D1_1..5`), `E_D2` (`E_D2_A..D`), `E_D3` (`E_D3_A..B`) |

@@ -13,6 +13,8 @@ namespace AfetUyanisi.Core
         public const string MainMenuScene = "MainMenu";
         public const string FloodScene = "FloodChapter";
         public const string EarthquakeScene = "EarthquakeChapter";
+        /// <summary>Deprem modu (120 sn farkındalık simülasyonu) sahnesi: Assets/Scenes/Chapters/Earthquake/EarthquakeHome.unity.</summary>
+        public const string EarthquakeHomeScene = "EarthquakeHome";
 
         /// <summary>Jam kapsamında sadece Sel ve Deprem açık; diğerleri menüde "Yakında".</summary>
         public static bool IsUnlocked(ChapterId chapter) =>
@@ -42,6 +44,14 @@ namespace AfetUyanisi.Core
             }
 
             GameSession.StartChapter(chapter);
+
+            // Deprem modu kendi sahnesinde baştan sona oynar (yatak odası + salon + koridor + toplanma alanı).
+            if (chapter == ChapterId.Earthquake && Application.CanStreamedLevelBeLoaded(EarthquakeHomeScene))
+            {
+                Debug.Log($"[GameSceneRouter] Deprem modu başlıyor: '{EarthquakeHomeScene}'.");
+                SceneManager.LoadScene(EarthquakeHomeScene);
+                return;
+            }
 
             if (Application.CanStreamedLevelBeLoaded(BedroomScene))
             {
