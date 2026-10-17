@@ -116,11 +116,15 @@ namespace AfetUyanisi.Menu.EditorTools
             var moonLamp = Place(furniture, "MoonLamp", "Decor/MoonLamp", 88, 78, 31);
             var roomClock = Place(furniture, "RoomClock", "Room/RoomClock", 124, 87, 31); // introda karanlığın altında; büyük saat gösterilir
 
-            // Yatak önden görünür: çocuk kareleri başlık + yastık + battaniyeyi içerir, altına ahşap ray ve bacaklar
-            // gelir. Çocuk yatağın çocuğu: sarsıntıda birlikte hareket ederler. Kare pivotu yatağın alt-ortası.
-            // Yatak, sol sütundaki butonların altına girmesin diye x=201'de.
-            var bedFront = Place(furniture, "Bed", "Room/BedFront", 201, 12, 35);
-            var boyRenderer = Place(bedFront.transform, "SleepingBoy", "Boy/BoySleep1", 0, bedFront.sprite.rect.height, 37, local: true);
+            // Yatak yere yatık, üstten 3/4 bakış: başlık ve yastıklar üstte (başlık süpürgelik hizasında), ayak ucu
+            // ekranın altında. Çocuk kareleri yastık + yorganı içerir; altta alçak ayak tahtası (BedFront), karelerin
+            // arkasında saçın üstüne kadar yükselen başlık (BedHeadboard). Çocuk ve başlık yatağın çocuğu: sarsıntıda
+            // birlikte hareket ederler. Kare pivotu yatağın alt-ortası. Saçın üstü y=126'da kalır ki iki düşünce yolu
+            // bulutlara kadar sığsın; yatak sol sütundaki butonların altına girmesin diye x=201'de.
+            var bedFront = Place(furniture, "Bed", "Room/BedFront", 201, 2, 35);
+            float frameBase = bedFront.sprite.rect.height;
+            Place(bedFront.transform, "Headboard", "Room/BedHeadboard", 0, frameBase + MenuArtBuilder.HeadboardOffset, 34, local: true);
+            var boyRenderer = Place(bedFront.transform, "SleepingBoy", "Boy/BoySleep1", 0, frameBase, 37, local: true);
 
             var boy = boyRenderer.gameObject.AddComponent<SleepingBoy>();
             SetRef(boy, "body", boyRenderer);
@@ -140,11 +144,13 @@ namespace AfetUyanisi.Menu.EditorTools
             // ---------------- Rüya seçimi
             var dreams = Group(null, "DreamSelection");
             var thought = Group(dreams, "ThoughtTrail");
-            // Çocuğun başından iki bulutun arasındaki boşluğa doğru yükselir.
-            var dot1 = Place(thought, "Thought1", "UI/ThoughtSmall", 190, 154, 99);
-            var dot2 = Place(thought, "Thought2", "UI/ThoughtMedium", 178, 186, 99);
+            // Çocuğun başının üstünden iki ayrı yol: sola DEPREM'e, sağa SEL'e (konum = yolun başa en yakın baloncuğu).
+            // Uçları bulutların alt kenarının birkaç piksel altına girer (bulut üstte çizilir), böylece yüzme ve seçili
+            // büyüme sırasında bağlantı kopmaz. Roket posterine, dünya haritasına ve etiketlere değmez.
+            var quakePath = Place(thought, "ThoughtToQuake", "UI/ThoughtPathQuake", 190, 133, 99);
+            var floodPath = Place(thought, "ThoughtToFlood", "UI/ThoughtPathFlood", 212, 133, 99);
             var trail = thought.gameObject.AddComponent<ThoughtTrail>();
-            SetArray(trail, "dots", dot1, dot2);
+            SetArray(trail, "dots", quakePath, floodPath);
             var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", "Bubbles/LabelQuake", 100, 200, 100, false, 0f);
             var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", "Bubbles/LabelFlood", 266, 200, 105, true, 0.5f);
 

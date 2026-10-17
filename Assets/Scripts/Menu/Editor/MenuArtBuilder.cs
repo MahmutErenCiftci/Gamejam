@@ -103,6 +103,7 @@ namespace AfetUyanisi.Menu.EditorTools
             }
             written.AddRange(ExtractBoyFrames(Sheet.Load(SourceDir + "boy_front_frames.png", 6, alignTop: true)));
             written.AddRange(BuildBubbles());
+            written.AddRange(BuildThoughtPaths());
             written.AddRange(GenerateProcedural());
 
             AssetDatabase.Refresh();
@@ -146,6 +147,22 @@ namespace AfetUyanisi.Menu.EditorTools
         const int BoyScale = 2;
         static int bedWidthCells;
 
+        // Yatak yere yatık görünür (üstten 3/4 bakış): başlık başın arkasında saçın üstüne kadar yükselir, ayak ucunda
+        // alçak bir tahta durur. Karelerde saç başlık rayının üstüne taşıyordu; çocuk oturuyor, yatak dik duruyor gibiydi.
+        // Yorganın yuvarlak ayak ucunun hemen üstündeki bant (ellerin çok altında) bir kez tekrarlanır: yorgan biraz uzar.
+        const int BlanketInsertAt = 3, BlanketInsertRows = 3;
+        // Başlık uzantısı karelerdeki başlık rayının ve yastıkların arkasından başlar (kare tabanından sanat pikseli);
+        // alt kısmı her karede kare tarafından örtülür, böylece uyanma karelerinde de boşluk kalmaz.
+        const int HeadboardBaseRow = 36, HeadboardRows = 18;
+        // Sahnede başlığın kare tabanına göre yüksekliği (sanal piksel).
+        public const int HeadboardOffset = (HeadboardBaseRow + BlanketInsertRows) * BoyScale;
+
+        // Karelerdeki ahşabın paleti
+        static readonly Color32 WoodDeep = new Color32(72, 24, 24, 255),
+            WoodDark = new Color32(96, 48, 24, 255), WoodShade = new Color32(120, 48, 48, 255), WoodBody = new Color32(120, 72, 48, 255),
+            WoodMid = new Color32(144, 72, 48, 255), WoodLight = new Color32(168, 96, 48, 255), WoodHi = new Color32(192, 96, 48, 255),
+            WoodTop = new Color32(192, 120, 48, 255);
+
         static IEnumerable<string> ExtractBoyFrames(Sheet sheet)
         {
             const int columnCells = 64, rowCells = 85;
@@ -153,33 +170,86 @@ namespace AfetUyanisi.Menu.EditorTools
                 for (int i = 0; i < 4; i++)
                 {
                     var region = new RectInt(i * columnCells, row * rowCells, columnCells, rowCells);
-                    Texture2D frame = sheet.ExtractFrame(region, BoyScale, out Vector2 pivot, out int bedWidth);
+                    Texture2D extracted = sheet.ExtractFrame(region, BoyScale, out Vector2 pivot, out int bedWidth);
+                    Texture2D frame = RepeatRows(extracted, BlanketInsertAt * BoyScale, BlanketInsertRows * BoyScale, ref pivot);
                     if (row == 0 && i == 0) bedWidthCells = bedWidth;
                     string name = row == 0 ? $"Boy/BoySleep{i + 1}" : $"Boy/BoyWake{i + 1}";
                     customPivots[name.Substring(name.IndexOf('/') + 1)] = pivot;
                     yield return Save(frame, name);
                 }
             yield return Save(BedFront(bedWidthCells), "Room/BedFront");
+            yield return Save(BedHeadboard(bedWidthCells), "Room/BedHeadboard");
         }
 
-        // Yatağın önü (karelerde yok): ahşap ray ve iki bacak. Çocuk kareleriyle aynı yoğunlukta (2x) çizilir.
+        // Alttan 'at' satırından başlayan 'count' satırlık bandı bir kez tekrarlar (kaynak dokuyu yok eder).
+        static Texture2D RepeatRows(Texture2D src, int at, int count, ref Vector2 pivot)
+        {
+            int w = src.width, h = src.height;
+            var sp = src.GetPixels32();
+            var dst = new Texture2D(w, h + count, TextureFormat.RGBA32, false);
+            var dp = new Color32[w * (h + count)];
+            // [0, at+count) aynen, sonrası 'count' satır yukarı kayar: bant iki kez görünür.
+            for (int y = 0; y < h + count; y++)
+                System.Array.Copy(sp, (y < at + count ? y : y - count) * w, dp, y * w, w);
+            dst.SetPixels32(dp);
+            dst.Apply();
+            float pivotRow = pivot.y * h;
+            if (pivotRow >= at) pivotRow += count;
+            pivot.y = pivotRow / (h + count);
+            Object.DestroyImmediate(src);
+            return dst;
+        }
+
+        // Yatağın ayak ucu (karelerde yok): üstü görünen alçak tahta, köşe topuzları ve kısa bacaklar.
+        // Çocuk kareleriyle aynı yoğunlukta (2x) çizilir.
         static Texture2D BedFront(int widthCells)
         {
-            int w = Mathf.Max(8, widthCells), h = 11;
-            var small = New(w, h);
-            var light = new Color32(156, 96, 56, 255);
-            var wood = new Color32(116, 64, 38, 255);
-            var dark = new Color32(66, 36, 24, 255);
+            int w = Mathf.Max(8, widthCells);
+            var small = New(w, 6);
             for (int x = 0; x < w; x++)
             {
-                Px(small, x, 0, x == 0 || x == w - 1 ? dark : light);
-                for (int y = 1; y < 4; y++) Px(small, x, y, x == 0 || x == w - 1 ? dark : ((x + y) % 9 == 0 ? light : wood));
-                Px(small, x, 4, dark);
+                bool edge = x == 0 || x == w - 1;
+                Px(small, x, 1, edge ? WoodDeep : WoodHi);
+                Px(small, x, 2, edge ? WoodDeep : (x % 13 == 7 ? WoodLight : WoodMid));
+                Px(small, x, 3, edge ? WoodDeep : (x % 11 == 4 ? WoodShade : WoodBody));
+                Px(small, x, 4, WoodDeep);
             }
-            foreach (int lx in new[] { 1, w - 5 })
-                for (int y = 5; y < h; y++)
-                    for (int x = lx; x < lx + 4; x++)
-                        Px(small, x, y, x == lx ? light : x == lx + 3 ? dark : wood);
+            foreach (int px in new[] { 0, w - 4 })
+            {
+                for (int x = px; x < px + 4; x++) Px(small, x, 0, x == px || x == px + 3 ? WoodDeep : WoodLight);
+                for (int y = 1; y <= 3; y++) { Px(small, px + 1, y, WoodLight); Px(small, px + 2, y, WoodMid); }
+                Px(small, px + 1, 5, WoodDark);
+                Px(small, px + 2, 5, WoodDeep);
+            }
+            small.Apply();
+            var big = Upscale(small, BoyScale);
+            Object.DestroyImmediate(small);
+            return big;
+        }
+
+        // Başlık uzantısı: karelerin arkasında, iki dikmenin arasında kemerli bir pano (dikey tahtalar). Kenarlarda
+        // karelerdeki başlık rayına iner, ortada saçın hemen üstüne çıkar; dikmeler karelerdeki gibi kalır, böylece
+        // sağ köşe SEL etiketine ve dünya haritasına uzanmaz. Çocuk uyurken başı başlığın önünde, yastıkta kalır.
+        static Texture2D BedHeadboard(int widthCells)
+        {
+            int w = Mathf.Max(12, widthCells), h = HeadboardRows;
+            int x0 = 7, x1 = w - 5;            // karelerdeki dikmelerin iç kenarları
+            const int sideRow = 7, rise = 10;  // kemerin dış çizgisi: kenarda kare satırı 43 (ray), ortada 53 (saçın üstü)
+            var small = New(w, h);
+            void Set(int x, int yBottom, Color32 c) => Px(small, x, h - 1 - yBottom, c);
+            for (int x = x0; x <= x1; x++)
+            {
+                float u = 2f * (x - x0 + 0.5f) / (x1 - x0 + 1) - 1f;
+                int edge = sideRow + Mathf.RoundToInt(rise * Mathf.Sqrt(1f - u * u));
+                int k = (x - x0) % 7;
+                for (int y = 0; y < edge - 4; y++)
+                    Set(x, y, k == 0 ? WoodDark : k == 1 ? WoodMid : (y % 9 == 4 && k == 4) ? WoodDark : WoodShade);
+                Set(x, edge - 4, WoodDeep);
+                Set(x, edge - 3, WoodBody);
+                Set(x, edge - 2, x % 9 == 3 ? WoodMid : WoodLight);
+                Set(x, edge - 1, x % 7 == 2 ? WoodTop : WoodHi);
+                Set(x, edge, WoodDeep);
+            }
             small.Apply();
             var big = Upscale(small, BoyScale);
             Object.DestroyImmediate(small);
@@ -220,6 +290,93 @@ namespace AfetUyanisi.Menu.EditorTools
                 yield return Save(art, $"Bubbles/Bubble{d.name}");
                 yield return Save(Label(d.label), $"Bubbles/Label{d.name}");
             }
+        }
+
+        // Rüya seçimindeki iki düşünce yolu: çocuğun başının üstünden sola DEPREM'e, sağa SEL'e. Yeni piksel çizilmez;
+        // mevcut düşünce baloncuklarının (UI/ThoughtSmall, UI/ThoughtLarge) baloncukları tek tek kopyalanıp dizilir.
+        // Konumlar ilk (en küçük) baloncuğun merkezine göre sanal piksel, y yukarı. Pivot bu baloncuk: belirme
+        // animasyonu yolu baştan dışa doğru büyütür. SEL bulutu başa daha yakın olduğu için sağ yol bir baloncuk kısa.
+        static IEnumerable<string> BuildThoughtPaths()
+        {
+            List<Texture2D> small = Puffs(OutDir + "UI/ThoughtSmall.png"), large = Puffs(OutDir + "UI/ThoughtLarge.png");
+            Texture2D tiny = small[0], mid = small[1], big = small[2], medium = large[0];
+            yield return Save(ThoughtPath("ThoughtPathQuake", (tiny, 0, 0), (mid, -10, 9), (medium, -22, 20), (big, -37, 32)), "UI/ThoughtPathQuake");
+            yield return Save(ThoughtPath("ThoughtPathFlood", (tiny, 0, 0), (mid, 10, 9), (medium, 23, 19)), "UI/ThoughtPathFlood");
+            foreach (Texture2D t in small) Object.DestroyImmediate(t);
+            foreach (Texture2D t in large) Object.DestroyImmediate(t);
+        }
+
+        // Görseldeki birbirine değmeyen parçalar (baloncuklar), alandan küçükten büyüğe.
+        static List<Texture2D> Puffs(string path)
+        {
+            var sheet = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            sheet.LoadImage(File.ReadAllBytes(path));
+            int w = sheet.width, h = sheet.height;
+            Color32[] px = sheet.GetPixels32();
+            Object.DestroyImmediate(sheet);
+            var seen = new bool[px.Length];
+            var found = new List<(int area, Texture2D texture)>();
+            var stack = new Stack<int>();
+            var cells = new List<int>();
+            for (int start = 0; start < px.Length; start++)
+            {
+                if (seen[start] || px[start].a == 0) continue;
+                cells.Clear();
+                seen[start] = true;
+                stack.Push(start);
+                int x0 = w, x1 = -1, y0 = h, y1 = -1;
+                while (stack.Count > 0)
+                {
+                    int c = stack.Pop(), cx = c % w, cy = c / w;
+                    cells.Add(c);
+                    x0 = Mathf.Min(x0, cx); x1 = Mathf.Max(x1, cx); y0 = Mathf.Min(y0, cy); y1 = Mathf.Max(y1, cy);
+                    void Visit(int n) { if (!seen[n] && px[n].a > 0) { seen[n] = true; stack.Push(n); } }
+                    if (cx > 0) Visit(c - 1);
+                    if (cx < w - 1) Visit(c + 1);
+                    if (cy > 0) Visit(c - w);
+                    if (cy < h - 1) Visit(c + w);
+                }
+                int pw = x1 - x0 + 1, ph = y1 - y0 + 1;
+                var piece = new Color32[pw * ph];
+                foreach (int c in cells) piece[(c / w - y0) * pw + c % w - x0] = px[c];
+                var texture = new Texture2D(pw, ph, TextureFormat.RGBA32, false);
+                texture.SetPixels32(piece);
+                texture.Apply();
+                found.Add((pw * ph, texture));
+            }
+            found.Sort((a, b) => a.area.CompareTo(b.area));
+            var result = new List<Texture2D>();
+            foreach (var f in found) result.Add(f.texture);
+            return result;
+        }
+
+        static Texture2D ThoughtPath(string name, params (Texture2D puff, int x, int y)[] parts)
+        {
+            int minX = int.MaxValue, minY = int.MaxValue, maxX = int.MinValue, maxY = int.MinValue;
+            foreach (var p in parts)
+            {
+                int x0 = p.x - p.puff.width / 2, y0 = p.y - p.puff.height / 2;
+                minX = Mathf.Min(minX, x0); minY = Mathf.Min(minY, y0);
+                maxX = Mathf.Max(maxX, x0 + p.puff.width); maxY = Mathf.Max(maxY, y0 + p.puff.height);
+            }
+            int w = maxX - minX, h = maxY - minY;
+            var dst = new Color32[w * h];
+            foreach (var p in parts)
+            {
+                Color32[] src = p.puff.GetPixels32();
+                int ox = p.x - p.puff.width / 2 - minX, oy = p.y - p.puff.height / 2 - minY;
+                for (int y = 0; y < p.puff.height; y++)
+                    for (int x = 0; x < p.puff.width; x++)
+                    {
+                        Color32 c = src[y * p.puff.width + x];
+                        if (c.a > 0) dst[(oy + y) * w + ox + x] = c;
+                    }
+            }
+            customPivots[name] = new Vector2(-minX / (float)w, -minY / (float)h);
+            var texture = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            texture.SetPixels32(dst);
+            texture.Apply();
+            return texture;
         }
 
         // Şeklin dışına doğru sönen renkli hale (merkez saydam; bulut görseli üstte çizilir).
@@ -297,7 +454,7 @@ namespace AfetUyanisi.Menu.EditorTools
         {
             string name = Path.GetFileNameWithoutExtension(path);
             if (customPivots.TryGetValue(name, out Vector2 custom)) return custom;
-            if (name == "BedFront") return Bottom;
+            if (name == "BedFront" || name == "BedHeadboard") return Bottom;
             foreach (Piece piece in Pieces)
                 if (piece.output.EndsWith(name))
                     return piece.pivot;
