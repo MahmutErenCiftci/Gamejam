@@ -1,0 +1,81 @@
+{
+  "chapter_id": "earthquake_home",
+  "version": "1.0",
+  "scenes": [
+    {
+      "id": "EQH_WAKE",
+      "title": "Telefon Çalıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Telefonum çalıyor... Bu saatte kim?" }
+      ]
+    },
+    {
+      "id": "EQH_PHONE_AFTER",
+      "title": "Simülasyon Başlıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Bir simülasyon mu? Tamam, <color=#18A957>evi dikkatle inceleyeyim!</color>" }
+      ]
+    },
+    {
+      "id": "EQH_MOTHER_CALL",
+      "title": "Annenin Seslenişi",
+      "lines": [
+        { "speaker": "Anne", "text": "Cenk! Bir bakar mısın?" }
+      ]
+    },
+    {
+      "id": "EQH_MOTHER_GREET",
+      "title": "Anneyle Karşılaşma",
+      "lines": [
+        { "speaker": "Anne", "text": "Günaydın canım! Bugün birlikte <color=#18A957>deprem planımızı</color> gözden geçirelim mi?" },
+        { "speaker": "Çocuk", "text": "Günaydın anne! Tamam, hazırım." }
+      ]
+    },
+    {
+      "id": "EQH_READY",
+      "title": "Hazırlık Tamam",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Hazırlığım tamam. <color=#18A957>Güvenli bir yerde</color> bekleyeyim." }
+      ]
+    },
+    {
+      "id": "EQH_QUAKE",
+      "title": "Sarsıntı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Yer sallanıyor!</color>" }
+      ]
+    },
+    {
+      "id": "EQH_AFTER_MOTHER",
+      "title": "Sarsıntı Sonrası",
+      "lines": [
+        { "speaker": "Anne", "text": "Cenk! İyi misin?" },
+        { "speaker": "Çocuk", "text": "İyiyim anne!" }
+      ]
+    },
+    {
+      "id": "EQH_BAG",
+      "title": "Deprem Çantası",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Çantamı aldım.</color>" }
+      ]
+    },
+    {
+      "id": "EQH_EXIT",
+      "title": "Binadan Çıkış",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Merdivenden sakince inelim.</color>" }
+      ]
+    },
+    {
+      "id": "EQH_ASSEMBLY",
+      "title": "Toplanma Alanı",
+      "lines": [
+        { "speaker": "Anne", "text": "Buradayız, ikimiz de iyiyiz. <color=#18A957>Sakin olmak</color> en önemlisi." },
+        { "speaker": "Çocuk", "text": "Eve hemen dönebilir miyiz anne?" },
+        { "speaker": "Anne", "text": "Bina kontrol edilmeden <color=#E8392B>içeri girmeyiz</color>. <color=#18A957>Resmî duyuruları</color> burada bekleyip takip edeceğiz." },
+        { "speaker": "Çocuk", "text": "Tamam anne. Doğru yaptıklarımızı hiç unutmayacağım!" }
+      ]
+    }
+  ]
+}

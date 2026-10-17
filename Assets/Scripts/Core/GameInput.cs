@@ -45,6 +45,15 @@ namespace AfetUyanisi.Core
         /// <summary>Etkileşim: kalk, yüzünü yıka, eşyayı al, tabelayı incele (E).</summary>
         public static bool InteractPressed => Pressed(Key.E);
 
+        /// <summary>Etkileşim tuşu basılı tutuluyor (E) — deprem modunda TUTUN adımı.</summary>
+        public static bool InteractHeld => Held(Key.E);
+
+        /// <summary>Başlat / bildirimi kapat: E, Space, Enter veya sol tık (ContinuePressed ile aynı).</summary>
+        public static bool StartPressed => ContinuePressed;
+
+        /// <summary>Deprem modu: hazırlık tamamken simülasyonu hızlandır (Space).</summary>
+        public static bool AcceleratePressed => Pressed(Key.Space);
+
         /// <summary>Diyaloğu ilerlet: E, Space, Enter veya sol tık.</summary>
         public static bool ContinuePressed =>
             Pressed(Key.E) || Pressed(Key.Space) || EnterPressed || ClickPressed;
