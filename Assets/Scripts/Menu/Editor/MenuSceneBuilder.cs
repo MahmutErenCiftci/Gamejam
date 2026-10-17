@@ -10,27 +10,40 @@ using UnityEngine.UI;
 
 namespace AfetUyanisi.Menu.EditorTools
 {
-    // Assets/Scenes/Menu/MainMenu.unity sahnesini modüler parçalardan kurar: Tilemap duvar/zemin, ayrı
-    // mobilya ve dekor sprite'ları, katmanlı pencere, uyuyan çocuk, iki rüya bulutu, Pixel Perfect Camera,
-    // arayüz ve tüm script referansları. İlk kurulum ve hızlı yeniden kurulum içindir; çalıştırıldığında
-    // MainMenu sahnesinin üzerine yazar (sahnede elle yapılan değişiklikler kaybolur).
+    // Assets/Scenes/Menu/MainMenu.unity sahnesini kurar. Menünün arka planı oyunun kendi izometrik yatak odasıdır:
+    // Assets/Scenes/Rooms/Bedroom.unity (Mahmut) sahnesinden duvarlar, zemin ve eşyalar kopyalanır (dosyalar
+    // kopyalanmaz, aynı sprite ve tile'lar kullanılır; oda değişirse menüyü yeniden kurmak yeter). Odanın üstüne
+    // şafak gökyüzü, yıldızlar, uyuyan çocuğun "z" harfleri, rüya bulutları, düşünce yolları ve piksel fontlu arayüz
+    // eklenir. Çalıştırıldığında MainMenu sahnesinin üzerine yazar (sahnede elle yapılan değişiklikler kaybolur).
     //
-    // Konumlar 480x270'lik sanal ekranda, sol alt köşeden piksel cinsindendir (1 birim = 16 piksel).
-    // Sıralama tek "Default" sorting layer'ında sortingOrder bantlarıyla yapılır (yeni sorting layer
-    // eklemek ProjectSettings değişikliği gerektirir):
-    //   0-5 duvar/zemin/duvar dekoru · 9-17 pencere içi (maskeli) · 18-19 çerçeve/perde · 30-49 mobilya
-    //   50 sarkıt lamba · 80-81 oda ışığı · 100-109 bulutlar · 120 logo · 900 karanlık · 950+ saat
+    // Konumlar 640x360'lık sanal ekranda, sol alt köşeden piksel cinsindendir (1 birim = 64 piksel, odanın
+    // sanatıyla aynı yoğunluk; 1080p'de tam 3 kat büyür). Sıralama tek "Default" sorting layer'ında:
+    //   -200 gökyüzü · -190 yıldızlar · -150 fırtına yağmuru (odanın arkasında)
+    //   odanın kendi sıraları (-90 halı … 0-1 eşyalar) · pencere fırtınası pencerenin
+    //   hemen üstünde · 60 "z" harfleri · 80-81 oda ışığı · 95 seçim karartması · 99 düşünce yolları
+    //   100-109 bulutlar · 120 logo · 900 karanlık · 958-960 açılış saati
     public static class MenuSceneBuilder
     {
         const string ScenePath = "Assets/Scenes/Menu/MainMenu.unity";
+        const string RoomScene = "Assets/Scenes/Rooms/Bedroom.unity";
         const string Art = "Assets/Art/Menu/";
-        const float PPU = 16f;
-        const int ScreenW = 480, ScreenH = 270;
+        const string RoomArt = "Assets/Art/Props/Bedroom/";
+        const float PPU = 64f;
+        const int ScreenW = 640, ScreenH = 360;
+
+        // Oda: Bedroom sahnesindeki dünya koordinatları bu kadar kaydırılır; oda ekranda x 199-614, y 20-321
+        // arasına gelir, solda başlık ve butonlara yer kalır.
+        static readonly Vector3 RoomOffset = new Vector3(71f / PPU, -162f / PPU, 0f);
+
+        static readonly Color Ink = new Color(0.95f, 0.92f, 0.85f);
+        static readonly Color Warm = new Color(1f, 0.74f, 0.4f);
+        static readonly Color Muted = new Color(0.7f, 0.7f, 0.86f);
 
         static Material unlit;
-        static Font font;
+        static Font regular, bold;
 
         static Vector3 P(float x, float y) => new Vector3((x - ScreenW / 2f) / PPU, (y - ScreenH / 2f) / PPU, 0f);
+        static Vector2 V(float x, float y) => new Vector2(x - ScreenW / 2f, y - ScreenH / 2f); // UI: ekran ortasına göre
         static Sprite S(string path) => AssetDatabase.LoadAssetAtPath<Sprite>(Art + path + ".png");
 
         [MenuItem("AfetUyanisi/Menü/Sahneyi Kur (MainMenu.unity üzerine yazar)")]
@@ -41,8 +54,14 @@ namespace AfetUyanisi.Menu.EditorTools
                 Debug.LogWarning("[MenuSceneBuilder] Play modundayken sahne kurulamaz; önce Play'den çıkın.");
                 return;
             }
+            if (!File.Exists(RoomScene))
+            {
+                Debug.LogError("[MenuSceneBuilder] Oda sahnesi yok: " + RoomScene);
+                return;
+            }
             unlit = AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat");
-            font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            regular = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PixelifySans/PixelifySans-Regular.ttf");
+            bold = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PixelifySans/PixelifySans-Bold.ttf");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
             // ---------------- Kamera
@@ -55,7 +74,7 @@ namespace AfetUyanisi.Menu.EditorTools
             cam.orthographic = true;
             cam.orthographicSize = ScreenH / 2f / PPU;
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = Color.black;
+            cam.backgroundColor = new Color(0.04f, 0.05f, 0.11f);
             var ppc = camGo.AddComponent<PixelPerfectCamera>();
             ppc.assetsPPU = (int)PPU;
             ppc.refResolutionX = ScreenW;
@@ -72,115 +91,94 @@ namespace AfetUyanisi.Menu.EditorTools
             es.AddComponent<EventSystem>();
             es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
 
-            // ---------------- Oda (Tilemap)
-            var room = new GameObject("Room").transform;
-            var grid = new GameObject("Grid", typeof(Grid));
-            grid.transform.SetParent(room, false);
-            grid.transform.position = P(0, 0);
-            Tilemap wall = TileLayer(grid.transform, "Wall", 0);
-            Tilemap floor = TileLayer(grid.transform, "Floor", 1);
-            TileBase wallTile = TileAsset("TileWall"), topTile = TileAsset("TileWallTop"), baseTile = TileAsset("TileBaseboard"), floorTile = TileAsset("TileFloor");
-            // Ekranın her yanında bir karo taşar: kamera sarsıntısında kenarda boşluk görünmesin.
-            for (int x = -1; x <= ScreenW / 16; x++)
-            {
-                for (int y = -1; y < 4; y++) floor.SetTile(new Vector3Int(x, y, 0), floorTile);
-                floor.SetTile(new Vector3Int(x, 4, 0), baseTile);
-                for (int y = 5; y < 16; y++) wall.SetTile(new Vector3Int(x, y, 0), wallTile);
-                wall.SetTile(new Vector3Int(x, 16, 0), topTile);
-                wall.SetTile(new Vector3Int(x, 17, 0), topTile);
-            }
+            // ---------------- Gökyüzü ve yıldızlar
+            var world = Group(null, "World");
+            Stretched(world, "Sky", "Fx/Sky", -16, -16, ScreenW + 32, ScreenH + 32, -200);
+            Stars(world);
 
-            // ---------------- Duvar dekoru
-            var decor = Group(room, "WallDecor");
-            var posterRocket = Place(decor, "PosterRocket", "Decor/PosterRocket", 206, 186, 5);
-            var posterSaturn = Place(decor, "PosterSaturn", "Decor/PosterSaturn", 252, 202, 5);
-            var worldMap = Place(decor, "WorldMap", "Decor/WorldMap", 268, 150, 5);
-            var starFrame = Place(decor, "StarFrame", "Decor/StarFrame", 288, 214, 5);
-            var hangingPlant = Place(decor, "HangingPlant", "Decor/HangingPlant", 470, 262, 22);
-            var pendantLamp = Place(decor, "PendantLamp", "Room/PendantLamp", 196, 272, 50);
+            // ---------------- Oda (Bedroom.unity'den)
+            var room = Group(world, "Room");
+            room.position = RoomOffset;
+            var parts = CopyRoom(room);
+            SpriteRenderer bed = parts["Bed"];
+            bed.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(RoomArt + "PROP_Bedroom_Bed_Sleeping.png");
+            SpriteRenderer clock = parts["AlarmClock"];
+            SpriteRenderer window = parts["Window"];
 
-            // ---------------- Pencere
-            var window = BuildWindow(room, out DynamicWindowController windowController, out Transform curtainL, out Transform curtainR);
+            // Uyuyan çocuğun başı (yatak sprite'ının pivotuna göre, piksel): baş ortası (-20, 41), saçın üstü 46.
+            Vector3 bedPos = bed.transform.position;
+            var zzz = new GameObject("SleepZzz").AddComponent<SleepZzz>();
+            zzz.transform.SetParent(bed.transform, false);
+            zzz.transform.position = bedPos + new Vector3(-10f, 48f, 0f) / PPU;
+            SetArray(zzz, "letters", S("Fx/ZSmall"), S("Fx/ZSmall"), S("Fx/ZBig"));
+            SetRef(zzz, "material", unlit);
 
-            // ---------------- Mobilya
-            var furniture = Group(room, "Furniture");
-            var desk = Place(furniture, "Desk", "Room/Desk", 380, 44, 30);
-            var deskLamp = Place(furniture, "DeskLamp", "Room/DeskLamp", 326, 106, 31);
-            var globe = Place(furniture, "Globe", "Decor/Globe", 356, 106, 31);
-            var bookStack = Place(furniture, "BookStack", "Decor/BookStack", 430, 106, 31);
-            var bookshelf = Place(furniture, "Bookshelf", "Room/Bookshelf", 474, 30, 32);
-            var backpack = Place(furniture, "Backpack", "Room/Backpack", 290, 26, 33);
-            Place(furniture, "Plant", "Room/Plant", 30, 20, 33);
-            var chair = Place(furniture, "Chair", "Room/Chair", 394, 14, 40);
-            var nightstand = Place(furniture, "Nightstand", "Room/Nightstand", 108, 22, 30);
-            var moonLamp = Place(furniture, "MoonLamp", "Decor/MoonLamp", 88, 78, 31);
-            var roomClock = Place(furniture, "RoomClock", "Room/RoomClock", 124, 87, 31); // introda karanlığın altında; büyük saat gösterilir
-
-            // Yatak önden görünür: çocuk kareleri başlık + yastık + battaniyeyi içerir, altına ahşap ray ve bacaklar
-            // gelir. Çocuk yatağın çocuğu: sarsıntıda birlikte hareket ederler. Kare pivotu yatağın alt-ortası.
-            // Yatak, sol sütundaki butonların altına girmesin diye x=201'de.
-            var bedFront = Place(furniture, "Bed", "Room/BedFront", 201, 12, 35);
-            var boyRenderer = Place(bedFront.transform, "SleepingBoy", "Boy/BoySleep1", 0, bedFront.sprite.rect.height, 37, local: true);
-
-            var boy = boyRenderer.gameObject.AddComponent<SleepingBoy>();
-            SetRef(boy, "body", boyRenderer);
-            // Üst sıra: zzz'li uyku, ağzı açık, sakin uyku (nefes); göz ovuşturma (kıpırdanma).
-            // Alt sıra: gerinme, gözler açık, etrafa bakma (irkilme).
-            SetArray(boy, "breathFrames", S("Boy/BoySleep1"), S("Boy/BoySleep2"), S("Boy/BoySleep3"));
-            SetArray(boy, "stirFrames", S("Boy/BoySleep4"));
-            SetArray(boy, "startledFrames", S("Boy/BoyWake2"), S("Boy/BoyWake4"), S("Boy/BoyWake3"), S("Boy/BoyWake2"));
-
-            // ---------------- Oda ışığı
-            var light = Group(room, "RoomLight");
-            var roomTint = Fill(light, "RoomTint", 0, 0, ScreenW, ScreenH, new Color(1f, 0.6f, 0.25f, 0.07f), 80);
-            var roomFlash = Fill(light, "RoomFlash", 0, 0, ScreenW, ScreenH, new Color(0.85f, 0.9f, 1f, 0f), 81);
-            SetRef(windowController, "roomTint", roomTint);
-            SetRef(windowController, "roomFlash", roomFlash);
+            // ---------------- Oda ışığı (fırtınada kararır, şimşekte parlar)
+            var light = Group(world, "RoomLight");
+            var roomTint = Fill(light, "RoomTint", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.08f, 0.12f, 0.3f, 0f), 80);
+            var roomFlash = Fill(light, "RoomFlash", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.85f, 0.9f, 1f, 0f), 81);
+            var windowController = BuildWeather(world, window, roomTint, roomFlash);
 
             // ---------------- Rüya seçimi
             var dreams = Group(null, "DreamSelection");
+            var dim = Fill(dreams, "SelectionDim", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.03f, 0.04f, 0.1f, 0.62f), 95);
+            var dimFader = dim.gameObject.AddComponent<SpriteFader>();
+            SetFloat(dimFader, "alpha", 0f);
             var thought = Group(dreams, "ThoughtTrail");
-            // Çocuğun başından iki bulutun arasındaki boşluğa doğru yükselir.
-            var dot1 = Place(thought, "Thought1", "UI/ThoughtSmall", 190, 154, 99);
-            var dot2 = Place(thought, "Thought2", "UI/ThoughtMedium", 178, 186, 99);
+            // Çocuğun başının üstünden iki ayrı yol: sol-yukarı DEPREM'e, sağ-yukarı SEL'e (konum = yolun başa en
+            // yakın baloncuğu). Uçları bulutların alt kenarının birkaç piksel altına girer (bulut üstte çizilir).
+            Vector3 headTop = bedPos + new Vector3(-20f, 46f, 0f) / PPU;
+            var quakePath = Place(thought, "ThoughtToQuake", "UI/ThoughtPathQuake", 0, 0, 99);
+            quakePath.transform.position = headTop + new Vector3(-6f, 6f, 0f) / PPU;
+            var floodPath = Place(thought, "ThoughtToFlood", "UI/ThoughtPathFlood", 0, 0, 99);
+            floodPath.transform.position = headTop + new Vector3(6f, 6f, 0f) / PPU;
             var trail = thought.gameObject.AddComponent<ThoughtTrail>();
-            SetArray(trail, "dots", dot1, dot2);
-            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", "Bubbles/LabelQuake", 100, 200, 100, false, 0f);
-            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", "Bubbles/LabelFlood", 266, 200, 105, true, 0.5f);
+            SetArray(trail, "dots", quakePath, floodPath);
+            var quake = Bubble(dreams, "Bubble_Deprem", MenuChapterLoader.Chapter.Earthquake, "Bubbles/BubbleQuake", "Bubbles/BubbleQuakeGlow", 184, 254, 100, false, 0f);
+            var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", 342, 254, 105, true, 0.5f);
 
-            // ---------------- Logo, karanlık, büyük saat
-            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 90, 222, 120);
+            // ---------------- Logo, karanlık, açılış saati
+            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 120, 290, 120);
             var title = titleRenderer.gameObject.AddComponent<SpriteFader>();
-            var darkness = Fill(null, "Darkness", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.02f, 0.02f, 0.05f, 1f), 900);
+            var darkness = Fill(null, "Darkness", -16, -16, ScreenW + 32, ScreenH + 32, new Color(0.01f, 0.01f, 0.03f, 1f), 900);
             var darkFader = darkness.gameObject.AddComponent<SpriteFader>();
-            var bigClock = Place(null, "IntroClock", "UI/ClockBig", 240, 140, 960);
-            var bigClockFader = bigClock.gameObject.AddComponent<SpriteFader>();
+            // Karanlıkta yalnızca komodindeki saat parlar: odadaki saatin kopyası karanlığın üstünde, arkasında kırmızı hale.
+            var introClock = Group(null, "IntroClock");
+            introClock.position = clock.transform.position;
+            Place(introClock, "Glow", "Fx/ClockGlow", 0, 8, 958, local: true);
+            var introClockFace = Place(introClock, "Clock", "Fx/Pixel", 0, 0, 960, local: true);
+            introClockFace.sprite = clock.sprite;
+            var introClockFader = introClock.gameObject.AddComponent<SpriteFader>();
 
             // ---------------- Arayüz
             var canvas = BuildCanvas(out RectTransform root);
-            var mainButtons = Panel(root, "MainButtons", new Vector2(-203, 4), new Vector2(160, 96));
-            var newGame = MenuButton(mainButtons.transform, "NewGameButton", "Yeni Oyun", new Vector2(0, 32));
-            var settings = MenuButton(mainButtons.transform, "SettingsButton", "Ayarlar", new Vector2(0, 0));
-            var exit = MenuButton(mainButtons.transform, "ExitButton", "Çıkış", new Vector2(0, -32));
+            var mainButtons = Panel(root, "MainButtons");
+            Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 11, Muted, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
+            var newGame = MenuButton(mainButtons.transform, "NewGameButton", "Yeni Oyun", V(120, 186), new Vector2(128, 22));
+            var settings = MenuButton(mainButtons.transform, "SettingsButton", "Ayarlar", V(120, 158), new Vector2(128, 22));
+            var exit = MenuButton(mainButtons.transform, "ExitButton", "Çıkış", V(120, 130), new Vector2(128, 22));
             ChainNavigation(newGame, settings, exit);
 
-            var selection = Panel(root, "SelectionPanel", new Vector2(0, -150), new Vector2(640, 50));
-            var startChapter = MenuButton(selection.transform, "StartChapterButton", "Bölümü Başlat", new Vector2(208, 4));
-            var back = MenuButton(selection.transform, "BackButton", "Geri", new Vector2(60, 4));
-            ((RectTransform)back.transform).sizeDelta = new Vector2(100, 26);
-            Label(selection.transform, "Hint", "Rüyanı seç: fare ya da A/D  ·  Enter: başla  ·  Esc: geri", 11, new Vector2(140, 32), new Vector2(300, 20), TextAnchor.MiddleCenter);
+            var selection = Panel(root, "SelectionPanel");
+            Label(selection.transform, "Header", "BİR RÜYA SEÇ", bold, 16, Warm, V(320, 340), new Vector2(300, 20), TextAnchor.MiddleCenter);
+            Label(selection.transform, "Hint", "A / D ya da fare ile seç  ·  Enter: başla  ·  Esc: geri", regular, 10, Muted, V(320, 324), new Vector2(400, 14), TextAnchor.MiddleCenter);
+            var infoPanel = UiImage(selection.transform, "InfoPanel", S("UI/Panel"), V(320, 52), new Vector2(400, 24));
+            infoPanel.type = UnityEngine.UI.Image.Type.Sliced;
+            var info = Label(infoPanel.transform, "Info", "", regular, 11, Ink, Vector2.zero, new Vector2(390, 20), TextAnchor.MiddleCenter);
+            info.supportRichText = true;
+            var back = MenuButton(selection.transform, "BackButton", "Geri", V(252, 20), new Vector2(104, 22));
+            var startChapter = MenuButton(selection.transform, "StartChapterButton", "Bölümü Başlat", V(388, 20), new Vector2(150, 22));
 
-            var settingsPanel = UiImage(root, "SettingsPanel", S("UI/ButtonBar"), Vector2.zero, new Vector2(300, 150));
+            var settingsPanel = UiImage(root, "SettingsPanel", S("UI/Panel"), V(320, 180), new Vector2(260, 120));
             settingsPanel.type = UnityEngine.UI.Image.Type.Sliced;
-            Label(settingsPanel.transform, "Title", "Ayarlar", 18, new Vector2(0, 45), new Vector2(280, 30), TextAnchor.MiddleCenter);
-            Label(settingsPanel.transform, "Info", "Ses ve tam ekran ayarları yakında.\nEsc: geri", 12, new Vector2(0, 5), new Vector2(280, 40), TextAnchor.MiddleCenter);
-            var settingsBack = MenuButton(settingsPanel.transform, "BackButton", "Geri", new Vector2(0, -45));
-            ((RectTransform)settingsBack.transform).sizeDelta = new Vector2(100, 26);
+            Label(settingsPanel.transform, "Title", "Ayarlar", bold, 16, Warm, new Vector2(0, 36), new Vector2(240, 20), TextAnchor.MiddleCenter);
+            Label(settingsPanel.transform, "Info", "Ses ve tam ekran ayarları yakında.\nEsc: geri", regular, 11, Ink, new Vector2(0, 4), new Vector2(240, 30), TextAnchor.MiddleCenter);
+            var settingsBack = MenuButton(settingsPanel.transform, "BackButton", "Geri", new Vector2(0, -36), new Vector2(104, 22));
             settingsPanel.gameObject.SetActive(false);
 
-            var tooltip = UiImage(root, "Tooltip", S("UI/ButtonBar"), new Vector2(0, -110), new Vector2(330, 26));
+            var tooltip = UiImage(root, "Tooltip", S("UI/Panel"), V(320, 86), new Vector2(320, 22));
             tooltip.type = UnityEngine.UI.Image.Type.Sliced;
-            var tooltipText = Label(tooltip.transform, "Text", "", 12, Vector2.zero, new Vector2(320, 24), TextAnchor.MiddleCenter);
+            var tooltipText = Label(tooltip.transform, "Text", "", regular, 11, Ink, Vector2.zero, new Vector2(310, 18), TextAnchor.MiddleCenter);
             tooltip.gameObject.SetActive(false);
 
             var fade = UiImage(root, "FadePanel", null, Vector2.zero, Vector2.zero);
@@ -204,6 +202,10 @@ namespace AfetUyanisi.Menu.EditorTools
             SetRef(menu, "selectionPanel", selection);
             SetRef(menu, "startChapterButton", startChapter);
             SetRef(menu, "backButton", back);
+            SetRef(menu, "selectionDim", dimFader);
+            SetRef(menu, "selectionInfo", info);
+            SetRef(menu, "sleepZzz", zzz);
+            SetStrings(menu, "bubbleInfo", "Sabah evde, yer birden sarsılmaya başlıyor.", "Yağmur dinmiyor, sokaklar suyla doluyor.");
             SetRef(menu, "settingsPanel", settingsPanel.gameObject);
             SetRef(menu, "settingsBackButton", settingsBack);
             SetRef(menu, "tooltip", tooltip.gameObject);
@@ -216,10 +218,10 @@ namespace AfetUyanisi.Menu.EditorTools
             var steps = so.FindProperty("steps");
             var defs = new (Object target, float start, float duration, bool fadeOut)[]
             {
-                (bigClockFader, 1.2f, 0.6f, true),
                 (darkFader, 1.0f, 1.2f, true),
-                (title, 2.6f, 0.6f, false),
-                (mainButtons, 3.2f, 0.6f, false),
+                (introClockFader, 1.4f, 0.6f, true),
+                (title, 2.4f, 0.6f, false),
+                (mainButtons, 3.0f, 0.6f, false),
             };
             steps.arraySize = defs.Length;
             for (int i = 0; i < defs.Length; i++)
@@ -239,37 +241,31 @@ namespace AfetUyanisi.Menu.EditorTools
             rumble.playOnAwake = false;
             var earthquake = quakeGo.AddComponent<EarthquakePreview>();
             SetRef(earthquake, "cameraTransform", camGo.transform);
-            SetRef(earthquake, "boy", boy);
             SetRef(earthquake, "rumbleSource", rumble);
-            var props = new (Component target, EarthquakePreview.Reaction reaction, float strength)[]
+            var props = new List<(string name, EarthquakePreview.Reaction reaction, float strength)>
             {
-                (bedFront, EarthquakePreview.Reaction.Jitter, 1f), // çocuk yatağın çocuğu, birlikte titrer
-                (nightstand, EarthquakePreview.Reaction.Jitter, 1f),
-                (roomClock, EarthquakePreview.Reaction.Jitter, 1f),
-                (moonLamp, EarthquakePreview.Reaction.Tilt, 6f),
-                (desk, EarthquakePreview.Reaction.Jitter, 1f),
-                (deskLamp, EarthquakePreview.Reaction.Tilt, 5f),
-                (globe, EarthquakePreview.Reaction.Tilt, 6f),
-                (bookStack, EarthquakePreview.Reaction.Jitter, 2f),
-                (bookshelf, EarthquakePreview.Reaction.Jitter, 1.5f),
-                (chair, EarthquakePreview.Reaction.Jitter, 2f),
-                (backpack, EarthquakePreview.Reaction.Tilt, 4f),
-                (posterRocket, EarthquakePreview.Reaction.Tilt, 3f),
-                (posterSaturn, EarthquakePreview.Reaction.Tilt, 3f),
-                (worldMap, EarthquakePreview.Reaction.Tilt, 3f),
-                (starFrame, EarthquakePreview.Reaction.Tilt, 4f),
-                (pendantLamp, EarthquakePreview.Reaction.Sway, 14f),
-                (hangingPlant, EarthquakePreview.Reaction.Sway, 8f),
-                (curtainL, EarthquakePreview.Reaction.Sway, 2f),
-                (curtainR, EarthquakePreview.Reaction.Sway, 2f),
+                ("Bed", EarthquakePreview.Reaction.Jitter, 1f),
+                ("Nightstand", EarthquakePreview.Reaction.Jitter, 1f),
+                ("AlarmClock", EarthquakePreview.Reaction.Jitter, 1f),
+                ("Desk", EarthquakePreview.Reaction.Jitter, 1f),
+                ("Chair", EarthquakePreview.Reaction.Jitter, 2f),
+                ("Bookshelf", EarthquakePreview.Reaction.Jitter, 1.5f),
+                ("Backpack", EarthquakePreview.Reaction.Tilt, 4f),
+                ("Ball", EarthquakePreview.Reaction.Jitter, 2f),
+                ("Slippers", EarthquakePreview.Reaction.Jitter, 1f),
+                ("Plant", EarthquakePreview.Reaction.Tilt, 5f),
+                ("Umbrella", EarthquakePreview.Reaction.Tilt, 4f),
+                ("Poster", EarthquakePreview.Reaction.Tilt, 3f),
+                ("Frame", EarthquakePreview.Reaction.Tilt, 3f),
             };
+            props.RemoveAll(p => !parts.ContainsKey(p.name));
             var eso = new SerializedObject(earthquake);
             var parr = eso.FindProperty("props");
-            parr.arraySize = props.Length;
-            for (int i = 0; i < props.Length; i++)
+            parr.arraySize = props.Count;
+            for (int i = 0; i < props.Count; i++)
             {
                 var e = parr.GetArrayElementAtIndex(i);
-                e.FindPropertyRelative("target").objectReferenceValue = props[i].target.transform;
+                e.FindPropertyRelative("target").objectReferenceValue = parts[props[i].name].transform;
                 e.FindPropertyRelative("reaction").enumValueIndex = (int)props[i].reaction;
                 e.FindPropertyRelative("strength").floatValue = props[i].strength;
             }
@@ -285,130 +281,223 @@ namespace AfetUyanisi.Menu.EditorTools
             Debug.Log("[MenuSceneBuilder] MainMenu kuruldu: " + ScenePath);
         }
 
-        // ---------------------------------------------------------------- pencere
-        static Transform BuildWindow(Transform room, out DynamicWindowController controller, out Transform curtainL, out Transform curtainR)
+        // ---------------------------------------------------------------- oda
+        // Bedroom sahnesini kaydetmeden açar, duvarları, zemini ve eşyaları menü sahnesine kopyalar, kapatır.
+        // Kopyalarda yalnızca görüntü kalır (oyun scriptleri, çarpışma kutuları, ışıklar atılır); hepsi ışıktan
+        // etkilenmeyen malzemeyle çizilir, oda menüde kendi renkleriyle görünür. Dönüş: isim → sprite.
+        static Dictionary<string, SpriteRenderer> CopyRoom(Transform parent)
         {
-            const float cx = 380, cy = 172;
-            var root = Group(room, "WindowSystem");
-            // SortingGroup: pencere tek parça sıralanır ve cam maskesi sadece kendi içini etkiler
-            // (özel sıralama aralıklı maske URP 2D'de üstteki katmanları gizliyordu).
-            root.gameObject.AddComponent<UnityEngine.Rendering.SortingGroup>().sortingOrder = 10;
-            var frameSprite = S("Window/WindowFrame");
-            RectInt glass = GlassRect(frameSprite.texture);
-            // Cam alanının sanal ekrandaki sol alt köşesi ve boyutu
-            float gx = cx - frameSprite.texture.width / 2f + glass.x;
-            float gy = cy - frameSprite.texture.height / 2f + glass.y;
-            float gw = glass.width, gh = glass.height;
+            var active = EditorSceneManager.GetActiveScene();
+            var source = EditorSceneManager.OpenScene(RoomScene, OpenSceneMode.Additive);
+            EditorSceneManager.SetActiveScene(active);
+            var wanted = new[] { "Environment/Walls", "Environment/Rug", "Grid", "Furniture" };
+            foreach (GameObject rootGo in source.GetRootGameObjects())
+                foreach (string path in wanted)
+                {
+                    string[] names = path.Split('/');
+                    if (rootGo.name != names[0]) continue;
+                    Transform t = names.Length == 1 ? rootGo.transform : rootGo.transform.Find(names[1]);
+                    if (t == null) continue;
+                    var copy = Object.Instantiate(t.gameObject);
+                    copy.name = t.name;
+                    copy.transform.SetParent(parent, false);
+                    copy.transform.localPosition = t.position;
+                    copy.transform.localRotation = t.rotation;
+                }
+            EditorSceneManager.CloseScene(source, true);
 
-            var mask = new GameObject("WindowMask", typeof(SpriteMask)).GetComponent<SpriteMask>();
-            mask.transform.SetParent(root, false);
-            mask.sprite = S("Fx/Pixel");
-            mask.transform.position = P(gx + gw / 2f, gy + gh / 2f);
-            mask.transform.localScale = new Vector3(gw, gh, 1f);
-            // Maske sadece WindowSystem SortingGroup'u içindeki sprite'ları etkiler.
-
-            var clearSky = Stretched(root, "SkySunrise", "Window/SkyGradientSunrise", gx, gy, gw, gh, 10, true);
-            var citySunrise = Place(root, "CitySunrise", "Window/CitySunrise", gx + gw / 2f, gy + 30, 12, true);
-
-            var stormRoot = Group(root, "Storm");
-            var stormSky = Stretched(stormRoot, "SkyStorm", "Window/SkyGradientStorm", gx, gy, gw, gh, 10, true);
-            var cityStorm = Place(stormRoot, "CityStorm", "Window/CityStorm", gx + gw / 2f, gy + 30, 12, true);
-            var cloud1 = Place(stormRoot, "StormCloud1", "Window/StormCloud", gx + gw * 0.3f, gy + gh - 14, 13, true);
-            var cloud2 = Place(stormRoot, "StormCloud2", "Window/StormCloud", gx + gw * 0.8f, gy + gh - 24, 13, true);
-            var rain = Rain(stormRoot, "Rain", gx, gy, gw, gh, 14, 9, 16);
-            var droplets = Place(stormRoot, "GlassDroplets", "Fx/GlassDroplets", gx + gw / 2f, gy + gh / 2f, 15, true);
-            droplets.drawMode = SpriteDrawMode.Tiled;
-            droplets.size = new Vector2(gw / PPU, gh / PPU);
-            var bolt = Place(stormRoot, "LightningBolt", "Fx/LightningBolt", gx + gw * 0.7f, gy + gh * 0.62f, 15, true);
-            bolt.enabled = false;
-            var flash = Stretched(stormRoot, "WindowFlash", "Fx/Pixel", gx, gy, gw, gh, 16, true);
-            flash.color = new Color(0.9f, 0.93f, 1f, 0f);
-
-            var glassTint = Stretched(root, "Glass", "Fx/Pixel", gx, gy, gw, gh, 17, false);
-            glassTint.color = new Color(0.75f, 0.85f, 1f, 0.06f);
-            Place(root, "WindowFrame", "Window/WindowFrame", cx, cy, 18);
-            curtainL = Place(root, "CurtainLeft", "Window/CurtainLeft", cx - 60, 248, 19).transform;
-            curtainR = Place(root, "CurtainRight", "Window/CurtainRight", cx + 60, 248, 19).transform;
-
-            var rainAudio = root.gameObject.AddComponent<AudioSource>();
-            rainAudio.playOnAwake = false;
-            var thunderAudio = root.gameObject.AddComponent<AudioSource>();
-            thunderAudio.playOnAwake = false;
-
-            controller = root.gameObject.AddComponent<DynamicWindowController>();
-            // Ayrı güneş sprite'ı yok: şehir görselinde ufukta zaten güneş var (ayrıca URP 2D'de arka arkaya maskeli
-            // iki sprite'tan ikincisi yanlış dokuyla çiziliyordu).
-            SetArray(controller, "clearLayers", clearSky, citySunrise);
-            SetArray(controller, "stormLayers", stormSky, cityStorm, cloud1, cloud2);
-            SetRef(controller, "stormRoot", stormRoot.gameObject);
-            SetRef(controller, "rain", rain);
-            SetRef(controller, "droplets", droplets);
-            SetArray(controller, "driftingClouds", cloud1.transform, cloud2.transform);
-            SetRef(controller, "lightningBolt", bolt);
-            SetRef(controller, "windowFlash", flash);
-            SetRef(controller, "rainAudio", rainAudio);
-            SetRef(controller, "thunderAudio", thunderAudio);
-            return root;
+            // Yalnızca görüntü bileşenleri kalır: önce scriptler, sonra çarpışma, en son geri kalanlar (fizik vb.).
+            var keep = new HashSet<System.Type> { typeof(Transform), typeof(SpriteRenderer), typeof(Grid), typeof(Tilemap), typeof(TilemapRenderer), typeof(UnityEngine.Rendering.SortingGroup) };
+            for (int pass = 0; pass < 3; pass++)
+                foreach (var c in parent.GetComponentsInChildren<Component>(true))
+                {
+                    if (c == null || keep.Contains(c.GetType())) continue;
+                    if (pass == 0 && !(c is MonoBehaviour)) continue;
+                    if (pass == 1 && !(c is Collider2D)) continue;
+                    Object.DestroyImmediate(c);
+                }
+            var parts = new Dictionary<string, SpriteRenderer>();
+            foreach (var r in parent.GetComponentsInChildren<Renderer>(true))
+            {
+                r.sharedMaterial = unlit;
+                if (r is SpriteRenderer sr && !parts.ContainsKey(sr.name)) parts[sr.name] = sr;
+            }
+            return parts;
         }
 
-        // Pencere çerçevesindeki şeffaf cam alanının sınırları (doku pikseli, sol alttan).
-        static RectInt GlassRect(Texture2D frame)
+        static void Stars(Transform parent)
         {
-            string path = AssetDatabase.GetAssetPath(frame);
-            var copy = new Texture2D(2, 2);
-            copy.LoadImage(File.ReadAllBytes(path));
-            int w = copy.width, h = copy.height, cx = w / 2, cy = h / 2;
-            var px = copy.GetPixels32();
-            int minX = cx, maxX = cx, minY = cy, maxY = cy;
-            while (minX > 0 && px[cy * w + minX - 1].a == 0) minX--;
-            while (maxX < w - 1 && px[cy * w + maxX + 1].a == 0) maxX++;
-            while (minY > 0 && px[(minY - 1) * w + cx].a == 0) minY--;
-            while (maxY < h - 1 && px[(maxY + 1) * w + cx].a == 0) maxY++;
-            Object.DestroyImmediate(copy);
-            return new RectInt(minX, minY, maxX - minX + 1, maxY - minY + 1);
-        }
-
-        static ParticleSystem Rain(Transform parent, string name, float gx, float gy, float gw, float gh, int order, int maskBack, int maskFront)
-        {
-            var go = new GameObject(name);
+            var go = new GameObject("Stars");
             go.transform.SetParent(parent, false);
-            go.transform.position = P(gx + gw / 2f + 6, gy + gh + 4);
+            go.transform.position = P(ScreenW / 2f, ScreenH / 2f);
             var ps = go.AddComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = ps.main;
+            main.loop = true;
+            main.prewarm = true;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(3f, 6f);
+            main.startSpeed = 0f;
+            main.startSize = 1f / PPU;
+            main.maxParticles = 70;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+            main.startColor = new ParticleSystem.MinMaxGradient(new Color(1f, 1f, 1f, 1f), new Color(0.75f, 0.82f, 1f, 1f));
+            var emission = ps.emission;
+            emission.rateOverTime = 12f;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(ScreenW / PPU, ScreenH / PPU, 0.1f);
+            var col = ps.colorOverLifetime;
+            col.enabled = true;
+            var gradient = new Gradient();
+            gradient.SetKeys(new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                new[] { new GradientAlphaKey(0f, 0f), new GradientAlphaKey(0.9f, 0.3f), new GradientAlphaKey(0.9f, 0.7f), new GradientAlphaKey(0f, 1f) });
+            col.color = gradient;
+            var sheet = ps.textureSheetAnimation;
+            sheet.enabled = true;
+            sheet.mode = ParticleSystemAnimationMode.Sprites;
+            if (sheet.spriteCount == 0) sheet.AddSprite(S("Fx/Pixel")); else sheet.SetSprite(0, S("Fx/Pixel"));
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = unlit;
+            renderer.sortingOrder = -190;
+        }
+
+        // Sel önizlemesindeki fırtına. Pencerenin camında: gün batımı fırtına tonlarına döner, yağmur yalnızca camın
+        // içine düşer, şimşekte cam parlar (SortingGroup pencerenin hemen üstünde, eşyaların altında; maske sadece bu
+        // grubun içini etkiler). Ayrıca havada duran odanın etrafındaki boşlukta, odanın arkasında yağmur yağar; bulut
+        // pencerenin önüne geldiğinde de fırtına hemen görünür. Kontrolcü hep açık kalan Weather'da, fırtına parçaları
+        // açılıp kapanan Storm'un altında.
+        static DynamicWindowController BuildWeather(Transform world, SpriteRenderer window, SpriteRenderer roomTint, SpriteRenderer roomFlash)
+        {
+            var weather = Group(world, "Weather");
+            var storm = Group(weather, "Storm");
+            SkyRain(storm);
+
+            var root = Group(storm, "WindowStorm");
+            root.position = window.transform.position;
+            root.gameObject.AddComponent<UnityEngine.Rendering.SortingGroup>().sortingOrder = window.sortingOrder + 1;
+            var glass = S("Fx/WindowGlass");
+            var mask = new GameObject("GlassMask", typeof(SpriteMask)).GetComponent<SpriteMask>();
+            mask.transform.SetParent(root, false);
+            mask.sprite = glass;
+            mask.alphaCutoff = 0.5f;
+
+            var stormGlass = Place(root, "StormGlass", "Fx/WindowStorm", 0, 0, 1, local: true);
+            SetAlpha(stormGlass, 0f);
+            Rect bounds = GlassBounds(glass);
+            var rain = new GameObject("Rain");
+            rain.transform.SetParent(root, false);
+            rain.transform.localPosition = new Vector3(bounds.center.x + 3f, bounds.yMax + 4f, 0f) / PPU;
+            var ps = rain.AddComponent<ParticleSystem>();
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = ps.main;
             main.playOnAwake = false;
             main.loop = true;
-            main.duration = 1f;
-            main.startLifetime = (gh + 8) / PPU / 9f;
+            main.startLifetime = (bounds.height + 8f) / PPU / 2.4f;
             main.startSpeed = 0f;
-            // Sprite modunda boyut birim cinsinden (sprite'ın kendi boyu değil): 4 px damla = 4/16 birim.
             main.startSize = 1f / PPU; // sprite modunda boyut genişliğe uygulanır: 1 px genişlik → 1x4 px damla
-            main.maxParticles = 80;
+            main.maxParticles = 60;
             main.simulationSpace = ParticleSystemSimulationSpace.Local;
             var velocity = ps.velocityOverLifetime;
             velocity.enabled = true;
             velocity.space = ParticleSystemSimulationSpace.Local;
-            velocity.x = new ParticleSystem.MinMaxCurve(-2.5f);
-            velocity.y = new ParticleSystem.MinMaxCurve(-9f);
+            velocity.x = new ParticleSystem.MinMaxCurve(-0.6f);
+            velocity.y = new ParticleSystem.MinMaxCurve(-2.4f);
             velocity.z = new ParticleSystem.MinMaxCurve(0f);
             var emission = ps.emission;
-            emission.rateOverTime = 55f;
+            emission.rateOverTime = 40f;
             var shape = ps.shape;
             shape.shapeType = ParticleSystemShapeType.Box;
-            shape.scale = new Vector3((gw + 24) / PPU, 0.1f, 0.1f);
+            shape.scale = new Vector3((bounds.width + 12f) / PPU, 0.1f, 0.1f);
+            var sheet = ps.textureSheetAnimation;
+            sheet.enabled = true;
+            sheet.mode = ParticleSystemAnimationMode.Sprites;
+            if (sheet.spriteCount == 0) sheet.AddSprite(S("Fx/RainDrop")); else sheet.SetSprite(0, S("Fx/RainDrop"));
+            var renderer = rain.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = unlit;
+            renderer.sortingOrder = 2;
+            renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            var flash = Place(root, "GlassFlash", "Fx/WindowGlass", 0, 0, 3, local: true);
+            flash.color = new Color(0.9f, 0.93f, 1f, 0f);
+
+            var rainAudio = weather.gameObject.AddComponent<AudioSource>();
+            rainAudio.playOnAwake = false;
+            var thunderAudio = weather.gameObject.AddComponent<AudioSource>();
+            thunderAudio.playOnAwake = false;
+
+            var controller = weather.gameObject.AddComponent<DynamicWindowController>();
+            SetArray(controller, "clearLayers");
+            SetArray(controller, "stormLayers", stormGlass);
+            SetRef(controller, "stormRoot", storm.gameObject);
+            SetRef(controller, "rain", ps);
+            SetArray(controller, "driftingClouds");
+            SetRef(controller, "windowFlash", flash);
+            SetRef(controller, "roomTint", roomTint);
+            SetRef(controller, "roomFlash", roomFlash);
+            SetRef(controller, "rainAudio", rainAudio);
+            SetRef(controller, "thunderAudio", thunderAudio);
+            var so = new SerializedObject(controller);
+            so.FindProperty("clearTint").colorValue = new Color(0.08f, 0.12f, 0.3f, 0f);
+            so.ApplyModifiedPropertiesWithoutUndo();
+            return controller;
+        }
+
+        // Odanın arkasında, bütün ekrana yağan eğik yağmur. Fırtına açılınca (Storm etkinleşince) kendiliğinden başlar,
+        // önceden ısıtıldığı için ekran ilk anda dolu görünür.
+        static void SkyRain(Transform parent)
+        {
+            var go = new GameObject("SkyRain");
+            go.transform.SetParent(parent, false);
+            go.transform.position = P(ScreenW / 2f + 30f, ScreenH + 8f);
+            var ps = go.AddComponent<ParticleSystem>();
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = ps.main;
+            main.playOnAwake = true;
+            main.loop = true;
+            main.prewarm = true;
+            main.startLifetime = 2f;
+            main.startSpeed = 0f;
+            main.startSize = 1f / PPU;
+            main.maxParticles = 260;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+            main.startColor = new ParticleSystem.MinMaxGradient(new Color(0.7f, 0.8f, 1f, 0.55f), new Color(0.75f, 0.85f, 1f, 0.9f));
+            var velocity = ps.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.space = ParticleSystemSimulationSpace.Local;
+            velocity.x = new ParticleSystem.MinMaxCurve(-0.6f);
+            velocity.y = new ParticleSystem.MinMaxCurve(-3.3f);
+            velocity.z = new ParticleSystem.MinMaxCurve(0f);
+            var emission = ps.emission;
+            emission.rateOverTime = 110f;
+            var shape = ps.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3((ScreenW + 80f) / PPU, 0.1f, 0.1f);
             var sheet = ps.textureSheetAnimation;
             sheet.enabled = true;
             sheet.mode = ParticleSystemAnimationMode.Sprites;
             if (sheet.spriteCount == 0) sheet.AddSprite(S("Fx/RainDrop")); else sheet.SetSprite(0, S("Fx/RainDrop"));
             var renderer = go.GetComponent<ParticleSystemRenderer>();
             renderer.sharedMaterial = unlit;
-            renderer.sortingOrder = order;
-            renderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-            return ps;
+            renderer.sortingOrder = -150;
+        }
+
+        // Cam maskesinin opak piksellerinin kutusu, sprite pivotuna göre piksel.
+        static Rect GlassBounds(Sprite sprite)
+        {
+            var copy = new Texture2D(2, 2);
+            copy.LoadImage(File.ReadAllBytes(AssetDatabase.GetAssetPath(sprite)));
+            int w = copy.width, h = copy.height;
+            Color32[] px = copy.GetPixels32();
+            Object.DestroyImmediate(copy);
+            int x0 = w, x1 = -1, y0 = h, y1 = -1;
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                    if (px[y * w + x].a > 0) { x0 = Mathf.Min(x0, x); x1 = Mathf.Max(x1, x); y0 = Mathf.Min(y0, y); y1 = Mathf.Max(y1, y); }
+            Vector2 pivot = sprite.pivot;
+            return x1 < 0 ? new Rect(0, 0, 1, 1) : Rect.MinMaxRect(x0 - pivot.x, y0 - pivot.y, x1 + 1 - pivot.x, y1 + 1 - pivot.y);
         }
 
         // ---------------------------------------------------------------- bulut
-        static DisasterBubble Bubble(Transform parent, string name, MenuChapterLoader.Chapter chapter, string artPath, string glowPath, string labelPath, float x, float y, int baseOrder, bool rainInside, float phase)
+        static DisasterBubble Bubble(Transform parent, string name, MenuChapterLoader.Chapter chapter, string artPath, string glowPath, float x, float y, int baseOrder, bool rainInside, float phase)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
@@ -418,8 +507,6 @@ namespace AfetUyanisi.Menu.EditorTools
             visual.SetParent(go.transform, false);
             var glow = Place(visual, "Glow", glowPath, 0, 0, baseOrder, local: true);
             var art = Place(visual, "Art", artPath, 0, 0, baseOrder + 1, local: true);
-            // Etiket bulutun altında; bulutla birlikte yüzer ve büyür, maskeden etkilenmez.
-            Place(visual, "Label", labelPath, 0, -(art.sprite.rect.height / 2f + 8f), baseOrder + 4, local: true);
 
             var mask = new GameObject("Mask", typeof(SpriteMask)).GetComponent<SpriteMask>();
             mask.transform.SetParent(visual, false);
@@ -446,13 +533,13 @@ namespace AfetUyanisi.Menu.EditorTools
             var velocity = ps.velocityOverLifetime;
             velocity.enabled = true;
             velocity.space = ParticleSystemSimulationSpace.Local;
-            velocity.x = new ParticleSystem.MinMaxCurve(rainInside ? -1.5f : 0f);
-            velocity.y = new ParticleSystem.MinMaxCurve(rainInside ? -7f : -2f);
+            velocity.x = new ParticleSystem.MinMaxCurve(rainInside ? -0.4f : 0f);
+            velocity.y = new ParticleSystem.MinMaxCurve(rainInside ? -1.8f : -0.5f);
             velocity.z = new ParticleSystem.MinMaxCurve(0f);
-            main.startLifetime = rainInside ? 0.7f : 1.8f;
+            main.startLifetime = rainInside ? 1.1f : 3f;
             if (!rainInside)
             {
-                main.gravityModifier = 0.3f;
+                main.gravityModifier = 0.08f;
                 main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
             }
             var sheet = ps.textureSheetAnimation;
@@ -488,7 +575,7 @@ namespace AfetUyanisi.Menu.EditorTools
             return t;
         }
 
-        static SpriteRenderer Place(Transform parent, string name, string spritePath, float x, float y, int order, bool masked = false, bool local = false)
+        static SpriteRenderer Place(Transform parent, string name, string spritePath, float x, float y, int order, bool local = false)
         {
             var go = new GameObject(name);
             if (parent != null) go.transform.SetParent(parent, false);
@@ -499,14 +586,13 @@ namespace AfetUyanisi.Menu.EditorTools
             if (sr.sprite == null) Debug.LogWarning("[MenuSceneBuilder] Sprite yok: " + spritePath);
             sr.sharedMaterial = unlit;
             sr.sortingOrder = order;
-            if (masked) sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             return sr;
         }
 
         // Sol alt köşesi (x,y) ve boyutu (w,h) piksel olan, verilen sprite'ı esneterek dolduran dikdörtgen.
-        static SpriteRenderer Stretched(Transform parent, string name, string spritePath, float x, float y, float w, float h, int order, bool masked)
+        static SpriteRenderer Stretched(Transform parent, string name, string spritePath, float x, float y, float w, float h, int order)
         {
-            var sr = Place(parent, name, spritePath, x + w / 2f, y + h / 2f, order, masked);
+            var sr = Place(parent, name, spritePath, x + w / 2f, y + h / 2f, order);
             var size = sr.sprite.rect.size;
             sr.transform.localScale = new Vector3(w / size.x, h / size.y, 1f);
             return sr;
@@ -514,41 +600,29 @@ namespace AfetUyanisi.Menu.EditorTools
 
         static SpriteRenderer Fill(Transform parent, string name, float x, float y, float w, float h, Color color, int order)
         {
-            var sr = Stretched(parent, name, "Fx/Pixel", x, y, w, h, order, false);
+            var sr = Stretched(parent, name, "Fx/Pixel", x, y, w, h, order);
             sr.color = color;
             return sr;
         }
 
-        static Tilemap TileLayer(Transform grid, string name, int order)
+        static void SetAlpha(SpriteRenderer sr, float alpha)
         {
-            var go = new GameObject(name, typeof(Tilemap), typeof(TilemapRenderer));
-            go.transform.SetParent(grid, false);
-            var renderer = go.GetComponent<TilemapRenderer>();
-            renderer.sortingOrder = order;
-            renderer.sharedMaterial = unlit;
-            return go.GetComponent<Tilemap>();
-        }
-
-        // Tile asset'leri sprite'larla aynı klasörde tutulur; yoksa oluşturulur.
-        static TileBase TileAsset(string name)
-        {
-            string path = Art + "Tiles/" + name + ".asset";
-            var tile = AssetDatabase.LoadAssetAtPath<Tile>(path);
-            if (tile == null)
-            {
-                tile = ScriptableObject.CreateInstance<Tile>();
-                AssetDatabase.CreateAsset(tile, path);
-            }
-            tile.sprite = S("Tiles/" + name);
-            EditorUtility.SetDirty(tile);
-            AssetDatabase.SaveAssets();
-            return tile;
+            Color c = sr.color;
+            c.a = alpha;
+            sr.color = c;
         }
 
         static void SetRef(Object target, string field, Object value)
         {
             var so = new SerializedObject(target);
             so.FindProperty(field).objectReferenceValue = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        static void SetFloat(Object target, string field, float value)
+        {
+            var so = new SerializedObject(target);
+            so.FindProperty(field).floatValue = value;
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -561,28 +635,40 @@ namespace AfetUyanisi.Menu.EditorTools
             so.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        static void SetStrings(Object target, string field, params string[] values)
+        {
+            var so = new SerializedObject(target);
+            var p = so.FindProperty(field);
+            p.arraySize = values.Length;
+            for (int i = 0; i < values.Length; i++) p.GetArrayElementAtIndex(i).stringValue = values[i];
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         // ---------------------------------------------------------------- arayüz
+        // 640x360 referans: 1080p'de tam 3 kat, piksel font ve paneller keskin kalır.
         static Canvas BuildCanvas(out RectTransform root)
         {
             var go = new GameObject("Canvas", typeof(RectTransform));
             var canvas = go.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.pixelPerfect = true;
             var scaler = go.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(640, 360);
+            scaler.referenceResolution = new Vector2(ScreenW, ScreenH);
             scaler.matchWidthOrHeight = 0.5f;
             go.AddComponent<GraphicRaycaster>();
             root = (RectTransform)go.transform;
             return canvas;
         }
 
-        static CanvasGroup Panel(RectTransform parent, string name, Vector2 pos, Vector2 size)
+        // Ekranı kaplayan grup; çocuklar V(x, y) ile sanal ekran koordinatında yerleşir.
+        static CanvasGroup Panel(RectTransform parent, string name)
         {
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(parent, false);
             var rt = (RectTransform)go.transform;
-            rt.anchoredPosition = pos;
-            rt.sizeDelta = size;
+            rt.anchoredPosition = Vector2.zero;
+            rt.sizeDelta = new Vector2(ScreenW, ScreenH);
             return go.AddComponent<CanvasGroup>();
         }
 
@@ -598,7 +684,7 @@ namespace AfetUyanisi.Menu.EditorTools
             return img;
         }
 
-        static Text Label(Transform parent, string name, string text, int size, Vector2 pos, Vector2 box, TextAnchor anchor)
+        static Text Label(Transform parent, string name, string text, Font font, int size, Color color, Vector2 pos, Vector2 box, TextAnchor anchor)
         {
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(parent, false);
@@ -606,12 +692,14 @@ namespace AfetUyanisi.Menu.EditorTools
             t.font = font;
             t.text = text;
             t.fontSize = size;
-            t.color = new Color(0.96f, 0.93f, 0.86f);
+            t.color = color;
             t.alignment = anchor;
             t.raycastTarget = false;
             t.horizontalOverflow = HorizontalWrapMode.Overflow;
+            t.verticalOverflow = VerticalWrapMode.Overflow;
+            t.lineSpacing = 1.15f;
             var shadow = go.AddComponent<Shadow>();
-            shadow.effectColor = new Color(0f, 0f, 0f, 0.8f);
+            shadow.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.9f);
             shadow.effectDistance = new Vector2(1f, -1f);
             var rt = (RectTransform)go.transform;
             rt.anchoredPosition = pos;
@@ -619,23 +707,25 @@ namespace AfetUyanisi.Menu.EditorTools
             return t;
         }
 
-        static Button MenuButton(Transform parent, string name, string label, Vector2 pos)
+        // Piksel panel buton: koyu panel, piksel font; seçilince turuncu çerçeve, sıcak yazı ve solda ok (MenuButtonFx).
+        static Button MenuButton(Transform parent, string name, string label, Vector2 pos, Vector2 size)
         {
-            // Buton oranı çerçeve sprite'ına yakın; düz esnetme 9-dilimden daha temiz görünüyor.
-            var img = UiImage(parent, name, S("UI/ButtonBar"), pos, new Vector2(150, 28));
-            img.type = UnityEngine.UI.Image.Type.Simple;
+            var img = UiImage(parent, name, S("UI/Panel"), pos, size);
+            img.type = UnityEngine.UI.Image.Type.Sliced;
             var button = img.gameObject.AddComponent<Button>();
-            var colors = button.colors;
-            colors.normalColor = new Color(0.85f, 0.85f, 0.9f, 1f);
-            colors.highlightedColor = new Color(1f, 0.86f, 0.55f, 1f);
-            colors.selectedColor = new Color(1f, 0.86f, 0.55f, 1f);
-            colors.pressedColor = new Color(1f, 0.7f, 0.35f, 1f);
-            colors.disabledColor = new Color(0.45f, 0.45f, 0.5f, 0.8f);
-            button.colors = colors;
+            button.transition = Selectable.Transition.None;
             var nav = button.navigation;
             nav.mode = Navigation.Mode.None;
             button.navigation = nav;
-            Label(img.transform, "Text", label, 13, Vector2.zero, new Vector2(140, 24), TextAnchor.MiddleCenter);
+            var text = Label(img.transform, "Text", label, regular, 16, Ink, new Vector2(0, 1), new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
+            var arrow = Label(img.transform, "Arrow", "▶", regular, 11, Warm, new Vector2(-size.x / 2f + 10f, 1), new Vector2(12, size.y), TextAnchor.MiddleCenter);
+            arrow.enabled = false;
+            var fx = img.gameObject.AddComponent<MenuButtonFx>();
+            SetRef(fx, "background", img);
+            SetRef(fx, "normalSprite", S("UI/Panel"));
+            SetRef(fx, "highlightSprite", S("UI/PanelLit"));
+            SetRef(fx, "label", text);
+            SetRef(fx, "arrow", arrow);
             return button;
         }
 

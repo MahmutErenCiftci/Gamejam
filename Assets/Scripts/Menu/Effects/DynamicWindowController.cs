@@ -47,7 +47,7 @@ namespace AfetUyanisi.Menu
 
         [SerializeField] float transitionDuration = 1.5f;
 
-        const float PixelsPerUnit = 16f;
+        const float PixelsPerUnit = 64f;
         public Weather Current { get; private set; } = Weather.Clear;
         float storm;               // 0 açık, 1 fırtına
         Coroutine transition;
