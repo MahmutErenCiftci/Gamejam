@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AfetUyanisi.Core;
+using AfetUyanisi.Cutscenes;
 using AfetUyanisi.Shared;
 using UnityEngine;
 using UnityEngine.Events;
@@ -84,6 +85,9 @@ namespace AfetUyanisi.Chapters.Flood
         [SerializeField] private float routeRainLight = 0.15f;
         [Tooltip("Tabela incelenince açılan büyük tabela (UI overlay, normalde kapalı)")]
         [SerializeField] private GameObject signOverlay;
+        [Tooltip("F_D2_A seçilince oynayan sele kapılma ara sahnesi (Eren, Prefabs/Cutscenes/FloodSweepCutscene; " +
+                 "dünyadan uzakta durur, kendi kamerası var). Boşsa atlanır, akış eskisi gibi sürer.")]
+        [SerializeField] private FloodSweepCutscene sweepCutscene;
 
         [Header("Sonuç (F09)")]
         [Tooltip("Geçici Sel sonuç ekranı (ResultViewBase); bölüme özel ayrıntıları (eşyalar, uyarılar) bu gösterir")]
@@ -574,9 +578,11 @@ namespace AfetUyanisi.Chapters.Flood
 
         // F_D2'de yanlış seçilirse: o yolun sonu gösterilir — çocuk Okul Caddesi'nin kenarında, suya GİRMEDEN durur
         // (bariyer, tabela, suda mahsur araç), uyarı repliği; sonra otobüse dönülür ve karar tekrar sorulur.
+        // F_D2_A'da ("Arkadaşlarınla geç") önce suya girilirse ne olacağı kısa ara sahneyle gösterilir.
         private IEnumerator ShowRiskAfterWrongChoice(ChoiceData choice)
         {
             if (choice.correct) yield break;
+            if (choice.id == "F_D2_A") yield return PlaySweepCutscene();
 
             // Bu kısa gösterimde çocuk zaten suyun kenarında duruyor: su kenarı alanları onu geri itmesin
             // (geri itme sürerken otobüse dönülürse çocuğu tekrar buraya taşırdı).
@@ -589,6 +595,25 @@ namespace AfetUyanisi.Chapters.Flood
             yield return EnterRoom("F06_RUMORS", 0.5f);
             if (tracker != null) tracker.Suppressed = false;
             LookAtFriends();
+        }
+
+        // Sele kapılma ara sahnesi: perde kararır, ara sahne kendi kamerasıyla (kendi kararmasından açılarak) oynar,
+        // sonunda kendisi kararır. Kamerası kapanmadan perde siyaha alınır ki dünya bir an görünmesin;
+        // ardından gelen EnterRoom zaten siyahtan açılır.
+        private IEnumerator PlaySweepCutscene()
+        {
+            if (sweepCutscene == null) yield break;
+            SetPlayerControl(false);
+            yield return FadeOut(0.4f);
+            HideHint();
+            StartCoroutine(sweepCutscene.Play());
+            yield return null;
+            yield return FadeIn(0.2f);
+            float blackAt = sweepCutscene.Duration - 0.1f;
+            for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
+                yield return null;
+            SetBlack();
+            while (sweepCutscene.IsPlaying) yield return null;
         }
     }
 }
