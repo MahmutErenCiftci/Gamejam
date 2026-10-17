@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 749828962}
   - component: {fileID: 749828961}
   - component: {fileID: 749828960}
+  - component: {fileID: 749828964}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -301,7 +302,7 @@ MonoBehaviour:
   dialogue: {fileID: 749828962}
   hint: {fileID: 863384592}
   warning: {fileID: 1486722308354582156}
-  showWarningOnStart: 1
+  showWarningOnStart: 0
   progressSeconds: 120
 --- !u!114 &749828961
 MonoBehaviour:
@@ -349,6 +350,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &749828964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749828959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a04c68cce4a9ac54db9e71629e68236e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodTreeFallDemo
+  autoPlay: 1
+  treeFall: {fileID: 0}
+  player: {fileID: 0}
+  standAt: {x: 0, y: -1.4, z: 0}
+  delay: 1.5
 --- !u!1 &778429648
 GameObject:
   m_ObjectHideFlags: 0
