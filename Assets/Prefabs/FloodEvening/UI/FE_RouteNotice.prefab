@@ -44,10 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a19ae99bc3c3846b41978c3636935c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodRouteNotice
-  font: {fileID: 12800000, guid: d509483c568522146a94ac50c966e5bd, type: 3}
+  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
   sortingOrder: 63
   anchor: {x: 0.5, y: 0.5}
-  offset: {x: 0, y: 52}
-  slideFrom: 6
+  offset: {x: 0, y: 36}
+  slideFrom: 16
   defaultText: "Yol a\xE7\u0131ld\u0131."
   seconds: 1.8
+  toastSprite: {fileID: 21300000, guid: 35636fc135064c4488d2ec8b3e4c10f0, type: 3}
+  iconSprite: {fileID: 21300000, guid: 8300493ea1f5dd04c97e0439e5d606c2, type: 3}

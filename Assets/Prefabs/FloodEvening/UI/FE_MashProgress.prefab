@@ -44,10 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a5ae6682c8475409569751946ced20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodMashProgressView
-  font: {fileID: 12800000, guid: d509483c568522146a94ac50c966e5bd, type: 3}
+  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  title: Art arda bas
+  subtitle: Engeli kenara it
+  panelSprite: {fileID: 21300000, guid: fe89b533c31a79b448be3fa6c81c7fa5, type: 3}
+  barBackSprite: {fileID: 21300000, guid: ff97fc559aaae114f82e9eeb7c619a18, type: 3}
+  barFillSprite: {fileID: 21300000, guid: 4dc481b368b98ab4e8a618209bc16cb9, type: 3}
   sortingOrder: 65
-  keyLabel: E
-  hint: "Art arda bas \u2014 Engeli kenara it"
-  bottomMargin: 40
-  maxWidth: 236
-  fillSpeed: 3
+  bottomMargin: 38
+  maxWidth: 200
+  fillSpeed: 4

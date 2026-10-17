@@ -4,9 +4,10 @@ using UnityEngine.UI;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Görev şeridi (SEL3-30): üst ortada ince koyu şerit, solda amber "GÖREV" etiketi, yanında görev metni
-    /// ("Güvenli güzergâhı takip et."). Yeni görev başlarken birkaç saniye görünür (seconds &lt;= 0: Hide'a kadar kalır).
-    /// Sol üstteki görev paneliyle (ObjectiveHudView) aynı palet: lacivert zemin, amber vurgu, krem yazı.
+    /// Görev şeridi (SEL3-30): üst ortada deprem görev banner'ı (amber kenarlı lacivert, UI_EQ_QuestBanner), solda amber
+    /// "GÖREV" plakası (UI_EQ_NamePlate), görev metni ("Güvenli güzergâhı takip et.") ve sağda ileri oku. Taşarak iner,
+    /// plaka soldan kayar, üstünden bir kez ışık geçer, ok "devam et" der gibi sallanır. Yeni görev başlarken birkaç saniye
+    /// görünür (seconds &lt;= 0: Hide'a kadar kalır).
     /// </summary>
     public class FloodObjectiveStrip : FeTimedBanner
     {
@@ -15,11 +16,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [Tooltip("0 veya altı: Hide çağrılana kadar ekranda kalır.")]
         [SerializeField] private float seconds = 4f;
 
-        private Text label;
-        private RectTransform tagRect;
-        private float t;
+        [Header("Sprite'lar (Assets/Art/UI/Earthquake)")]
+        [SerializeField] private Sprite bannerSprite;
+        [SerializeField] private Sprite tagSprite;
 
-        protected override Vector2 Size => new Vector2(252f, 24f);
+        private const float TagW = 46f;
+
+        private Text label;
+        private RectTransform tagRect, arrow, shine;
+
+        protected override Vector2 Size => new Vector2(226f, 22f);
         protected override float DefaultSeconds => seconds;
 
         private void Reset()
@@ -27,7 +33,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             sortingOrder = 61;
             anchor = new Vector2(0.5f, 1f);
             offset = new Vector2(0f, -8f);
-            slideFrom = 10f;
+            slideFrom = 14f;
         }
 
         public void Show() => Show(null);
@@ -36,39 +42,59 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public void Show(string text, float duration = float.NaN)
         {
             EnsureBuilt();
-            label.text = string.IsNullOrEmpty(text) ? defaultText : text;
+            label.SetPixelText(string.IsNullOrEmpty(text) ? defaultText : text);
             Open(float.IsNaN(duration) ? DefaultSeconds : duration);
         }
 
-        protected override void OnOpened() => t = 0f;
-
-        // "GÖREV" etiketi girişte soldan kayar.
         protected override void Animate(float dt)
         {
-            t += dt;
-            float k = FeUi.OutCubic(t / 0.3f);
-            tagRect.anchoredPosition = new Vector2(Mathf.Round(3f - (1f - k) * 6f), 0f);
+            // Plaka 0,1 sn gecikmeyle soldan taşarak gelir.
+            float k = FePixel.OutBack((Age - 0.1f) / 0.3f);
+            tagRect.anchoredPosition = new Vector2(Mathf.Round(3f - (1f - k) * 10f), 0f);
+
+            // Işık: 0,35–0,85 sn arası soldan sağa bir kez geçer.
+            float s = (Age - 0.35f) / 0.5f;
+            shine.gameObject.SetActive(s > 0f && s < 1f);
+            shine.anchoredPosition = new Vector2(Mathf.Round(Mathf.Lerp(-8f, Root.rect.width, s)), 0f);
+
+            // Ok: 2 px ileri geri.
+            arrow.anchoredPosition = new Vector2(-6f + (Mathf.Repeat(Age, 0.6f) < 0.3f ? 0f : 2f), 0f);
         }
 
         protected override void BuildContent(RectTransform root)
         {
-            var frame = FeUi.Framed("Frame", root, FeUi.Hex(0x2F6A8C), FeUi.A(FeUi.Ink, 0.92f), false, 2f);
+            var frame = bannerSprite != null
+                ? FePixel.Sliced("Frame", root, bannerSprite)
+                : FeUi.Framed("Frame", root, FePixel.Amber, FePixel.Navy, false, 2f);
             FeUi.Stretch(frame.rectTransform);
 
-            var tag = FeUi.Img("Tag", root, FeUi.Amber);
-            tagRect = tag.rectTransform;
-            tagRect.anchorMin = new Vector2(0f, 0f); tagRect.anchorMax = new Vector2(0f, 1f); tagRect.pivot = new Vector2(0f, 0.5f);
-            tagRect.sizeDelta = new Vector2(54f, -6f);
-            tagRect.anchoredPosition = new Vector2(3f, 0f);
-            var tagText = FeUi.Txt("Label", tag.transform, font, 11, FeUi.Ink, TextAnchor.MiddleCenter, false);
-            FeUi.BestFit(tagText, 8);
-            tagText.text = tagLabel;
+            // Işık sütunu çerçevenin içinde kırpılır.
+            var clip = FeUi.Rect("ShineClip", root);
+            FeUi.Stretch(clip, 2f);
+            clip.gameObject.AddComponent<RectMask2D>();
+            shine = FeUi.Img("Shine", clip, FeUi.A(Color.white, 0.3f)).rectTransform;
+            shine.anchorMin = new Vector2(0f, 0f); shine.anchorMax = new Vector2(0f, 1f); shine.pivot = new Vector2(0f, 0.5f);
+            shine.sizeDelta = new Vector2(4f, 0f);
 
-            label = FeUi.Txt("Text", root, font, 12, FeUi.Cream, TextAnchor.MiddleLeft);
-            label.rectTransform.offsetMin = new Vector2(63f, 2f);
-            label.rectTransform.offsetMax = new Vector2(-6f, -2f);
-            FeUi.BestFit(label, 9);
-            label.text = defaultText;
+            var tag = tagSprite != null ? FePixel.Sliced("Tag", root, tagSprite) : FeUi.Img("Tag", root, FePixel.Amber);
+            tagRect = tag.rectTransform;
+            tagRect.anchorMin = new Vector2(0f, 0.5f); tagRect.anchorMax = new Vector2(0f, 0.5f); tagRect.pivot = new Vector2(0f, 0.5f);
+            tagRect.sizeDelta = new Vector2(TagW, 16f);
+            tagRect.anchoredPosition = new Vector2(3f, 0f);
+            var tagText = FePixel.Txt("Label", tag.transform, font, 8, FePixel.Ink, TextAnchor.MiddleCenter, FeUi.A(Color.white, 0.35f));
+            tagText.rectTransform.offsetMin = new Vector2(0f, 1f);
+            tagText.SetPixelText(tagLabel);
+
+            label = FePixel.Txt("Text", root, font, 10, FePixel.Cream, TextAnchor.MiddleLeft, FePixel.Ink);
+            label.rectTransform.offsetMin = new Vector2(TagW + 9f, 1f);
+            label.rectTransform.offsetMax = new Vector2(-16f, -1f);
+            FeUi.BestFit(label, 8);
+            label.SetPixelText(defaultText);
+
+            arrow = FePixel.Icon("Arrow", root, FePixel.Arrow).rectTransform;
+            arrow.anchorMin = arrow.anchorMax = new Vector2(1f, 0.5f);
+            arrow.pivot = new Vector2(1f, 0.5f);
+            arrow.anchoredPosition = new Vector2(-6f, 0f);
         }
     }
 }

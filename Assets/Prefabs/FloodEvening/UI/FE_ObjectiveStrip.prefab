@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94eceed213458eb429628a197d8aec3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodObjectiveStrip
-  font: {fileID: 12800000, guid: d509483c568522146a94ac50c966e5bd, type: 3}
+  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
   sortingOrder: 61
   anchor: {x: 0.5, y: 1}
   offset: {x: 0, y: -8}
-  slideFrom: 10
+  slideFrom: 14
   tagLabel: "G\xD6REV"
   defaultText: "G\xFCvenli g\xFCzerg\xE2h\u0131 takip et."
   seconds: 4
+  bannerSprite: {fileID: 21300000, guid: af0b11f2d8184604488aa0627fe09920, type: 3}
+  tagSprite: {fileID: 21300000, guid: 030fa16b45fb914478220d59f9325410, type: 3}

@@ -4,9 +4,10 @@ using UnityEngine.UI;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Kısa yol uyarı kutusu (SEL3-30): üst ortada koyu panel, üstte kırmızı-krem bariyer şeridi, zıplayan "!" rozeti,
-    /// kırmızı başlık ve Cenk'in iç sesi ("Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım."). Renk tek başına bilgi
-    /// taşımaz: ikon + başlık + metin birlikte. Oyunu durdurmaz, tıklama yakalamaz.
+    /// Kısa yol uyarı kutusu (SEL3-30): deprem telefon uyarı kartı (UI_EQ_PhoneNotifCard: kırmızı başlık bandı + tehlike
+    /// ikonu, krem gövde). Başlıkta "YOL KAPALI", gövdede Cenk'in iç sesi ("Yol kapanmış. Kavşağa dönüp diğer yolu
+    /// kullanmalıyım."). Girişte taşarak iner ve "dur!" der gibi yatay sarsılır, başlık bandı üç kez parlar. Renk tek başına
+    /// bilgi taşımaz: ikon + başlık + metin birlikte. Oyunu durdurmaz, tıklama yakalamaz.
     /// Show(title, body, seconds) imzası DangerToast ile aynıdır; bariyer bileşeni hangisini kullanacağını seçebilir.
     /// </summary>
     public class FloodRouteWarningBox : FeTimedBanner
@@ -15,11 +16,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField, TextArea] private string defaultBody = "Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım.";
         [SerializeField, Min(0.5f)] private float seconds = 3.5f;
 
-        private Text titleText, bodyText;
-        private RectTransform badge;
-        private float t;
+        [Header("Sprite (Assets/Art/UI/Earthquake/UI_EQ_PhoneNotifCard)")]
+        [SerializeField] private Sprite cardSprite;
 
-        protected override Vector2 Size => new Vector2(276f, 64f);
+        private const float HeaderH = 15f;
+
+        private Text titleText, bodyText;
+        private Image headerFlash;
+
+        protected override Vector2 Size => new Vector2(220f, 50f);
         protected override float DefaultSeconds => seconds;
 
         // Görev şeridinin (üst orta, 22 px) altında kalır.
@@ -27,8 +32,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             sortingOrder = 64;
             anchor = new Vector2(0.5f, 1f);
-            offset = new Vector2(0f, -36f);
-            slideFrom = 10f;
+            offset = new Vector2(0f, -34f);
+            slideFrom = 12f;
         }
 
         public void Show() => Show(null, null, -1f);
@@ -37,68 +42,47 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public void Show(string title, string body, float duration)
         {
             EnsureBuilt();
-            titleText.text = string.IsNullOrEmpty(title) ? defaultTitle : title;
-            bodyText.text = string.IsNullOrEmpty(body) ? defaultBody : body;
+            titleText.SetPixelText(string.IsNullOrEmpty(title) ? defaultTitle : title);
+            bodyText.SetPixelText(string.IsNullOrEmpty(body) ? defaultBody : body);
             Open(duration > 0f ? duration : DefaultSeconds);
         }
 
-        protected override void OnOpened() => t = 0f;
-
-        // "!" rozeti ilk saniyede üç kez zıplar, sonra durur (göz yormasın).
         protected override void Animate(float dt)
         {
-            t += dt;
-            float hop = t < 1.05f ? Mathf.Abs(Mathf.Sin(t / 0.35f * Mathf.PI)) * 3f : 0f;
-            badge.anchoredPosition = new Vector2(8f, -Mathf.Round(14f - hop));
+            // Oturduktan sonra 0,35 sn yatay sarsıntı (±3 px).
+            Jolt = new Vector2(FePixel.Shake(Age - 0.3f < 0f ? 99f : Age - 0.3f, 0.35f, 3f, 45f), 0f);
+
+            // Başlık bandı ilk 0,9 sn'de üç kez parlar, başlık yazısı krem ↔ altın.
+            bool on = Age < 0.9f && Mathf.Repeat(Age, 0.3f) < 0.15f;
+            headerFlash.color = FeUi.A(Color.white, on ? 0.28f : 0f);
+            titleText.color = on ? FePixel.Gold : FePixel.Cream;
         }
 
         protected override void BuildContent(RectTransform root)
         {
-            var frame = FeUi.Framed("Frame", root, FeUi.Red, FeUi.A(FeUi.Panel, 0.95f), false, 2f);
-            FeUi.Stretch(frame.rectTransform);
+            var card = cardSprite != null
+                ? FePixel.Sliced("Card", root, cardSprite)
+                : FeUi.Framed("Card", root, FePixel.Ink, FePixel.Cream);
+            FeUi.Stretch(card.rectTransform);
 
-            // Bariyer şeridi: 4 px yüksek, 8 px'lik kırmızı/krem bloklar (kısa yoldaki bariyerle aynı dil).
-            var stripe = FeUi.Rect("Stripe", root);
-            stripe.anchorMin = new Vector2(0f, 1f); stripe.anchorMax = new Vector2(1f, 1f); stripe.pivot = new Vector2(0.5f, 1f);
-            stripe.offsetMin = new Vector2(2f, -6f); stripe.offsetMax = new Vector2(-2f, -2f);
-            stripe.gameObject.AddComponent<RectMask2D>();
-            for (int i = 0; i < 40; i++)
-            {
-                var b = FeUi.Img("S" + i, stripe, i % 2 == 0 ? FeUi.Red : FeUi.Cream).rectTransform;
-                b.anchorMin = b.anchorMax = new Vector2(0f, 0.5f);
-                b.pivot = new Vector2(0f, 0.5f);
-                b.sizeDelta = new Vector2(8f, 4f);
-                b.anchoredPosition = new Vector2(i * 8f, 0f);
-            }
+            // Başlık bandının üstünde parlama katmanı (kartın iç kenarlarına kadar).
+            headerFlash = FeUi.Img("HeaderFlash", root, FeUi.A(Color.white, 0f));
+            var hf = headerFlash.rectTransform;
+            hf.anchorMin = new Vector2(0f, 1f); hf.anchorMax = new Vector2(1f, 1f); hf.pivot = new Vector2(0.5f, 1f);
+            hf.offsetMin = new Vector2(2f, -(HeaderH - 1f)); hf.offsetMax = new Vector2(-2f, -2f);
 
-            badge = FeUi.Badge("Icon", root, font, FeUi.Red).rectTransform;
-            FeUi.TL(badge, 8f, 14f, 20f, 20f);
-            var glyph = badge.Find("Glyph").GetComponent<Text>();
-            glyph.fontSize = 14;
-            glyph.color = FeUi.Cream;
+            titleText = FePixel.Txt("Title", root, font, 10, FePixel.Cream, TextAnchor.MiddleLeft, FePixel.ShadowRed);
+            var trt = titleText.rectTransform;
+            trt.anchorMin = new Vector2(0f, 1f); trt.anchorMax = new Vector2(1f, 1f); trt.pivot = new Vector2(0f, 1f);
+            trt.offsetMin = new Vector2(19f, -HeaderH); trt.offsetMax = new Vector2(-6f, -2f);
+            FeUi.BestFit(titleText, 8);
+            titleText.SetPixelText(defaultTitle);
 
-            titleText = FeUi.Txt("Title", root, font, 12, FeUi.Red, TextAnchor.MiddleLeft);
-            FeUi.TL(titleText.rectTransform, 36f, 9f, Size.x - 44f, 15f);
-            Grow(titleText.rectTransform);
-            FeUi.BestFit(titleText, 9);
-            titleText.text = defaultTitle;
-
-            bodyText = FeUi.Txt("Body", root, font, 12, FeUi.Cream, TextAnchor.UpperLeft);
-            FeUi.TL(bodyText.rectTransform, 36f, 24f, Size.x - 44f, 37f);
-            Grow(bodyText.rectTransform);
-            FeUi.BestFit(bodyText, 9);
-            bodyText.text = defaultBody;
-        }
-
-        // Kutu dar ekranda kısılınca metin alanı da kısılsın (sağ kenara 8 px pay).
-        private static void Grow(RectTransform rt)
-        {
-            float x = rt.anchoredPosition.x, y = rt.anchoredPosition.y, h = rt.sizeDelta.y;
-            rt.anchorMin = new Vector2(0f, 1f);
-            rt.anchorMax = new Vector2(1f, 1f);
-            rt.pivot = new Vector2(0f, 1f);
-            rt.offsetMin = new Vector2(x, y - h);
-            rt.offsetMax = new Vector2(-8f, y);
+            bodyText = FePixel.Txt("Body", root, font, 10, FePixel.Ink, TextAnchor.MiddleLeft, FeUi.A(Color.white, 0.5f));
+            var brt = bodyText.rectTransform;
+            brt.offsetMin = new Vector2(7f, 6f); brt.offsetMax = new Vector2(-7f, -(HeaderH + 2f));
+            FeUi.BestFit(bodyText, 8);
+            bodyText.SetPixelText(defaultBody);
         }
     }
 }
