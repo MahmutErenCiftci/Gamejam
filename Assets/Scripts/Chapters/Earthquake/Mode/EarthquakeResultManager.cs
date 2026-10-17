@@ -92,7 +92,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             switch (s.protection)
             {
                 case ProtectionOutcome.TableDropCoverHold: score += tableProtection; break;
-                case ProtectionOutcome.InPlaceDropCover: score += inPlaceProtection; break;
+                // Masadan uzaktayken yerinde güvenli biçimde korunmak daha az doğru değildir.
+                case ProtectionOutcome.InPlaceDropCover: score += Mathf.Max(inPlaceProtection, tableProtection); break;
                 case ProtectionOutcome.Exposed: score += exposedProtection; break;
             }
             if (s.protection != ProtectionOutcome.None && s.protectionIncomplete) score -= incompleteHoldMinus;
@@ -130,6 +131,8 @@ namespace AfetUyanisi.Chapters.Earthquake
             r.remainingText = s.acceleratedReady ? res.readyText : FormatTime(r.remainingAtQuake);
 
             BuildLessons(r, s, data);
+            if (s.protectionBalancePlayed)
+                r.tips.Add(string.Format((data.protection.balance ?? new EqBalanceTexts()).score, s.protectionBalanceScore));
             if (r.prepTotal > 0 && r.prepMissed.Count > 0)
             {
                 int shownMissing = Mathf.Min(3, r.prepMissed.Count);

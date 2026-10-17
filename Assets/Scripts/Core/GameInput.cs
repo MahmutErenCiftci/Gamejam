@@ -48,6 +48,9 @@ namespace AfetUyanisi.Core
         /// <summary>Etkileşim tuşu basılı tutuluyor (E) — deprem modunda TUTUN adımı.</summary>
         public static bool InteractHeld => Held(Key.E);
 
+        /// <summary>Yeni korunma denge alıştırması: Space basılı; A/D düzeltmesi MoveX ile okunur.</summary>
+        public static bool ProtectionHeld => Held(Key.Space);
+
         /// <summary>Başlat / bildirimi kapat: E, Space, Enter veya sol tık (ContinuePressed ile aynı).</summary>
         public static bool StartPressed => ContinuePressed;
 

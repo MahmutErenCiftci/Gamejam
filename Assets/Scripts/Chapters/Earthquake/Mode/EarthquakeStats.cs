@@ -37,6 +37,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         public bool protectionUnderTable;
         public bool protectionHoldReleased;
         public bool protectionIncomplete;
+        public bool protectionBalancePlayed;
+        public int protectionBalanceScore;
+        public float protectionHeldRatio;
         public bool bagTaken;
         public bool bagInspected;
         /// <summary>Kitaplık mini oyunu: doğru malzeme + iki bağlantı + TEST ET başarılı (deprem ÖNCESİ hazırlık).</summary>
