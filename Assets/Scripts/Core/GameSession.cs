@@ -20,6 +20,12 @@ namespace AfetUyanisi.Core
         /// </summary>
         public const string MorningDoneInRoomsFlag = "morning_done_in_rooms";
 
+        /// <summary>
+        /// Okul çantası alındı bayrağının adı (Sel). Cenk çantasız başlar; yatak odasında "[E] Çantanı al" ile
+        /// (odalar atlandıysa mutfakta otomatik) konur. CenkOutfit bunu okuyup çantalı sprite'lara geçer.
+        /// </summary>
+        public const string BackpackFlag = "backpack_taken";
+
         private static readonly HashSet<string> flags = new HashSet<string>();
 
         public static ChapterId? CurrentChapter { get; private set; }
@@ -29,6 +35,9 @@ namespace AfetUyanisi.Core
 
         /// <summary>Sabah açılışı oda sahnelerinde oynandı mı (bölüm sahnesi mutfaktan başlar).</summary>
         public static bool MorningDoneInRooms => HasFlag(MorningDoneInRoomsFlag);
+
+        /// <summary>Cenk okul çantasını aldı mı (sırtında çanta görünür).</summary>
+        public static bool BackpackTaken => HasFlag(BackpackFlag);
 
         /// <summary>Bölümü başlatır; önceki oynanıştan kalan bayraklar (şemsiye vb.) silinir.</summary>
         public static void StartChapter(ChapterId chapter)
@@ -48,6 +57,9 @@ namespace AfetUyanisi.Core
 
         /// <summary>Sabah açılışının odalarda bittiğini kaydeder (banyodaki "[E] Mutfağa git").</summary>
         public static void MarkMorningDoneInRooms() => SetFlag(MorningDoneInRoomsFlag);
+
+        /// <summary>Okul çantasının alındığını kaydeder (yatak odasındaki "[E] Çantanı al").</summary>
+        public static void MarkBackpackTaken() => SetFlag(BackpackFlag);
 
         /// <summary>Bu oynanışta bir şeyin yapıldığını kaydeder (bölüm başlayınca silinir).</summary>
         public static void SetFlag(string flag)

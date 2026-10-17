@@ -374,6 +374,7 @@ namespace AfetUyanisi.Chapters.Flood
             if (stepId == "F03_NEWS") PrepareKitchen();
             else if (stepId == "F05_EXIT")
             {
+                EnsureBackpack();
                 // Dışarı çıkınca hafif yağmur zaten yağıyor.
                 if (rain != null) rain.SetIntensity(exitRain, 0f);
                 lastWarningTime.Clear();
@@ -389,10 +390,21 @@ namespace AfetUyanisi.Chapters.Flood
             }
         }
 
+        // Okul çantası normalde yatak odasında (Bedroom sahnesi) alınır. Bölüm doğrudan başlatıldıysa (odalar atlandı)
+        // Cenk mutfağa/sokağa çantasıyla gelmiş sayılır: bayrak konur, Cenk'in görünüşü yenilenir.
+        private static void EnsureBackpack()
+        {
+            if (GameSession.BackpackTaken) return;
+            GameSession.MarkBackpackTaken();
+            CenkOutfit.RefreshAll();
+            Debug.Log("[Flood] çanta odalarda alınmamıştı → otomatik alındı (Cenk çantalı)");
+        }
+
         // Mutfak: yağmurluk askıda, şemsiye (yatak odasında alınmadıysa) şemsiyelikte, deprem çantası Sel'de yok,
         // TV normal yayında.
         private void PrepareKitchen()
         {
+            EnsureBackpack();
             SetRoomObjectVisible("QuakeBag", false);
             tvRenderer = FindRoomComponent<SpriteRenderer>("TV");
             if (tvRenderer != null && tvDefaultSprite == null) tvDefaultSprite = tvRenderer.sprite;

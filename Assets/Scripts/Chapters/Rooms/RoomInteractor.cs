@@ -155,6 +155,7 @@ namespace AfetUyanisi.Chapters.Rooms
             foreach (var p in points)
             {
                 if (p == null || !p.Available || !p.isActiveAndEnabled) continue;
+                if (!Visibility.RoomVisibilityManager.AllowsInteraction(p)) continue; // karanlık (aktif olmayan) odadaki nokta
                 float d = player.GroundDistanceTo(p.transform.position);
                 if (d <= p.UseRadius && d < bestDistance)
                 {

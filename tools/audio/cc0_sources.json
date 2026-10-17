@@ -1,0 +1,32 @@
+{
+  "verifiedOn": "2026-10-17",
+  "license": "CC0-1.0",
+  "modification": "Original OGG data unchanged; renamed to runtime audio IDs.",
+  "packs": [
+    {
+      "name": "Kenney Interface Sounds 1.0",
+      "page": "https://kenney.nl/assets/interface-sounds",
+      "download": "https://kenney.nl/media/pages/assets/interface-sounds/fa43c1dd4d-1677589452/kenney_interface-sounds.zip",
+      "sha256": "f2193d072726d6758a5f7871b2dcc54dcce0d5c35c6f0a62f92549b327c81232",
+      "licenseFile": "Assets/Audio/Licenses/Kenney_Interface_Sounds.txt",
+      "files": {
+        "Audio/click_002.ogg": "Assets/Resources/Audio/Overrides/SFX_UI_Click.ogg",
+        "Audio/select_001.ogg": "Assets/Resources/Audio/Overrides/SFX_UI_Hover.ogg",
+        "Audio/back_001.ogg": "Assets/Resources/Audio/Overrides/SFX_UI_Back.ogg",
+        "Audio/confirmation_001.ogg": "Assets/Resources/Audio/Overrides/SFX_Correct.ogg",
+        "Audio/error_001.ogg": "Assets/Resources/Audio/Overrides/SFX_Wrong.ogg"
+      }
+    },
+    {
+      "name": "Kenney Impact Sounds 1.0",
+      "page": "https://kenney.nl/assets/impact-sounds",
+      "download": "https://kenney.nl/media/pages/assets/impact-sounds/87b4ddecda-1677589768/kenney_impact-sounds.zip",
+      "sha256": "029d734af1582474edf3a694d1b0cebc97c1c152f2f39fa34d4c2bafc5de77f8",
+      "licenseFile": "Assets/Audio/Licenses/Kenney_Impact_Sounds.txt",
+      "files": {
+        "Audio/impactWood_light_000.ogg": "Assets/Resources/Audio/Overrides/SFX_Books_Fall.ogg",
+        "Audio/impactGlass_light_000.ogg": "Assets/Resources/Audio/Overrides/SFX_Glass_Crack.ogg"
+      }
+    }
+  ]
+}
