@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 94048e136663869429ef7040d27b46ff
+guid: d11e33dca585f6842a2f300994d29756
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6551516144995280090
-    second: PROP_FE_TreeCanopy_0
+      213: -4144362458465201688
+    second: PROP_FE_TreeFallen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 9
-  spritePivot: {x: 0.5, y: 0.07575758}
+  spritePivot: {x: 0.14030612, y: 0.24859096}
   spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PROP_FE_TreeCanopy_0
+      name: PROP_FE_TreeFallen_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 4
-        width: 165
-        height: 128
+        y: 0
+        width: 170
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ad42ea2f839abea50800000000000000
-      internalID: 6551516144995280090
+      spriteID: 8e197b24d444c76c0800000000000000
+      internalID: -4144362458465201688
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PROP_FE_TreeCanopy_0: 6551516144995280090
+      PROP_FE_TreeFallen_0: -4144362458465201688
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

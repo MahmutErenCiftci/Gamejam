@@ -10,13 +10,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// <summary>
     /// Uzun yolda köşeden sonraki ağaç düşüşü (SEL3-10, ZIGZAG §9). TreeStopSpot alanına (trigger) eklenen prefabın kökü
     /// TreeFallSpot'tur (ağacın dibi). Oyuncu alana girince TEK SEFER:
-    /// Cenk güvenli noktada durur, hareket kilitlenir (Hub.NotifyOpened/Closed("treefall")) → ilk çatırtı, ağaç
-    /// gıcırdayarak yavaşça eğilir, yaprak döker → ikinci, sert kırılma; Cenk irkilip yarım adım geri çekilir →
-    /// ağaç dibinden devrilen gerçek bir gövde gibi önce ağır, sonra hızlanarak yola düşer (θ'' ∝ sin θ eğrisi; fizik
-    /// motoru yok), düşerken taç hava direnciyle geride kalır, gölgesi yere doğru kayar → yere değdiği karede yolu
-    /// kapatan collider açılır, gövde bir iki kez sekip oturur, taç yere ezilip esner, toz yerde yuvarlanarak yayılır,
-    /// dal parçaları uçuşur, yapraklar süzülüp yere konar, kamera sarsılır → kontrol geri gelir, Hub.Complete("tree_fell"),
-    /// bağlı dallarda Arm() (Arda'nın BranchObstacle'ı).
+    /// (Olaydan önce ağaç fırtınada hafifçe salınır.) Cenk güvenli noktada durur, hareket kilitlenir
+    /// (Hub.NotifyOpened/Closed("treefall")) → ilk çatırtı, kütükte kıymıklar belirir, ağaç gıcırdayarak yavaşça eğilir,
+    /// yaprak döker → ikinci, sert kırılma; Cenk irkilip yarım adım geri çekilir → ağaç kırılma noktasından devrilen
+    /// gerçek bir gövde gibi önce ağır, sonra hızlanarak yola düşer (θ'' ∝ sin θ eğrisi; fizik motoru yok), kırık uç
+    /// kütükten kayıp yere iner, gölgesi çarpma yerine kayar → yere değdiği karede yolu kapatan collider açılır, dönen
+    /// gövdenin yerine yatık ağaç görseli geçer (toz/sarsıntı örter), gövde bir iki kez seker, dallar yere ezilip esner
+    /// (ayrı taç varsa o geride kalır ve ezilir), toz yerde yuvarlanarak yayılır, dal parçaları uçuşur, yapraklar süzülüp
+    /// yere konar, kamera sarsılır → kontrol geri gelir, Hub.Complete("tree_fell"), bağlı dallarda Arm() (Arda'nın
+    /// BranchObstacle'ı).
     /// Büyük gövde dekordur; geçidi kapatan ve itilen şey küçük dal. Düşüşten önce düşme alanına girişi katı bir
     /// FallZoneBlock collider'ı kapatır, ağaç Cenk'in üstüne düşmez. Collider mesajı yerine her FixedUpdate'te geometrik
     /// örtüşme kontrol edilir (TreeStopSpot başka bir objede de olabilir). Hub.FreeRoam false iken (diyalog, panel) çalışmaz.
@@ -38,14 +40,21 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [Header("Ağaç")]
         [Tooltip("Dönen parça; pivotu kırılma noktası (gövdenin dibi).")]
         [SerializeField] private Transform tree;
-        [Tooltip("Ağacın çocuğu; düşerken geride kalır, yere değince ezilip esner.")]
+        [Tooltip("İsteğe bağlı: ağacın çocuğu olan ayrı taç; düşerken geride kalır, yere değince ezilip esner.")]
         [SerializeField] private Transform canopy;
+        [Tooltip("Yerde yatan ağaç görseli (başta kapalı). Yere değdiği karede dönen gövdenin yerine geçer ve ezilip esner; " +
+                 "pivotu kırık uç, konumu = gövde pivotu + fallSlide.")]
+        [SerializeField] private Transform fallenTree;
+        [Tooltip("Kütüğün kırık üstündeki açık renk kıymıklar (başta kapalı): ilk çatırtıda belirir, ikinci kırılmada tam görünür.")]
+        [SerializeField] private SpriteRenderer stumpBreak;
         [Tooltip("Yerdeki gölge (dönmez; düşüşle birlikte çarpma yerine kayar).")]
         [SerializeField] private SpriteRenderer shadow;
         [Tooltip("Düşmüş hâldeki Z açısı (negatif = sağa düşer).")]
         [SerializeField] private float fallenAngle = -84f;
-        [Tooltip("Düşerken pivotun kayması (yerel, dünya birimi).")]
+        [Tooltip("Düşerken pivotun kayması (yerel, dünya birimi): kırık uç kütükten kayıp yere iner.")]
         [SerializeField] private Vector2 fallSlide = new Vector2(0.12f, -0.06f);
+        [Tooltip("Olaydan önce fırtınada hafif salınım (derece). 0 = durgun.")]
+        [SerializeField, Range(0f, 3f)] private float idleSway = 0.8f;
 
         [Header("Zamanlama")]
         [Tooltip("Cenk durduktan sonra ilk çatırtıya kadar.")]
@@ -105,7 +114,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [Tooltip("Taç içinde yaprak dökülen bölge (tacın yerel uzayında, yarım boyut).")]
         [SerializeField] private Vector2 canopyLeafArea = new Vector2(1.1f, 0.8f);
         [SerializeField] private Vector2 canopyLeafCenter = new Vector2(0f, 0.95f);
-        [SerializeField, Range(0, 120)] private int impactLeaves = 55;
+        [SerializeField, Range(0, 120)] private int impactLeaves = 70;
         [SerializeField, Range(0, 40)] private int impactDust = 22;
         [SerializeField, Range(0, 30)] private int impactTwigs = 10;
         [SerializeField, Range(0, 30)] private int crackChips = 12;
@@ -135,8 +144,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private Collider2D playerCollider;
         private Coroutine routine;
         private bool lockedPlayer, prevCanMove;
-        private Vector3 treeBasePos, canopyBasePos, canopyBaseScale, shadowBasePos, shadowBaseScale;
-        private Quaternion treeBaseRot, canopyBaseRot;
+        private Vector3 treeBasePos, canopyBasePos, canopyBaseScale, shadowBasePos, shadowBaseScale, fallenBasePos, fallenBaseScale;
+        private Quaternion treeBaseRot, canopyBaseRot, fallenBaseRot;
         private Color shadowBaseColor;
         private bool baseCaptured;
         private Transform fxRoot;
@@ -182,6 +191,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             CaptureBase();
             BuildFallCurve();
             if (alertIcon != null) alertIcon.gameObject.SetActive(false);
+            ShowFallen(false);
+            SetBreak(0f);
             ApplyState(false);
         }
 
@@ -219,7 +230,41 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 shadowBaseScale = shadow.transform.localScale;
                 shadowBaseColor = shadow.color;
             }
+            if (fallenTree != null)
+            {
+                fallenBasePos = fallenTree.localPosition;
+                fallenBaseRot = fallenTree.localRotation;
+                fallenBaseScale = fallenTree.localScale;
+            }
             baseCaptured = true;
+        }
+
+        /// <summary>Ayakta (dönen gövde görünür) ya da yerde (yatık görsel görünür) hâli.</summary>
+        private void ShowFallen(bool fallen) => BlendFallen(fallen ? 1f : 0f);
+
+        /// <summary>
+        /// Dönen gövdeden yatık görsele çapraz geçiş (0 = ayakta, 1 = yerde). Geniş taç yere çarpıp dağılırken
+        /// solar, yatık görsel belirir; geçişi çarpma tozu ve yaprak savrulması örter.
+        /// </summary>
+        private void BlendFallen(float k)
+        {
+            if (fallenTree == null) return;
+            fallenTree.gameObject.SetActive(k > 0f);
+            foreach (var sr in fallenTree.GetComponentsInChildren<SpriteRenderer>(true)) { var c = sr.color; c.a = k; sr.color = c; }
+            if (tree == null) return;
+            // Dönen gövdenin görselleri söner; transform (ve varsa çocuk collider'lar) yerinde kalır.
+            foreach (var sr in tree.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                sr.enabled = k < 1f;
+                var c = sr.color; c.a = 1f - k; sr.color = c;
+            }
+        }
+
+        private void SetBreak(float alpha)
+        {
+            if (stumpBreak == null) return;
+            stumpBreak.gameObject.SetActive(alpha > 0f);
+            var c = stumpBreak.color; c.a = alpha; stumpBreak.color = c;
         }
 
         /// <summary>
@@ -317,16 +362,18 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Sfx(crackSfx, 0.6f);
             Sfx(creakSfx, 0.35f);
             SpawnChips(crackChips / 2);
+            SetBreak(0.55f);
             StartCoroutine(PopAlert());
             float lean = leanAngle * Dir;
             float leafAcc = 0f;
+            float sway0 = SwayAngle(Time.time); // salınımın içinden başla (sıçrama olmasın)
             for (float t = 0f; t < leanSeconds; t += Time.deltaTime)
             {
                 float k = t / leanSeconds;
                 float ease = k * k * (3f - 2f * k);
                 // Liflerin teker teker kopması: düzensiz küçük sarsıntılar
                 float jitter = (Mathf.Sin(t * 47f) * 0.5f + Mathf.Sin(t * 83f + 1.3f) * 0.3f) * (1f - k * 0.4f) * 0.9f;
-                SetTree(lean * ease + jitter * Dir, 0f);
+                SetTree(lean * ease + jitter * Dir + sway0 * (1f - ease), 0f);
                 SetCanopy(-jitter * 1.4f * Dir, 1f);
                 leafAcc += Time.deltaTime * 10f;
                 while (leafAcc >= 1f) { leafAcc -= 1f; SpawnFallingLeaf(); }
@@ -337,6 +384,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             // 3) İkinci, sert kırılma: Cenk irkilip yarım adım geri çekilir.
             Sfx(crackSfx, 1f);
             SpawnChips(crackChips);
+            SetBreak(1f);
             Shake(1.2f, 0.15f);
             StartCoroutine(Flinch());
             for (float t = 0f; t < snapSeconds; t += Time.deltaTime)
@@ -369,7 +417,13 @@ namespace AfetUyanisi.Chapters.FloodEvening
             SetTree(fallenAngle, 1f);
             UpdateShadow(1f);
 
-            // 5) Yere değdi: collider görselle aynı karede yolu kapatır; toz, yaprak, dal, sarsıntı, ses.
+            // 5) Yere değdi: collider görselle aynı karede yolu kapatır; dönen gövde yerine yatık görsel geçer
+            // (çarpma tozu, sarsıntı ve ezilme esnemesi geçişi örter); toz, yaprak, dal, sarsıntı, ses.
+            if (fallenTree != null)
+            {
+                fallenTree.localPosition = fallenBasePos;
+                BlendFallen(0.35f);
+            }
             ApplyState(true);
             Sfx(impactSfx, 0.9f);
             Sfx(impactSfx2, 0.8f);
@@ -378,18 +432,27 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Shake(shakePixels, shakeSeconds);
             Impact?.Invoke();
             // Taç momentumla öne savrulur ve yere ezilir; sonra yay gibi toparlanır.
+            if (canopy == null) { canopyAngle = 0f; canopyScale = 1f; }
             canopyVel = impactOmega * 0.35f;
-            canopyScaleVel = -canopySquash * 14f;
+            canopyScaleVel = -canopySquash * 28f;
             canopySpring = true;
 
-            // Gövde sekmesi: sönümlenen birkaç küçük zıplama
+            // Gövde sekmesi: sönümlenen birkaç küçük zıplama (yatık görsel de kırık ucu etrafında aynı sekmeyi yapar);
+            // bu sırada dönen gövdeden yatık görsele çapraz geçiş.
+            const float blendSeconds = 0.22f;
             for (float t = 0f; t < settleSeconds; t += Time.deltaTime)
             {
                 float b = bounceAngle * Mathf.Exp(-t * 5.5f) * Mathf.Abs(Mathf.Sin(t * Mathf.PI / 0.24f));
                 SetTree(fallenAngle - Dir * b, 1f);
+                if (fallenTree != null)
+                {
+                    BlendFallen(Mathf.Lerp(0.35f, 1f, Mathf.Clamp01(t / blendSeconds)));
+                    fallenTree.localRotation = fallenBaseRot * Quaternion.Euler(0f, 0f, -Dir * b + canopyAngle * 0.3f);
+                }
                 yield return null;
             }
             SetTree(fallenAngle, 1f);
+            if (fallenTree != null) { BlendFallen(1f); fallenTree.localRotation = fallenBaseRot; }
 
             for (float t = 0f; t < afterSeconds; t += Time.deltaTime) yield return null;
             ShowAlert(false);
@@ -447,7 +510,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (tree != null) { tree.localPosition = treeBasePos; tree.localRotation = treeBaseRot; }
                 if (canopy != null) { canopy.localPosition = canopyBasePos; canopy.localRotation = canopyBaseRot; canopy.localScale = canopyBaseScale; }
                 if (shadow != null) { shadow.transform.localPosition = shadowBasePos; shadow.transform.localScale = shadowBaseScale; shadow.color = shadowBaseColor; }
+                if (fallenTree != null) { fallenTree.localPosition = fallenBasePos; fallenTree.localRotation = fallenBaseRot; fallenTree.localScale = fallenBaseScale; }
             }
+            ShowFallen(false);
+            SetBreak(0f);
             ApplyState(false);
         }
 
@@ -471,9 +537,19 @@ namespace AfetUyanisi.Chapters.FloodEvening
             tree.localPosition = treeBasePos + (Vector3)(fallSlide * slide01);
         }
 
+        private float RestScale => canopy != null ? canopyRestScale : 1f;
+
         private void SetCanopy(float angle, float squash)
         {
-            if (canopy == null) return;
+            if (canopy == null)
+            {
+                // Ayrı taç yoksa yere değme esnemesi yatık görselde: ekranda dikey yassılma, gövde boyunca hafif uzama,
+                // kırık uç etrafında küçük savrulma.
+                if (fallenTree == null || !fallenTree.gameObject.activeSelf) return;
+                fallenTree.localRotation = fallenBaseRot * Quaternion.Euler(0f, 0f, angle * 0.3f);
+                fallenTree.localScale = new Vector3(fallenBaseScale.x * (1f + (1f - squash) * 0.25f), fallenBaseScale.y * squash, fallenBaseScale.z);
+                return;
+            }
             canopy.localRotation = canopyBaseRot * Quaternion.Euler(0f, 0f, angle);
             // Yassılma tacın gövdeye dik ekseninde (yerel X; ağaç yattığında ekranda dikey), hacim korunsun diye gövde
             // ekseni (yerel Y) biraz uzar.
@@ -589,24 +665,34 @@ namespace AfetUyanisi.Chapters.FloodEvening
         // Efekt (basit sprite parçacıkları; ParticleSystem yok, kare hızından bağımsız)
         // =====================================================================
 
+        // Fırtınada ayakta duran ağacın salınımı: iki yavaş dalga + ara sıra sert rüzgâr.
+        private float SwayAngle(float t)
+        {
+            if (idleSway <= 0f) return 0f;
+            float gust = Mathf.Max(0f, Mathf.Sin(t * 0.37f)) * 0.6f;
+            return (Mathf.Sin(t * 1.3f) * 0.7f + Mathf.Sin(t * 2.9f + 1.1f) * 0.3f) * idleSway * (1f + gust);
+        }
+
         private void Update()
         {
             float dt = Time.deltaTime;
             if (shakeTime < shakeDuration) shakeTime += dt;
+            if (!IsPlaying && !HasFallen && tree != null && baseCaptured && idleSway > 0f) SetTree(SwayAngle(Time.time), 0f);
 
             // Taç yayı (yere değdikten sonra): öne savrulma + yassılma, sönümlenerek düzelir.
-            if (canopySpring && canopy != null)
+            if (canopySpring && (canopy != null || fallenTree != null))
             {
+                float rest = RestScale;
                 canopyVel += (-canopyAngle * 260f - canopyVel * 13f) * dt;
                 canopyAngle += canopyVel * dt;
-                canopyScaleVel += ((canopyRestScale - canopyScale) * 320f - canopyScaleVel * 15f) * dt;
+                canopyScaleVel += ((rest - canopyScale) * 320f - canopyScaleVel * 11f) * dt;
                 canopyScale += canopyScaleVel * dt;
-                canopyScale = Mathf.Clamp(canopyScale, canopyRestScale - canopySquash * 1.5f, 1.1f);
+                canopyScale = Mathf.Clamp(canopyScale, rest - canopySquash * 1.5f, 1.1f);
                 SetCanopy(canopyAngle, canopyScale);
-                if (Mathf.Abs(canopyAngle) < 0.05f && Mathf.Abs(canopyVel) < 0.5f && Mathf.Abs(canopyRestScale - canopyScale) < 0.003f && Mathf.Abs(canopyScaleVel) < 0.02f)
+                if (Mathf.Abs(canopyAngle) < 0.05f && Mathf.Abs(canopyVel) < 0.5f && Mathf.Abs(rest - canopyScale) < 0.003f && Mathf.Abs(canopyScaleVel) < 0.02f)
                 {
                     canopySpring = false;
-                    SetCanopy(0f, canopyRestScale);
+                    SetCanopy(0f, rest);
                 }
             }
 
@@ -675,9 +761,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
         // Tacın içinden kopan yaprak: süzülerek yere iner (yer = çarpma hattının biraz önü).
         private void SpawnFallingLeaf()
         {
-            if (canopy == null) return;
+            var src = canopy != null ? canopy : tree; // ayrı taç yoksa alan ağacın (dönen gövdenin) uzayında
+            if (src == null) return;
             Vector3 local = new Vector3(canopyLeafCenter.x + R(-canopyLeafArea.x, canopyLeafArea.x), canopyLeafCenter.y + R(-canopyLeafArea.y, canopyLeafArea.y), 0f);
-            Vector2 at = transform.InverseTransformPoint(canopy.TransformPoint(local));
+            Vector2 at = transform.InverseTransformPoint(src.TransformPoint(local));
             var p = Spawn(RandomLeaf(), at, new Vector2(R(-0.3f, 0.3f), R(-0.2f, 0.25f)), R(3.0f, 4.2f));
             if (p == null) return;
             p.Gravity = 1.4f; p.Drag = 2.0f; p.Sway = R(0.15f, 0.4f); p.Phase = R(0f, 6.28f); p.Spin = R(-260f, 260f);
