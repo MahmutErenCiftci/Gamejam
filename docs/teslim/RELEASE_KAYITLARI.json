@@ -1,0 +1,196 @@
+{
+  "reviewedAtUtc": "2026-10-18T14:20:52.507Z",
+  "repository": "https://github.com/MahmutErenCiftci/Gamejam",
+  "latestStableTag": "v0.8",
+  "releases": [
+    {
+      "id": 416465000,
+      "tag": "v0.8",
+      "name": "EŞİK v0.8",
+      "prerelease": false,
+      "draft": false,
+      "publishedAtUtc": "2026-10-18T13:26:40Z",
+      "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.8",
+      "sourceCommit": "0507fc3c480a11a7ad584267f085191cd639c6db",
+      "targetCommitish": "dev",
+      "notes": "Jam sürümü.",
+      "assets": [
+        {
+          "name": "ESIK_v0.8_Windows.zip",
+          "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.8/ESIK_v0.8_Windows.zip",
+          "size": 59352099,
+          "actualBytes": 59352099,
+          "reportedDigest": "sha256:94305e2d229045365f30600c6e589fa00afbf8df7dd47ddf0126f325313142fd",
+          "sha256": "94305e2d229045365f30600c6e589fa00afbf8df7dd47ddf0126f325313142fd",
+          "digestMatches": true,
+          "tempPath": "C:\\Users\\mahmu\\AppData\\Local\\Temp\\esik-teslim-releases\\ESIK_v0.8_Windows.zip"
+        }
+      ]
+    },
+    {
+      "id": 416415248,
+      "tag": "v0.7-onizleme",
+      "name": "EŞİK v0.7 (önizleme)",
+      "prerelease": true,
+      "draft": false,
+      "publishedAtUtc": "2026-10-18T11:40:00Z",
+      "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.7-onizleme",
+      "sourceCommit": "4eb8e14642c9139c1a516b382d8f81068421065d",
+      "targetCommitish": "dev",
+      "notes": "Windows build. Zip'i aç, `ESIK.exe`'yi çalıştır.\n\n**Yenilikler**\n- İki bölüm: Deprem ve Sel, hangisini seçersen ondan başla. İkisi bitince oyun sonu ekranı gelir.\n- **Deprem:** yönlendirme oku, 7 sn Çök-Kapan-Tutun, yeni sesler, puana bağlı rozet.\n- **Sel:**\n  - Okul ve köprü başlangıcı, dereye düşmüş ters araba.\n  - Akşam mahallesinde 85 sn sel; ağaç devrilip duvarı kırıyor, yolu İT/ÇEK ritim oyunuyla açıyorsun.\n  - Elektrik ve enkaz tehlikeleri, yönlendirme oku, apartman finali (PIN).\n- **Arayüz:** yeni sel göstergesi ve sel raporu, ayak sesleri, Esc ile duraklatma menüsü.\n",
+      "assets": [
+        {
+          "name": "ESIK_v0.7_Windows.zip",
+          "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.7-onizleme/ESIK_v0.7_Windows.zip",
+          "size": 59379887,
+          "actualBytes": 59379887,
+          "reportedDigest": "sha256:60a5d32545623e8e2dc47797ef6fc4518f1de639090e4e0ed44ed515886277a3",
+          "sha256": "60a5d32545623e8e2dc47797ef6fc4518f1de639090e4e0ed44ed515886277a3",
+          "digestMatches": true,
+          "tempPath": "C:\\Users\\mahmu\\AppData\\Local\\Temp\\esik-teslim-releases\\ESIK_v0.7_Windows.zip"
+        }
+      ]
+    },
+    {
+      "id": 415973604,
+      "tag": "v0.4.1-onizleme",
+      "name": "AFET UYANIŞI v0.4.1 (önizleme)",
+      "prerelease": true,
+      "draft": false,
+      "publishedAtUtc": "2026-10-17T17:58:12Z",
+      "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.4.1-onizleme",
+      "sourceCommit": "8792f7f63c9257e46c15700d154d64e52549a29a",
+      "targetCommitish": "feature/mahmut-entegrasyon",
+      "notes": "Oynanabilir Windows önizleme build'i (PR #12'nin son haliyle aynı kod).\n\n**Nasıl oynanır:** zip'i indir, klasöre çıkar, `AfetUyanisi.exe`. Windows uyarı verirse: Ek bilgi → Yine de çalıştır.\n\n**v0.4'e göre yenilikler:**\n- 🎒 Deprem modunda afet çantası alınınca Cenk'in sırtında görünür\n- 🧘 Sarsıntıdaki denge alıştırması artık anlaşılır: talimat, A/D + SPACE ipuçları, kalan süre, net bitiş mesajı; zorluk yumuşatıldı\n- 🌳 Sokakta parkın ve binaların arkası dolduruldu (apartmanlar, çatılar, ağaçlar, banklar, lambalar, park etmiş arabalar)\n\n**Bilinen eksikler:**\n- Tam baştan sona oynanış testi bu build'de henüz yapılmadı\n- Ses seviyeleri kulakla ayarlanmadı\n\nHata görürseniz ekran görüntüsüyle Mahmut'a iletin.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "assets": [
+        {
+          "name": "AfetUyanisi_v0.4.1_Windows.zip",
+          "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.4.1-onizleme/AfetUyanisi_v0.4.1_Windows.zip",
+          "size": 55369399,
+          "actualBytes": 55369399,
+          "reportedDigest": "sha256:df55093db9093166c30c248cb895fc48af480984e0621ddb71acfb082ea5347e",
+          "sha256": "df55093db9093166c30c248cb895fc48af480984e0621ddb71acfb082ea5347e",
+          "digestMatches": true,
+          "tempPath": "C:\\Users\\mahmu\\AppData\\Local\\Temp\\esik-teslim-releases\\AfetUyanisi_v0.4.1_Windows.zip"
+        }
+      ]
+    },
+    {
+      "id": 415930569,
+      "tag": "v0.4-onizleme",
+      "name": "AFET UYANIŞI v0.4 (önizleme)",
+      "prerelease": true,
+      "draft": false,
+      "publishedAtUtc": "2026-10-17T16:34:42Z",
+      "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.4-onizleme",
+      "sourceCommit": "ced0afa906474708a35eddc502f9017a75c70a52",
+      "targetCommitish": "feature/mahmut-entegrasyon",
+      "notes": "Oynanabilir Windows önizleme build'i (PR #12'nin son haliyle aynı kod).\n\n**Nasıl oynanır:** zip'i indir, bir klasöre çıkar, `AfetUyanisi.exe`'yi çalıştır. Windows \"bilinmeyen yayıncı\" derse: Ek bilgi → Yine de çalıştır.\n\n**v0.3.1'e göre yenilikler:**\n- 🔊 Ses: menü müziği, Sel'de yağmur/alarm/otobüs, Deprem'de gerilim müziği, sarsıntı, sayaç tikleri, buton sesleri\n- 🎒 Cenk çantasız başlar; Sel'de yatak odasındaki çantayı alınca sırtına geçer\n- 📱 Telefon ekranları (deprem bildirimi, belediye duyurusu, söylenti kartları) daha okunur, tuş ipuçlu\n- ⌨️ Arda'nın yeni [E] etkileşim ipucu, sarsıntıda denge alıştırması, ocak kapatma görevi\n- 🧱 Cenk'i kapatan ön objeler saydamlaşır (duvar kesme)\n\n**Bilinen eksikler / test edilmedi:**\n- Bu build'de tam baştan sona oynanış testi henüz yapılmadı (yapılıyor)\n- Oda karartması kurulu ama odalar ayrı olduğu için şu an ekranda görünmüyor\n- Ses seviyeleri kulakla ayarlanmadı\n\nHata görürseniz ekran görüntüsüyle Mahmut'a iletin.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "assets": [
+        {
+          "name": "AfetUyanisi_v0.4_Windows.zip",
+          "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.4-onizleme/AfetUyanisi_v0.4_Windows.zip",
+          "size": 55217223,
+          "actualBytes": 55217223,
+          "reportedDigest": "sha256:749badf928f5d10b1aec88fe8c63d297d061545fd6bb92f8826152d2e664ab6c",
+          "sha256": "749badf928f5d10b1aec88fe8c63d297d061545fd6bb92f8826152d2e664ab6c",
+          "digestMatches": true,
+          "tempPath": "C:\\Users\\mahmu\\AppData\\Local\\Temp\\esik-teslim-releases\\AfetUyanisi_v0.4_Windows.zip"
+        }
+      ]
+    },
+    {
+      "id": 415880170,
+      "tag": "v0.3.1-onizleme",
+      "name": "AFET UYANIŞI v0.3.1 (önizleme)",
+      "prerelease": true,
+      "draft": false,
+      "publishedAtUtc": "2026-10-17T15:25:07Z",
+      "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.3.1-onizleme",
+      "sourceCommit": "6ee357cda3fa4e8dd4b8f69a7af32878e9270e18",
+      "targetCommitish": "feature/mahmut-entegrasyon",
+      "notes": "Oynanabilir Windows önizleme build'i (PR #12'deki kodla aynı).\n\n**Nasıl oynanır:** zip'i indir, bir klasöre çıkar, `AfetUyanisi.exe`'yi çalıştır. Kurulum gerekmez. Windows \"bilinmeyen yayıncı\" derse: Ek bilgi → Yine de çalıştır.\n\n**Neler var:**\n- Berk'in yeni şehir manzaralı ana menüsü\n- Sel ve Deprem bölümleri baştan sona oynanabilir\n- Eren'in sele kapılma ara sahnesi (otobüste yanlış seçim / okul yolunda suya girme)\n- Yakın kamera, odaların etrafında renkli arka plan\n- Deprem: kitaplık sabitlenmezse ve yanındaysan \"YARALANDIN\"\n\n**Bilinen eksikler:**\n- Ses yok (bir sonraki sürümde)\n- Telefon ekranları yeniden düzenleniyor\n- Rapor ekranlarında birkaç küçük metin tutarsızlığı\n\nHata görürseniz ekran görüntüsüyle Mahmut'a iletin.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+      "assets": [
+        {
+          "name": "AfetUyanisi_v0.3.1_Windows.zip",
+          "url": "https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.3.1-onizleme/AfetUyanisi_v0.3.1_Windows.zip",
+          "size": 53032959,
+          "actualBytes": 53032959,
+          "reportedDigest": "sha256:8dc13655853c403478a000c2f217c583b2594449555f84a712677ae9de299f51",
+          "sha256": "8dc13655853c403478a000c2f217c583b2594449555f84a712677ae9de299f51",
+          "digestMatches": true,
+          "tempPath": "C:\\Users\\mahmu\\AppData\\Local\\Temp\\esik-teslim-releases\\AfetUyanisi_v0.3.1_Windows.zip"
+        }
+      ]
+    }
+  ],
+  "latestSourceSnapshot": [
+    {
+      "path": "ProjectSettings/ProjectVersion.txt",
+      "status": 200,
+      "sha256": "9207210a75d6f7e920816752a3a9228f1366df762e660fb6c1f8f56ee3af8661",
+      "localFileMatches": true
+    },
+    {
+      "path": "ProjectSettings/EditorBuildSettings.asset",
+      "status": 200,
+      "sha256": "8daafb79724a7c0065426614aca59823048a668a8a4484688144744abdf175ba",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/Core/GameInput.cs",
+      "status": 200,
+      "sha256": "251a8baf30d97c59772dae04ba36913be6e82765a60aabfd507e7192659ebace",
+      "localFileMatches": false
+    },
+    {
+      "path": "Assets/Scripts/Core/GameFlow.cs",
+      "status": 200,
+      "sha256": "59eabc1d1078d39e89617fc8552948f4312657ef2aa22c3eea05bb8d9328fc46",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/Core/GameSceneRouter.cs",
+      "status": 200,
+      "sha256": "fc9555a5942770659de8ebfc19ffe82ac5cb3556983efaa1567e5b4035552dd0",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/Chapters/Earthquake/Mode/ProtectionMinigameController.cs",
+      "status": 200,
+      "sha256": "f085b4313abaf1ec80c96f6212439732e46f62318e93a5d18167bfd8a3aa0c6c",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Data/Earthquake/earthquake_mode.json",
+      "status": 200,
+      "sha256": "e448ab7632f1716e6d7b221d66664418cd5e25fc296140d1c14dcedaaa16d912",
+      "localFileMatches": false
+    },
+    {
+      "path": "Assets/Scripts/Chapters/FloodEvening/Flow/FloodEveningController.cs",
+      "status": 200,
+      "sha256": "f2e43029cda1ff8b1df03a529e0aa9039e63185bc58cd71b0e8a2b8767a108c0",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/Chapters/FloodEvening/Events/BranchObstacle.cs",
+      "status": 200,
+      "sha256": "bd26446e3be27b1e816acf7bf9fa14b2476237da9543eca69b052c08b259a70d",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/Chapters/FloodEvening/Final/ApartmentFinale.cs",
+      "status": 200,
+      "sha256": "72003c2010b477a7b43aadf8b94d796e86c6fd13b0320890a30e2f6a75cc6632",
+      "localFileMatches": true
+    },
+    {
+      "path": "Assets/Scripts/UI/Pause/PauseMenu.cs",
+      "status": 200,
+      "sha256": "5408029b3fb09b55258e23ff812638da7e76f82266886d625cff8cfb92d1db23",
+      "localFileMatches": false
+    }
+  ],
+  "verification": "Public release metadatası, tag commitleri, tüm yayımlanmış release assetlerinin gerçek SHA256 karşılaştırması. ZIP yapısı ayrıca incelenecek; EXE çalıştırılmadı."
+}
