@@ -214,6 +214,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             float bodyH = string.IsNullOrEmpty(body) ? 0f : Mathf.Ceil(EqUi.PreferredHeight(toastBody, toastBody.text, ToastW - 31f)) + 1f;
             EqUi.TopBand(toastBody.rectTransform, 25f, 6f, 15f, Mathf.Max(10f, bodyH));
             toastRoot.sizeDelta = new Vector2(ToastW, Mathf.Max(ToastMinH, 15f + bodyH + 8f));
+            CenterToastIcon();
 
             if (toastRoutine != null) StopCoroutine(toastRoutine);
             toastRoutine = null;
@@ -225,6 +226,64 @@ namespace AfetUyanisi.Chapters.Earthquake
                 return;
             }
             toastRoutine = StartCoroutine(ToastRoutine(Mathf.Max(0.8f, seconds)));
+        }
+
+        // UI_EQ_Toast'taki krem kutu 9-slice ile şeritle birlikte uzar: iç alanı (16 px genişlik) üstten 4, alttan 6 piksel
+        // içeride. 16 px'lik UI_EQ_Icon_Hazard kutuya taşıyor; aynı paletle 12x13 küçük sürümü çizilip kutuda ortalanır.
+        private void CenterToastIcon()
+        {
+            if (toastRoot.GetComponent<Image>().sprite == null || toastIcon.sprite == null) return;
+            if (toastIcon.sprite != SmallHazard()) toastIcon.sprite = SmallHazard();
+            float inner = toastRoot.sizeDelta.y - 4f - 6f;
+            float w = SmallHazardRows[0].Length, h = SmallHazardRows.Length;
+            EqUi.TL(toastIcon.rectTransform, 4f + (16f - w) * 0.5f, 4f + Mathf.Floor((inner - h) * 0.5f), w, h);
+        }
+
+        // A kontur, B açık kenar, C kırmızı, D krem "!", E koyu taban, F yarı saydam gölge (UI_EQ_Icon_Hazard renkleri).
+        private static readonly string[] SmallHazardRows =
+        {
+            ".....AA.....",
+            "....ABBA....",
+            "....ABCA....",
+            "...ABDDBA...",
+            "...ABDDCA...",
+            "..ABCDDCBA..",
+            "..ABCDDCCA..",
+            ".ABCCCCCCBA.",
+            ".ABCCDDCCCA.",
+            "ABCCCDDCCCBA",
+            "AEEEEEEEEEEA",
+            "AAAAAAAAAAAA",
+            "FFFFFFFFFFFF",
+        };
+
+        private static Sprite smallHazard;
+
+        private static Sprite SmallHazard()
+        {
+            if (smallHazard != null) return smallHazard;
+            int w = SmallHazardRows[0].Length, h = SmallHazardRows.Length;
+            var tex = new Texture2D(w, h, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point, wrapMode = TextureWrapMode.Clamp };
+            for (int r = 0; r < h; r++)
+                for (int c = 0; c < w; c++)
+                {
+                    Color32 col;
+                    switch (SmallHazardRows[r][c])
+                    {
+                        case 'A': col = new Color32(20, 20, 31, 255); break;
+                        case 'B': col = new Color32(255, 122, 98, 255); break;
+                        case 'C': col = new Color32(232, 57, 43, 255); break;
+                        case 'D': col = new Color32(255, 250, 240, 255); break;
+                        case 'E': col = new Color32(168, 36, 24, 255); break;
+                        case 'F': col = new Color32(20, 20, 31, 120); break;
+                        default: col = new Color32(0, 0, 0, 0); break;
+                    }
+                    tex.SetPixel(c, h - 1 - r, col);
+                }
+            tex.Apply();
+            smallHazard = Sprite.Create(tex, new Rect(0, 0, w, h), new Vector2(0.5f, 0.5f), EqUi.RefPixelsPerUnit);
+            smallHazard.name = "UI_EQ_Icon_Hazard_Small";
+            return smallHazard;
         }
 
         private IEnumerator ToastRoutine(float seconds)
