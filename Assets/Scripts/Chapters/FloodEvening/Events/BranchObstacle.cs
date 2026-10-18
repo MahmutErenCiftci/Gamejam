@@ -18,7 +18,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
     }
 
     /// <summary>
-    /// Düşen dal engeli. Varsayılan Mash: RoomInteractor'ın her E basışında Play çağrısı +1 ilerletir.
+    /// Düşen dal engeli. Rhythm kipi (P-FLOOD 18 Eki, akşam selde kullanılan): devrilen ağacın yatan gövdesi ritimle itilip çekilir
+    /// (yeşil pencerede E, sırayla İT / ÇEK; ayrıntı RhythmPlay). Mash kipi: RoomInteractor'ın her E basışında Play çağrısı +1 ilerletir.
     /// Arm ağaç düşüşünden sonra açar; ilerleme uzaklaşınca korunur, dal ve collider birlikte kayar.
     /// Eski AlternativePassage kipi:
     /// yolu kesen dala dokunulmaz ("Engeli aşmaya çalışma"), yanındaki işaretli alternatif geçidin mandalı açılır:
@@ -30,10 +31,11 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// </summary>
     public class BranchObstacle : MonoBehaviour, IFloodEveningInteraction, IFloodEveningResettable
     {
-        public enum Mode { AlternativePassage = 0, SmallBranch = 1, Mash = 2 }
+        public enum Mode { AlternativePassage = 0, SmallBranch = 1, Mash = 2, Rhythm = 3 }
 
         public const string MinigameId = "branch";
         public const string StepId = "branch_cleared";
+        private const string BeatChannel = "fe_branch_push";
 
         [SerializeField] private Mode mode = Mode.Mash;
         [SerializeField] private Interactable point;
@@ -58,6 +60,28 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private int pressCount, lastPressFrame = -1, resetVersion;
         private Vector3 branchStart;
         private float pressFeedbackUntil;
+
+        [Header("Ritimle it / çek (P-FLOOD 18 Eki; Rhythm kipi)")]
+        [Tooltip("Ritim göstergesi (FloodRhythmView). Boşsa bu objeye eklenir.")]
+        [SerializeField] private FloodRhythmView rhythmView;
+        [Tooltip("Yolu açmak için gereken iyi vuruş")]
+        [SerializeField, Min(1)] private int requiredBeats = 6;
+        [Tooltip("İşaretçinin çubuğu bir uçtan öbürüne geçme süresi (sn) = iki vuruş fırsatı arası")]
+        [SerializeField, Min(0.3f)] private float beatSeconds = 0.75f;
+        [Tooltip("Yeşil pencerenin yarı genişliği (çubuğun yarısına oranla)")]
+        [SerializeField, Range(0.1f, 0.6f)] private float windowHalf = 0.32f;
+        [Tooltip("Ritim dışı basışta geri giden vuruş (başarısızlık yok)")]
+        [SerializeField, Min(0f)] private float missPenalty = 0.5f;
+        [Tooltip("Açılınca yolu kesen gövdenin kayacağı DÜNYA ofseti (ör. sokağın arka kenarına doğru)")]
+        [SerializeField] private Vector2 clearOffsetWorld = new Vector2(-0.85f, 0.425f);
+        [Tooltip("Her iyi vuruşta gövdenin it/çek sarsılması (piksel)")]
+        [SerializeField] private float shovePixels = 3f;
+        [Tooltip("Devrilen ağaç: her iyi vuruşta yaprak/dal parçacıkları onun kendi efektleriyle savrulur")]
+        [SerializeField] private FloodTreeFallEvent treeFx;
+        [Tooltip("Cenk'in itip çekerken öne/geri sarsılması (piksel; yürüme animasyonu oynamaz, yüzü ağaçta kalır)")]
+        [SerializeField] private float cenkShovePixels = 2f;
+        [SerializeField] private string beatSfx = "SFX_FE_Branch_Push";
+        [SerializeField] private string openSfx = "SFX_FE_Passage_Open";
 
         [Header("Açılınca")]
         [Tooltip("Kapanacak yol kesen collider'lar: AltPassage'ın kapalı collider'ı (Alternatif) ya da küçük dalın collider'ı (Küçük dal).")]
@@ -86,6 +110,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private string holdLabel = "Basılı tut";
         [SerializeField] private string hint = "[E] ya da fareyle basılı tut · [Esc] vazgeç";
 
+        private Vector3 rhythmStartWorld;
+        private bool rhythmStartCaptured;
+        private float beats;
+
         private Canvas canvas;
         private CanvasGroup group;
         private Text titleText, bodyText, percentText;
@@ -99,6 +127,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public bool IsOpen => playing;
         /// <summary>0..1 ilerleme (panel açıkken).</summary>
         public float Progress { get; private set; }
+        /// <summary>Ritim kipi: iyi vuruş sayısı (ceza yarım düşürebilir) ve test sayaçları.</summary>
+        public float Beats => beats;
+        public int GoodBeats { get; private set; }
+        public int MissBeats { get; private set; }
+        /// <summary>QA: işaretçi şu an yeşil pencerede mi (ritim paneli açıkken).</summary>
+        public bool InBeatWindow { get; private set; }
 
         private void Awake()
         {
@@ -111,7 +145,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 }
             texts = storyJson != null ? FloodEveningTexts.Load(storyJson) : null;
             if (branchRoot != null) branchStart = branchRoot.localPosition;
-            if (point != null) point.Setup(mode == Mode.Mash ? MashLabel : mode == Mode.SmallBranch ? smallBranchLabel : alternativeLabel, "", false, false);
+            if (point != null) point.Setup(mode == Mode.Rhythm ? RhythmLabel : mode == Mode.Mash ? MashLabel : mode == Mode.SmallBranch ? smallBranchLabel : alternativeLabel, "", false, false);
+            if (mode == Mode.Rhythm && rhythmView == null) rhythmView = gameObject.AddComponent<FloodRhythmView>();
             if (progressView != null)
             {
                 if (!progressView.gameObject.scene.IsValid()) progressView = Instantiate(progressView, transform);
@@ -145,11 +180,13 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             armed = true;
             if (mode == Mode.Mash) SetBranchVisible(true);
+            if (mode == Mode.Rhythm && branchRoot != null && !rhythmStartCaptured) { rhythmStartWorld = branchRoot.position; rhythmStartCaptured = true; }
             if (point != null) point.SetAvailable(CanUse);
         }
 
-        private string MashLabel => texts != null ? texts.Ui("branch_mash_action") : "Art arda bas — Engeli kenara it";
-        private string MashHint => texts != null ? texts.Ui("branch_mash_hint") : "[E] Art arda bas — Engeli kenara it";
+        private string MashLabel => texts != null ? texts.Ui("branch_mash_action") : "Art arda bas: Engeli kenara it";
+        private string RhythmLabel => texts != null && texts.HasUi("branch_rhythm_action") ? texts.Ui("branch_rhythm_action") : "Ağacı ritimle it, yolu aç";
+        private string MashHint => texts != null ? texts.Ui("branch_mash_hint") : "[E] Art arda bas: Engeli kenara it";
         private bool InRange => player != null && player.isActiveAndEnabled && point != null && point.IsPlayerInRange(player);
 
         private void LateUpdate()
@@ -230,6 +267,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             if (!CanUse) yield break;
             if (mode == Mode.Mash) { yield return MashOnce(); yield break; }
+            if (mode == Mode.Rhythm) { yield return RhythmPlay(); yield break; }
             playing = true;
             panelNotified = true;
             FloodEveningHub.NotifyOpened(MinigameId);
@@ -286,6 +324,171 @@ namespace AfetUyanisi.Chapters.FloodEvening
             }
         }
 
+        // =====================================================================
+        // Ritimle it / çek (P-FLOOD): işaretçi çubukta ileri geri gezer; yeşil pencerede E = iyi vuruş (gövde it/çek sarsılır,
+        // SFX_FE_Branch_Push), pencere dışında E = yarım vuruş geri + nazik "!" (asla başarısızlık değil). requiredBeats iyi
+        // vuruşta gövde sokağın arka kenarına kayar (collider'ı da), SFX_FE_Passage_Open, "branch_cleared". Süre akar (mini oyun).
+        // Esc: bırak (ilerleme korunur, nokta yeniden kullanılabilir).
+        // =====================================================================
+
+        private IEnumerator RhythmPlay()
+        {
+            if (!CanUse || !InRange) yield break;
+            playing = true;
+            panelNotified = true;
+            int version = resetVersion;
+            FloodEveningHub.NotifyOpened(MinigameId);
+            if (branchRoot != null && !rhythmStartCaptured) { rhythmStartWorld = branchRoot.position; rhythmStartCaptured = true; }
+            var animator = player != null ? player.GetComponent<IsoCharacterAnimator>() : null;
+            Vector2 toTree = branchRoot != null && player != null ? (Vector2)(TreePoint() - player.transform.position) : Vector2.right;
+            if (animator != null) animator.Face(toTree);
+            Vector2 pushDir = toTree.sqrMagnitude > 1e-5f ? toTree.normalized : Vector2.right;
+            bool done = false;
+            float phase = 0f, shoveT = 99f, wobbleT = 99f, beatSoundUntil = 0f, cenkShoveT = 99f;
+            bool cenkShoving = false;
+            var body = player != null ? player.GetComponent<Rigidbody2D>() : null;
+            Vector2 cenkBase = body != null ? body.position : Vector2.zero;
+            float winW = windowHalf * Mathf.Lerp(1f, 0.7f, Mathf.Clamp01(GoodBeats / Mathf.Max(1f, requiredBeats - 1f)));
+            float winC = NextWindow(-1f, winW); // işaretçi sol uçtan başlar
+            Vector2 shoveDir = Vector2.zero;
+            var cam = Camera.main != null ? Camera.main.GetComponent<ChapterCamera>() : null;
+            try
+            {
+                if (rhythmView != null)
+                {
+                    rhythmView.Show(requiredBeats, windowHalf);
+                    rhythmView.SetPrompt(GoodBeats % 2 == 0);
+                    rhythmView.SetBeats(beats);
+                    rhythmView.SetWindow(winC, winW);
+                }
+                yield return null; // başlatan E bu karede vuruş sayılmasın
+                while (true)
+                {
+                    if (version != resetVersion || !isActiveAndEnabled) yield break;
+                    if (GameInput.BackPressed || GameInput.RightClickPressed) break;
+                    float dt = Time.deltaTime;
+                    phase += dt;
+                    // üçgen dalga: -1 → 1 → -1; merkez geçişleri (k + 0,5) * beatSeconds anlarında
+                    float u = phase / beatSeconds;
+                    float tri = Mathf.PingPong(u, 1f) * 2f - 1f;
+                    InBeatWindow = Mathf.Abs(tri - winC) <= winW;
+                    if (rhythmView != null) rhythmView.SetMarker(tri);
+                    if (GameInput.InteractPressed)
+                    {
+                        if (InBeatWindow)
+                        {
+                            bool isPush = GoodBeats % 2 == 0;
+                            GoodBeats++;
+                            beats = Mathf.Min(requiredBeats, beats + 1f);
+                            shoveDir = isPush ? pushDir : -pushDir;
+                            shoveT = 0f;
+                            // SFX_FE_Branch_Push sürekli bir zorlanma sesi (1,6 sn): iyi vuruşlar sürdükçe döngü çalar, ~0,5 sn vuruş gelmezse susar
+                            if (!string.IsNullOrEmpty(beatSfx)) GameAudio.PlayLoop(beatSfx, BeatChannel, 0.75f, 0.05f);
+                            beatSoundUntil = Time.time + 0.5f;
+                            if (animator != null) animator.Face(toTree);
+                            if (rhythmView != null) { rhythmView.Good(); rhythmView.SetPrompt(GoodBeats % 2 == 0); }
+                            if (cam != null) cam.ShakeOffset = shoveDir * (1f / 64f);
+                            if (treeFx != null) treeFx.EmitShoveDebris(3, 1, clearOffsetWorld * (Progress * 0.18f));
+                            if (body != null && !cenkShoving) cenkBase = body.position;
+                            cenkShoveT = 0f;
+                        }
+                        else
+                        {
+                            MissBeats++;
+                            beats = Mathf.Max(0f, beats - missPenalty);
+                            wobbleT = 0f;
+                            if (rhythmView != null) rhythmView.Miss();
+                        }
+                        if (rhythmView != null) rhythmView.SetBeats(beats);
+                        Progress = beats / requiredBeats;
+                        // her basıştan sonra pencere yeni yere geçer; yalnız iyi vuruşlar onu biraz daraltır (son vuruşta ~%70)
+                        winW = windowHalf * Mathf.Lerp(1f, 0.7f, Mathf.Clamp01(GoodBeats / Mathf.Max(1f, requiredBeats - 1f)));
+                        winC = NextWindow(tri, winW);
+                        if (rhythmView != null) rhythmView.SetWindow(winC, winW);
+                    }
+                    if (beatSoundUntil > 0f && Time.time > beatSoundUntil) { beatSoundUntil = 0f; GameAudio.StopLoop(BeatChannel, 0.2f); }
+                    // gövde: ilerledikçe biraz kayar + it/çek sarsılması (tam piksel) + ıskada küçük titreme
+                    shoveT += dt; wobbleT += dt; cenkShoveT += dt;
+                    // Cenk: İT'te gövdeye doğru, ÇEK'te geriye kısa bir adım ve geri dönüş (birkaç piksel; collider'lar geçerli)
+                    if (player != null)
+                    {
+                        bool on = cenkShoveT < 0.16f && body != null;
+                        if (on || cenkShoving)
+                        {
+                            float k = on ? Mathf.Round(Mathf.Sin(cenkShoveT / 0.16f * Mathf.PI) * cenkShovePixels) / 64f : 0f;
+                            body.position = cenkBase + shoveDir * k;
+                            cenkShoving = on;
+                        }
+                    }
+                    if (cam != null && shoveT > 0.08f && shoveT < 0.2f) cam.ShakeOffset = Vector2.zero;
+                    float shove = shoveT < 0.18f ? Mathf.Sin(shoveT / 0.18f * Mathf.PI) * shovePixels / 64f : 0f;
+                    float wobble = wobbleT < 0.2f ? Mathf.Round(Mathf.Sin(wobbleT * 60f)) / 64f : 0f;
+                    PlaceTree(Progress * 0.18f, shoveDir * shove + new Vector2(wobble, 0f));
+                    if (beats >= requiredBeats) { done = true; break; }
+                    yield return null;
+                }
+                if (cam != null) cam.ShakeOffset = Vector2.zero;
+                if (cenkShoving && body != null) { body.position = cenkBase; cenkShoving = false; }
+                InBeatWindow = false;
+                if (!done) { PlaceTree(Progress * 0.18f, Vector2.zero); yield break; }
+
+                // yol açılıyor: gövde arka kenara kayar (collider'ı da), ses, adım
+                if (rhythmView != null) rhythmView.Done();
+                if (!string.IsNullOrEmpty(openSfx)) GameAudio.PlaySfx(openSfx, 0.85f);
+                float from = Progress * 0.18f;
+                for (float t = 0f; t < 0.6f; t += Time.deltaTime)
+                {
+                    if (version != resetVersion || !isActiveAndEnabled) yield break;
+                    PlaceTree(Mathf.Lerp(from, 1f, Mathf.SmoothStep(0f, 1f, t / 0.6f)), Vector2.zero);
+                    yield return null;
+                }
+                PlaceTree(1f, Vector2.zero);
+                for (float t = 0f; t < 0.3f; t += Time.deltaTime) yield return null;
+                IsCleared = true;
+                Apply(true);
+                if (point != null) point.SetAvailable(false);
+                Debug.Log($"[BranchObstacle] {name}: ağaç ritimle kenara itildi (iyi {GoodBeats}, ıska {MissBeats})", this);
+                FloodEveningHub.Say("FE_PATH_OPEN", "Yol açıldı.");
+                FloodEveningHub.Complete(StepId);
+            }
+            finally
+            {
+                if (cenkShoving && body != null) body.position = cenkBase;
+                GameAudio.StopLoop(BeatChannel, 0.2f);
+                if (rhythmView != null) rhythmView.Hide();
+                InBeatWindow = false;
+                playing = false;
+                CloseNotification();
+            }
+        }
+
+        // Yeni pencere yeri: çubuğun tamamen içinde, işaretçinin şu anki yerinin altında değil (en az 0,55 uzakta)
+        private static float NextWindow(float marker, float half)
+        {
+            float lo = -1f + half, hi = 1f - half;
+            for (int i = 0; i < 12; i++)
+            {
+                float c = UnityEngine.Random.Range(lo, hi);
+                if (Mathf.Abs(c - marker) >= 0.55f + half * 0.5f) return c;
+            }
+            return marker > 0f ? lo : hi;
+        }
+
+        private Vector3 TreePoint()
+        {
+            if (branchRoot == null) return transform.position;
+            var sr = branchRoot.GetComponentInChildren<SpriteRenderer>();
+            return sr != null ? sr.bounds.center : branchRoot.position;
+        }
+
+        // k = 0 (başta) .. 1 (açık): gövde clearOffsetWorld boyunca kayar; extra = anlık sarsılma (dünya)
+        private void PlaceTree(float k, Vector2 extra)
+        {
+            if (branchRoot == null || !rhythmStartCaptured) return;
+            Vector3 p = rhythmStartWorld + (Vector3)(clearOffsetWorld * Mathf.Clamp01(k) + extra);
+            branchRoot.position = new Vector3(Mathf.Round(p.x * 64f) / 64f, Mathf.Round(p.y * 64f) / 64f, rhythmStartWorld.z);
+        }
+
         public void ResetModule()
         {
             SetPanel(false);
@@ -298,7 +501,14 @@ namespace AfetUyanisi.Chapters.FloodEvening
             pressCount = 0;
             lastPressFrame = -1;
             armed = startArmed;
-            if (branchRoot != null) branchRoot.localPosition = branchStart;
+            beats = 0f; GoodBeats = 0; MissBeats = 0; InBeatWindow = false;
+            if (rhythmView != null) rhythmView.Hide();
+            if (mode == Mode.Rhythm)
+            {
+                if (branchRoot != null && rhythmStartCaptured) branchRoot.position = rhythmStartWorld;
+                rhythmStartCaptured = false;
+            }
+            else if (branchRoot != null) branchRoot.localPosition = branchStart;
             Apply(false);
         }
 
@@ -307,6 +517,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (mode == Mode.Mash)
             {
                 SetBranchVisible(armed);
+                if (point != null) point.SetAvailable(CanUse);
+                return;
+            }
+            if (mode == Mode.Rhythm)
+            {
+                // gövde (branchRoot = devrilen ağacın yatan görseli) gizlenmez; yolu kesen collider'ı onunla birlikte kayar
+                foreach (var c in blockers) if (c != null) c.enabled = !open;
+                foreach (var go in showWhenOpen) if (go != null) go.SetActive(open);
+                foreach (var go in hideWhenOpen) if (go != null) go.SetActive(!open);
                 if (point != null) point.SetAvailable(CanUse);
                 return;
             }

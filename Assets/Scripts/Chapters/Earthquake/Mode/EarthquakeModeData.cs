@@ -162,10 +162,10 @@ namespace AfetUyanisi.Chapters.Earthquake
                 countdownSeconds = 120f,
                 phone = new EqPhoneData
                 {
-                    app = "AFET FARKINDALIK SİMÜLASYONU",
-                    title = "DEPREM SENARYOSU: 02:00",
-                    body = "Çevreni incele, riskleri belirle ve güvenli davranışları seç!",
-                    note = "Bu bir eğitim simülasyonudur. Depremler önceden kesin olarak tahmin edilemez.",
+                    app = "EŞİK",
+                    title = "DEPREM HAZIRLIĞI: 02:00",
+                    body = "İki dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
+                    note = "",
                     button = "BAŞLA"
                 },
                 inspectables = Array.Empty<EqInspectableData>(),
@@ -174,11 +174,11 @@ namespace AfetUyanisi.Chapters.Earthquake
                     new EqWarningData { id = "mirror", title = "CAM TEHLİKESİ!", text = "Deprem sırasında cam ve kırılabilecek eşyalardan uzak dur." },
                     new EqWarningData { id = "window", title = "PENCERE TEHLİKESİ!", text = "Camlar kırılabilir. Deprem anında pencerenin önünde durma." },
                     new EqWarningData { id = "bookshelf", title = "DEVRİLME TEHLİKESİ!", text = "Sabitlenmemiş uzun eşyalar devrilebilir. Yanında bekleme." },
-                    new EqWarningData { id = "glass_after", title = "CAM KIRIKLARI!", text = "Yerde cam kırıkları var — üstünden geçme." }
+                    new EqWarningData { id = "glass_after", title = "CAM KIRIKLARI!", text = "Yerde cam kırıkları var. Üstünden geçme!" }
                 },
                 questions = new[]
                 {
-                    Q("Q1", "Deprem sırasında ne yapmalıyız?", "Aferin! Sağlam masanın altında Çök–Kapan–Tutun.", "protect",
+                    Q("Q1", "Deprem sırasında ne yapmalıyız?", "Evet! Sağlam masanın altında Çök–Kapan–Tutun.", "protect",
                         "Deprem anı: sağlam masanın altında Çök–Kapan–Tutun.",
                         O("Pencereye koşmalıyız", false, "Camlar kırılabilir. Pencerelerden uzak durmalıyız."),
                         O("Sağlam bir masanın altında Çök–Kapan–Tutun yapmalıyız", true, "Masa, düşebilecek eşyalardan korur."),
@@ -189,7 +189,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                         O("Evet, daha hızlı ineriz", false, "Elektrik kesilebilir, mahsur kalırız."),
                         O("Hayır, asansörden uzak durmalıyız", true, "Depremde ve sonrasında merdiven kullanılır."),
                         O("Sadece elektrik varsa kullanabiliriz", false, "Elektrik her an kesilebilir.")),
-                    Q("Q3", "Deprem sırasında camlara yakın durmalı mıyız?", "Çok iyi! Camlardan uzak dururuz.", "glass",
+                    Q("Q3", "Deprem sırasında camlara yakın durmalı mıyız?", "Evet. Camlardan uzak dururuz.", "glass",
                         "Camlar: pencere ve aynalardan uzak dur.",
                         O("Evet", false, "Camlar kırılıp zarar verebilir."),
                         O("Hayır, camlardan uzak durmalıyız", true, "Kırılan cam parçaları yaralayabilir."),
@@ -205,13 +205,13 @@ namespace AfetUyanisi.Chapters.Earthquake
                     steps = new[] { "ÇÖK", "KAPAN", "TUTUN" },
                     promptDrop = "[E] Çök",
                     promptCover = "[E] Başını ve enseni koru",
-                    promptHold = "[SPACE] basılı tut; [A] / [D] ile dengeyi düzelt",
+                    promptHold = "[BOŞLUK] basılı tut, [A] / [D] ile dengede kal",
                     promptDropInPlace = "[E] Olduğun yerde çök",
                     promptCoverInPlace = "[E] Kollarınla başını ve enseni koru",
                     releaseWarning = "Sarsıntı bitene kadar tutun!",
                     noResponseHint = "Hemen korun! [E] ile çök, başını ve enseni koru.",
-                    tableSuccess = "Harika! Sağlam masanın altında Çök–Kapan–Tutun yaptın.",
-                    inPlaceSuccess = "İyi! Olduğun yerde çöktün ve başını, enseni korudun.",
+                    tableSuccess = "Sağlam masanın altında Çök–Kapan–Tutun yaptın.",
+                    inPlaceSuccess = "Olduğun yerde çöktün, başını ve enseni korudun.",
                     exposed = new EqExposedTexts
                     {
                         window = "Pencereye çok yakındın! Deprem anında pencereden uzak dur.",
@@ -223,18 +223,18 @@ namespace AfetUyanisi.Chapters.Earthquake
                 after = new EqAfterTexts
                 {
                     checkHazards = "Önce çevreni kontrol et: cam kırıkları, düşen eşyalar, gaz kokusu.",
-                    glassWarning = "Yerde cam kırıkları var — üstünden geçme.",
+                    glassWarning = "Yerde cam kırıkları var. Üstünden geçme!",
                     elevator = "Asansör kullanılmaz! Merdiveni kullan.",
                     stairs = "Merdivenden koşmadan, tırabzana tutunarak in.",
                     bagTaken = "Deprem çantanı aldın.",
                     bagReminder = "Çıkmadan önce kapının yanındaki deprem çantanı al.",
                     doorLockedBefore = "Sarsıntı sırasında dışarı koşulmaz. Şimdi evde güvenli yerini belirle.",
                     assembly = "Toplanma alanına ulaştın. Resmî duyuruları takip et.",
-                    readyHint = "Hazırlığın tamam! Güvenli bir yerde bekle. [Space] Simülasyonu hızlandır"
+                    readyHint = "Güvenli bir yerde bekle. [BOŞLUK] Zamanı hızlandır"
                 },
                 results = new EqResultTexts
                 {
-                    title = "AFET FARKINDALIK RAPORU",
+                    title = "DEPREM FARKINDALIK RAPORU",
                     labels = new[]
                     {
                         new EqLabel { minScore = 85, label = "AFET BİLİNCİ USTASI" },
@@ -244,7 +244,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     },
                     labelMessages = Array.Empty<EqLabelMessage>(),
                     readyText = "Hazırlık tamam",
-                    note = "Bu bir farkındalık simülasyonudur. Gerçek bir afette resmî kurumların talimatlarına uy.",
+                    note = "",
                     lessons = EqLessons.CreateDefault(),
                     tips = new EqTips
                     {
@@ -375,11 +375,11 @@ namespace AfetUyanisi.Chapters.Earthquake
         /// <summary>Talimat (denge başlamadan): durum satırı.</summary>
         public string controls = "İşareti YEŞİLDE tut:  A sola,  D sağa çeker";
         /// <summary>Talimat (denge başlamadan): SPACE şeridi.</summary>
-        public string startHint = "Başlamak için SPACE'e bas ve basılı tut";
+        public string startHint = "BOŞLUK tuşuna bas ve bırakma";
         /// <summary>SPACE basılıyken şerit metni.</summary>
-        public string note = "Tutunuyorsun — başını ve enseni koru";
+        public string note = "Tutunuyorsun. Başını ve enseni koru!";
         /// <summary>SPACE bırakılınca şerit metni.</summary>
-        public string release = "SPACE'i bırakma — tutunmaya devam et!";
+        public string release = "Bırakma, tutunmaya devam et!";
         public string initial = "Sarsıntı başladı";
         public string strong = "Sarsıntı güçleniyor";
         public string irregular = "Sarsıntı düzensiz, dikkat!";
@@ -388,13 +388,13 @@ namespace AfetUyanisi.Chapters.Earthquake
         public string driftLeft = "A ile ortaya dön";
         public string driftRight = "D ile ortaya dön";
         public string timeLeft = "{0} sn";
-        public string resultGood = "Sarsıntı bitti — iyi tutundun!";
+        public string resultGood = "Sarsıntı bitti. Sıkı tutundun!";
         public string resultHard = "Sarsıntı bitti. Biraz zorlandın ama korunmaya devam ettin.";
         // Sarsıntı sonrası kart / rapor
         public string success = "Sarsıntı bitene kadar tutundun ve dengeni korudun.";
-        public string feedback = "Biraz zorlandın: sarsıntı bitene kadar SPACE'i bırakmadan tutunmaya çalış.";
+        public string feedback = "Biraz zorlandın. Sarsıntı bitene kadar BOŞLUK tuşunu bırakma.";
         public string score = "Denge: {0}/100";
-        public string resultNote = "Gerçek depremde de sarsıntı bitene kadar başını ve enseni koru, tutunmaya devam et.";
+        public string resultNote = "Sarsıntı bitene kadar başını ve enseni korumaya devam et.";
     }
 
     [Serializable]

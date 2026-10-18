@@ -207,6 +207,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (warn && !blocked && Time.time - lastToastTime >= toastCooldown)
             {
                 lastToastTime = Time.time;
+                EqSfx.Play(EqSfx.HazardWarn, 0.7f); // SES: tehlike uyarısı
                 if (cards != null) cards.ShowToast(WarningTitle, WarningText, toastSeconds);
                 else Debug.Log($"[EQ] UYARI: {WarningTitle} — {WarningText}", this);
             }

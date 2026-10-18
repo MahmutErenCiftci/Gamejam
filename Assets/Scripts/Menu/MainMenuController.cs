@@ -237,6 +237,7 @@ namespace AfetUyanisi.Menu
                 ShowTooltip("Önce bir rüya seç: DEPREM ya da SEL.");
                 return;
             }
+            GameAudio.PlaySfx("SFX_UI_Confirm", 0.8f); // bölüm başlatma onayı (P-UI)
             StartCoroutine(LoadChapterRoutine(bubbles[selectedIndex].Chapter));
         }
 

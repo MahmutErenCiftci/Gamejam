@@ -115,7 +115,7 @@
     }
   ],
   "result": {
-    "title_success": "Tebrikler! Doğru davrandın.",
+    "title_success": "Bölüm tamam. Doğru yerde korundun.",
     "title_with_mistakes": "Bölümü tamamladın! Yanlışlarından ders çıkardın.",
     "learned": [
       "Sarsıntı anında ÇÖK – KAPAN – TUTUN.",
@@ -125,6 +125,6 @@
       "Resmî açıklamaları takip et.",
       "Toplanma alanına git."
     ],
-    "note": "Bu bir farkındalık oyunudur. Gerçek bir afette resmî kurumların talimatlarına uy."
+    "note": ""
   }
 }

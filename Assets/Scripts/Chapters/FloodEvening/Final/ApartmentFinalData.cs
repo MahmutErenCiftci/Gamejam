@@ -47,8 +47,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public string handle_hint = "SOL TIK BASILI TUT VE AŞAĞI SÜRÜKLE";
         public string cancel_hint = "[Esc] Geri";
 
-        public string end_title = "GÜVENLİ BÖLGEYE ULAŞTIN!";
-        public string end_subtitle = "AFET UYANIŞI — BÖLÜM TAMAMLANDI";
+        public string end_title = "EVE ULAŞTIN!";
+        public string end_subtitle = "EŞİK · SEL BÖLÜMÜ TAMAMLANDI";
 
         [NonSerialized] private string rawJson;
         [NonSerialized] private HashSet<string> warned;

@@ -57,6 +57,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (IsRinging) return;
             IsRinging = true;
             Debug.Log("[EQ] telefon çalıyor (titreşim + zil)", this);
+            EqSfx.Play("SFX_UI_Phone_Vibrate", 0.8f); // SES: telefon titreşimi (zil AudioAutoWiring'de)
             if (ringAudio != null && ringAudio.clip != null)
             {
                 ringAudio.loop = true;

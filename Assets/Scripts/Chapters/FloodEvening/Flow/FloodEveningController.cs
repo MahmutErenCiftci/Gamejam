@@ -20,9 +20,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
         LongRoad,       // uzun yolda (HighRoad'a girildi)
         Obstacle,       // ağaç düştü; kırık dal E'ye art arda basarak itilecek
         FinalApproach,  // "Yol açıldı." → son sokak (J) → apartmanın ön bahçesi (avlu)
-        Finale,         // avluya (SafeZone) varıldı: sel sayacı durdu, apartman finali (posta kutusu, PIN, kapı kolu) oynanıyor
+        Finale,         // avluya (SafeZone) varıldı: apartman finali (posta kutusu, PIN, kapı kolu); sel YAVAŞLAYARAK sürer, avlu da dolar
         Success,        // Cenk eve girdi (final yoksa: avluya varıldı) → bitiş ekranı
-        Failed          // sel sayacı (120 sn) doldu, güvenli bölgeye varılamadı → başarısız ekranı
+        Failed          // sel sayacı (80 sn) doldu, eve girilemedi → başarısız ekranı
     }
 
     /// <summary>
@@ -30,12 +30,13 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// Intro → Warning → RouteChoice → (kısa yol: köşeden sonra kapalı, bir kez "Yol kapanmış..." repliği, oyuncu YÜRÜYEREK döner;
     /// hata sayılmaz, raporda nötr bilgi) → LongRoad → Obstacle (EVENTS'in ağaç düşüşü + dal itme) → FinalApproach → Success.
     /// Durum geri gitmez; modüllerin Hub adımlarından ve oyuncunun konumundan (HighRoad, BarrierZone, SafeZone) türetilir.
-    /// SEL SAYACI (lider kararı 18 Eki): telefon uyarısı kapandığı an TEK bir 120 sn sayaç başlar (StartFloodSequence; tekrar
-    /// çağrılsa da ikinci sayaç olmaz). FloodEveningHub.Progress01 = geçen / 120 bütün sistemlerin tek kaynağıdır: sağdaki gösterge,
+    /// SEL SAYACI (lider kararı 18 Eki; 80 sn, P-FLOOD): telefon uyarısı kapandığı an TEK bir sayaç başlar (StartFloodSequence; tekrar
+    /// çağrılsa da ikinci sayaç olmaz). FloodEveningHub.Progress01 = geçen / floodSeconds bütün sistemlerin tek kaynağıdır: sağdaki gösterge,
     /// yağmur, haritadaki su (FloodWaterField), yol kapanmaları, sesler. Süre yalnız oynanışta akar: diyalog, okuma panelleri ve
     /// zorunlu sinematiklerde (ağaç düşüşü) durur; mini oyunlarda (dal itme) ve çevre tehlikelerinde (yüzen enkaz, elektrik çarpması tepkisi) akar; Time.timeScale = 0 (pause) durdurur.
-    /// Avluya (SafeZone) varınca sayaç durur → apartman finali (IFloodEveningFinale) → Cenk eve girince bitiş ekranı.
-    /// Süre dolarsa (avluya varılmadıysa) Failed: kritik uyarı + başarısız ekranı; Tekrar Dene sahneyi baştan kurar.
+    /// Avluya (SafeZone) varınca sayaç DURMAZ (lider kararı 18 Eki öğlen): apartman finali (IFloodEveningFinale) oynanırken sel
+    /// finaleRate hızıyla (ör. 0,35x) sürer, avlu da su alır; sayaç ancak Cenk eve girince (home_entered) durur → bitiş ekranı.
+    /// Süre dolarsa (eve girilmediyse; finalde de) Failed: kritik uyarı + başarısız ekranı; Tekrar Dene sahneyi baştan kurar.
     /// Rotadan çıkan modüller (şifre, bahçe kapısı, ipuçları, söylenti) sahnede yoksa akış sorunsuz çalışır;
     /// sahneye konursa IFloodEveningInteraction olarak yine kaydedilir.
     /// </summary>
@@ -43,7 +44,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
     {
         [Header("Sel sayacı (tek zaman kaynağı)")]
         [Tooltip("Uyarıdan sonra selin kritik seviyeye (%100) varma süresi (oynanışta geçen sn)")]
-        [SerializeField] private float floodSeconds = 120f;
+        [SerializeField] private float floodSeconds = 80f;
+        [Tooltip("Apartman finalinde (avludan eve girene kadar) sel sayacının hız çarpanı: sel sürer ama adil kalır")]
+        [SerializeField, Range(0.05f, 1f)] private float finaleRate = 0.15f;
         [Tooltip("Süre dolunca bölüm başarısız olur (kapalıysa su %100'de kalır, oyun sürer)")]
         [SerializeField] private bool failOnTimeout = true;
         [Tooltip("Sağ kenardaki SEL DURUMU göstergesi")]
@@ -120,6 +123,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private bool forkSaid;
         private bool shortRoadTried;
         private float lastRainSet = -1f;
+        private bool treeFocus;
         private ChapterCamera chapterCamera;
         private ObjectiveTracker objectives;
         private Transform forkPoint;
@@ -140,6 +144,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public float Elapsed => elapsed;
         public float PlaySeconds => playSeconds;
         public float FloodSeconds => floodSeconds;
+        public float FinaleRate => finaleRate;
+        /// <summary>Avluya varıldığı andaki sayaç (sn; varılmadıysa -1). Test ölçümü için.</summary>
+        public float YardElapsed { get; private set; } = -1f;
         public float Progress01 => Mathf.Clamp01(elapsed / Mathf.Max(1f, floodSeconds));
         public bool FloodStarted => floodStarted;
         public bool FloodStopped => floodStopped;
@@ -189,6 +196,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             FloodEveningHub.FloodStarted = false;
             FloodEveningHub.FloodStopped = false;
             FloodEveningHub.FloodSeconds = floodSeconds;
+            ObjectiveHudView.ProgressWord = "İLERLEME"; // P-FLOOD: görev panelinde "HAZIRLIK" yerine (deprem değil)
             FloodEveningHub.OutdoorAudio01 = 1f; // önceki oyunda eve girerken 0'a inmişti (Tekrar Dene / menüden yeniden giriş)
 
             if (player == null) player = FindAnyObjectByType<IsoPlayerController>(FindObjectsInactive.Include);
@@ -251,6 +259,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             FloodEveningHub.Paused = false;
             FloodEveningHub.Progress01 = 0f;
             FloodEveningHub.OutdoorAudio01 = 1f;
+            FloodEveningHub.CinematicActive = false;
+            ObjectiveHudView.ProgressWord = "HAZIRLIK";
             Time.timeScale = 1f;
         }
 
@@ -324,6 +334,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             // ---------------- Warning (bir kez) ----------------
             SetState(FloodEveningState.Warning);
             GameAudio.PlaySfx("SFX_Phone_Notify", 0.8f);
+            GameAudio.PlaySfx("SFX_UI_Phone_Vibrate", 0.7f); // P-FLOOD: bildirimle birlikte titreşim
             if (warning != null) yield return warning.ShowWarning();
             else yield return FallbackWarning();
             yield return null; // uyarıyı kapatan girdi bir sonraki etkileşimi tetiklemesin
@@ -413,7 +424,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
             playSeconds += Time.deltaTime;
             bool paused = ComputePaused();
             FloodEveningHub.Paused = paused;
-            if (!paused && !floodStopped) elapsed = Mathf.Min(floodSeconds, elapsed + Time.deltaTime * debugTimeScale);
+            // Finalde (avlu → ev) sel yavaşlar ama durmaz (finaleRate).
+            float rate = state == FloodEveningState.Finale ? finaleRate : 1f;
+            if (!paused && !floodStopped) elapsed = Mathf.Min(floodSeconds, elapsed + Time.deltaTime * debugTimeScale * rate);
             float p = Progress01;
             FloodEveningHub.Progress01 = p;
             hud.SetLevel(p);
@@ -421,13 +434,11 @@ namespace AfetUyanisi.Chapters.FloodEvening
             UpdateWeather(p);
             UpdateStageWarnings(p);
 
-            if (state == FloodEveningState.Finale)
-            {
-                if ((finale != null && finale.IsComplete) || steps.Contains("home_entered")) Finish();
-                return;
-            }
-            // süre doluşu yalnız oynanışta sonuçlanır: diyalog / okuma paneli / sinematik açıkken (ör. F9 ile) panel kapanınca
+            if (state == FloodEveningState.Finale && ((finale != null && finale.IsComplete) || steps.Contains("home_entered"))) { Finish(); return; }
+            // süre doluşu yalnız oynanışta sonuçlanır: diyalog / okuma paneli / sinematik açıkken (ör. F9 ile) panel kapanınca.
+            // Apartman finalinde de geçerli (çok yavaş oynanırsa su avluyu basar).
             if (!paused && !floodStopped && failOnTimeout && elapsed >= floodSeconds) { Fail(); return; }
+            if (state == FloodEveningState.Finale) return;
 
             if (player != null)
             {
@@ -486,6 +497,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private void UpdateControl()
         {
             bool control = freeRoam && !finished && !saying && openPanels.Count == 0 && !interactor.IsBusy;
+            bool cine = false;
+            foreach (var id in openPanels) foreach (var prefix in cinematicPanels) if (!string.IsNullOrEmpty(prefix) && id.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) cine = true;
+            FloodEveningHub.CinematicActive = cine;
             FloodEveningHub.FreeRoam = control;
             interactor.InteractionEnabled = freeRoam && !finished && !saying;
             if (control != lastControl && player != null)
@@ -543,19 +557,22 @@ namespace AfetUyanisi.Chapters.FloodEvening
         // Sonuç
         // =====================================================================
 
-        /// <summary>Avluya (SafeZone) varıldı: sel sayacı durur (su/yağmur bu seviyede kalır). Final varsa başlar, yoksa bitiş.</summary>
+        /// <summary>
+        /// Avluya (SafeZone) varıldı. Final varsa başlar ve sel YAVAŞLAYARAK sürer (finaleRate; avlu da su alır, sayaç eve girince durur);
+        /// final yoksa sayaç durur ve bitiş.
+        /// </summary>
         private void ReachSafeZone()
         {
-            if (floodStopped || finished) return;
-            floodStopped = true;
-            FloodEveningHub.FloodStopped = true;
+            if (floodStopped || finished || state == FloodEveningState.Finale) return;
             MarkStep("safe_zone");
-            hud.SetFloodSafe(true);
-            Log($"GÜVENLİ BÖLGE: sel sayacı durdu (sayaç {elapsed:0.0}/{floodSeconds:0} sn, oynanış {playSeconds:0.0} sn, kısa yol {(shortRoadTried ? "denendi" : "denenmedi")})");
-            if (finale == null) { Finish(); return; }
+            YardElapsed = elapsed;
+            GameAudio.PlaySfx("SFX_FE_SafeZone", 0.75f);
+            Log($"AVLU: apartmana varıldı (sayaç {elapsed:0.0}/{floodSeconds:0} sn = %{Progress01 * 100f:0}, oynanış {playSeconds:0.0} sn, kısa yol {(shortRoadTried ? "denendi" : "denenmedi")})");
+            if (finale == null) { floodStopped = true; FloodEveningHub.FloodStopped = true; Finish(); return; }
             SetState(FloodEveningState.Finale);
-            hud.ShowToast(UiOr(KeyToastHomeTitle, "APARTMANINA ULAŞTIN"), UiOr(KeyToastHomeBody, "Sel sayacı durdu. Şimdi eve gir."),
-                FloodEveningHud.ToastKind.Info, 3f);
+            Log($"final: sel x{finaleRate:0.00} hızla sürüyor");
+            hud.ShowToast(UiOr(KeyToastHomeTitle, "APARTMANINA ULAŞTIN"), UiOr(KeyToastFinaleBody, "Su avluya da geliyor. Hemen kapıyı aç, eve gir!"),
+                FloodEveningHud.ToastKind.Warning, 3f);
             finale.Begin();
         }
 
@@ -568,8 +585,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
             FloodEveningHub.FreeRoam = false;
             bool viaFinale = state == FloodEveningState.Finale;
             if (!floodStopped) { floodStopped = true; FloodEveningHub.FloodStopped = true; MarkStep("safe_zone"); }
+            hud.SetFloodSafe(true); // eve girildi: sayaç durdu, gösterge yeşil
             SetState(FloodEveningState.Success);
-            Log($"BİTTİ: {(viaFinale ? "Cenk eve girdi" : "güvenli bölgeye varıldı")} (sayaç {elapsed:0.0} sn, oynanış {playSeconds:0.0} sn)");
+            Log($"BİTTİ: {(viaFinale ? "Cenk eve girdi" : "güvenli bölgeye varıldı")} (sayaç {elapsed:0.0} sn = %{Progress01 * 100f:0}, avlu %{(YardElapsed >= 0f ? YardElapsed / floodSeconds * 100f : -1f):0}, oynanış {playSeconds:0.0} sn)");
             StartCoroutine(EndSequence(viaFinale));
         }
 
@@ -629,6 +647,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 // FLOOD-START: okuldan gelindiyse mahalle baştan (okul/köprü tekrar oynanmaz), değilse bölüm baştan.
                 if (!FloodSchoolHandoff.RetryInStreet()) GameSceneRouter.RestartCurrentChapter();
             }
+            // P-UI: başarısız raporda da "Deprem Bölümüne Geç / Oyunu Bitir" var; sel tamamlanmış sayılmaz (GameFlow "geçildi").
+            else if (result.choice == FloodEveningResultView.ChoiceNext) GameFlow.ContinueAfter(ChapterId.Flood);
             else GameSceneRouter.ReturnToMenu();
         }
 
@@ -652,17 +672,22 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (p - StageAt[i] > 0.08f) continue; // test kısayoluyla atlanan eşikler sessiz geçer
                 switch (i)
                 {
-                    case 0: hud.ShowToast(T(FloodEveningTexts.Keys.Toast2Title), T(FloodEveningTexts.Keys.Toast2Body), FloodEveningHud.ToastKind.Info, 3f); break;
-                    case 1: hud.ShowToast(T(FloodEveningTexts.Keys.Toast3Title), T(FloodEveningTexts.Keys.Toast3Body), FloodEveningHud.ToastKind.Warning, 3.5f); break;
+                    case 0: if (state == FloodEveningState.Finale) break; hud.ShowToast(T(FloodEveningTexts.Keys.Toast2Title), T(FloodEveningTexts.Keys.Toast2Body), FloodEveningHud.ToastKind.Info, 3f); break;
+                    case 1: if (state == FloodEveningState.Finale) break; hud.ShowToast(T(FloodEveningTexts.Keys.Toast3Title), T(FloodEveningTexts.Keys.Toast3Body), FloodEveningHud.ToastKind.Warning, 3.5f); break;
                     case 2:
                         GameAudio.PlaySfx("SFX_Flood_Warn", 0.8f);
+                        if (state == FloodEveningState.Finale) break; // finalde yalnız ses (finale özel şerit %90'da)
                         hud.ShowToast(UiOr(KeyCriticalTitle, "KRİTİK TEHLİKE"), UiOr(KeyCriticalBody, "Bazı yollar suyla kapanıyor. Hemen güvenli bölgeye ilerle!"),
                             FloodEveningHud.ToastKind.Danger, 3.5f);
                         break;
                     case 3:
                         GameAudio.PlaySfx("SFX_Flood_Warn", 0.9f);
-                        hud.ShowToast(UiOr(KeyHurryTitle, "SU HIZLA YÜKSELİYOR"), UiOr(KeyHurryBody, "Az zaman kaldı. Apartmanının avlusuna ulaş!"),
-                            FloodEveningHud.ToastKind.Danger, 3f);
+                        if (state == FloodEveningState.Finale)
+                            hud.ShowToast(UiOr(KeyHurryTitle, "SU HIZLA YÜKSELİYOR"), UiOr(KeyHurryFinaleBody, "Su avluyu basıyor. Kapıyı aç, hemen içeri gir!"),
+                                FloodEveningHud.ToastKind.Danger, 3f);
+                        else
+                            hud.ShowToast(UiOr(KeyHurryTitle, "SU HIZLA YÜKSELİYOR"), UiOr(KeyHurryBody, "Az zaman kaldı. Apartmanının avlusuna ulaş!"),
+                                FloodEveningHud.ToastKind.Danger, 3f);
                         break;
                 }
             }
@@ -711,8 +736,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             result = BuildResult();
             if (viaFinale)
             {
-                result.title = UiOr(KeyEndTitle, "GÜVENLİ BÖLGEYE ULAŞTIN!");
-                result.message = UiOr(KeyEndSubtitle, "AFET UYANIŞI — BÖLÜM TAMAMLANDI");
+                result.title = UiOr(KeyEndTitle, "EVE ULAŞTIN!");
+                result.message = UiOr(KeyEndSubtitle, "EŞİK · SEL BÖLÜMÜ TAMAMLANDI");
             }
             Log("sonuç: " + result.title + " · doğru " + result.correct.Count + ", bilgi " + result.corrected.Count);
             resultView.SetPrimaryAction(FloodEveningResultView.ChoiceNext, GameFlow.ContinueLabel(ChapterId.Flood));
@@ -720,8 +745,14 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Log("seçim: " + result.choice);
             Time.timeScale = 1f;
             FloodEveningHub.Paused = false;
-            // Başarı ekranında Tekrar Dene yok (yalnız başarısız ekranında): Devam → GameFlow, Menü → oyun sıfırlanır.
+            // Devam → GameFlow, Tekrar Dene → mahalle baştan (tamamlanma bilgisi kalır), Menü → oyun sıfırlanır.
             if (result.choice == FloodEveningResultView.ChoiceNext) GameFlow.ContinueAfter(ChapterId.Flood);
+            else if (result.choice == FloodEveningResultView.ChoiceRetry)
+            {
+                // P-UI: rapor başarıda da Tekrar Dene sunar (deprem raporu gibi); tamamlanma bilgisi değişmez.
+                GameSession.StartChapter(ChapterId.Flood);
+                if (!FloodSchoolHandoff.RetryInStreet()) GameSceneRouter.RestartCurrentChapter();
+            }
             else GameSceneRouter.ReturnToMenu();
         }
 
@@ -773,6 +804,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private const string KeyEndTitle = "end_title", KeyEndSubtitle = "end_subtitle";
         private const string KeyCriticalTitle = "toast_critical_title", KeyCriticalBody = "toast_critical_body";
         private const string KeyHurryTitle = "toast_hurry_title", KeyHurryBody = "toast_hurry_body";
+        private const string KeyToastFinaleBody = "toast_home_flood_body", KeyHurryFinaleBody = "toast_hurry_finale_body";
 
         private string UiOr(string key, string fallback) => texts.HasUi(key) ? texts.Ui(key) : fallback;
 
@@ -785,6 +817,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (string.IsNullOrEmpty(id)) return;
             openPanels.Add(id);
             Log($"panel açıldı: {id}");
+            // P-FLOOD: ağaç düşüşünde kamera yumuşakça Cenk ile ağacın arasına kayar (ikisi de kadrajda), bitince Cenk'e döner
+            if (id.StartsWith("treefall", StringComparison.OrdinalIgnoreCase) && chapterCamera != null && player != null)
+            {
+                var tree = FindAnyObjectByType<FloodTreeFallEvent>();
+                if (tree != null) { treeFocus = true; chapterCamera.ShowPoint(Vector3.Lerp(player.transform.position, tree.FocusPoint + new Vector3(0f, 0.45f, 0f), 0.75f), false); }
+            }
         }
 
         private void OnPanelClosed(string id)
@@ -792,6 +830,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (string.IsNullOrEmpty(id)) return;
             openPanels.Remove(id);
             Log($"panel kapandı: {id}");
+            if (treeFocus && id.StartsWith("treefall", StringComparison.OrdinalIgnoreCase)) { treeFocus = false; FollowPlayer(false); }
         }
 
         private void OnStep(string id)

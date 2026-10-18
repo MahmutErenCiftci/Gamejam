@@ -253,6 +253,30 @@ namespace AfetUyanisi.Chapters.Earthquake
         public bool StartRoomLocked => (phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep) && !countdown.HasExpired
                                        && MissingStartRoomTasks().Count > 0;
 
+        // --- YÖNLENDİRME (EarthquakeGuidance) için okunur durum: ok/kontur yalnızca serbest dolaşmada görünür ---
+        /// <summary>Serbest dolaşma var ve hiçbir engel yok (mini oyun, kart, diyalog, soru, oda geçişi, çanta takma).</summary>
+        public bool GuidanceFree => freeRoam && !transitioning && !bagWearing && interactor != null && !interactor.IsBusy
+                                    && !interactor.IsSaying && !decisions.IsAsking && !Mode.EarthquakeMinigameHub.AnyOpen;
+        public bool PrepTimeOver => countdown == null || countdown.HasExpired;
+        public RoomInteractor Interactor => interactor;
+        public PreparationQuestManager Quests => quests;
+        public EmergencyBagInteractable EmergencyBag => emergencyBag;
+        public IReadOnlyList<EarthquakeDoor> Doors => doors;
+        public bool ReachedAssembly => reachedAssembly;
+        public EarthquakeRoom RoomOfId(EarthquakeRoom.RoomId id) => RoomOf(id);
+        /// <summary>Toplanma alanında oyuncunun yürüyeceği anne (WaitAssemblyMeet ile aynı seçim).</summary>
+        public Transform AssemblyMeetTarget
+        {
+            get
+            {
+                if (assemblyMother != null) return assemblyMother.transform;
+                if (mother != null && mother.gameObject.activeInHierarchy) return mother.transform;
+                var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+                return assembly != null ? assembly.FindChild("MotherSpot") : null;
+            }
+        }
+        // --- YÖNLENDİRME sonu ---
+
         private bool Bypass => debugAutoPlay && !autoPlayUseViews;
 
         // =====================================================================
@@ -301,6 +325,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 phone.Hint = hint;
             }
             ApplyAutoPlaySettings();
+            // YÖNLENDİRME: ok + kontur + ŞİMDİ satırı + kontrol ipucu (sahnede yoksa bu objeye eklenir)
+            if (FindAnyObjectByType<EarthquakeGuidance>(FindObjectsInactive.Include) == null) gameObject.AddComponent<EarthquakeGuidance>();
         }
 
         private void Start()
@@ -814,6 +840,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             nextLockedToastAt = Time.time + lockedToastCooldown;
             var labels = missing.ConvertAll(t => t.label);
             Log($"B: başlangıç odası kapısı kilitli — eksik: {string.Join(", ", labels)}");
+            EqSfx.Play(EqSfx.DoorLocked, 0.8f); // SES: kilitli kapı
             Toast(startRoomLockedTitle, startRoomLockedText + "\nEksik: " + string.Join(", ", labels), toastSeconds);
         }
 
@@ -862,6 +889,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             foreach (var z in exposedZones) Log($"C: oyuncu tehlike bölgesinde: {z.Id} ({z.ExposureKind})");
 
             quakeEvents.BeginShake();
+            StartCoroutine(QuakeExtraSfx()); // SES: bina gıcırtısı + toz/moloz (aralıklı)
             MotherTakeCover();
             float shakeStart = Time.time;
             yield return Startled();
@@ -883,6 +911,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             while (Time.time - shakeStart < minShakeSeconds && !stats.hitByBookshelf) yield return null;
             if (stats.hitByBookshelf) { yield return InjuredByBookshelf(shakeStart); yield break; }
             quakeEvents.EndShake();
+            StartCoroutine(DelayedSfx("SFX_EQ_Car_Alarm", 2.5f, 0.55f)); // SES: sarsıntıdan birkaç sn sonra araba alarmı
             motherShaking = false; // sarsıntı bitti: anne tutunmaya devam eder, D evresinde kalkar
             countdown.SetStatusText("SARSINTI BİTTİ");
             yield return new WaitForSeconds(settleSeconds);
@@ -1061,6 +1090,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             bool preQuake = phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep;
             stats.AddInspected(insp.Id, insp.IsHazard && preQuake);
             Log($"inceleme: {insp.Id} ({insp.Kind}) — toplam {stats.InspectedCount}, tehlike {stats.HazardsFound}/{stats.hazardsTotal}");
+            EqSfx.Play(EqSfx.Inspect, 0.8f); // SES: inceleme kartı açılıyor
             yield return ShowCard(insp.Title, insp.TextFor(phase), insp.Kind);
         }
 
@@ -1075,6 +1105,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 yield break;
             }
             TimedDecisionController.Result result = null;
+            EqSfx.Play(EqSfx.QuestionOpen, 0.8f); // SES: annenin sorusu açılıyor
             yield return decisions.Ask(q, r => result = r);
             freeSinceQuestion = 0f;
             pendingQuestionLogged = null;
@@ -1106,6 +1137,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             quakeBag.Point.SetAvailable(false);
             HideBagVisual();
             WearQuakeBag();
+            EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
             yield return Say(bagLine);
             Toast("DEPREM ÇANTASI", data.after.bagTaken, toastSeconds);
         }
@@ -1163,6 +1195,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     stats.AddInspected("emergency_bag", false);
                     Log("D: hazırlanan afet çantası alındı");
                     bag.MarkTaken();
+                    EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
                     yield return Say(bagLine);
                     Toast("AFET ÇANTASI", bag.TakenToast, toastSeconds);
                     yield break;
@@ -1199,6 +1232,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 if (anim != null && pose != null) anim.ClearPose();
             }
             else bag.MarkTaken();
+            EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
             stats.bagTaken = true;
             bagWearing = false;
             motherProgress = true;
@@ -1239,6 +1273,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                         var info = data.FindInspectable("apartment_door");
                         stats.AddInspected("apartment_door", false);
                         Log("B: daire kapısı kilitli — sarsıntıda dışarı koşulmaz");
+                        EqSfx.Play(EqSfx.DoorLocked, 0.8f); // SES: kilitli kapı
                         yield return ShowCard(info != null ? info.title : "Daire Kapısı", data.after.doorLockedBefore, HazardClass.Exit);
                         yield break;
                     }
@@ -1269,6 +1304,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     yield return Say(exitLine);
                     yield return Transition(room, spawn, facing, PrepareAssembly);
                     reachedAssembly = true;
+                    EqSfx.Play(EqSfx.AssemblyArrive, 0.9f); // SES: toplanma alanına varış
                     break;
 
                 default:
@@ -1326,6 +1362,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             transitioning = true;
             countdown.PushPause(transitionToken);
+            EqSfx.Play(EqSfx.DoorOpen, 0.8f); // SES: kapıdan geçiş
             yield return fader.FadeOut(transitionFadeSeconds);
             PlacePlayer(spawn != null ? spawn : room.DefaultSpawn, facing.sqrMagnitude > 0.0001f ? facing : room.DefaultFacing);
             EnterRoom(room);
@@ -1436,6 +1473,24 @@ namespace AfetUyanisi.Chapters.Earthquake
                 else if (sr != null) sr.sprite = pose;
                 yield return new WaitForSeconds(Mathf.Max(0.05f, motherCoverFrameSeconds));
             }
+        }
+
+        /// <summary>SES: sarsıntı sürerken bina gıcırtısı ve toz/moloz efektleri (birer-ikişer, aralıklı).</summary>
+        private IEnumerator QuakeExtraSfx()
+        {
+            var plan = new (float at, string id, float vol)[] { (0.7f, "SFX_EQ_Building_Creak", 0.8f), (1.9f, "SFX_EQ_Dust_Debris", 0.7f), (3.3f, "SFX_EQ_Building_Creak", 0.6f), (4.6f, "SFX_EQ_Dust_Debris", 0.5f) };
+            float start = Time.time;
+            foreach (var p in plan)
+            {
+                while (Time.time - start < p.at) { if (!quakeEvents.IsShaking) yield break; yield return null; }
+                EqSfx.Play(p.id, p.vol);
+            }
+        }
+
+        private static IEnumerator DelayedSfx(string id, float delay, float vol)
+        {
+            yield return new WaitForSeconds(delay);
+            EqSfx.Play(id, vol);
         }
 
         /// <summary>Annenin korunma pozunu bitirir (yürüme/durma animasyonuna döner). Korunmada değilse bir şey yapmaz.</summary>

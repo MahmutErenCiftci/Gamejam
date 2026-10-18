@@ -115,6 +115,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             while (toasts.Count > 0)
             {
+                // P-FLOOD: zorunlu sinematik (ağaç düşüşü vb.) sırasında şerit beklemede kalır, sonra gösterilir
+                while (FloodEveningHub.CinematicActive) yield return null;
                 var t = toasts.Dequeue();
                 Color c = t.kind == ToastKind.Danger ? FeUi.Red : t.kind == ToastKind.Warning ? FeUi.Amber : FeUi.Teal;
                 FeUi.SetFrameColors(toastFrame, c, FeUi.A(FeUi.Panel, 0.95f));
@@ -126,7 +128,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 PlaceToast();
                 for (float k = 0f; k < 0.2f; k += Time.unscaledDeltaTime) { PlaceToast(); toastGroup.alpha = k / 0.2f; yield return null; }
                 toastGroup.alpha = 1f;
-                for (float k = 0f; k < t.seconds; k += Time.unscaledDeltaTime) { PlaceToast(); yield return null; }
+                for (float k = 0f; k < t.seconds; )
+                {
+                    // sinematik başlarsa şerit gizlenir, süresi işlemez; bitince kaldığı yerden sürer
+                    if (FloodEveningHub.CinematicActive) { toastGroup.alpha = 0f; yield return null; continue; }
+                    toastGroup.alpha = 1f;
+                    k += Time.unscaledDeltaTime;
+                    PlaceToast();
+                    yield return null;
+                }
                 for (float k = 0f; k < 0.25f; k += Time.unscaledDeltaTime) { PlaceToast(); toastGroup.alpha = 1f - k / 0.25f; yield return null; }
                 toastGroup.alpha = 0f;
             }

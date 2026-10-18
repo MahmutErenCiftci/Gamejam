@@ -558,7 +558,7 @@ namespace AfetUyanisi.Chapters
         {
             var data = story?.result;
             string title = mistakes.Count == 0
-                ? data?.title_success ?? "Tebrikler! Doğru davrandın."
+                ? data?.title_success ?? "Bölüm tamam."
                 : data?.title_with_mistakes ?? "Bölümü tamamladın! Yanlışlarından ders çıkardın.";
             IReadOnlyList<string> learned = data?.learned ?? Array.Empty<string>();
             List<string> wrong = mistakes

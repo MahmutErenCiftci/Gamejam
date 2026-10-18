@@ -2,6 +2,7 @@ using System.Collections;
 using AfetUyanisi.Chapters.FloodEvening;
 using AfetUyanisi.Core;
 using AfetUyanisi.Shared;
+using AfetUyanisi.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,11 +45,11 @@ namespace AfetUyanisi.Chapters.GameEnd
 
         [Header("Metinler")]
         [SerializeField] private string title = "OYUN TAMAMLANDI";
-        [SerializeField] private string subtitle = "İki afeti de güvenle atlattın. Küçük kararlar, büyük fark yaratır.";
+        [SerializeField] private string subtitle = "İki afeti de atlattın. Annen de sen de güvendesiniz.";
         [SerializeField] private string chaptersHeader = "BÖLÜMLER";
-        [SerializeField] private string quakeTitle = "DEPREM — Toplanma alanına ulaştın";
+        [SerializeField] private string quakeTitle = "DEPREM · Toplanma alanına ulaştın";
         [SerializeField] private string quakeText = "Sarsıntıda Çök-Kapan-Tutun yaptın, sonra merdivenle güvenli alana indin.";
-        [SerializeField] private string floodTitle = "SEL — Eve güvenle ulaştın";
+        [SerializeField] private string floodTitle = "SEL · Eve güvenle ulaştın";
         [SerializeField] private string floodText = "Suya girmeden, kapalı yolları kullanmadan güvenli yoldan eve vardın.";
         [SerializeField] private string remindersHeader = "UNUTMA";
         [SerializeField] private string[] reminders =
@@ -57,7 +58,7 @@ namespace AfetUyanisi.Chapters.GameEnd
             "Suyla kaplı ya da kapatılmış yollara asla girme; güvenli yüksek bölgeye yönel.",
             "Söylentiye değil, resmî kurumların duyurularına güven; afet çantan hazır olsun."
         };
-        [SerializeField] private string note = "Bu bir farkındalık oyunudur. Gerçek bir afette resmî kurumların talimatlarına uy.";
+        [SerializeField] private string note = "Acil bir durumda 112'yi ara.";
         [SerializeField] private string menuLabel = "Ana Menü";
         [SerializeField] private string replayLabel = "Tekrar Oyna";
 
@@ -92,6 +93,9 @@ namespace AfetUyanisi.Chapters.GameEnd
         private void Awake()
         {
             Time.timeScale = 1f;
+            // Menüyle aynı yazı tipleri: başlık, bölüm başlıkları ve butonlar Press Start 2P (8 px ızgara), metinler Pixel Operator.
+            if (GameFonts.Story != null) font = GameFonts.Story;
+            if (GameFonts.Menu != null) boldFont = GameFonts.Menu;
             if (font == null) font = FeUi.DefaultFont();
             if (boldFont == null) boldFont = font;
             Build();
@@ -142,7 +146,6 @@ namespace AfetUyanisi.Chapters.GameEnd
             }
             var t = Label("Header", titleBlock, boldFont, 16, Warm, TextAnchor.MiddleCenter);
             FeUi.TL(t.rectTransform, 0f, textTop, 400f, 20f);
-            FeUi.BestFit(t, 11);
             t.text = title;
             var st = Label("Subtitle", titleBlock, font, 10, Cream, TextAnchor.MiddleCenter);
             FeUi.TL(st.rectTransform, 0f, textTop + 19f, 400f, 14f);
@@ -156,7 +159,7 @@ namespace AfetUyanisi.Chapters.GameEnd
             FeUi.TL(bottomPanel, 16f, 222f, 608f, 92f);
             bottomGroup = bp.gameObject.AddComponent<CanvasGroup>();
 
-            var ch = Label("ChaptersHeader", bottomPanel, boldFont, 11, Warm, TextAnchor.MiddleLeft);
+            var ch = Label("ChaptersHeader", bottomPanel, boldFont, 8, Warm, TextAnchor.MiddleLeft);
             FeUi.TL(ch.rectTransform, 12f, 6f, 280f, 14f);
             ch.text = chaptersHeader;
             bool floodFirst = GameFlow.FirstSelectedDisaster == ChapterId.Flood;
@@ -166,7 +169,7 @@ namespace AfetUyanisi.Chapters.GameEnd
             var sep = FeUi.Img("Sep", bottomPanel, FeUi.A(Lavender, 0.6f));
             FeUi.TL(sep.rectTransform, 304f, 8f, 1f, 76f);
 
-            var rh = Label("RemindersHeader", bottomPanel, boldFont, 11, Warm, TextAnchor.MiddleLeft);
+            var rh = Label("RemindersHeader", bottomPanel, boldFont, 8, Warm, TextAnchor.MiddleLeft);
             FeUi.TL(rh.rectTransform, 316f, 6f, 280f, 14f);
             rh.text = remindersHeader;
             var rl = Label("Reminders", bottomPanel, font, 9, Cream, TextAnchor.UpperLeft);
@@ -265,10 +268,9 @@ namespace AfetUyanisi.Chapters.GameEnd
         {
             var img = PanelImage(i == 0 ? "MenuButton" : "ReplayButton", buttonRow, false, true);
             FeUi.TL(img.rectTransform, x, 1f, 136f, 22f);
-            var t = Label("Label", img.transform, font, 14, Cream, TextAnchor.MiddleCenter);
+            var t = Label("Label", img.transform, boldFont, 8, Cream, TextAnchor.MiddleCenter);
             FeUi.Stretch(t.rectTransform, 2f);
             t.rectTransform.offsetMin = new Vector2(14f, 1f);
-            FeUi.BestFit(t, 9);
             t.text = label;
             var arrow = Label("Arrow", img.transform, font, 10, Warm, TextAnchor.MiddleCenter);
             FeUi.TL(arrow.rectTransform, 5f, 1f, 12f, 20f);
@@ -354,7 +356,7 @@ namespace AfetUyanisi.Chapters.GameEnd
             for (int i = 0; i < 2; i++) feButtons[i].Interactable = false;
             focus = choice;
             Refresh();
-            GameAudio.PlaySfx("SFX_UI_Click", 0.8f);
+            GameAudio.PlaySfx("SFX_UI_Confirm", 0.8f); // oyun sonu onayı (P-UI; önce SFX_UI_Click)
             var rt = buttons[choice].rectTransform;
             Vector2 p0 = rt.anchoredPosition;
             rt.anchoredPosition = p0 + new Vector2(0f, -1f);

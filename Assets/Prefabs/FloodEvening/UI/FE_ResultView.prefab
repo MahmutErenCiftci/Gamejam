@@ -47,3 +47,15 @@ MonoBehaviour:
   font: {fileID: 0}
   sortingOrder: 110
   inputDelay: 0.6
+  reportPanel: {fileID: 21300000, guid: e1cbe651e5470ee47af34db62cb2c8b7, type: 3}
+  dimSprite: {fileID: 21300000, guid: 94e47c5d7f1230c4d9ee3778b38fc0ee, type: 3}
+  button: {fileID: 21300000, guid: 4d3b9e624e99fb249911caf2918be3aa, type: 3}
+  buttonHover: {fileID: 21300000, guid: 7a08e75fcbeda3f488edc3b3fd382541, type: 3}
+  buttonStart: {fileID: 21300000, guid: c23cf9ac7f902b748ab0c72cf10ad81c, type: 3}
+  buttonStartHover: {fileID: 21300000, guid: dfe03950d45e76c499bf794e135e3407, type: 3}
+  checkIcon: {fileID: 21300000, guid: e17e83a6e0b6b9c42a69dbd26a24b86a, type: 3}
+  crossIcon: {fileID: 21300000, guid: 8e443a90592d18048b27670416205f83, type: 3}
+  warningIcon: {fileID: 21300000, guid: afa8c0ee1114a954f977aa82482f7771, type: 3}
+  clockIcon: {fileID: 21300000, guid: 6d87cfb32b73624419b2611d57052229, type: 3}
+  infoIcon: {fileID: 21300000, guid: 8eed703ac8f3b94418f250bba3e76c3f, type: 3}
+  medal: {fileID: 21300000, guid: f3c1a7e2b94d4e5a8c6b2d0e7a91c4f5, type: 3}

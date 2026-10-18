@@ -98,7 +98,9 @@ namespace AfetUyanisi.Chapters.Earthquake
                     if (l.lightType == Light2D.LightType.Global) { globalLight = l; break; }
             }
             if (globalLight != null) baseLightIntensity = globalLight.intensity;
-            if (rumbleAudio == null)
+            // SES: gürlemeyi AudioAutoWiring (SFX_Quake_Rumble döngüsü) çalıyor; dosya varsa ikinci (sentez) gürleme kurulmaz.
+            bool fileRumble = AfetUyanisi.Core.GameAudio.LoadClip("SFX_Quake_Rumble") != null;
+            if (rumbleAudio == null && !fileRumble)
             {
                 rumbleAudio = gameObject.AddComponent<AudioSource>();
                 rumbleAudio.playOnAwake = false;

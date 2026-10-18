@@ -16,7 +16,7 @@
       "warnOn": [{ "type": "event", "key": "F07_WATER_WARNING" }, { "type": "event", "key": "FS_SWEPT" }] },
     { "id": "FS_SIGN", "group": "home", "text": "Uyarı tabelasını oku", "kind": "Bonus",
       "completeOn": [{ "type": "event", "key": "FS_SIGN" }] },
-    { "id": "FS_HOME", "group": "home", "text": "Mevcut sel güzergâhına bağlan", "kind": "Main",
+    { "id": "FS_HOME", "group": "home", "text": "Eve doğru yürü", "kind": "Main",
       "completeOn": [{ "type": "event", "key": "FS_LEFT" }] }
   ]
 }

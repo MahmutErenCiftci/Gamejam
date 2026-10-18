@@ -209,13 +209,29 @@ namespace AfetUyanisi.Chapters.Flood
             yield return FadeOut(0.4f);
             HideHint();
             StartCoroutine(sweepCutscene.Play());
+            float sweepStart = Time.time; // ara sahnenin kendi saati (ses kancası)
+            GameAudio.PlaySfx("SFX_FE_Sweep_Dream", 0.8f); // Cenk bunu hayal ediyor: rüya geçişi
             yield return null;
             yield return FadeIn(0.2f);
+            // P-FLOOD (18 Eki): ses kancası — suya girince akıntı döngüsü, düşüşte büyük sıçrama, bitince döngü susar.
+            const string currentChannel = "fe_sweep_current";
+            bool current = false, splash = false;
             float blackAt = sweepCutscene.Duration - 0.1f;
-            for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
-                yield return null;
-            SetBlack();
-            while (sweepCutscene.IsPlaying) yield return null;
+            try
+            {
+                for (float elapsed = 0f; sweepCutscene.IsPlaying && elapsed < blackAt; elapsed += Time.deltaTime)
+                {
+                    if (!current && Time.time - sweepStart >= sweepCutscene.EnterWaterTime) { current = true; GameAudio.PlayLoop("SFX_FE_Sweep_Current", currentChannel, 0.75f, 0.4f); }
+                    if (!splash && Time.time - sweepStart >= sweepCutscene.FallTime - 0.05f) { splash = true; GameAudio.PlaySfx("SFX_FE_Sweep_Splash", 0.9f); GameAudio.PlaySfx("SFX_FE_Sweep_Scream", 0.6f); }
+                    yield return null;
+                }
+                SetBlack();
+                while (sweepCutscene.IsPlaying) yield return null;
+            }
+            finally
+            {
+                GameAudio.StopLoop(currentChannel, 0.6f);
+            }
         }
 
         // ---------------- serbest yürüyüş ----------------

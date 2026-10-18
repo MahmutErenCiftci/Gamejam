@@ -2,18 +2,18 @@
   "id": "flood_f03_tv",
   "channelName": "ŞEHİR HABER",
   "programName": "Sabah Haberleri",
-  "fictionNotice": "Kurgusal yayın · Oyun içi örnektir",
+  "fictionNotice": "",
   "speakerName": "Spiker",
   "breakingLabel": "SON DAKİKA",
   "headline": "BUGÜN ŞİDDETLİ YAĞMUR BEKLENİYOR",
-  "subheadline": "Uyarı seviyesi: Yüksek. Açıklamayı okuyun.",
+  "subheadline": "Uyarı seviyesi: Yüksek.",
   "lines": [
     "Günaydın. Bugün yer yer çok kuvvetli yağış bekleniyor.",
     "Sel ve su baskını riskine karşı resmî uyarıları takip edin.",
     "Suyla kaplı yollardan ve dere yataklarından uzak durun."
   ],
   "legendTitle": "Bu yayının uyarı ölçeği",
-  "legendNote": "Renk ölçeği kuruma göre değişebilir; açıklamayı okuyun.",
+  "legendNote": "",
   "legend": [
     { "color": "#C0392B", "label": "Kırmızı (Çok tehlikeli)" },
     { "color": "#E67E22", "label": "Turuncu (Tehlikeli)" },

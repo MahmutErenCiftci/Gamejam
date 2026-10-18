@@ -89,6 +89,8 @@ tree('Yard_Tree2', 'Tree_Small', 39.8, 20.0); tree('Yard_Bench', 'Bench', 37, 24
 for (const [n, s, gx, gy] of [['GPuddle_1', 'Puddle_L', 32, 28.2], ['GDrain_1', 'Drain', 38, 27.4], ['GPuddle_2', 'Puddle_S', 44, 28.5]]) decal(n, s, gx, gy);
 // H
 houseY(46, 18.2, 'Facade_A'); houseY(46, 22.5, 'Facade_Home');
+// (18 Eki, P-FLOOD) G → H köşesindeki boş arsa (gx 46, gy 26.8..31) bir evle kapatıldı: ağaca giden yolda cephe sırası kesintisiz.
+houseY(46, 26.8, 'Facade_A');
 lamp('H1', 45.6, 17.6);                                                            // köşe lambası (I'ye dönüş)
 for (const [n, s, gx, gy] of [['HPuddle_1', 'Puddle_M', 43, 23], ['HDrain_1', 'Drain', 44.5, 19.5], ['HPuddle_2', 'Puddle_S', 42.5, 15.5]]) decal(n, s, gx, gy);
 // I (ağaç olayı burada; ağaç + dal Eren/Arda prefabı, burada sadece boşluk ve çapalar)

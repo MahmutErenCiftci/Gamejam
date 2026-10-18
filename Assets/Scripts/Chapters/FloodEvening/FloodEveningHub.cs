@@ -14,14 +14,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public static bool Paused { get; set; }
         /// <summary>Oyuncu serbest yürüyebilir mi (diyalog/panel/mini oyun kapalı). Controller yazar.</summary>
         public static bool FreeRoam { get; set; }
-        /// <summary>Sel sayacı (120 sn) başladı mı. Telefon uyarısı kapanınca bir kez true olur; controller yazar.</summary>
+        /// <summary>Sel sayacı (80 sn) başladı mı. Telefon uyarısı kapanınca bir kez true olur; controller yazar.</summary>
         public static bool FloodStarted { get; set; }
-        /// <summary>Sel sayacı durdu mu (güvenli bölgeye varıldı ya da süre doldu): su ve yağmur bu seviyede kalır. Controller yazar.</summary>
+        /// <summary>Sel sayacı durdu mu (Cenk eve girdi ya da süre doldu; avluda/apartman finalinde sel yavaşlayarak SÜRER): su ve yağmur bu seviyede kalır. Controller yazar.</summary>
         public static bool FloodStopped { get; set; }
         /// <summary>Sel sayacının toplam süresi (sn). Controller yazar; ekran süreyi buradan hesaplar.</summary>
-        public static float FloodSeconds { get; set; } = 120f;
+        public static float FloodSeconds { get; set; } = 80f;
         /// <summary>Dış ortam seslerinin (yağmur, akan su) çarpanı 0..1: Cenk eve girerken controller/final yavaşça düşürür.</summary>
         public static float OutdoorAudio01 { get; set; } = 1f;
+        /// <summary>Zorunlu sinematik (ağaç düşüşü treefall*, kapı sinematiği cine*) oynuyor mu: üst şeritler bu sırada gizlenir, sonra gösterilir. Controller yazar.</summary>
+        public static bool CinematicActive { get; set; }
 
         public static event Action<string> MinigameOpened;     // id: "gate", "code", "branch", "rumor"
         public static event Action<string> MinigameClosed;
@@ -40,7 +42,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
         {
-            Progress01 = 0f; Paused = false; FreeRoam = false; FloodStarted = false; FloodStopped = false; FloodSeconds = 120f; OutdoorAudio01 = 1f;
+            Progress01 = 0f; Paused = false; FreeRoam = false; FloodStarted = false; FloodStopped = false; FloodSeconds = 80f; OutdoorAudio01 = 1f; CinematicActive = false;
             MinigameOpened = null; MinigameClosed = null; StepCompleted = null; Mistake = null; SayRequest = null; ResetRequested = null;
             // FLOW: her sahne geçişinde sel sayacı bayrakları sıfırlanır (sel bittikten sonra açılan depreme sızmasın).
             AfetUyanisi.Core.GameSceneRouter.SceneChanging -= OnSceneChanging;

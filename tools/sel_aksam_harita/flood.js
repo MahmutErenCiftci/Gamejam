@@ -1,11 +1,13 @@
-// Akşam sel — 120 sn dinamik su verisi (FloodWaterField + FE_FloodWater.shader).
+// Akşam sel — 80 sn dinamik su verisi (FloodWaterField + FE_FloodWater.shader).
 // Çalıştır: node flood.js   → Assets/Art/FloodEvening/ENV/Flood/FE_FloodData.png (+ küçük efekt sprite'ları)
 //
 // FE_FloodData: ızgara hücresi başına K×K texel (G sınırları, map.js). Kanallar:
 //   R = dolma eşiği t (0..1): ilerleme p > t olunca o noktada su belirir; derinlik = p - t. 255 = hiç dolmaz.
 //   G = akış yönü (ızgara uzayında açı, 0..255 → 0..2π), B = akış hızı (0..1), A = 255 su çıkabilir / 0 çıkamaz.
 // Bölge eşikleri rotayla ilişkilidir: kısa yol (D/E) ve kanal kıyısı ilk dolar, başlangıç sokağı (A) kaldırım
-// kenarından birikir, uzun yol (F→G→H→I) giderek daha geç, rüzgâr koridoru (J) en son; apartman avlusu (AVLU) kuru kalır.
+// kenarından birikir, uzun yol (F→G→H→I) giderek daha geç, son sokak (J) sonra; apartman avlusu (AVLU) EN SON dolar
+// (P-FLOOD 18 Eki: apartman finalinde sel yavaşlayarak sürer; avlunun ön/kanal tarafı ~%58'de ıslanır, kapı önü ~%83'te,
+// %100'de bile kapı önü sığ kalır — posta kutusu / kilit / kapı kullanılabilir).
 // Duvar ve kaldırım kenarları biraz daha erken dolar; düşük frekanslı gürültü küçük birikintilerin ayrı ayrı doğup
 // büyüyerek birleşmesini sağlar.
 const C = require('./common');
@@ -13,6 +15,9 @@ const M = require('./map');
 const { G, R, corridorOf } = M;
 
 const K = 4;
+// FE_FloodData ızgarası sahnedeki FloodWaterField.grid ile aynı kalmalı (-26, -16, 106, 60): A_YOLU'nun batı uzantısı (gx < -26)
+// yürünmez süs yol, su verisine girmez.
+G.gx0 = -26;
 const W = G.gx1 - G.gx0, H = G.gy1 - G.gy0;
 const TW = W * K, TH = H * K;
 const DST = C.DST + '/Flood';
@@ -47,7 +52,7 @@ function base(gx, gy) {
     case 'H': return lerp(0.3, 0.34, (gy - 13) / 13);
     case 'I': return lerp(0.32, 0.38, (gx - 46) / 13);
     case 'J': return lerp(0.44, 0.48, (gy + 1) / 14);
-    case 'AVLU': return 1.02;
+    case 'AVLU': return lerp(0.58, 0.80, (gy + 8) / 7) + (Math.abs(gx - 59.5) < 2.5 && gy > -3.5 ? 0.03 : 0);
   }
   if (isBank(gx, gy)) return lerp(0.15, 0.25, (gy + 3) / 3);
   return null;

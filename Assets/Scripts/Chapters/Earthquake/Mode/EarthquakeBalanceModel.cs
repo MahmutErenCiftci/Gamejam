@@ -6,24 +6,26 @@ namespace AfetUyanisi.Chapters.Earthquake
     [Serializable]
     public class EarthquakeBalanceSettings
     {
-        [Min(0.1f)] public float initialSeconds = 4f;
-        [Min(0.1f)] public float strongSeconds = 6f;
-        [Min(0.1f)] public float irregularSeconds = 6f;
+        // Toplam ≈ 7 sn (lider isteği, 18 Eki): kısa ama okunur — hafif başlangıç, güçlü orta, düzensiz son.
+        [Min(0.1f)] public float initialSeconds = 1.5f;
+        [Min(0.1f)] public float strongSeconds = 3f;
+        [Min(0.1f)] public float irregularSeconds = 2.5f;
         [Tooltip("Yeşil (güvenli) bölgenin yarı genişliği; 0.35 = ortadan iki yana %35")]
         [Range(0.1f, 0.6f)] public float greenZone = 0.35f;
         [Tooltip("Kırmızı bölge eşiği (AudioAutoWiring uyarı sesi de 0.65 kullanır)")]
         [Range(0.4f, 0.9f)] public float redThreshold = 0.65f;
         [Tooltip("Sarsıntının işareti itme gücü. Girdisiz kalınca işaret yer yer kırmızıya kayar; A/D ile kolayca geri gelir.")]
-        [Min(0)] public float waveForce = 4f;
+        [Min(0)] public float waveForce = 4.5f;
         [Tooltip("Düşük = yavaş, okunabilir itmeler (ilk kez oynayan da yetişir)")]
-        [Min(0.1f)] public float waveFrequency = 0.4f;
+        [Min(0.1f)] public float waveFrequency = 0.75f;
         [Tooltip("A/D düzeltme gücü; en güçlü itmeden belirgin şekilde büyük olmalı")]
         [Min(0.1f)] public float correctionStrength = 6.5f;
         [Tooltip("Yüksek = tuş bırakılınca işaret hemen durur (savrulma / aşırı düzeltme olmaz)")]
         [Min(0.1f)] public float damping = 8f;
-        [Min(0)] public float amberDrain = 1f;
-        [Min(0)] public float redDrain = 5f;
-        [Min(0)] public float releaseDrain = 3f;
+        // Kayıplar 7 sn'ye ölçeklendi (eski 16 sn'lik turla aynı toplam zorluk: ≈ ×2.2)
+        [Min(0)] public float amberDrain = 2.2f;
+        [Min(0)] public float redDrain = 11f;
+        [Min(0)] public float releaseDrain = 6.5f;
         [Min(0)] public float releaseGrace = 0.25f;
         public int seed = 19;
         public float Duration => Mathf.Max(0.1f, initialSeconds) + Mathf.Max(0.1f, strongSeconds) + Mathf.Max(0.1f, irregularSeconds);

@@ -1,3 +1,5 @@
+using AfetUyanisi.Chapters.FloodEvening;
+using UnityEngine.Rendering;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -249,10 +251,9 @@ internal class CommandScript : IRunCommand
         // ===== /APARTMAN FİNALİ =====
         PlaceFlood(scene, world, result); // 120 sn sel: harita suyu, yol kapanmaları, SEL DURUMU göstergesi
         PlaceEnvironment(scene, world, result); // ağaç salınımı, şimşek, yüzen enkaz, elektrikli su bölgeleri (FLOOD-MECH)
-        var tree =AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/FloodEvening/FE_TreeFall.prefab");
-        var stop = FindDeep(world, "TreeStopSpot");
-        if (tree != null && stop != null) { var t = (GameObject)PrefabUtility.InstantiatePrefab(tree, scene); t.transform.position = stop.position; result.Log("FE_TreeFall yerleşti"); }
-        else result.Log("FE_TreeFall henüz yok (Eren) — ağaç olayı atlanır");
+        // (P-FLOOD 18 Eki) ağaç düşüşü (Eren'in FE_TreeFall'ı, I sokağını tamamen kesen yatık gövde) + ritimle it/çek (dal engeli Rhythm kipi),
+        // 80 sn sel / final hızı, isabet parlaması malzemesi — ayrıntılar PFloodTreeAndRhythm'de (scratch patch_scene.cs ile aynı).
+        PFloodTreeAndRhythm(scene, AssetDatabase.LoadAssetAtPath<Material>("Assets/Art/FloodEvening/ENV/Hazards/FE_SpriteFlash.mat"), result);
     }
 
     // ---- 120 sn sel sistemi (LEAD): FloodWaterField (su katmanı + kapanan yollar) ve SEL DURUMU göstergesinin piksel fontu ----
@@ -449,4 +450,112 @@ internal class CommandScript : IRunCommand
         EditorBuildSettings.scenes = list.ToArray();
         result.Log("Build Settings: " + string.Join(", ", EditorBuildSettings.scenes.Select(s => System.IO.Path.GetFileNameWithoutExtension(s.path) + (s.enabled ? "" : "(kapalı)"))));
     }
+
+    // ===== P-FLOOD (18 Eki): ağaç + ritim =====
+    static Vector2 PfW(float gx, float gy) => new Vector2((gx - gy) / 2f, (gx + gy) / 4f);
+        static T PfFind<T>(Scene s) where T : Component => s.GetRootGameObjects().Select(g => g.GetComponentInChildren<T>(true)).FirstOrDefault(c => c != null);
+
+    static PolygonCollider2D PfPoly(Transform parent, string name, params Vector2[] world)
+    {
+        var old = parent.Find(name);
+        if (old != null) Object.DestroyImmediate(old.gameObject);
+        var go = new GameObject(name);
+        go.transform.SetParent(parent, false);
+        var poly = go.AddComponent<PolygonCollider2D>();
+        poly.SetPath(0, world.Select(p => (Vector2)go.transform.InverseTransformPoint(p)).ToArray());
+        return poly;
+    }
+
+    static void PFloodTreeAndRhythm(Scene scene, Material flashMat, ExecutionResult result)
+    {
+        var world = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "World")?.transform;
+        if (world == null) { result.LogError("World yok"); return; }
+
+        // ---- 80 sn sel + final hızı
+        var ctrl = PfFind<FloodEveningController>(scene);
+        { var so = new SerializedObject(ctrl); so.FindProperty("floodSeconds").floatValue = 80f; so.FindProperty("finaleRate").floatValue = 0.15f; so.ApplyModifiedPropertiesWithoutUndo(); }
+
+        // ---- isabet parlaması
+        var react = PfFind<FloodPlayerReaction>(scene);
+        if (react != null) { var so = new SerializedObject(react); so.FindProperty("flashMaterial").objectReferenceValue = flashMat; so.ApplyModifiedPropertiesWithoutUndo(); }
+
+        // ---- ağaç: kök (kütük) I sokağının ön kenarının dışında (ızgara ~50.7, 11.8), aynalı (sola, sokağın üstüne devrilir);
+        // yatan gövde tam +gy ekseninde gx = 51'de gy 12.75 → 18.4 boyunca uzanır (sokak gy 13..18).
+        var treePf = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/FloodEvening/FE_TreeFall.prefab");
+        var tree = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "FE_TreeFall");
+        if (tree == null) { tree = (GameObject)PrefabUtility.InstantiatePrefab(treePf, scene); tree.name = "FE_TreeFall"; }
+        var ev = tree.GetComponent<FloodTreeFallEvent>();
+        Vector2 brokenEnd = PfW(51f, 12.75f);
+        tree.transform.position = brokenEnd - new Vector2(-0.3f, 0.314375f); // Fallen yerel (0.3, 0.314), aynalı
+        tree.transform.localScale = new Vector3(-1f, 1f, 1f);
+        var fallen = FindDeep(tree.transform, "Fallen");
+        fallen.localRotation = Quaternion.Euler(0f, 0f, 12.6f); // aynalı: dünyada saat yönünde 12.6° → gövde 153.4° (= +gy ekseni)
+        var sg = tree.GetComponent<SortingGroup>();
+        if (sg != null) sg.sortingOrder = -45; // binaların (-50) önünde, Cenk/sokak eşyalarının (0) arkasında
+        foreach (var n in new[] { "TrunkBlock", "FallZoneBlock", "TreeStopSpot" })
+        { var t = FindDeep(tree.transform, n); if (t != null) foreach (var c in t.GetComponents<Collider2D>()) c.enabled = false; }
+        var trunk = PfPoly(fallen, "TreeBlock_FE", PfW(50.55f, 12.4f), PfW(51.45f, 12.4f), PfW(51.45f, 18.7f), PfW(50.55f, 18.7f));
+        var fallZone = PfPoly(tree.transform, "FallZoneBlock_FE", PfW(49.6f, 12.6f), PfW(52.4f, 12.6f), PfW(52.4f, 18.4f), PfW(49.6f, 18.4f));
+        Collider2D stop = null;
+        foreach (var t in world.GetComponentsInChildren<Transform>(true)) if (t.name == "TreeStopSpot") { stop = t.GetComponent<Collider2D>(); if (stop != null) break; }
+
+        // ---- dal engeli → ritim (Rhythm): itilen = yatan gövde (Fallen), etkileşim noktası gövdenin solunda
+        var br = scene.GetRootGameObjects().FirstOrDefault(g => g.GetComponent<BranchObstacle>() != null);
+        if (br == null) { result.LogError("FE_BranchObstacle yok"); return; }
+        br.transform.position = PfW(49.9f, 15.5f);
+        var oldBlock = br.transform.Find("BranchBlock"); if (oldBlock != null) Object.DestroyImmediate(oldBlock.gameObject);
+        foreach (var n in new[] { "Branch", "AltPassage", "AltSign", "Chain_Closed", "Chain_Open" }) { var t = FindDeep(br.transform, n); if (t != null) t.gameObject.SetActive(false); }
+        var inter = br.GetComponent<AfetUyanisi.Chapters.Interactable>();
+        if (inter != null) { var so = new SerializedObject(inter); so.FindProperty("useRadius").floatValue = 1.8f; so.ApplyModifiedPropertiesWithoutUndo(); }
+        var view = br.GetComponent<FloodRhythmView>();
+        if (view == null) view = br.AddComponent<FloodRhythmView>();
+        {
+            var so = new SerializedObject(view);
+            so.FindProperty("font").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PixelOperator/PixelOperatorTR-Bold.ttf");
+            so.FindProperty("panelSprite").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/UI/Earthquake/QuestHUD/UI_EQ_QuestPanel.png");
+            so.FindProperty("barBackSprite").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/UI/Earthquake/UI_EQ_HoldBar_Back.png");
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+        var bo = br.GetComponent<BranchObstacle>();
+        {
+            var so = new SerializedObject(bo);
+            so.FindProperty("mode").enumValueIndex = 3; // Rhythm
+            so.FindProperty("startArmed").boolValue = false;
+            so.FindProperty("branchRoot").objectReferenceValue = fallen;
+            so.FindProperty("rhythmView").objectReferenceValue = view;
+            so.FindProperty("requiredBeats").intValue = 6;
+            so.FindProperty("beatSeconds").floatValue = 0.75f;
+            so.FindProperty("windowHalf").floatValue = 0.32f;
+            so.FindProperty("clearOffsetWorld").vector2Value = PfW(0f, 2f) - PfW(0f, 0f); // +gy yönünde 2 hücre (sokağın arka kenarına)
+            so.FindProperty("blockers").arraySize = 0;
+            so.FindProperty("showWhenOpen").arraySize = 0;
+            so.FindProperty("hideWhenOpen").arraySize = 0;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        // ---- ağaç olayı ayarları
+        {
+            var so = new SerializedObject(ev);
+            so.FindProperty("stopZone").objectReferenceValue = stop;
+            so.FindProperty("fallenAngle").floatValue = -63.4f;
+            so.FindProperty("fallSeconds").floatValue = 0.8f;
+            so.FindProperty("startledPose").objectReferenceValue = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art/Characters/Cenk/Poses/CHR_Cenk_Startled_SouthEast.png");
+            so.FindProperty("impactFrom").vector2Value = new Vector2(0.6f, 0.3f);
+            so.FindProperty("impactTo").vector2Value = new Vector2(2.92f, 1.46f);
+            so.FindProperty("fallZoneBlock").objectReferenceValue = fallZone;
+            var ci = so.FindProperty("closeOnImpact"); ci.arraySize = 1; ci.GetArrayElementAtIndex(0).objectReferenceValue = trunk;
+            { var bso = new SerializedObject(bo); bso.FindProperty("treeFx").objectReferenceValue = ev; bso.ApplyModifiedPropertiesWithoutUndo(); }
+            var ao = so.FindProperty("armOnFallen"); ao.arraySize = 1; ao.GetArrayElementAtIndex(0).objectReferenceValue = br;
+            so.FindProperty("crackSfx").stringValue = "SFX_FE_Tree_Crack";
+            so.FindProperty("creakSfx").stringValue = "";
+            so.FindProperty("fallSfx").stringValue = "SFX_FE_Tree_Fall";
+            so.FindProperty("impactSfx").stringValue = "";
+            so.FindProperty("impactSfx2").stringValue = "";
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+        result.Log($"ağaç kök={tree.transform.position} gövde ucu={brokenEnd} dur={(stop != null ? stop.name : "YOK")} dal={br.transform.position} " +
+                   $"sel={ctrl.FloodSeconds} parlama={(react != null)}");
+    }
+    // ===== /P-FLOOD =====
+
 }

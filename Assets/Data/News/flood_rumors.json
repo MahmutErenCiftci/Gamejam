@@ -1,7 +1,7 @@
 {
   "id": "flood_f05_rumors",
   "prompt": "Hangi bilgiye güvenirsin?",
-  "fictionNotice": "Kurgusal duyuru · Oyun içi örnektir",
+  "fictionNotice": "",
   "cards": [
     {
       "id": "rumor_road",

@@ -26,7 +26,8 @@ namespace AfetUyanisi.UI
     /// seçimi bırakılır. Devam edince hepsi eski haline döner; kilit bir kare sonra kalkar (Devam'ı seçen Enter
     /// arkadaki diyaloğu ilerletmesin).
     ///
-    /// Esc'i kendisi kullanan açık bir mini oyun/panel varsa (çanta, kitaplık, dal, şifre, kapı kolu, tabela; deprem
+    /// Esc'i kendisi kullanan açık bir mini oyun/panel varsa (çanta, kitaplık, dal, şifre, kapı kolu, tabela, apartman kilidi/PIN,
+    /// mektup, posta kutusu; deprem
     /// mini oyunları) Esc ona kalır, menü açılmaz. Sahne yüklendikten sonraki 0,5 sn'de ve başka bir şey zamanı
     /// durdurmuşken de açılmaz.
     /// </summary>
@@ -74,6 +75,11 @@ namespace AfetUyanisi.UI
         private readonly List<BookshelfAnchorMinigame> shelves = new List<BookshelfAnchorMinigame>();
         private readonly List<BranchObstacle> branches = new List<BranchObstacle>();
         private readonly List<FloodPuzzleInteractionBase> puzzles = new List<FloodPuzzleInteractionBase>();
+        // Sel apartman finali (P-FLOOD 18 Eki): kilit/PIN yakın planı, mektup, posta kutusu ve kilit etkileşimleri Esc'i kendisi kullanır.
+        private readonly List<ApartmentLockView> lockViews = new List<ApartmentLockView>();
+        private readonly List<ApartmentLetterView> letterViews = new List<ApartmentLetterView>();
+        private readonly List<DoorLockInteraction> doorLocks = new List<DoorLockInteraction>();
+        private readonly List<MailboxInteraction> mailboxes = new List<MailboxInteraction>();
         private float nextOwnerScanAt;
         private bool ownerActiveLastFrame;
 
@@ -324,11 +330,19 @@ namespace AfetUyanisi.UI
                 Refill(shelves);
                 Refill(branches);
                 Refill(puzzles);
+                Refill(lockViews);
+                Refill(letterViews);
+                Refill(doorLocks);
+                Refill(mailboxes);
             }
             foreach (var b in bags) if (b != null && b.IsOpen) return true;
             foreach (var s in shelves) if (s != null && s.IsOpen) return true;
             foreach (var b in branches) if (b != null && b.IsOpen) return true;
             foreach (var p in puzzles) if (p != null && p.IsOpen) return true;
+            foreach (var v in lockViews) if (v != null && v.IsOpen) return true;
+            foreach (var v in letterViews) if (v != null && v.IsOpen) return true;
+            foreach (var d in doorLocks) if (d != null && d.IsOpen) return true;
+            foreach (var m in mailboxes) if (m != null && m.IsOpen) return true;
             return false;
         }
 

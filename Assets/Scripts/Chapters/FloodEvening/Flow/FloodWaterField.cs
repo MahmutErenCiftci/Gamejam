@@ -6,10 +6,10 @@ using UnityEngine;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Haritadaki gerçek zamanlı su (120 sn sel sayacı, LEAD). Tek kaynak FloodEveningHub.Progress01'dir; bu bileşen yalnız okur.
+    /// Haritadaki gerçek zamanlı su (80 sn sel sayacı, LEAD). Tek kaynak FloodEveningHub.Progress01'dir; bu bileşen yalnız okur.
     /// - Su katmanı: haritayı kaplayan tek sprite + FE_FloodWater.shader. FE_FloodData (tools/sel_aksam_harita/flood.js) her noktanın
-    ///   dolma eşiğini, akış yönünü/hızını ve maskesini taşır: kısa yol ve kanal kıyısı önce, uzun yol giderek, son sokak (J) en son
-    ///   dolar; avlu kuru kalır. Katman zemin (order -100) ile süs/duvar/karakter arasındadır (order -88), izometrik sıralama bozulmaz.
+    ///   dolma eşiğini, akış yönünü/hızını ve maskesini taşır: kısa yol ve kanal kıyısı önce, uzun yol giderek, son sokak (J) sonra,
+    ///   apartmanın avlusu en son dolar (apartman finalinde, sel yavaşlamış sürerken; kapı önü en son). Katman zemin (order -100) ile süs/duvar/karakter arasındadır (order -88), izometrik sıralama bozulmaz.
     /// - Oyuncu: ayağının altındaki derinliğe göre halka/sıçrama, suya gömülen ayak çizgisi ve derin suda hafif yavaşlama (yalnız serbest
     ///   yürüyüşte; dış hız (geri itme, apartman finali) verilirken dokunmaz).
     /// - Sürüklenen arka plan süsü (yaprak, köpük) derin ve akan suda, kamera çevresinde havuzlanmış sprite'larla; çarpışan yüzen enkaz
@@ -72,12 +72,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [Header("Ses")]
         [SerializeField] private string waterLoop = "AMB_Flood_Water_Loop";
         [SerializeField] private string waterChannel = "flood_water";
+        [Tooltip("Cenk suda yürürken çalan döngü (durunca / sudan çıkınca susar)")]
+        [SerializeField] private string wadeLoop = "SFX_FE_Wade_Loop";
+        [SerializeField] private string wadeChannel = "fe_wade";
 
         private SpriteRenderer waterRenderer;
         private Material runtimeMat;
         private Color[] data;
         private int dataW, dataH;
-        private float progress, lastSoundVol = -1f;
+        private float progress, lastSoundVol = -1f, lastWadeVol = -1f;
         private SpriteRenderer feetRenderer, playerRenderer;
         private readonly List<SpriteRenderer> ripples = new List<SpriteRenderer>();
         private readonly List<float> rippleAge = new List<float>();
@@ -122,6 +125,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             slowing = false;
             GameAudio.StopLoop(waterChannel, 0.5f);
             lastSoundVol = -1f;
+            GameAudio.StopLoop(wadeChannel, 0.2f);
+            lastWadeVol = -1f;
         }
 
         private void OnDestroy()
@@ -298,6 +303,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
             bool deep = depth > slowDepths.x;
             if (deep && !wasDeep && moving) GameAudio.PlaySfx("SFX_Water_Splash", 0.45f);
             wasDeep = deep;
+
+            // suda yürüme sesi: yalnız su varken ve Cenk gerçekten yürürken (durunca, sudan çıkınca, diyalogda susar)
+            bool wading = depth > 0.02f && moving && player.CanMove && Time.timeScale > 0f;
+            float wadeVol = wading ? Mathf.Round(Mathf.Lerp(0.45f, 0.85f, Mathf.Clamp01(depth / deepAt)) * FloodEveningHub.OutdoorAudio01 * 20f) / 20f : 0f;
+            if (!Mathf.Approximately(wadeVol, lastWadeVol))
+            {
+                lastWadeVol = wadeVol;
+                if (wadeVol <= 0.001f) GameAudio.StopLoop(wadeChannel, 0.15f);
+                else GameAudio.PlayLoop(wadeLoop, wadeChannel, wadeVol, 0.1f);
+            }
 
             // derin suda hafif yavaşlama: yalnız serbest yürüyüşte ve dış hız yokken
             bool canSlow = FloodEveningHub.FreeRoam && player.CanMove && player.ExternalVelocity.sqrMagnitude < 0.0001f && !FloodEveningHub.FloodStopped;

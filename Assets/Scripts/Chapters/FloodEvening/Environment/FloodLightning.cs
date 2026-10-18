@@ -113,6 +113,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
             float peak = maxBoost * Random.Range(0.7f, 1f);
             float second = Random.Range(0.14f, 0.22f);
             float delay = Random.Range(thunderDelay.x, thunderDelay.y);
+            // P-FLOOD: yakın çakmalarda (gök gürültüsü kısa gecikmeli) ve her 3 çakmadan birinde anında çatırtı; uzak gürleme aynen sürer
+            if (FloodEveningHub.OutdoorAudio01 > 0.05f && (delay < 1.15f || StrikeCount % 3 == 0))
+                GameAudio.PlaySfx("SFX_FE_Lightning_Crack", 0.7f * FloodEveningHub.OutdoorAudio01);
             if (logStrikes) Debug.Log($"[FE] şimşek #{StrikeCount} (parıltı {flickers}, tepe +{peak:0.00}, görsel {(visual ? "açık" : "kapalı")}, gök gürültüsü {delay:0.0} sn sonra)", this);
             if (bolt != null && visual)
             {

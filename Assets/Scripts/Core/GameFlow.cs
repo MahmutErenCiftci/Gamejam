@@ -35,6 +35,15 @@ namespace AfetUyanisi.Core
         public static bool IsCompleted(ChapterId chapter) =>
             chapter == ChapterId.Earthquake ? EarthquakeCompleted : chapter == ChapterId.Flood && FloodCompleted;
 
+        // P-UI (18 Eki): sel sonuç ekranı başarısızlıkta da "Deprem Bölümüne Geç" sunar. Tamamlanmadan ContinueAfter ile
+        // geçilen bölüm "geçildi" sayılır: tamamlanmış olmaz (oyun sonu ekranı öyle gösterir) ama sıradaki afet seçiminde
+        // oynanmış sayılır; böylece hiçbir afet üçüncü kez başlamaz.
+        private static bool earthquakeSkipped, floodSkipped;
+
+        /// <summary>Bölüm bu oyunda oynandı mı: tamamlandı ya da başarısız bitirilip "Devam" ile geçildi.</summary>
+        public static bool IsAttempted(ChapterId chapter) => IsCompleted(chapter) ||
+            (chapter == ChapterId.Earthquake ? earthquakeSkipped : chapter == ChapterId.Flood && floodSkipped);
+
         /// <summary>Bölüm bu denemede başarıyla bitti mi (sonuç ekranı "Devam"ı bununla gösterir).</summary>
         public static bool CompletedThisAttempt(ChapterId chapter) => GameSession.HasFlag(CompletedFlagPrefix + chapter);
 
@@ -68,17 +77,18 @@ namespace AfetUyanisi.Core
             Debug.Log($"[GameFlow] {chapter} tamamlandı (deprem={EarthquakeCompleted}, sel={FloodCompleted})");
         }
 
-        /// <summary>Sıradaki afet (bitmemiş olan); ikisi de bittiyse null.</summary>
+        /// <summary>Sıradaki afet (henüz oynanmamış olan); ikisi de oynandıysa (tamamlandı ya da geçildi) null.</summary>
         public static ChapterId? NextChapter(ChapterId finished)
         {
             var other = finished == ChapterId.Earthquake ? ChapterId.Flood : ChapterId.Earthquake;
-            return IsCompleted(other) ? (ChapterId?)null : other;
+            return IsAttempted(other) ? (ChapterId?)null : other;
         }
 
         /// <summary>Sonuç ekranının birincil butonu açılabilir mi: bölüm bitti ve sıradaki bölümün (ya da oyun sonunun) sahnesi var.</summary>
-        public static bool CanContinueAfter(ChapterId finished)
+        /// <param name="evenIfIncomplete">true: bölüm başarısız bittiyse de (sel sonuç ekranının Devam butonu).</param>
+        public static bool CanContinueAfter(ChapterId finished, bool evenIfIncomplete = false)
         {
-            if (!IsCompleted(finished)) return false;
+            if (!evenIfIncomplete && !IsCompleted(finished)) return false;
             var next = NextChapter(finished);
             // Oyun sonu sahnesi yoksa LoadGameEnd menüye döner; "Oyunu Bitir" yine anlamlıdır.
             return !next.HasValue || Application.CanStreamedLevelBeLoaded(GameSceneRouter.FirstSceneOf(next.Value));
@@ -96,7 +106,12 @@ namespace AfetUyanisi.Core
         public static void ContinueAfter(ChapterId finished)
         {
             if (!IsCompleted(finished))
-                Debug.LogWarning($"[GameFlow] ContinueAfter({finished}) ama bölüm tamamlanmadı; yine de devam ediliyor.");
+            {
+                // Başarısız bitirilip geçildi: tamamlanmış sayılmaz ama bir daha sıraya girmez.
+                if (finished == ChapterId.Earthquake) earthquakeSkipped = true;
+                else if (finished == ChapterId.Flood) floodSkipped = true;
+                Debug.Log($"[GameFlow] {finished} tamamlanmadan geçildi (bir daha başlamaz).");
+            }
             var next = NextChapter(finished);
             Debug.Log($"[GameFlow] {finished} sonrası → {(next.HasValue ? next.Value.ToString() : "oyun sonu")}");
             if (next.HasValue) GameSceneRouter.LoadChapter(next.Value);
@@ -115,6 +130,7 @@ namespace AfetUyanisi.Core
         {
             FirstSelectedDisaster = null;
             EarthquakeCompleted = FloodCompleted = false;
+            earthquakeSkipped = floodSkipped = false;
             CurrentObjective = null;
         }
 

@@ -245,18 +245,18 @@ MonoBehaviour:
   fadeOutSeconds: 0.6
   inputDelay: 0.6
   title: OYUN TAMAMLANDI
-  subtitle: "\u0130ki afeti de g\xFCvenle atlatt\u0131n. K\xFC\xE7\xFCk kararlar, b\xFCy\xFCk fark yarat\u0131r."
+  subtitle: "\u0130ki afeti de atlatt\u0131n. Annen de sen de g\xFCvendesiniz."
   chaptersHeader: "B\xD6L\xDCMLER"
-  quakeTitle: "DEPREM \u2014 Toplanma alan\u0131na ula\u015Ft\u0131n"
+  quakeTitle: "DEPREM \xB7 Toplanma alan\u0131na ula\u015Ft\u0131n"
   quakeText: "Sars\u0131nt\u0131da \xC7\xF6k-Kapan-Tutun yapt\u0131n, sonra merdivenle g\xFCvenli alana indin."
-  floodTitle: "SEL \u2014 Eve g\xFCvenle ula\u015Ft\u0131n"
+  floodTitle: "SEL \xB7 Eve g\xFCvenle ula\u015Ft\u0131n"
   floodText: "Suya girmeden, kapal\u0131 yollar\u0131 kullanmadan g\xFCvenli yoldan eve vard\u0131n."
   remindersHeader: UNUTMA
   reminders:
   - "Sars\u0131nt\u0131da \xC7\xD6K \u2013 KAPAN \u2013 TUTUN; sonra asans\xF6r\xFC de\u011Fil merdiveni kullan."
   - "Suyla kapl\u0131 ya da kapat\u0131lm\u0131\u015F yollara asla girme; g\xFCvenli y\xFCksek b\xF6lgeye y\xF6nel."
   - "S\xF6ylentiye de\u011Fil, resm\xEE kurumlar\u0131n duyurular\u0131na g\xFCven; afet \xE7antan haz\u0131r olsun."
-  note: "Bu bir fark\u0131ndal\u0131k oyunudur. Ger\xE7ek bir afette resm\xEE kurumlar\u0131n talimatlar\u0131na uy."
+  note: "Acil bir durumda 112'yi ara."
   menuLabel: "Ana Men\xFC"
   replayLabel: Tekrar Oyna
 --- !u!4 &878815484

@@ -156,7 +156,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             pill = pillImage.rectTransform;
             EqUi.Place(pill, 0.5f, 0f, new Vector2(0f, PillBottom), new Vector2(PillW, PillH));
             EqUi.Fallback(pillImage, Ink, NavyDark, skin);
-            var space = EqUi.KeyCap(pill, "SPACE", font, skin, 9);
+            var space = EqUi.KeyCap(pill, "BOŞLUK", font, skin, 9);
             EqUi.TL(space, 4f, 3f, 48f, 16f);
             pillText = EqUi.Txt("Text", pill, font, 9, Cream, TextAnchor.MiddleLeft, Ink);
             EqUi.TopBand(pillText.rectTransform, 58f, 6f, 3f, 16f);

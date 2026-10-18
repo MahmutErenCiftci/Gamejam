@@ -75,6 +75,10 @@ namespace AfetUyanisi.Cutscenes
 
         public bool IsPlaying { get; private set; }
         public float Duration => endTime;
+        /// <summary>Cenk'in suya gömüldüğü an (sn; büyük sıçrama). Ses kancası için (P-FLOOD: FloodSchoolController).</summary>
+        public float FallTime => fallEnd;
+        /// <summary>Cenk'in suya girdiği an (sn): akıntı sesi buradan başlar.</summary>
+        public float EnterWaterTime => walkEnd;
 
         // Sıralama (hepsi kendi kamerasında, dünyadan uzakta)
         private const int OrderSky = -1000, OrderFacade = -900, OrderGround = -800, OrderWater = -700,

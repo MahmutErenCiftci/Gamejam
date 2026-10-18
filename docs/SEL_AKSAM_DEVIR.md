@@ -46,21 +46,19 @@ FloodEveningController (tek akış/sonuç sorumlusu)
    kart    uyarı (1 kez)  sokaklar  └─ uzun yol (HighRoad) ─► LongRoad ─► Obstacle (tree_fell) ─► FinalApproach (branch_cleared, FE_FINAL)
                                                                                                     └─► SafeZone/devam noktası ─► Success ─► sonuç
 ```
-* **120 sn sel sayacı (lider kararı 18 Eki 01:45):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç durur → apartman finali → bitiş. Süre dolarsa başarısız ekranı ([R] Tekrar Dene).
+* **80 sn sel sayacı (lider kararı 18 Eki öğlen; önce 120 sn):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç DURMAZ: apartman finali sırasında sel yavaşlayarak (x0,15) sürer, avlu da su alır; sayaç Cenk eve girince durur → bitiş. Süre dolarsa (finalde de) başarısız ekranı ([R] Tekrar Dene).
 * Durum geri gitmez. Dal itilir itilmez bölüm bitmez; oyuncu devam noktasına yürüyünce biter.
 * Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
 
-## 1b. 120 sn sel sistemi (Mahmut)
+## 1b. 80 sn sel sistemi (Mahmut; P-FLOOD 18 Eki: 120 → 80 sn, finalde yavaşlayan sel)
 
 - **Tek başlangıç:** telefon bildirimi kapanınca `FloodEveningController.StartFloodSequence()` bir kez çalışır (tekrar çağrılırsa hiçbir şey olmaz). Bildirim sırasında süre akmaz.
-- **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / 120`. Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur.
+- **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / floodSeconds` (80 sn; `FloodEveningController.floodSeconds`). Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur. Aşama eşikleri yüzde olarak aynı kaldı.
 - **Süre ne zaman akar:**
-  - Akar: serbest yürüyüş, dal itme, çevre tehlikesi tepkileri (enkaz çarpması, elektrik çarpması).
-  - Durur: diyalog, okuma panelleri (`info*`, `read*`, `warning*`…), zorunlu sinematik (`treefall*`, `cine*`), pause (timeScale 0), başarı/başarısızlık.
-- **Ölçülen süreler (bot, kusursuz yürüyüş):**
-  - En kısa rota: güvenli bölgeye sayaç 58 sn'de (%48).
-  - Kısa yolu deneyip dönme + rüzgârda karışık tepki: 77 sn (%64) (rüzgâr koridoru 18 Eki'de kaldırıldı; yeni ölçüm §1c).
-  - İnsan oyuncu için ~90–100 sn bekleniyor.
+  - Akar: serbest yürüyüş, ağacı ritimle itme (mini oyun), çevre tehlikesi tepkileri (enkaz çarpması, elektrik çarpması).
+  - Apartman finali (avlu → eve giriş): **x0,15 hızla akar** (`finaleRate`, Inspector'dan ayarlanır); posta kutusu, kilit ve PIN de bu hızla.
+  - Durur: diyalog, okuma panelleri (`info*`, `read*` — mektup dahil, `warning*`…), zorunlu sinematik (`treefall*` ağaç düşüşü, `cine*` kapı sinematiği), pause (timeScale 0), eve girildi / süre doldu.
+- **Ölçülen süreler (bot, 80 sn, P-FLOOD 18 Eki):** bkz. §1d.
 - **Aşamalar:**
   - %25: YAĞIŞ ARTIYOR.
   - %50: SU YÜKSELİYOR.
@@ -73,9 +71,9 @@ FloodEveningController (tek akış/sonuç sorumlusu)
   - Ölçek (0–1,5 m) temsilîdir.
 - **Harita suyu:** `Flow/FloodWaterField.cs` + `Assets/Art/FloodEvening/ENV/Flood/FE_FloodWater.shader` (haritayı kaplayan tek sprite, 2D ışıklı).
   - Veri dosyası: `FE_FloodData.png`, `tools/sel_aksam_harita/flood.js` üretir.
-  - Dolma sırası: kısa yol ve kanal kıyısı ilk dolar, uzun yol giderek, son sokak (J) en son; avlu (apartmanın ön bahçesi) kuru kalır.
+  - Dolma sırası: kısa yol ve kanal kıyısı ilk dolar, uzun yol giderek, son sokak (J) sonra, **avlu en son** (ön/kanal tarafı ~%58'de ıslanır, kapı önü ~%83'te; %100'de bile kapı önü sığ — posta kutusu / kilit / kapı kullanılabilir).
   - Görünüm: ıslak zemin → birikinti → sığ → derin su, kenar köpüğü, akış yönünde dalga ve yağmur halkaları.
-  - Oyuncu: ayak halkaları ve suya gömülen ayak çizgisi; derin suda hafif yavaşlama (0,85 / 0,72).
+  - Oyuncu: ayak halkaları ve suya gömülen ayak çizgisi; derin suda hafif yavaşlama (0,85 / 0,72); suda yürürken `SFX_FE_Wade_Loop` (durunca / sudan çıkınca susar).
 - **Yol kapanmaları (tasarlanmış):**
   - Kısa yol girişi %42'de kapanır.
   - Geldiğin sokak (C → kavşak) %75'te kapanır.
@@ -84,6 +82,7 @@ FloodEveningController (tek akış/sonuç sorumlusu)
   - Yağmur hafiften sağanağa geçer (`AudioAutoWiring`).
   - Akan su sesi `AMB_Flood_Water_Loop` ilerledikçe artar.
   - Uyarı sesleri: `SFX_Flood_Warn`, `SFX_Flood_Critical`. Sesler `tools/audio/generate_flood.js` ile üretilir.
+  - Avluya varınca `SFX_FE_SafeZone`. Gerilim müziği avluda ve finalde sürer; ancak Cenk eve girerken (dış ses kısılınca) sakin müziğe geçer (`AudioAutoWiring`).
 - **Test kısayolları (yalnız Editor/Development):**
   - F5 / F6 / F7 / F8 / F9 = %0 / 25 / 50 / 75 / 100.
   - F10 = sayaç ×4.
@@ -93,7 +92,7 @@ FloodEveningController (tek akış/sonuç sorumlusu)
   - `flood_fail_title`, `flood_fail_body`, `flood_fail_retry`
   - `toast_critical_*`, `toast_hurry_*`, `toast_home_*`
   - `end_title`, `end_subtitle`
-- **Apartman finali:** `IFloodEveningFinale` (`Begin()`, `IsComplete`). Avluya varınca sayaç durur, ardından `Begin()` çağrılır. `home_entered` gelince kararma ve bitiş ekranı ("GÜVENLİ BÖLGEYE ULAŞTIN!" / "AFET UYANIŞI — BÖLÜM TAMAMLANDI").
+- **Apartman finali:** `IFloodEveningFinale` (`Begin()`, `IsComplete`). Avluya varınca `Begin()` çağrılır; sel x0,15 sürer, %90'da "Su avluyu basıyor" uyarısı. `home_entered` gelince sayaç durur (gösterge yeşil), kararma ve bitiş ekranı. Esc finaldeki yakın planları kapatır (duraklatma menüsü açılmaz: `PauseMenu` Esc sahipleri).
 
 ## 1c. Çevre tehlikeleri (FLOOD-MECH, 18 Eki)
 
@@ -103,7 +102,15 @@ Rüzgâr sistemi (WindCorridor/WindFx/WindHud/WindGustZone, FE_WindCorridor/FE_W
 - **Şimşek** (`FloodLightning.cs`): 10–25 sn'de bir; ekrana tam beyaz yok (en çok +0,3 ışık, ~0,5 sn sönüş, çakma başına en çok 2 parıltı), gökyüzünde ince çizgi, 0,7–2,4 sn sonra gök gürültüsü. **[L]** parlamayı kapatır/açar (`FloodEveningSettings.LightningEnabled`, PlayerPrefs); ilk şimşekte bir kez hatırlatılır. Menü ayar paneline satır eklemek Berk'e kaldı.
 - **Yüzen enkaz** (`FloodDebrisField.cs`): 22 cisim (tahta, kasa, şişe, dal yüzer; taş/moloz yüzmez, derin hızlı suda en çok 3 px yuvarlanır). Sel %30'u geçince, su olan yerdeki hafifler yüzeye çıkar, akışla farklı hızlarda sürüklenir, 1 px yüzer. Çarpma: ~1 adım geri itme + kısa sendeleme, 1,4 sn bekleme; duvardan geçmez; başarısızlık değil, süre akar. Görev: "Yüzen engellerden uzak dur" (debris_bump uyarısı).
 - **Elektrik direkleri** (`FloodElectricHazards.cs`): 17 direk, tel açıklıkları; 3 kopuk tel (Zone_1 A sokağı, Zone_2 G sokağı, Zone_3 H sokağı). Kıvılcım + mavi parıltı her zaman, su varken su yüzeyinde ark, yakında yanıp sönen ⚡, yaklaştıkça çıtırtı. Bölgeye girilirse 0,4 sn kontrol kaybı + bölge dışındaki güvenli noktaya geri itme, 1,6 sn (art arda 3,2 sn) bekleme; sokağın yarısından fazlası açık kalır, ilerlemeyi kesmez. Sonuç ekranına "power_shock" düzeltilen yanlış olarak gider.
-- Ortak tepki: `FloodPlayerReaction.cs` (tek seferde tek tepki, sayaç durunca / Hub.RequestReset'te iptal).
+- Ortak tepki: `FloodPlayerReaction.cs` (tek seferde tek tepki, sayaç durunca / Hub.RequestReset'te iptal). Geri bildirim (P-FLOOD): ~0,25 sn küçük kamera sarsıntısı; elektrikte Cenk'in siluetinde mavi-beyaz titreşim + çevresinde kısa piksel arklar (+ `SFX_FE_Shock`); enkazda kısa kırmızı parlama + acı sesi `SFX_Cenk_Hurt` (perde 1,15; yoksa `SFX_EQ_Injured`) + `SFX_FE_Debris_Bump`. Tam ekran parlama yok (yalnız karakterin pikselleri, `FE_SpriteFlash` shader'ı).
+
+## 1d. Ağaç düşüşü + ritimle it/çek (P-FLOOD, 18 Eki)
+
+- **Ağaç** (Eren'in `FE_TreeFall` prefabı, sahnede aynalı): kütük I sokağının ön kenarının dışında (ızgara ~50.7, 11.8). Cenk `TreeStopSpot`'a (gx 46.2..48.2, sokağın tamamı) girince sinematik: çatırtı (`SFX_FE_Tree_Crack`) → eğilme → ikinci kırılma + düşüş sesi (`SFX_FE_Tree_Fall`, klibin çarpması düşüşle aynı anda) → gövde sokağın üstüne +gy ekseninde yatar (gx 51, gy 12.75 → 18.4). Sayaç sinematikte durur (`treefall`).
+- **Yol tamamen kapalı:** düşmeden önce `FallZoneBlock_FE`, düştükten sonra gövdeyle birlikte kayan `TreeBlock_FE` (gx 50.55..51.45, gy 12.4..18.7) — sokak (gy 13..18) boşluksuz kesilir. Prefabın kendi kutu collider'ları (TrunkBlock, FallZoneBlock, TreeStopSpot) sahnede kapalı.
+- **Ritimle it/çek** (`BranchObstacle` Rhythm kipi + `UI/FloodRhythmView`, perçinli amber pervazlı ahşap levha): gövdenin solunda [E] → panel: işaretçi çubukta 0,75 sn'de bir uçtan öbürüne gider; yeşil pencerede E = iyi vuruş (gövde ve Cenk 2-3 px it/çek sarsılır, yaprak/dal parçacıkları, `SFX_FE_Branch_Push`), komut sırayla İT! / ÇEK!; pencere dışında E = yarım vuruş geri + amber "!" "Ritmi bekle" (başarısızlık yok). Her basıştan sonra pencere çubukta rastgele yeni yere geçer (işaretçinin altına değil); iyi vuruşlarla biraz daralır (sonda ~%70). 6 iyi vuruşta gövde 2 hücre sokağın arka kenarına kayar (collider'ı da), ön kenarda geçit açılır (`SFX_FE_Passage_Open`, `branch_cleared`). Esc = bırak (ilerleme korunur). Süre akar.
+- Kurulum: `tools/sel_aksam_harita/cs/build_scene.cs` → `PFloodTreeAndRhythm` (yeniden kurulumda aynı yerleşim). Sinematikte kamera Cenk ile ağacın arasına kayar; üst şeritler (tehlike uyarıları) sinematik bitene kadar bekletilir.
+- Harita: G → H köşesindeki boş arsa bir evle kapatıldı (`layout.js` houseY(46, 26.8)).
 
 ## 2. Hub (modüller ↔ controller), `Assets/Scripts/Chapters/FloodEvening/FloodEveningHub.cs`
 

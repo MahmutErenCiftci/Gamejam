@@ -3852,7 +3852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.ResultReportView
   skin: {fileID: 0}
   sortingOrder: 95
-  defaultTitle: AFET FARKINDALIK RAPORU
+  defaultTitle: DEPREM FARKINDALIK RAPORU
   notesTitle: "\xD6\u011Frenilecekler"
   retryLabel: Tekrar Dene
   menuLabel: "Men\xFCye D\xF6n"
@@ -4001,7 +4001,7 @@ MonoBehaviour:
   sortingOrder: 92
   clockText: 07:00
   dateText: 
-  startHint: "Enter, Space ya da t\u0131klama da olur"
+  startHint: "Enter, Bo\u015Fluk ya da t\u0131klama da olur"
   slideSeconds: 0.55
   vibrateSeconds: 0.9
 --- !u!1 &456893099

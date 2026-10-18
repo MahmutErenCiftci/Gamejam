@@ -10,7 +10,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// Çök–Kapan–Tutun mini oyunu (sarsıntı sırasında). Run(oyuncuKonumu):
     ///  • Yalnızca sarsıntı başlangıcında hemen erişilebilir masaya yakınsa altına geçer; uzaktaysa yerinde korunur.
     ///  • Değilse olduğu yerde aynı adımlar (Yerinde Ç-K; masaya koşma yok, ödüllendirilmez).
-    ///  • E ile Çök/Kapan, ardından kısa talimat (SPACE'e basınca başlar) ve A/D + Space ile 16 sn denge alıştırması;
+    ///  • E ile Çök/Kapan, ardından kısa talimat (SPACE'e basınca başlar) ve A/D + Space ile 7 sn denge alıştırması;
     ///    bitişte kısa sonuç ("Sarsıntı bitti — iyi tutundun!"). Space bırakılınca poz bozulmaz.
     ///  • Bir adımda noResponseHintAfter sn tepki yoksa ipucu. maxSeconds içinde bitmezse: en az KAPAN yapıldıysa sonuç sayılır
     ///    (tutunma eksik notuyla), yoksa "Korunma yapılmadı" (None).
@@ -109,7 +109,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         // Denge ayarlarının sürümü. Eski (zor/anlaşılmaz) varsayılanlarla kaydedilmiş ya da editörde bellekte eski
         // değerleri taşıyan bileşenler bir kez yeni varsayılanlara yükseltilir; sonra Inspector ayarı korunur.
-        private const int BalanceTuningVersion = 2;
+        private const int BalanceTuningVersion = 3;
         [SerializeField, HideInInspector] private int balanceTuning;
 
         private void UpgradeBalanceTuning()
@@ -117,6 +117,12 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (balanceTuning >= BalanceTuningVersion) return;
             balanceTuning = BalanceTuningVersion;
             balanceSettings = new EarthquakeBalanceSettings();
+            // v3: 7 sn'lik denge turu (ÇÖK → KAPAN hızlı, talimat kısa); sahnedeki eski değerler çalışırken güncellenir.
+            holdSeconds = 4.5f;
+            introMinSeconds = 0.8f;
+            introMaxSeconds = 2.5f;
+            noResponseHintAfter = 2.5f;
+            maxSeconds = 12f;
         }
 
         private void OnValidate() => UpgradeBalanceTuning();
@@ -124,6 +130,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         private void Awake()
         {
             UpgradeBalanceTuning();
+            // SES: her adım (ÇÖK / KAPAN / TUTUN) ve tutunmayı bırakma uyarısı
+            onStepCompleted.AddListener(() => EqSfx.Play(EqSfx.ProtectStep, 0.8f));
+            onReleaseWarning.AddListener(() => EqSfx.Play(EqSfx.ProtectRelease, 0.8f));
             if (quakeEvents == null) quakeEvents = FindAnyObjectByType<EarthquakeEventController>();
             if (tables == null || tables.Length == 0)
                 tables = FindObjectsByType<SturdyTable>(FindObjectsInactive.Exclude);

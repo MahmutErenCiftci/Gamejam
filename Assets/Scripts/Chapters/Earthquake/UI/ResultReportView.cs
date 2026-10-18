@@ -21,7 +21,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     {
         [SerializeField] private EarthquakeUISkin skin;
         [SerializeField] private int sortingOrder = 95;
-        [SerializeField] private string defaultTitle = "AFET FARKINDALIK RAPORU";
+        [SerializeField] private string defaultTitle = "DEPREM FARKINDALIK RAPORU";
         [SerializeField] private string notesTitle = "Öğrenilecekler";
         [SerializeField] private string retryLabel = "Tekrar Dene";
         [SerializeField] private string menuLabel = "Menüye Dön";
@@ -240,7 +240,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         private void MoveFocus(int dir)
         {
             int k = Mathf.Max(0, order.IndexOf(focus));
-            focus = order[Mathf.Clamp(k + dir, 0, order.Count - 1)];
+            int nf = order[Mathf.Clamp(k + dir, 0, order.Count - 1)];
+            if (nf != focus) GameAudio.PlaySfx("SFX_UI_Hover", 0.35f); // klavye gezintisi de duyulsun (P-UI)
+            focus = nf;
             RefreshButtons();
         }
 
@@ -332,6 +334,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 }
                 yield return null;
             }
+            // Fare tıkının sesi AudioAutoWiring'den (EqButton) gelir; klavye onayı burada duyulur (P-UI).
+            if (clicked != chosen) GameAudio.PlaySfx("SFX_UI_Click", 0.5f);
             for (int i = 0; i < 3; i++) eqButtons[i].Interactable = false;
             focus = chosen;
             RefreshButtons();
