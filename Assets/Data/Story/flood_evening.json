@@ -1,6 +1,6 @@
 {
   "chapter_id": "flood_evening",
-  "version": "0.1",
+  "version": "0.2",
   "scenes": [
     {
       "id": "FE_TITLE",
@@ -29,8 +29,22 @@
       "id": "FE_FORK",
       "title": "Yol Ayrımı",
       "lines": [
-        { "speaker": "Çocuk", "text": "İki yol var. Alçak yol kısa ama dere kenarından geçiyor ve <color=#E8392B>kapatılmış</color>." },
-        { "speaker": "Çocuk", "text": "Yüksek yol daha uzun ama kuru. <color=#3CCFC4>Güvenli rota</color> olarak işaretlenmiş." }
+        { "speaker": "Çocuk", "text": "Tabelada <color=#3CCFC4>KISA YOL</color> ve <color=#3CCFC4>UZUN YOL</color> yazıyor. Kısa yol köşenin arkasına gidiyor; devamını buradan göremiyorum." },
+        { "speaker": "Çocuk", "text": "Uzun yol kuru ve <color=#3CCFC4>güvenli güzergâh</color> olarak işaretlenmiş. Kısa olması bir yolu güvenli yapmaz." }
+      ]
+    },
+    {
+      "id": "FE_SHORT_CLOSED",
+      "title": "Kısa Yol Kapalı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım." }
+      ]
+    },
+    {
+      "id": "FE_OBJECTIVE",
+      "title": "Görev",
+      "lines": [
+        { "speaker": "Görev", "text": "Güvenli güzergâhı takip et." }
       ]
     },
     {
@@ -73,6 +87,21 @@
       "lines": [
         { "speaker": "Çocuk", "text": "Yola büyük bir dal düşmüş. Ona dokunmayacağım, üstünden de aşmayacağım." },
         { "speaker": "Çocuk", "text": "Yanda <color=#3CCFC4>işaretli bir geçit</color> var. Oradan geçebilirim." }
+      ]
+    },
+    {
+      "id": "FE_TREE_FELL",
+      "title": "Ağaç Düştü",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Ağaç ilerideki yola düştü! Büyük gövdeye yaklaşmayacağım." },
+        { "speaker": "Çocuk", "text": "Korunaklı, kuru geçitte yalnız küçük ve hafif bir kırık dal var. Onu kenara itip işaretli rotadan devam edebilirim." }
+      ]
+    },
+    {
+      "id": "FE_PATH_OPEN",
+      "title": "Yol Açıldı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yol açıldı." }
       ]
     },
     {
@@ -168,7 +197,7 @@
       "lines": [
         { "speaker": "warning_read", "text": "Sel uyarısını okudun." },
         { "speaker": "rumor_checked", "text": "Söylentinin kaynağını resmî duyurudan kontrol ettin." },
-        { "speaker": "branch_cleared", "text": "Dala dokunmadan işaretli alternatif geçidi kullandın." },
+        { "speaker": "branch_cleared", "text": "Kuru ve korunaklı geçitteki küçük, hafif dalı kenara itip yolu açtın." },
         { "speaker": "gate_opened", "text": "Güvenli bölgenin bahçe kapısını açtın." },
         { "speaker": "code_opened", "text": "İpuçlarını okuyup girişin şifresini buldun." },
         { "speaker": "safe_zone", "text": "Belirlenmiş güvenli yüksek bölgeye ulaştın." },
@@ -179,6 +208,7 @@
       "id": "FE_RESULT_MISTAKES",
       "title": "Sonuç: Düzeltilen Yanlışlar (speaker = Hub hata id'si)",
       "lines": [
+        { "speaker": "short_road_tried", "text": "Kısa yolu denedin, kapalıydı — zaman kaybettin. Bariyeri aşmadan kavşağa döndün." },
         { "speaker": "low_road", "text": "Kapatılmış alçak yola yöneldin; bariyerde durup güvenli rotaya döndün." },
         { "speaker": "rumor_trusted", "text": "Önce kaynağı belirsiz söylentiye güvendin; resmî duyuruyu görünce düzelttin." },
         { "speaker": "wrong_code", "text": "Şifreyi önce yanlış girdin; ipuçlarını yeniden okuyup doğrusunu buldun." }
@@ -197,9 +227,12 @@
       "Güvenli yüksek bölgelere ilişkin resmî yönlendirmeleri izle.",
       "Eve ulaşmak uğruna risk alma."
     ],
-    "note": "Bu bir farkındalık oyunudur. 120 saniye yalnızca bu oyunun süresidir, gerçek afetler için süre garantisi değildir. Gerçek bir afette resmî kurumların yönlendirmelerine uy."
+    "note": "Bu bir farkındalık oyunudur. Büyük ağaçları, ağır dalları veya elektrik hatlarına yakın cisimleri taşımaya çalışma. Gerçek bir afette resmî kurumların yönlendirmelerine uy."
   },
   "ui": [
+    { "id": "objective_route", "text": "Güvenli güzergâhı takip et." },
+    { "id": "branch_mash_action", "text": "Art arda bas — Engeli kenara it" },
+    { "id": "branch_mash_hint", "text": "[E] Art arda bas — Engeli kenara it" },
     { "id": "card_note", "text": "Bu bir farkındalık oyunudur. Sahneler kurgudur." },
     { "id": "gauge_title", "text": "SU SEVİYESİ" },
     { "id": "gauge_note", "text": "Çevredeki su\nSuya hiç girme!" },

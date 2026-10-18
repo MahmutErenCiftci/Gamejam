@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5447580381964359402
 Transform:
   m_ObjectHideFlags: 0
@@ -245,10 +245,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79c478fa22e3884dbfb8db679e04694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.BranchObstacle
-  mode: 0
+  mode: 2
   point: {fileID: 4921571816266609450}
   alternativeLabel: "Alternatif ge\xE7idi a\xE7"
   smallBranchLabel: "K\xFC\xE7\xFCk dal\u0131 kenara \xE7ek"
+  startArmed: 0
+  requiredPresses: 12
+  player: {fileID: 0}
+  branchRoot: {fileID: 8227096806384349760}
+  clearOffset: {x: 0.9, y: 0.3, z: 0}
+  slideSeconds: 0.35
+  progressView: {fileID: 0}
+  storyJson: {fileID: 4900000, guid: 2b6a3f30c56b75a4b826a313c271108f, type: 3}
   blockers:
   - {fileID: 8307432678143415046}
   showWhenOpen:
@@ -375,7 +383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1979798553553596062
 Transform:
   m_ObjectHideFlags: 0
