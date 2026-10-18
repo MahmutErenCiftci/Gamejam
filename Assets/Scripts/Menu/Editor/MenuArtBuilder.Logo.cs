@@ -1,72 +1,83 @@
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace AfetUyanisi.Menu.EditorTools
 {
     // Oyunun adı: "EŞİK" logosu (UI/LogoStacked.png'nin üzerine yazar; GUID aynı kaldığı için menüdeki referanslar
-    // bozulmaz). Harfler aşağıdaki piksel haritalarından (Glyph*) çizilir: 98x50 sanat pikseli, 3 kat büyütülüp
-    // 294x151'e yazılır. Satır başına kaydırmayla sağa yatık, ışık sol üstten: üst kenar parlak, sol kenar açık,
-    // alt/sağ kenar koyu; açık-orta geçişi tek sıra damalı. Altında 2 piksel kalınlık, dışında tek koyu hat.
-    // Renk takımları LogoPalettes'ta; LogoPalette seçer.
+    // bozulmaz). Çocuk kitabı kapağı gibi: her harf kâğıttan kesilmiş ayrı bir parça; uçları yuvarlak kalın
+    // hatlar, makasla kesilmiş gibi hafif dalgalı kenar, her biri biraz farklı açıda ve yükseklikte yapıştırılmış.
+    // Pastel guaj renkler (içinde kısa fırça izleri), beyaz kâğıt kenarı, sayfaya düşen yumuşak gölge; etrafta
+    // birkaç küçük yıldız (uyuyan çocuk / rüya). 147x75 sanat pikseli, 2 kat büyütülüp 294x151'e yazılır.
     public static partial class MenuArtBuilder
     {
-        const int ArtW = 98, ArtH = 50, ArtScale = 3;
-        const int GlyphTop = 12, GlyphLeft = 4, CapRows = 26;
-        const int LogoPalette = 2;
+        const int ArtW = 147, ArtH = 75, ArtScale = 2;
+        const int LogoW = ArtW * ArtScale, LogoH = ArtH * ArtScale + 1;
+        const float PaperEdge = 1.8f;
 
-        // Işık → gölge: parlak, açık, orta, koyu, kalınlık, dış hat
-        public static readonly Color32[][] LogoPalettes =
+        static readonly Color32 Paper = C(255, 248, 236), PaperShade = C(236, 222, 204);
+        static readonly Color32 PaperShadow = new Color32(28, 16, 40, 120);
+        static readonly Color32 Star = C(255, 240, 196), StarCore = C(255, 255, 255);
+
+        // Bir harf: kalın hatlar (x0,y0,x1,y1; yerel, y aşağı), noktalar (x,y,yarıçap), renk (açık, ana, koyu),
+        // tuvaldeki merkezi ve dönüş açısı.
+        class PaperLetter
         {
-            // 0: altın (gün batımı) — mor dış hat
-            new[] { C(255, 246, 201), C(255, 211, 92), C(246, 163, 58), C(216, 105, 42), C(155, 59, 42), C(43, 26, 46) },
-            // 1: krem kâğıt — kırmızı kalınlık
-            new[] { C(255, 255, 255), C(255, 240, 214), C(243, 211, 176), C(213, 154, 123), C(181, 55, 46), C(42, 26, 40) },
-            // 2: su yeşili — lacivert kalınlık
-            new[] { C(232, 255, 248), C(159, 240, 224), C(79, 201, 196), C(46, 143, 166), C(31, 77, 122), C(22, 26, 51) },
+            public Vector4[] strokes;
+            public Vector3[] dots = new Vector3[0];
+            public float width = 4.5f;
+            public Color32 light, main, dark;
+            public Color32? dotColor;
+            public Vector2 center, pivot;
+            public float angle;
+        }
+
+        static PaperLetter[] Letters() => new[]
+        {
+            // E — mercan
+            new PaperLetter
+            {
+                strokes = new[] { new Vector4(5, 5, 5, 38), new Vector4(5, 5, 26, 5), new Vector4(5, 21.5f, 22, 21.5f), new Vector4(5, 38, 27, 38) },
+                light = C(250, 172, 148), main = C(242, 131, 107), dark = C(206, 94, 78),
+                pivot = new Vector2(16, 21), center = new Vector2(28, 37), angle = -5f,
+            },
+            // Ş — tereyağı sarısı; S tek akışlı yol, altında çengel
+            new PaperLetter
+            {
+                strokes = StrokePath(26, 9, 20, 4, 11, 4, 5, 9, 5, 15, 11, 19.5f, 20, 22.5f, 26, 27, 26, 33, 20, 38.5f, 11, 38.5f, 4, 33),
+                dots = new[] { new Vector3(15, 44, 2.2f), new Vector3(16.5f, 47, 2f), new Vector3(13.5f, 49.5f, 2f) },
+                light = C(255, 231, 160), main = C(255, 205, 94), dark = C(222, 160, 58),
+                pivot = new Vector2(15, 21), center = new Vector2(64, 41), angle = 4f,
+            },
+            // İ — nane yeşili gövde, sarı nokta
+            new PaperLetter
+            {
+                strokes = new[] { new Vector4(6, 13, 6, 44) },
+                dots = new[] { new Vector3(6, 2.5f, 4.5f) },
+                dotColor = C(255, 205, 94),
+                light = C(172, 228, 205), main = C(126, 204, 172), dark = C(84, 166, 136),
+                pivot = new Vector2(6, 26), center = new Vector2(92, 33), angle = -3f,
+            },
+            // K — gök mavisi
+            new PaperLetter
+            {
+                strokes = new[] { new Vector4(5, 5, 5, 38), new Vector4(25, 5, 9, 22), new Vector4(13, 20, 26, 38) },
+                light = C(170, 210, 244), main = C(126, 182, 234), dark = C(88, 140, 200),
+                pivot = new Vector2(16, 21), center = new Vector2(119, 38), angle = 6f,
+            },
         };
 
-        static readonly string[] GlyphE =
+        static Vector4[] StrokePath(params float[] p)
         {
-            ".XXXXXXXXXXXXXXXXXXX",
-            "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX",
-            "XXXXXX..............", "XXXXXX..............", "XXXXXX..............", "XXXXXX..............", "XXXXXX..............", "XXXXXX..............",
-            "XXXXXXXXXXXXXXXX....", "XXXXXXXXXXXXXXXX....", "XXXXXXXXXXXXXXXX....", "XXXXXXXXXXXXXXXX....", "XXXXXXXXXXXXXXXX....",
-            "XXXXXX..............", "XXXXXX..............", "XXXXXX..............", "XXXXXX..............", "XXXXXX..............",
-            "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXX",
-            ".XXXXXXXXXXXXXXXXXXX",
-        };
+            var s = new Vector4[p.Length / 2 - 1];
+            for (int i = 0; i < s.Length; i++) s[i] = new Vector4(p[i * 2], p[i * 2 + 1], p[i * 2 + 2], p[i * 2 + 3]);
+            return s;
+        }
 
-        static readonly string[] GlyphS =
+        // Yıldızlar: tuval x, y, boy (1 = küçük artı, 2 = dört kollu).
+        static readonly Vector3Int[] Stars =
         {
-            "..XXXXXXXXXXXXXXXXXXX",
-            ".XXXXXXXXXXXXXXXXXXXX",
-            "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX",
-            "XXXXXX.........XXXXXX", "XXXXXX.........XXXXXX",
-            "XXXXXX...............", "XXXXXX...............", "XXXXXX...............",
-            "XXXXXXXXXXXXXXXXXXXX.",
-            "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX",
-            ".XXXXXXXXXXXXXXXXXXXX",
-            "...............XXXXXX", "...............XXXXXX", "...............XXXXXX", "...............XXXXXX",
-            "XXXXXX.........XXXXXX", "XXXXXX.........XXXXXX",
-            "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX", "XXXXXXXXXXXXXXXXXXXXX",
-            "XXXXXXXXXXXXXXXXXXXX.",
-            "XXXXXXXXXXXXXXXXXXX..",
-            // çengel
-            ".........XX..........",
-            "..........XX.........",
-            "..........XX.........",
-            ".......XXXX..........",
-        };
-
-        // İ'nin noktası: köşeleri kırık kare. Satır -7'den başlar.
-        static readonly string[] GlyphIDot =
-        {
-            ".XXXX.",
-            "XXXXXX",
-            "XXXXXX",
-            "XXXXXX",
-            ".XXXX.",
+            new Vector3Int(9, 14, 2), new Vector3Int(46, 8, 1), new Vector3Int(137, 12, 2), new Vector3Int(141, 30, 1),
+            new Vector3Int(79, 66, 1),
         };
 
         [MenuItem("AfetUyanisi/Menü/Logoyu Kur (EŞİK)")]
@@ -78,113 +89,116 @@ namespace AfetUyanisi.Menu.EditorTools
             Debug.Log("[MenuArtBuilder] EŞİK logosu yazıldı: " + path);
         }
 
-        static Texture2D Logo() => LogoTexture(LogoPalette);
-
-        /// <summary>Logoyu verilen renk takımıyla çizer (önizleme için de kullanılır).</summary>
-        public static Texture2D LogoTexture(int palette)
+        static Texture2D Logo()
         {
-            Color32[] pal = LogoPalettes[Mathf.Clamp(palette, 0, LogoPalettes.Length - 1)];
-            var face = new bool[ArtW, ArtH];
-            var row = new int[ArtW, ArtH]; // harfin büyük harf tepesine göre satırı (damalı geçiş için)
+            var letters = Letters();
+            var owner = new int[ArtW, ArtH];   // 0 = boş, i+1 = harf, -(i+1) = harfin noktası
+            var paper = new bool[ArtW, ArtH];
 
-            void Stamp(string[] rows, int left, int top)
-            {
-                for (int r = 0; r < rows.Length; r++)
-                    for (int c = 0; c < rows[r].Length; c++)
+            for (int y = 0; y < ArtH; y++)
+                for (int x = 0; x < ArtW; x++)
+                    for (int i = 0; i < letters.Length; i++)
                     {
-                        if (rows[r][c] != 'X') continue;
-                        int ly = top + r;                       // büyük harf tepesine göre
-                        int x = GlyphLeft + left + c + (CapRows - 1 - ly) / 4, y = GlyphTop + ly;
-                        if (x < 0 || y < 0 || x >= ArtW || y >= ArtH) continue;
-                        face[x, y] = true;
-                        row[x, y] = ly;
+                        var L = letters[i];
+                        // Makasla kesilmiş kenar: yavaş değişen ±0.5 piksellik oynama.
+                        float wobble = (Mathf.PerlinNoise(x * 0.23f + i * 17f, y * 0.23f) - 0.5f) * 1.1f;
+                        Vector2 p = ToLocal(L, x + 0.5f, y + 0.5f);
+                        float d = StrokeDistance(L, p) - L.width - wobble;
+                        float dd = DotDistance(L, p) - wobble;
+                        float inside = Mathf.Min(d, dd);
+                        if (inside < PaperEdge) paper[x, y] = true;
+                        if (inside < 0f && owner[x, y] == 0) owner[x, y] = dd < d ? -(i + 1) : i + 1;
                     }
-            }
-
-            Stamp(GlyphE, 0, 0);
-            Stamp(GlyphS, 23, 0);
-            Stamp(Block(6, CapRows), 47, 0);
-            Stamp(GlyphIDot, 47, -7);
-            Stamp(GlyphK(), 56, 0);
-
-            bool F(int x, int y) => x >= 0 && y >= 0 && x < ArtW && y < ArtH && face[x, y];
-
-            var art = new Color32?[ArtW, ArtH];
-            // Kalınlık: harfin 2 piksel altı
-            for (int y = 0; y < ArtH; y++)
-                for (int x = 0; x < ArtW; x++)
-                    if (!face[x, y] && (F(x, y - 1) || F(x, y - 2))) art[x, y] = pal[4];
-            // Dış hat: harf + kalınlığın çevresi (4 komşu + köşeler)
-            var body = new bool[ArtW, ArtH];
-            for (int y = 0; y < ArtH; y++)
-                for (int x = 0; x < ArtW; x++)
-                    body[x, y] = face[x, y] || art[x, y].HasValue;
-            for (int y = 0; y < ArtH; y++)
-                for (int x = 0; x < ArtW; x++)
-                {
-                    if (body[x, y]) continue;
-                    for (int dy = -1; dy <= 1 && !art[x, y].HasValue; dy++)
-                        for (int dx = -1; dx <= 1; dx++)
-                        {
-                            int nx = x + dx, ny = y + dy;
-                            if (nx >= 0 && ny >= 0 && nx < ArtW && ny < ArtH && body[nx, ny]) { art[x, y] = pal[5]; break; }
-                        }
-                }
-            // Yüz: ışık sol üstten
-            for (int y = 0; y < ArtH; y++)
-                for (int x = 0; x < ArtW; x++)
-                {
-                    if (!face[x, y]) continue;
-                    bool up = F(x, y - 1), down = F(x, y + 1), left = F(x - 1, y), right = F(x + 1, y);
-                    int ly = row[x, y];
-                    Color32 c;
-                    if (!up) c = !left ? C(255, 255, 255) : pal[0];
-                    else if (!down) c = pal[3];
-                    else if (!left) c = pal[1];
-                    else if (!right) c = pal[3];
-                    else if (ly < 11) c = pal[1];
-                    else if (ly < 13) c = ((x + y) & 1) == 0 ? pal[1] : pal[2]; // tek sıra damalı geçiş
-                    else c = pal[2];
-                    art[x, y] = c;
-                }
 
             var t = New(LogoW, LogoH);
+            void Put(int x, int y, Color32 c)
+            {
+                if (x < 0 || y < 0 || x >= ArtW || y >= ArtH) return;
+                for (int sy = 0; sy < ArtScale; sy++)
+                    for (int sx = 0; sx < ArtScale; sx++)
+                        Px(t, x * ArtScale + sx, y * ArtScale + sy, c);
+            }
+
+            // Sayfaya düşen gölge: kâğıdın sağ-aşağı kaydırılmışı.
             for (int y = 0; y < ArtH; y++)
                 for (int x = 0; x < ArtW; x++)
                 {
-                    if (!art[x, y].HasValue) continue;
-                    for (int sy = 0; sy < ArtScale; sy++)
-                        for (int sx = 0; sx < ArtScale; sx++)
-                            Px(t, x * ArtScale + sx, y * ArtScale + sy, art[x, y].Value);
+                    int sx = x - 1, sy = y - 2;
+                    if (!paper[x, y] && sx >= 0 && sy >= 0 && paper[sx, sy]) Put(x, y, PaperShadow);
                 }
+
+            for (int y = 0; y < ArtH; y++)
+                for (int x = 0; x < ArtW; x++)
+                {
+                    if (!paper[x, y]) continue;
+                    int o = owner[x, y];
+                    if (o == 0)
+                    {
+                        // Kâğıt kenarı: alt kenarı bir ton gölgeli
+                        bool lower = y + 1 < ArtH && !paper[x, y + 1];
+                        Put(x, y, lower ? PaperShade : Paper);
+                        continue;
+                    }
+                    var L = letters[Mathf.Abs(o) - 1];
+                    bool isDot = o < 0 && L.dotColor.HasValue;
+                    Color32 main = isDot ? L.dotColor.Value : L.main;
+                    Color32 light = isDot ? Mix(L.dotColor.Value, Paper, 0.45f) : L.light;
+                    Color32 dark = isDot ? Shade(L.dotColor.Value, 0.82f) : L.dark;
+
+                    bool edgeUp = y == 0 || owner[x, y - 1] != o;
+                    bool edgeDown = y + 1 >= ArtH || owner[x, y + 1] != o || (y + 2 < ArtH && owner[x, y + 2] != o);
+                    Color32 c = main;
+                    if (edgeDown) c = dark;
+                    else if (edgeUp) c = light;
+                    else if (Brush(x, y, Mathf.Abs(o))) c = light;
+                    Put(x, y, c);
+                }
+
+            foreach (var s in Stars) DrawStar(Put, s.x, s.y, s.z);
             return Done(t);
         }
 
-        const int LogoW = ArtW * ArtScale, LogoH = ArtH * ArtScale + 1;
-
-        static string[] Block(int w, int h)
+        static Vector2 ToLocal(PaperLetter L, float x, float y)
         {
-            var rows = new string[h];
-            for (int i = 0; i < h; i++) rows[i] = new string('X', w);
-            return rows;
+            float a = -L.angle * Mathf.Deg2Rad;
+            float dx = x - L.center.x, dy = y - L.center.y;
+            return new Vector2(dx * Mathf.Cos(a) - dy * Mathf.Sin(a), dx * Mathf.Sin(a) + dy * Mathf.Cos(a)) + L.pivot;
         }
 
-        // K: 6 piksellik gövde; kol ve bacak 45° (her satır 1 piksel) çapraz.
-        static string[] GlyphK()
+        static float StrokeDistance(PaperLetter L, Vector2 p)
         {
-            var rows = new List<string>();
-            for (int y = 0; y < CapRows; y++)
+            float best = 999f;
+            foreach (var s in L.strokes)
             {
-                var r = new char[25];
-                for (int c = 0; c < r.Length; c++) r[c] = c < 6 ? 'X' : '.';
-                int a0, a1;
-                if (y <= 8) { a0 = 14 - y; a1 = 19 - y; }
-                else if (y <= 12) { a0 = 6; a1 = 11; }
-                else { a0 = 7 + (y - 13); a1 = 12 + (y - 13); }
-                for (int c = a0; c <= a1 && c < r.Length; c++) r[c] = 'X';
-                rows.Add(new string(r));
+                Vector2 a = new Vector2(s.x, s.y), b = new Vector2(s.z, s.w), ab = b - a;
+                float u = ab.sqrMagnitude < 0.001f ? 0f : Mathf.Clamp01(Vector2.Dot(p - a, ab) / ab.sqrMagnitude);
+                best = Mathf.Min(best, Vector2.Distance(p, a + ab * u));
             }
-            return rows.ToArray();
+            return best;
+        }
+
+        static float DotDistance(PaperLetter L, Vector2 p)
+        {
+            float best = 999f;
+            foreach (var d in L.dots) best = Mathf.Min(best, Vector2.Distance(p, new Vector2(d.x, d.y)) - d.z);
+            return best;
+        }
+
+        // Guaj fırça izi: satır boyunca kısa, açık tonlu çizgiler.
+        static bool Brush(int x, int y, int letter)
+        {
+            int run = Mathf.FloorToInt((x + Hash(y, letter) * 9f) / 5f);
+            return Hash(run, y, letter, 3) < 0.07f;
+        }
+
+        static void DrawStar(System.Action<int, int, Color32> put, int x, int y, int size)
+        {
+            put(x, y, StarCore);
+            for (int k = 1; k <= size; k++)
+            {
+                Color32 c = k == size ? Star : StarCore;
+                put(x - k, y, c); put(x + k, y, c); put(x, y - k, c); put(x, y + k, c);
+            }
         }
     }
 }
