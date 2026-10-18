@@ -133,6 +133,7 @@ namespace AfetUyanisi.Dialogue
                 yield return TypeLine(target, hint, line.text);
                 hint.SetActive(true);
                 while (!DialogueInput.ContinuePressed()) yield return null;
+                AfetUyanisi.Core.GameAudio.PlaySfx("SFX_UI_Dialogue_Next", 0.5f); // satır geçişi (P-UI)
                 hint.SetActive(false);
                 yield return null;
             }

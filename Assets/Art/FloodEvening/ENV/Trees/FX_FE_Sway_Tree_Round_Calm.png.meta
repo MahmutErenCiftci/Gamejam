@@ -1,0 +1,340 @@
+fileFormatVersion: 2
+guid: 46d9e3ac25e799d11fc29bf66bb776fa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 391660571222681331
+    second: FX_FE_Sway_Tree_Round_Calm_0
+  - first:
+      213: 1458785638567066854
+    second: FX_FE_Sway_Tree_Round_Calm_1
+  - first:
+      213: 785214961283564378
+    second: FX_FE_Sway_Tree_Round_Calm_2
+  - first:
+      213: 4026462103261838394
+    second: FX_FE_Sway_Tree_Round_Calm_3
+  - first:
+      213: 1239034985132002053
+    second: FX_FE_Sway_Tree_Round_Calm_4
+  - first:
+      213: 270728385493673527
+    second: FX_FE_Sway_Tree_Round_Calm_5
+  - first:
+      213: 1355434468362626439
+    second: FX_FE_Sway_Tree_Round_Calm_6
+  - first:
+      213: 2560132789895779937
+    second: FX_FE_Sway_Tree_Round_Calm_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c12e7c963df9c063e88bd3f856ff2750
+      internalID: 391660571222681331
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_1
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54e13d50d15c19a0c1ddca67e5029aca
+      internalID: 1458785638567066854
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_2
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e871c3b363079feafc87206e8a83e3f
+      internalID: 785214961283564378
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_3
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40550b7eb4604642e460fa5e05c7b41b
+      internalID: 4026462103261838394
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_4
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a37405c47658f9d5c2a923ed2b4ddb79
+      internalID: 1239034985132002053
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_5
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1cbc1c3fadad5188afc6b0b24c267a2
+      internalID: 270728385493673527
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_6
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9359b0075b5dc28069eee268d82b3b1
+      internalID: 1355434468362626439
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Round_Calm_7
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 0
+        width: 92
+        height: 154
+      alignment: 9
+      pivot: {x: 0.48913, y: 0.097403}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec39563fbb471b45f3e3b63d8a4f43fd
+      internalID: 2560132789895779937
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FX_FE_Sway_Tree_Round_Calm_0: 391660571222681331
+      FX_FE_Sway_Tree_Round_Calm_1: 1458785638567066854
+      FX_FE_Sway_Tree_Round_Calm_2: 785214961283564378
+      FX_FE_Sway_Tree_Round_Calm_3: 4026462103261838394
+      FX_FE_Sway_Tree_Round_Calm_4: 1239034985132002053
+      FX_FE_Sway_Tree_Round_Calm_5: 270728385493673527
+      FX_FE_Sway_Tree_Round_Calm_6: 1355434468362626439
+      FX_FE_Sway_Tree_Round_Calm_7: 2560132789895779937
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

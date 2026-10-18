@@ -13,7 +13,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
     public class FloodRouteWarningBox : FeTimedBanner
     {
         [SerializeField] private string defaultTitle = "YOL KAPALI";
-        [SerializeField, TextArea] private string defaultBody = "Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım.";
+        [SerializeField, TextArea] private string defaultBody = "Kapalıymış. Geri dönüp öbür yoldan gideyim.";
         [SerializeField, Min(0.5f)] private float seconds = 3.5f;
 
         [Header("Sprite (Assets/Art/UI/Earthquake/UI_EQ_PhoneNotifCard)")]

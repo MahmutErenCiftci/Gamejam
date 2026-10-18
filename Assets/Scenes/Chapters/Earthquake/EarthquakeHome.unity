@@ -1099,10 +1099,28 @@ MonoBehaviour:
   settleSeconds: 1.2
   fallbackCardSeconds: 2
   toastSeconds: 3.5
+  startRoomRequiredTasks:
+  - emergency_bag
+  - secure_bookshelf
+  - check_windows
+  - safe_spot
+  startRoomLockedTitle: "ODADAN \xC7IKMADAN \xD6NCE"
+  startRoomLockedText: "\xD6nce odadaki haz\u0131rl\u0131klar\u0131n\u0131 tamamlamal\u0131s\u0131n."
+  lockedToastCooldown: 4
+  motherQuestionId: Q1
+  motherMinSeconds: 5
+  motherAfterTaskDelay: 2.5
+  motherPlanLine: EQH_MOTHER_PLAN
+  timedFollowUpQuestions: 0
+  bagWearPose: {fileID: 0}
+  bagWearSeconds: 0.35
+  motherCoverPoses:
+  - {fileID: 21300000, guid: 0ccf8318c49ae5c4ab1da1649f43f77d, type: 3}
+  - {fileID: 21300000, guid: 964b9d0d8be72b54e9d21f42f210a1b4, type: 3}
+  motherCoverFrameSeconds: 0.12
   wakeLine: EQH_WAKE
   phoneAfterLine: EQH_PHONE_AFTER
   motherCallLine: EQH_MOTHER_CALL
-  motherGreetLine: EQH_MOTHER_GREET
   readyLine: EQH_READY
   quakeLine: EQH_QUAKE
   afterMotherLine: EQH_AFTER_MOTHER
@@ -1369,7 +1387,7 @@ MonoBehaviour:
   tasks:
   - id: emergency_bag
     label: "Afet \xE7antas\u0131n\u0131 haz\u0131rla"
-    detail: "Su, g\u0131da, el feneri, d\xFCd\xFCk, ilk yard\u0131m seti: \xE7antay\u0131 haz\u0131rla ve kapat."
+    detail: "Su, g\u0131da, el feneri, d\xFCd\xFCk, ilk yard\u0131m seti: \xE7antay\u0131 haz\u0131rla, kapat ve s\u0131rt\u0131na al."
     source: 0
     keys: []
   - id: secure_bookshelf
@@ -1378,12 +1396,11 @@ MonoBehaviour:
     source: 0
     keys: []
   - id: check_windows
-    label: Pencereleri kontrol et
-    detail: "Yatak odas\u0131 ve salon pencerelerini incele: sars\u0131nt\u0131da camlardan uzak dur."
+    label: Pencereyi kontrol et
+    detail: "Odandaki pencereyi incele: sars\u0131nt\u0131da camlardan uzak dur."
     source: 2
     keys:
     - bedroom_window
-    - living_window
   - id: safe_spot
     label: "\xC7\xF6k\u2013Kapan\u2013Tutun yerini belirle"
     detail: "Sa\u011Flam bir masa bul: \xE7al\u0131\u015Fma masas\u0131 ya da yemek masas\u0131."
@@ -1391,26 +1408,18 @@ MonoBehaviour:
     keys:
     - desk
     - dining_table
+  - id: family_communication
+    label: Annenin sorusunu cevapla
+    detail: "Annen sana bir soru soracak: deprem an\u0131nda ne yapaca\u011F\u0131n\u0131 s\xF6yle."
+    source: 3
+    keys:
+    - Q1
   - id: utilities_location
     label: "Vana ve sigorta yerini \xF6\u011Fren"
     detail: "Oca\u011F\u0131 incele: do\u011Falgaz vanas\u0131 ve sigorta kutusunun YER\u0130N\u0130 \xF6\u011Fren (tesisata dokunma)."
     source: 1
     keys:
     - stove
-  - id: family_communication
-    label: "Annenin sorular\u0131n\u0131 cevapla"
-    detail: "Annenle deprem plan\u0131n\u0131 konu\u015F: \xFC\xE7 sorusunu cevapla."
-    source: 3
-    keys:
-    - Q1
-    - Q2
-    - Q3
-  - id: assembly_point
-    label: "Annenden toplanma yerini \xF6\u011Fren"
-    detail: "Salondaki annenle konu\u015F: ailenin toplanma alan\u0131n\u0131 \xF6\u011Fren."
-    source: 1
-    keys:
-    - mother
   logEvents: 1
 --- !u!1 &125607233
 GameObject:
@@ -3843,7 +3852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.ResultReportView
   skin: {fileID: 0}
   sortingOrder: 95
-  defaultTitle: AFET FARKINDALIK RAPORU
+  defaultTitle: DEPREM FARKINDALIK RAPORU
   notesTitle: "\xD6\u011Frenilecekler"
   retryLabel: Tekrar Dene
   menuLabel: "Men\xFCye D\xF6n"
@@ -3992,7 +4001,7 @@ MonoBehaviour:
   sortingOrder: 92
   clockText: 07:00
   dateText: 
-  startHint: "Enter, Space ya da t\u0131klama da olur"
+  startHint: "Enter, Bo\u015Fluk ya da t\u0131klama da olur"
   slideSeconds: 0.55
   vibrateSeconds: 0.9
 --- !u!1 &456893099
@@ -5525,8 +5534,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 678344775}
-  - component: {fileID: 678344776}
-  - component: {fileID: 678344777}
   m_Layer: 0
   m_Name: Fridge
   m_TagString: Untagged
@@ -5549,52 +5556,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1670360765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &678344776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 678344774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73adfa61d96b8d47b2e9ef3cbf2e2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Interactable
-  actionLabel: "Buzdolab\u0131n\u0131 incele"
-  keyLabel: E
-  useRadius: 0.75
-  highlight: {fileID: 0}
-  promptAnchor: {fileID: 0}
-  promptOffset: {x: 0, y: 0.4, z: 0}
-  available: 1
-  dialogueId: 
-  appendChapterSuffix: 0
-  oneShot: 0
-  onUsed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &678344777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 678344774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f5be182884043489306817ec12c5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.InspectableObject
-  id: fridge
-  actionLabel: "Buzdolab\u0131n\u0131 incele"
-  hazardClass: 1
-  fallbackTitle: 
-  fallbackText: 
-  inspectedMarker: {fileID: 0}
-  onInspected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &689511053
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,6 +5632,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -5902,8 +5864,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 723788948}
-  - component: {fileID: 723788950}
-  - component: {fileID: 723788949}
   m_Layer: 0
   m_Name: Cabinet
   m_TagString: Untagged
@@ -5926,52 +5886,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1670360765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &723788949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723788947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f5be182884043489306817ec12c5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.InspectableObject
-  id: cabinet
-  actionLabel: Vitrini incele
-  hazardClass: 1
-  fallbackTitle: 
-  fallbackText: 
-  inspectedMarker: {fileID: 0}
-  onInspected:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &723788950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723788947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73adfa61d96b8d47b2e9ef3cbf2e2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Interactable
-  actionLabel: Vitrini incele
-  keyLabel: E
-  useRadius: 0.7
-  highlight: {fileID: 0}
-  promptAnchor: {fileID: 0}
-  promptOffset: {x: 0, y: 0.4, z: 0}
-  available: 1
-  dialogueId: 
-  appendChapterSuffix: 0
-  oneShot: 0
-  onUsed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &747546805
 GameObject:
   m_ObjectHideFlags: 0
@@ -6539,6 +6453,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -6695,8 +6610,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 860978185}
-  - component: {fileID: 860978186}
-  - component: {fileID: 860978187}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -6719,52 +6632,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1843478080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &860978186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860978184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73adfa61d96b8d47b2e9ef3cbf2e2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Interactable
-  actionLabel: Telefona bak
-  keyLabel: E
-  useRadius: 0.8
-  highlight: {fileID: 0}
-  promptAnchor: {fileID: 0}
-  promptOffset: {x: 0, y: 0.4, z: 0}
-  available: 1
-  dialogueId: 
-  appendChapterSuffix: 0
-  oneShot: 0
-  onUsed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &860978187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860978184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f5be182884043489306817ec12c5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.InspectableObject
-  id: phone
-  actionLabel: Telefona bak
-  hazardClass: 0
-  fallbackTitle: 
-  fallbackText: 
-  inspectedMarker: {fileID: 0}
-  onInspected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &864380399
 GameObject:
   m_ObjectHideFlags: 0
@@ -9090,8 +8957,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 994270273}
-  - component: {fileID: 994270275}
-  - component: {fileID: 994270274}
   m_Layer: 0
   m_Name: Wardrobe
   m_TagString: Untagged
@@ -9114,52 +8979,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1843478080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &994270274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 994270272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f5be182884043489306817ec12c5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.InspectableObject
-  id: wardrobe
-  actionLabel: "Gard\u0131robu incele"
-  hazardClass: 1
-  fallbackTitle: 
-  fallbackText: 
-  inspectedMarker: {fileID: 0}
-  onInspected:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &994270275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 994270272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73adfa61d96b8d47b2e9ef3cbf2e2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Interactable
-  actionLabel: "Gard\u0131robu incele"
-  keyLabel: E
-  useRadius: 0.7
-  highlight: {fileID: 0}
-  promptAnchor: {fileID: 0}
-  promptOffset: {x: 0, y: 0.4, z: 0}
-  available: 1
-  dialogueId: 
-  appendChapterSuffix: 0
-  oneShot: 0
-  onUsed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1000285210
 GameObject:
   m_ObjectHideFlags: 0
@@ -10816,6 +10635,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -13092,6 +12912,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -22081,8 +21902,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588644249}
-  - component: {fileID: 1588644250}
-  - component: {fileID: 1588644251}
   m_Layer: 0
   m_Name: LivingWindow
   m_TagString: Untagged
@@ -22105,52 +21924,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1670360765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1588644250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588644248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c73adfa61d96b8d47b2e9ef3cbf2e2d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Interactable
-  actionLabel: Pencereyi incele
-  keyLabel: E
-  useRadius: 0.8
-  highlight: {fileID: 0}
-  promptAnchor: {fileID: 0}
-  promptOffset: {x: 0, y: 0.4, z: 0}
-  available: 1
-  dialogueId: 
-  appendChapterSuffix: 0
-  oneShot: 0
-  onUsed:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1588644251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588644248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77f5be182884043489306817ec12c5c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.InspectableObject
-  id: living_window
-  actionLabel: Pencereyi incele
-  hazardClass: 1
-  fallbackTitle: 
-  fallbackText: 
-  inspectedMarker: {fileID: 0}
-  onInspected:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1613191261
 GameObject:
   m_ObjectHideFlags: 0
@@ -22202,6 +21975,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -22789,6 +22563,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -23807,6 +23582,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []
@@ -24237,6 +24013,7 @@ MonoBehaviour:
   fallbackTitle: 
   fallbackText: 
   inspectedMarker: {fileID: 0}
+  singleUse: 1
   onInspected:
     m_PersistentCalls:
       m_Calls: []

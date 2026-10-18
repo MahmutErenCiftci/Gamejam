@@ -1,0 +1,100 @@
+{
+  "chapter_id": "flood_school",
+  "version": 1,
+  "scenes": [
+    {
+      "id": "FS_TEACHER",
+      "title": "Okul Çıkışı",
+      "lines": [
+        { "speaker": "Öğretmen", "text": "Okul Caddesi'ni <color=#E8392B>su bastı</color>! Sakın suya yaklaşmayın." },
+        { "speaker": "Öğretmen", "text": "Köprüdeki yaya yolundan geçin, doğruca eve gidin." },
+        { "speaker": "Çocuk", "text": "Tamam öğretmenim, görüşürüz!" }
+      ]
+    },
+    {
+      "id": "FS_SHORTCUT",
+      "title": "Kestirme mi, Köprü mü?",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Caddeden kessem eve beş dakikada varırım... Ama orası <color=#E8392B>su altında</color>." },
+        { "speaker": "Çocuk", "text": "Su da çok hızlı akıyor. Köprü uzak ama en azından kuru. Ne yapsam?" }
+      ]
+    },
+    {
+      "id": "FS_SWEPT",
+      "title": "Dur! (yanlış seçimde)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Dur! Girsem akıntı beni böyle sürükler." },
+        { "speaker": "Çocuk", "text": "Ne kadar derin, ne kadar hızlı, bilemem ki. <color=#E8392B>Akan suya girilmez.</color>" }
+      ]
+    },
+    {
+      "id": "FS_DECIDED",
+      "title": "Karar",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Köprüden gideceğim. Geç kalırsam kalayım." }
+      ]
+    },
+    {
+      "id": "FS_BRIDGE",
+      "title": "Köprüde",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Su köprünün altından nasıl da akıyor! Kenardan uzak durayım." }
+      ]
+    },
+    {
+      "id": "FS_CROSSED",
+      "title": "Köprü Geçildi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Geçtim! Bu yağmur hiç dinmeyecek galiba. Hadi eve." }
+      ]
+    },
+    {
+      "id": "FS_SIGN",
+      "title": "Tabela",
+      "lines": [
+        { "speaker": "Çocuk", "text": "\"SU BİRİKİNTİSİ TEHLİKELİDİR!\" Cadde tamamen kapatılmış." },
+        { "speaker": "Çocuk", "text": "İyi ki köprüden geldim." }
+      ]
+    },
+    {
+      "id": "F07_WATER_WARNING",
+      "title": "Suya Yaklaşma",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yok, suya yaklaşmayayım. Ne kadar derin, belli değil." }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "FS_D1",
+      "prompt": "Kestirme yolu su bastı, köprü biraz uzakta. Ne yapmalısın?",
+      "time_limit": 0,
+      "required_correct": 1,
+      "timeout_feedback": "",
+      "choices": [
+        {
+          "id": "FS_D1_A",
+          "key": 1,
+          "text": "Kestirmeden, akan suyun içinden geç.",
+          "correct": false,
+          "feedback": "Akan suyun derinliği ve gücü görünenden fazladır. Diz hizasındaki akıntı bile insanı sürükleyebilir. Asla girme!",
+          "wrong_example": "Akan suya girmek"
+        },
+        {
+          "id": "FS_D1_B",
+          "key": 2,
+          "text": "Köprüdeki yaya yolunu kullan.",
+          "correct": true,
+          "feedback": "Doğru. Yol biraz uzun ama kuru ve güvenli.",
+          "wrong_example": ""
+        }
+      ]
+    }
+  ],
+  "result": {
+    "title_success": "",
+    "title_with_mistakes": "",
+    "learned": [],
+    "note": ""
+  }
+}

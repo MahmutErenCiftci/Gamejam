@@ -30,6 +30,20 @@ namespace AfetUyanisi.Chapters.FloodEvening
         IEnumerator ShowWarning();
     }
 
+    /// <summary>
+    /// Apartman finali (sel sonrası): Cenk güvenli bölgeye (apartman avlusu, "SafeZone") varınca controller sel sayacını DURDURUR,
+    /// Hub.Complete("safe_zone") yapar ve Begin()'i bir kez çağırır. Oyuncu serbest yürümeye devam eder; finalin [E] noktaları
+    /// (posta kutusu, kilit) IFloodEveningInteraction olarak controller'a kayıtlıdır ve ancak Begin()'den sonra CanUse = true olur.
+    /// Sinematik kısımlarda final Hub.NotifyOpened("cine_...") ile kontrolü alır (Cenk'i ExternalVelocity ile yürütebilir).
+    /// Cenk eve girince IsComplete = true olur (ayrıca Hub.Complete("home_entered")); controller kararma + bitiş ekranını gösterir.
+    /// Sahnede final yoksa controller doğrudan sonuç ekranına geçer.
+    /// </summary>
+    public interface IFloodEveningFinale
+    {
+        void Begin();
+        bool IsComplete { get; }
+    }
+
     /// <summary>Bölüm yeniden kurulurken modülün kendi durumunu sıfırlaması (kapı kapalı, kod boş, dal yerinde...).</summary>
     public interface IFloodEveningResettable
     {

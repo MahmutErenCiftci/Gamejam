@@ -1,0 +1,526 @@
+{
+ "anchor": {
+  "gx": 59,
+  "gy": -1
+ },
+ "ppu": 64,
+ "items": {
+  "PROP_FE_Apt_Facade": {
+   "file": "PROP_FE_Apt_Facade.png",
+   "sprites": [
+    "PROP_FE_Apt_Facade_0"
+   ],
+   "local": [
+    0,
+    0
+   ],
+   "order": -50,
+   "unlit": false,
+   "rect": {
+    "x": 37,
+    "y": 39,
+    "w": 138,
+    "h": 198
+   }
+  },
+  "PROP_FE_Apt_Recess": {
+   "file": "PROP_FE_Apt_Recess.png",
+   "sprites": [
+    "PROP_FE_Apt_Recess_0"
+   ],
+   "local": [
+    0.28125,
+    0.15625
+   ],
+   "order": -52,
+   "unlit": false,
+   "rect": {
+    "x": 64,
+    "y": 148,
+    "w": 28,
+    "h": 78
+   }
+  },
+  "PROP_FE_Apt_Door": {
+   "file": "PROP_FE_Apt_Door.png",
+   "sprites": [
+    "PROP_FE_Apt_Door_0",
+    "PROP_FE_Apt_Door_1",
+    "PROP_FE_Apt_Door_2",
+    "PROP_FE_Apt_Door_3",
+    "PROP_FE_Apt_Door_4",
+    "PROP_FE_Apt_Door_5",
+    "PROP_FE_Apt_Door_6",
+    "PROP_FE_Apt_Door_7",
+    "PROP_FE_Apt_Door_8",
+    "PROP_FE_Apt_Door_9",
+    "PROP_FE_Apt_Door_10",
+    "PROP_FE_Apt_Door_11",
+    "PROP_FE_Apt_Door_12",
+    "PROP_FE_Apt_Door_13"
+   ],
+   "local": [
+    0.28125,
+    0.26563
+   ],
+   "order": -55,
+   "unlit": false,
+   "rect": {
+    "x": 64,
+    "y": 152,
+    "w": 21,
+    "h": 67
+   },
+   "angles": [
+    0,
+    3,
+    6,
+    9,
+    13,
+    20,
+    28,
+    37,
+    46,
+    56,
+    66,
+    76,
+    84,
+    90
+   ]
+  },
+  "PROP_FE_Apt_DoorGlow": {
+   "file": "PROP_FE_Apt_DoorGlow.png",
+   "sprites": [
+    "PROP_FE_Apt_DoorGlow_0",
+    "PROP_FE_Apt_DoorGlow_1",
+    "PROP_FE_Apt_DoorGlow_2",
+    "PROP_FE_Apt_DoorGlow_3",
+    "PROP_FE_Apt_DoorGlow_4",
+    "PROP_FE_Apt_DoorGlow_5",
+    "PROP_FE_Apt_DoorGlow_6",
+    "PROP_FE_Apt_DoorGlow_7",
+    "PROP_FE_Apt_DoorGlow_8",
+    "PROP_FE_Apt_DoorGlow_9",
+    "PROP_FE_Apt_DoorGlow_10",
+    "PROP_FE_Apt_DoorGlow_11",
+    "PROP_FE_Apt_DoorGlow_12",
+    "PROP_FE_Apt_DoorGlow_13"
+   ],
+   "local": [
+    0.28125,
+    0.26563
+   ],
+   "order": -54,
+   "unlit": true,
+   "rect": {
+    "x": 64,
+    "y": 152,
+    "w": 21,
+    "h": 67
+   },
+   "angles": [
+    0,
+    3,
+    6,
+    9,
+    13,
+    20,
+    28,
+    37,
+    46,
+    56,
+    66,
+    76,
+    84,
+    90
+   ]
+  },
+  "PROP_FE_Apt_Handle": {
+   "file": "PROP_FE_Apt_Handle.png",
+   "sprites": [
+    "PROP_FE_Apt_Handle_0",
+    "PROP_FE_Apt_Handle_1"
+   ],
+   "local": [
+    0.42188,
+    0.70313
+   ],
+   "order": -53,
+   "unlit": false,
+   "rect": {
+    "x": 73,
+    "y": 181,
+    "w": 9,
+    "h": 10
+   }
+  },
+  "PROP_FE_Apt_Keypad": {
+   "file": "PROP_FE_Apt_Keypad.png",
+   "sprites": [
+    "PROP_FE_Apt_Keypad_0",
+    "PROP_FE_Apt_Keypad_1",
+    "PROP_FE_Apt_Keypad_2",
+    "PROP_FE_Apt_Keypad_3"
+   ],
+   "local": [
+    0.48438,
+    0.875
+   ],
+   "order": -53,
+   "unlit": true,
+   "rect": {
+    "x": 77,
+    "y": 170,
+    "w": 3,
+    "h": 10
+   }
+  },
+  "PROP_FE_Apt_Interior": {
+   "file": "PROP_FE_Apt_Interior.png",
+   "sprites": [
+    "PROP_FE_Apt_Interior_0"
+   ],
+   "local": [
+    0.28125,
+    0.26563
+   ],
+   "order": -57,
+   "unlit": true,
+   "rect": {
+    "x": 64,
+    "y": 148,
+    "w": 28,
+    "h": 71
+   }
+  },
+  "PROP_FE_Apt_Mailbox": {
+   "file": "PROP_FE_Apt_Mailbox.png",
+   "sprites": [
+    "PROP_FE_Apt_Mailbox_0"
+   ],
+   "local": [
+    1.04688,
+    0.9375
+   ],
+   "order": -49,
+   "unlit": false,
+   "rect": {
+    "x": 113,
+    "y": 138,
+    "w": 30,
+    "h": 38
+   }
+  },
+  "PROP_FE_Apt_MailLid": {
+   "file": "PROP_FE_Apt_MailLid.png",
+   "sprites": [
+    "PROP_FE_Apt_MailLid_0",
+    "PROP_FE_Apt_MailLid_1",
+    "PROP_FE_Apt_MailLid_2"
+   ],
+   "local": [
+    1.10938,
+    0.875
+   ],
+   "order": -48,
+   "unlit": false,
+   "rect": {
+    "x": 117,
+    "y": 160,
+    "w": 10,
+    "h": 20
+   }
+  },
+  "PROP_FE_Apt_EnvelopeTip": {
+   "file": "PROP_FE_Apt_EnvelopeTip.png",
+   "sprites": [
+    "PROP_FE_Apt_EnvelopeTip_0"
+   ],
+   "local": [
+    1.15625,
+    1.07813
+   ],
+   "order": -47,
+   "unlit": false,
+   "rect": {
+    "x": 120,
+    "y": 163,
+    "w": 4,
+    "h": 4
+   }
+  },
+  "PROP_FE_Apt_MailHighlight": {
+   "file": "PROP_FE_Apt_MailHighlight.png",
+   "sprites": [
+    "PROP_FE_Apt_MailHighlight_0"
+   ],
+   "local": [
+    1.10938,
+    0.9375
+   ],
+   "order": -46,
+   "unlit": true,
+   "rect": {
+    "x": 117,
+    "y": 160,
+    "w": 10,
+    "h": 16
+   }
+  },
+  "PROP_FE_Apt_LockHighlight": {
+   "file": "PROP_FE_Apt_LockHighlight.png",
+   "sprites": [
+    "PROP_FE_Apt_LockHighlight_0"
+   ],
+   "local": [
+    0.45313,
+    0.8125
+   ],
+   "order": -46,
+   "unlit": true,
+   "rect": {
+    "x": 75,
+    "y": 166,
+    "w": 8,
+    "h": 18
+   }
+  },
+  "PROP_FE_Apt_Lamp": {
+   "file": "PROP_FE_Apt_Lamp.png",
+   "sprites": [
+    "PROP_FE_Apt_Lamp_0"
+   ],
+   "local": [
+    0.42188,
+    1.03125
+   ],
+   "order": -49,
+   "unlit": false,
+   "rect": {
+    "x": 73,
+    "y": 154,
+    "w": 11,
+    "h": 16
+   }
+  },
+  "PROP_FE_Apt_LampBulb": {
+   "file": "PROP_FE_Apt_LampBulb.png",
+   "sprites": [
+    "PROP_FE_Apt_LampBulb_0"
+   ],
+   "local": [
+    0.45313,
+    1.0625
+   ],
+   "order": -47,
+   "unlit": true,
+   "rect": {
+    "x": 75,
+    "y": 158,
+    "w": 7,
+    "h": 10
+   }
+  },
+  "PROP_FE_Apt_Mat": {
+   "file": "PROP_FE_Apt_Mat.png",
+   "sprites": [
+    "PROP_FE_Apt_Mat_0"
+   ],
+   "local": [
+    0.34375,
+    0.03125
+   ],
+   "order": -89,
+   "unlit": false,
+   "rect": {
+    "x": 68,
+    "y": 215,
+    "w": 38,
+    "h": 19
+   }
+  },
+  "PROP_FE_Apt_Plant_A": {
+   "file": "PROP_FE_Apt_Plant_A.png",
+   "sprites": [
+    "PROP_FE_Apt_Plant_A_0"
+   ],
+   "local": [
+    0.12,
+    -0.025
+   ],
+   "order": 0,
+   "unlit": false,
+   "rect": {
+    "x": 44,
+    "y": 215,
+    "w": 19,
+    "h": 27
+   }
+  },
+  "PROP_FE_Apt_Plant_B": {
+   "file": "PROP_FE_Apt_Plant_B.png",
+   "sprites": [
+    "PROP_FE_Apt_Plant_B_0"
+   ],
+   "local": [
+    1.865,
+    0.7925
+   ],
+   "order": 0,
+   "unlit": false,
+   "rect": {
+    "x": 153,
+    "y": 150,
+    "w": 24,
+    "h": 42
+   }
+  },
+  "FX_FE_Apt_LightSpill": {
+   "file": "FX_FE_Apt_LightSpill.png",
+   "sprites": [
+    "FX_FE_Apt_LightSpill_0"
+   ],
+   "local": [
+    0.14063,
+    -0.34375
+   ],
+   "order": -88,
+   "unlit": false,
+   "rect": {
+    "x": 55,
+    "y": 209,
+    "w": 102,
+    "h": 49
+   }
+  },
+  "FX_FE_Apt_SpillGlow": {
+   "file": "FX_FE_Apt_SpillGlow.png",
+   "sprites": [
+    "FX_FE_Apt_SpillGlow_0"
+   ],
+   "local": [
+    0.14063,
+    -0.34375
+   ],
+   "order": -88,
+   "unlit": true,
+   "rect": {
+    "x": 55,
+    "y": 209,
+    "w": 101,
+    "h": 49
+   }
+  }
+ },
+ "anchors": {
+  "DoorFront": [
+   0.735,
+   0.1575
+  ],
+  "Threshold": [
+   0.525,
+   0.2625
+  ],
+  "LeafPlane": [
+   0.425,
+   0.3375
+  ],
+  "Inside": [
+   0.3,
+   0.56
+  ],
+  "LockPoint": [
+   0.8,
+   0.25
+  ],
+  "LockStand": [
+   0.81,
+   0.295
+  ],
+  "LockPrompt": [
+   0.515,
+   1.1175
+  ],
+  "MailPoint": [
+   1.30167,
+   0.47083
+  ],
+  "MailStand": [
+   1.43167,
+   0.58583
+  ],
+  "MailPrompt": [
+   1.18667,
+   1.41895
+  ],
+  "CameraFocus": [
+   1.025,
+   0.7625
+  ],
+  "DoorLight": [
+   0.6,
+   0.2
+  ],
+  "LampLight": [
+   0.51,
+   0.105
+  ],
+  "PlantA": [
+   0.12,
+   -0.025
+  ],
+  "PlantB": [
+   1.865,
+   0.7925
+  ]
+ },
+ "lampHeight": 1.03125,
+ "geometry": {
+  "uL": 0.5625,
+  "uR": 1.4375,
+  "hB": 1,
+  "hT": 65,
+  "dLeaf": 0.22,
+  "jamb": 0.11,
+  "lintel": 6,
+  "canopy": {
+   "u0": 0.36,
+   "u1": 1.66,
+   "d0": -0.46,
+   "h0": 73,
+   "h1": 78
+  },
+  "mail": {
+   "u0": 2.12,
+   "u1": 2.86,
+   "d0": -0.13,
+   "h0": 29,
+   "h1": 51,
+   "cols": 3,
+   "rows": 2
+  },
+  "lamp": {
+   "u": 0.72,
+   "d": -0.3,
+   "h": 63
+  },
+  "plate": {
+   "u0": 0.12,
+   "u1": 0.42,
+   "h0": 44
+  },
+  "mat": {
+   "u0": 0.6,
+   "u1": 1.4,
+   "d0": -0.48,
+   "d1": -0.08
+  },
+  "hall": {
+   "dBack": 2.3,
+   "uLw": 0.25,
+   "uRw": 1.95,
+   "hC": 80
+  },
+  "w": 0.875
+ }
+}

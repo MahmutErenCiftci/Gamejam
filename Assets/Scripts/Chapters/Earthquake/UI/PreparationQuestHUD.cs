@@ -57,8 +57,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private float rowHeight = 13f;
 
         [Header("Metinler")]
-        [SerializeField] private string title = "AFET HAZIRLIĞI";
-        [SerializeField] private string alarmText = "DEPREM HAZIRLIK SİMÜLASYONU";
+        [SerializeField] private string title = "DEPREM HAZIRLIĞI";
+        [SerializeField] private string alarmText = "HAZIRLIK BAŞLADI!";
         [SerializeField] private string completeText = "GÖREV TAMAMLANDI!";
         [SerializeField] private string allDoneText = "HAZIRLIK TAMAM!";
         [SerializeField] private string penaltyFormat = "-{0} SANİYE";
@@ -94,7 +94,18 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private UnityEvent onAlarm = new UnityEvent();
         [SerializeField] private UnityEvent onTaskCompleted = new UnityEvent();
 
-        private const float HeaderH = 33f, ListTop = 35f, ListPad = 5f, CompactH = 34f;
+        private const float HeaderH = 33f, ListTop = 35f, ListPad = 5f, CompactH = 34f, NowRowH = 14f;
+
+        // "ŞİMDİ: …" satırı (EarthquakeGuidance.SetNowText): panelde başlığın altında; panel kapalıyken (sarsıntı sonrası) sağ üstte küçük etiket.
+        private RectTransform nowRow;
+        private CanvasGroup nowRowGroup;
+        private Text nowRowText;
+        private RectTransform nowPill;
+        private CanvasGroup nowPillGroup;
+        private Text nowPillText;
+        private string nowValue;
+        private bool nowStandalone;
+        private float nowH, nowPillAlpha;
 
         private bool built;
         private Font font, fontBold;
@@ -204,6 +215,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             BuildBanner();
             BuildToast();
             BuildStatus();
+            BuildNowPill();
 
             group.alpha = 1f;
             SetPanelVisual(0f, 0f);
@@ -297,6 +309,98 @@ namespace AfetUyanisi.Chapters.Earthquake
             listRoot.offsetMin = new Vector2(4f, -ListTop - 7f * rowHeight);
             listRoot.offsetMax = new Vector2(-4f, -ListTop);
             listGroup = listRoot.gameObject.AddComponent<CanvasGroup>();
+
+            // ŞİMDİ satırı: amber zemin + sol çizgi, tek satır (görev listesinin üstünde)
+            nowRow = EqUi.Rect("NowRow", panel);
+            EqUi.TopBand(nowRow, 4f, 4f, ListTop, NowRowH - 1f);
+            nowRowGroup = nowRow.gameObject.AddComponent<CanvasGroup>();
+            nowRowGroup.blocksRaycasts = false;
+            var nowBg = EqUi.Img("Bg", nowRow, null, EqUi.A(EqUi.Amber, 0.22f), skin);
+            EqUi.Stretch(nowBg.rectTransform);
+            var nowBar = EqUi.Img("Bar", nowRow, null, EqUi.Amber, skin);
+            nowBar.rectTransform.anchorMin = new Vector2(0f, 0f);
+            nowBar.rectTransform.anchorMax = new Vector2(0f, 1f);
+            nowBar.rectTransform.pivot = new Vector2(0f, 0.5f);
+            nowBar.rectTransform.offsetMin = Vector2.zero;
+            nowBar.rectTransform.offsetMax = new Vector2(2f, 0f);
+            nowRowText = EqUi.Txt("Text", nowRow, font, taskSize, EqUi.Cream, TextAnchor.MiddleLeft, EqUi.Ink);
+            EqUi.StretchOffsets(nowRowText.rectTransform, 6f, 0f, 2f, 0f);
+            EqUi.BestFit(nowRowText, Mathf.Max(6, taskSize - 2));
+            nowRow.gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Yönlendirme satırı "ŞİMDİ: …" (EarthquakeGuidance). text boşsa satır kalkar. standalone: görev paneli kapalıyken
+        /// (sarsıntı sonrası) sağ üstte küçük etiket olarak gösterilsin mi.
+        /// </summary>
+        public void SetNowText(string text, bool standalone)
+        {
+            EnsureBuilt();
+            nowStandalone = standalone;
+            string value = string.IsNullOrEmpty(text) ? null : text;
+            if (value == nowValue) return;
+            nowValue = value;
+            string rich = value == null ? "" : "<color=#" + EqUi.HexOf(EqUi.Gold) + ">ŞİMDİ:</color> " + value;
+            nowRowText.text = rich;
+            nowPillText.text = rich;
+            if (value != null)
+            {
+                float w = Mathf.Ceil(EqUi.PreferredWidth(nowPillText, rich)) + 14f;
+                nowPill.sizeDelta = new Vector2(Mathf.Clamp(w, 60f, 260f), 18f);
+            }
+            nowH = value != null ? NowRowH : 0f;
+            nowRow.gameObject.SetActive(value != null);
+            ApplyListLayout();
+            RefreshRows();
+        }
+
+        /// <summary>Görev panelinin (ya da ŞİMDİ etiketinin) ekran dikdörtgeni (piksel); görünmüyorsa false. Yönlendirme oku bunun altında kalır.</summary>
+        public bool TryGetPanelScreenRect(out Rect rect)
+        {
+            rect = default;
+            RectTransform rt = IsPanelVisible && panelGroup != null && panelGroup.alpha > 0.05f ? panelRoot
+                : nowPill != null && nowPillAlpha > 0.05f ? nowPill : null;
+            if (rt == null) return false;
+            var c = new Vector3[4];
+            rt.GetWorldCorners(c);
+            rect = Rect.MinMaxRect(c[0].x, c[0].y, c[2].x, c[2].y);
+            return true;
+        }
+
+        /// <summary>Görev listesi ŞİMDİ satırının altından başlar; panel yüksekliği buna göre.</summary>
+        private void ApplyListLayout()
+        {
+            if (listRoot == null) return;
+            float top = ListTop + nowH;
+            listRoot.offsetMin = new Vector2(4f, -top - Mathf.Max(rows.Count, 1) * rowHeight);
+            listRoot.offsetMax = new Vector2(-4f, -top);
+            panelH = top + rows.Count * rowHeight + ListPad;
+        }
+
+        private void BuildNowPill()
+        {
+            nowPill = EqUi.Rect("NowPill", canvas.transform);
+            EqUi.Place(nowPill, 1f, 1f, new Vector2(-margin.x, -margin.y), new Vector2(120f, 18f));
+            nowPillGroup = nowPill.gameObject.AddComponent<CanvasGroup>();
+            nowPillGroup.blocksRaycasts = false;
+            var bg = EqUi.Img("Bg", nowPill, EqUi.S(skin, s => s.TimerPanel), EqUi.Navy, skin);
+            EqUi.Stretch(bg.rectTransform);
+            if (bg.sprite == null) EqUi.Fallback(bg, EqUi.Ink, EqUi.Navy, skin);
+            nowPillText = EqUi.Txt("Text", nowPill, font, taskSize, EqUi.Cream, TextAnchor.MiddleCenter, EqUi.Ink);
+            EqUi.StretchOffsets(nowPillText.rectTransform, 6f, 1f, 6f, 0f);
+            nowPillText.horizontalOverflow = HorizontalWrapMode.Overflow;
+            nowPillGroup.alpha = 0f;
+            nowPill.gameObject.SetActive(false);
+        }
+
+        private void UpdateNowPill(float dt)
+        {
+            if (nowRowGroup != null) nowRowGroup.alpha = listGroup != null ? listGroup.alpha : 1f;
+            float want = nowStandalone && nowValue != null && mode == Mode.Hidden && statusTarget <= 0f ? 1f : 0f;
+            if (Mathf.Approximately(nowPillAlpha, want)) return;
+            nowPillAlpha = Mathf.MoveTowards(nowPillAlpha, want, dt / 0.2f);
+            nowPillGroup.alpha = nowPillAlpha;
+            nowPill.gameObject.SetActive(nowPillAlpha > 0f);
         }
 
         private void BuildBanner()
@@ -395,7 +499,6 @@ namespace AfetUyanisi.Chapters.Earthquake
                 // Daha önce tamamlanmış görev animasyonsuz gösterilir.
                 if (quests.IsDone(d.id)) { row.SetState(PreparationQuestRow.State.Completed, false); animated.Add(d.id); }
             }
-            listRoot.offsetMin = new Vector2(4f, -ListTop - defs.Count * rowHeight);
             // Piksel bölmeler: her görev için bir hücre
             for (int i = 1; i < defs.Count; i++)
             {
@@ -407,7 +510,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 drt.offsetMin = new Vector2(-0.5f, 2f);
                 drt.offsetMax = new Vector2(0.5f, -2f);
             }
-            panelH = ListTop + defs.Count * rowHeight + ListPad;
+            ApplyListLayout();
             Canvas.ForceUpdateCanvases();
             foreach (var r in rows)
             {
@@ -637,6 +740,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             UpdateBar(dt);
             UpdateFx(dt);
             UpdateStatus(dt);
+            UpdateNowPill(dt);
             foreach (var r in rows) r.Tick(dt, clock);
         }
 

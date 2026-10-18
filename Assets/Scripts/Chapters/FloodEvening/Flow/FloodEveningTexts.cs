@@ -53,6 +53,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
             return key;
         }
 
+        /// <summary>"ui" bölümünde bu anahtar var mı (yoksa çağıran kendi varsayılan metnini kullanır).</summary>
+        public bool HasUi(string key) => !string.IsNullOrEmpty(key) && ui.ContainsKey(key);
+
         public bool HasScene(string id) => !string.IsNullOrEmpty(id) && scenes.ContainsKey(id);
 
         /// <summary>Sahnenin speaker'ı verilen satırının metni (FE_RESULT_STEPS gibi sözlük sahneleri için).</summary>

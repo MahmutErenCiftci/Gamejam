@@ -41,7 +41,7 @@ namespace AfetUyanisi.Chapters.Flood
         [Tooltip("Assets/Fonts/PixelOperator/PixelOperatorTR-Bold.ttf (boşsa oyun içi yazı tipi: GameFonts.Story)")]
         [SerializeField] private Font font;
         [SerializeField] private int sortingOrder = 300;
-        [SerializeField] private string header = "AFET FARKINDALIK RAPORU · SEL";
+        [SerializeField] private string header = "SEL FARKINDALIK RAPORU";
         [SerializeField] private Sprite dim;          // UI_EQ_Dim
         [SerializeField] private Sprite panel;        // UI_EQ_ReportPanel (9-slice, başlık bandı 33 px)
         [SerializeField] private Sprite check;        // UI_EQ_Check

@@ -19,6 +19,9 @@ namespace AfetUyanisi.Chapters.Objectives
     [DisallowMultipleComponent]
     public sealed class ObjectiveHudView : ObjectiveViewBase
     {
+        /// <summary>Yüzdenin önündeki kelime (deprem: HAZIRLIK). P-FLOOD: akşam selde FloodEveningController "İLERLEME" yapar, çıkışta geri alır.</summary>
+        public static string ProgressWord = "HAZIRLIK";
+
         [SerializeField] private Font font;
         [SerializeField] private int sortingOrder = 40;
         [Tooltip("Panelin sol üst köşesi (640×360 referans birimi)")]
@@ -611,7 +614,7 @@ namespace AfetUyanisi.Chapters.Objectives
         private void SetFill(float value)
         {
             fillValue = value;
-            progressLabel.text = "HAZIRLIK %" + Mathf.RoundToInt(value * 100f); // çubukla birlikte sayar
+            progressLabel.text = ProgressWord + " %" + Mathf.RoundToInt(value * 100f); // çubukla birlikte sayar
             int n = segmentFills.Count;
             if (n == 0) return;
             bool glow = Time.unscaledTime < pendingGlowUntil;

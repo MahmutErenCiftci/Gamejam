@@ -96,23 +96,31 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
         }
 
+        /// <summary>
+        /// Varsayılan görevler (sıra = HUD sırası): önce başlangıç odasındakiler (çanta, kitaplık, pencere, masa),
+        /// sonra annenin otomatik sorusu, en son salondaki ocak.
+        /// </summary>
         public static List<PrepTaskDefinition> DefaultTasks() => new List<PrepTaskDefinition>
         {
             new PrepTaskDefinition("emergency_bag", "Afet çantasını hazırla", PrepTaskSource.External,
-                "Su, gıda, el feneri, düdük, ilk yardım seti: çantayı hazırla ve kapat."),
+                "Su, gıda, el feneri, düdük, ilk yardım seti: çantayı hazırla, kapat ve sırtına al."),
             new PrepTaskDefinition("secure_bookshelf", "Kitaplığı sabitle", PrepTaskSource.External,
                 "Devrilebilecek kitaplığı depremden ÖNCE duvara sabitle."),
-            new PrepTaskDefinition("check_windows", "Pencereleri kontrol et", PrepTaskSource.InspectAll,
-                "Yatak odası ve salon pencerelerini incele: sarsıntıda camlardan uzak dur.", "bedroom_window", "living_window"),
+            new PrepTaskDefinition("check_windows", "Pencereyi kontrol et", PrepTaskSource.InspectAll,
+                "Odandaki pencereyi incele: sarsıntıda camlardan uzak dur.", "bedroom_window"),
             new PrepTaskDefinition("safe_spot", "Çök–Kapan–Tutun yerini belirle", PrepTaskSource.InspectAny,
                 "Sağlam bir masa bul: çalışma masası ya da yemek masası.", "desk", "dining_table"),
+            new PrepTaskDefinition("family_communication", "Annenin sorusunu cevapla", PrepTaskSource.AnswerAll,
+                "Annen sana bir soru soracak: deprem anında ne yapacağını söyle.", "Q1"),
             new PrepTaskDefinition("utilities_location", "Vana ve sigorta yerini öğren", PrepTaskSource.InspectAny,
                 "Ocağı incele: doğalgaz vanası ve sigorta kutusunun YERİNİ öğren (tesisata dokunma).", "stove"),
-            new PrepTaskDefinition("family_communication", "Annenin sorularını cevapla", PrepTaskSource.AnswerAll,
-                "Annenle deprem planını konuş: üç sorusunu cevapla.", "Q1", "Q2", "Q3"),
-            new PrepTaskDefinition("assembly_point", "Annenden toplanma yerini öğren", PrepTaskSource.InspectAny,
-                "Salondaki annenle konuş: ailenin toplanma alanını öğren.", "mother"),
         };
+
+        /// <summary>Kaldırılan görevler: eski sahne verisinde kalsa bile listeye girmez (anneyle E ile konuşma yok).</summary>
+        public static readonly string[] RetiredTaskIds = { "assembly_point", "check_phone" };
+
+        /// <summary>Kaldırılan incelemeler (telefon, gardırop, buzdolabı, TV, vitrin, salon penceresi): görev anahtarlarından silinir.</summary>
+        public static readonly string[] RetiredInspectionIds = { "phone", "wardrobe", "fridge", "tv", "cabinet", "living_window", "mother" };
 
         private void Awake()
         {
@@ -120,6 +128,33 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (countdown == null) countdown = FindAnyObjectByType<EmergencyCountdownManager>(FindObjectsInactive.Include);
             if (tasks == null || tasks.Count == 0) tasks = DefaultTasks();
             tasks.RemoveAll(t => t == null || string.IsNullOrEmpty(t.id));
+            RemoveRetired();
+        }
+
+        /// <summary>Kaldırılan görevleri ve kaldırılan incelemelere bağlı anahtarları ayıklar (yalnızca o anahtarlara bağlı görev de düşer).</summary>
+        private void RemoveRetired()
+        {
+            tasks.RemoveAll(t => Array.IndexOf(RetiredTaskIds, t.id) >= 0);
+            foreach (var t in tasks)
+            {
+                if (t.keys == null || t.source == PrepTaskSource.External || t.source == PrepTaskSource.AnswerAll) continue;
+                t.keys = Array.FindAll(t.keys, k => Array.IndexOf(RetiredInspectionIds, k) < 0);
+            }
+            tasks.RemoveAll(t => (t.source == PrepTaskSource.InspectAny || t.source == PrepTaskSource.InspectAll)
+                                 && (t.keys == null || t.keys.Length == 0));
+        }
+
+        /// <summary>AnswerAll görevlerinden sorulmayacak soruları çıkarır (mod kontrolcüsü: anne tek soru sorar).</summary>
+        public void RestrictQuestions(ICollection<string> askedIds)
+        {
+            if (askedIds == null) return;
+            foreach (var t in tasks)
+                if (t.source == PrepTaskSource.AnswerAll && t.keys != null)
+                {
+                    var kept = Array.FindAll(t.keys, k => askedIds.Contains(k));
+                    if (kept.Length > 0) t.keys = kept;
+                }
+            Changed?.Invoke();
         }
 
         private void OnEnable()

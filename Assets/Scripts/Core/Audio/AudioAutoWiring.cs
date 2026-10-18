@@ -62,6 +62,7 @@ namespace AfetUyanisi.Core
         private string musicId, ambienceId;
         private float musicVolume = -1f, ambienceVolume = -1f;
         private float nextSplashAt;
+        private bool eqSirens; // DEPREM: siren katmanı çalıyor mu
 
         private void Awake() => runtime = GetComponent<GameAudioRuntime>();
 
@@ -110,6 +111,8 @@ namespace AfetUyanisi.Core
             GameAudio.StopTransientAudio();
             audibleScene = scene;
             alarmPlaying = phonePlaying = quakePlaying = false;
+            nightVolume = -1f; // P-FLOOD: sahne geçişi döngüleri durdurdu
+            eqSirens = false; // DEPREM
             floodResultShown = markShown = false;
             hasPhase = false;
             lastListenerVolume = AudioListener.volume;
@@ -488,14 +491,19 @@ namespace AfetUyanisi.Core
 
         // ------------------------------------------------------------------ müzik + ortam
 
+        private float nightVolume = -1f; // P-FLOOD: gece katmanının son ses düzeyi
+
         private void ApplySoundscape()
         {
             string wantedMusic = null, wantedAmbience = null;
             float music = 1f, ambience = 1f;
             string scene = audibleScene.IsValid() ? audibleScene.name : "";
+            bool floodScene = false;
 
             // Menü: müzik alçak (~0.35); oda/yağmur ortamını menünün kendi efektleri çalıyor, burada ortam yok.
             if (scene == "MainMenu") { wantedMusic = "MUS_Menu_Loop"; music = 0.7f; }
+            // Oyun sonu (iki afet de bitti): sakin müzik, ortam sesi yok (yağmur/oda sesi sızmaz).
+            else if (scene == GameSceneRouter.GameEndScene) { wantedMusic = "MUS_Calm_Loop"; music = 0.6f; }
             else if (scene == "Bedroom" || scene == "Bathroom" || scene == "FloodChapter" ||
                      scene == "EarthquakeHome" || scene == "EarthquakeChapter")
             {
@@ -510,8 +518,23 @@ namespace AfetUyanisi.Core
                 bool active = p > 0f || AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.FreeRoam;
                 wantedMusic = active ? "MUS_Tension_Loop" : "MUS_Calm_Loop";
                 music = active ? Mathf.Round(Mathf.Lerp(0.55f, 0.9f, p) * 10f) / 10f : 0.5f;
-                wantedAmbience = "AMB_Rain_Light_Loop";
-                ambience = 0.6f;
+                // P-FLOOD (18 Eki): avluda / apartman finalinde gerilim sürer; müzik ancak Cenk eve girerken (dış ses kısılınca) sakinleşir.
+                if (AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.OutdoorAudio01 < 0.999f) { wantedMusic = "MUS_Calm_Loop"; music = 0.5f; }
+                // 120 sn sel sayacı: yağmur sesi ilerlemeyle hafiften sağanağa geçer (sağanak döngüsü %55'ten sonra), eve girerken kısılır.
+                bool heavyRain = p >= 0.55f;
+                wantedAmbience = heavyRain ? "AMB_Rain_Heavy_Loop" : "AMB_Rain_Light_Loop";
+                ambience = heavyRain ? Mathf.Lerp(0.6f, 1f, (p - 0.55f) / 0.45f) : Mathf.Lerp(0.45f, 0.85f, p / 0.55f);
+                ambience = Mathf.Round(ambience * AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.OutdoorAudio01 * 20f) / 20f;
+                floodScene = true;
+            }
+
+            // Sel okul çıkışı (FloodSchool): FloodEvening'in açılışıyla aynı ses (sakin müzik 0.5 + hafif yağmur 0.45);
+            // aynı parçalar istendiği için FloodEvening'e geçişte müzik ve yağmur kesilmeden sürer. Akan su sesi FloodCurrentFlow'da.
+            if (scene == AfetUyanisi.Core.GameSceneRouter.FloodSchoolScene)
+            {
+                wantedMusic = "MUS_Calm_Loop"; music = 0.5f;
+                wantedAmbience = "AMB_Rain_Light_Loop"; ambience = 0.45f;
+                floodScene = true;
             }
 
             var mode = ActiveMode();
@@ -525,7 +548,20 @@ namespace AfetUyanisi.Core
                     case EarthquakePhase.Quake: wantedMusic = "MUS_Tension_Loop"; music = 0.3f; wantedAmbience = null; break;
                     case EarthquakePhase.After: music = 0.7f; break;
                 }
+                // DEPREM: toplanma alanı (dış mekân) → oda ortamı yerine dış mekân ortamı.
+                if (mode.CurrentRoom != null && mode.CurrentRoom.Id == EarthquakeRoom.RoomId.Assembly && mode.Phase != EarthquakePhase.Quake)
+                    wantedAmbience = "AMB_EQ_Assembly_Outdoor_Loop";
+                // DEPREM sonu
             }
+            // DEPREM: sarsıntıdan sonra uzaktan siren katmanı (ortamın altında, kendi kanalında, ~0.4)
+            bool sirens = mode != null && (mode.Phase == EarthquakePhase.After || mode.Phase == EarthquakePhase.Report) && !quakePlaying;
+            if (sirens != eqSirens)
+            {
+                eqSirens = sirens;
+                if (sirens) GameAudio.PlayLoop("AMB_EQ_Sirens_Distant_Loop", "eq_sirens", 0.4f, 1.5f);
+                else GameAudio.StopLoop("eq_sirens", 1f);
+            }
+            // DEPREM sonu (siren)
             if (quakePlaying) { music = Mathf.Min(music, 0.3f); wantedAmbience = null; }
 
             // Otobüs içi: dışarıda yağmur, hafif.
@@ -533,11 +569,21 @@ namespace AfetUyanisi.Core
 
             foreach (var state in rains)
             {
+                if (floodScene) break; // akşam selde yağmur sesini sel ilerlemesi belirler
                 if (state.Source == null || !state.Source.isActiveAndEnabled || !state.Source.IsRaining) continue;
                 bool heavy = state.Downpour || state.Source.TargetIntensity >= 0.9f;
                 wantedAmbience = heavy ? "AMB_Rain_Heavy_Loop" : "AMB_Rain_Light_Loop";
                 ambience = heavy ? 1f : Mathf.Round(Mathf.Lerp(0.4f, 0.8f, state.Source.Intensity / 0.9f) * 10f) / 10f;
                 if (heavy) { music = Mathf.Min(music, 0.6f); break; }
+            }
+
+            // P-FLOOD (18 Eki): sel mahallesi gece katmanı (okul çıkışı + akşam sel), kendi kanalında; eve girerken dış sesle kısılır.
+            float night = floodScene ? Mathf.Round(0.25f * AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.OutdoorAudio01 * 20f) / 20f : 0f;
+            if (!Mathf.Approximately(night, nightVolume))
+            {
+                nightVolume = night;
+                if (night <= 0.001f) GameAudio.StopLoop("fe_night", 0.8f);
+                else GameAudio.PlayLoop("AMB_FE_Neighbourhood_Night_Loop", "fe_night", night, 0.8f);
             }
 
             if (wantedMusic != musicId || !Mathf.Approximately(music, musicVolume))

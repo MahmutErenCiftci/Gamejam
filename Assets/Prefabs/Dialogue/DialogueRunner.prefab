@@ -609,7 +609,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.05
-  m_Text: "E / Space \u25B6 devam"
+  m_Text: "E / Bo\u015Fluk \u25B6 devam"
 --- !u!114 &7556695668056792908
 MonoBehaviour:
   m_ObjectHideFlags: 0

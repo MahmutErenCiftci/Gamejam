@@ -68,8 +68,8 @@ MonoBehaviour:
   panelWidth: 180
   compactWidth: 98
   rowHeight: 13
-  title: "AFET HAZIRLI\u011EI"
-  alarmText: "DEPREM HAZIRLIK S\u0130M\xDCLASYONU"
+  title: "DEPREM HAZIRLI\u011EI"
+  alarmText: "HAZIRLIK BA\u015ELADI!"
   completeText: "G\xD6REV TAMAMLANDI!"
   allDoneText: HAZIRLIK TAMAM!
   penaltyFormat: "-{0} SAN\u0130YE"

@@ -21,7 +21,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         [Tooltip("Boşsa bugünün tarihi Türkçe yazılır (ör. \"Cumartesi, 17 Ekim\").")]
         [SerializeField] private string dateText = "";
         [Tooltip("Kartın altındaki ikinci ipucu (asıl tuş [E] düğmenin üstünde rozet olarak durur).")]
-        [SerializeField] private string startHint = "Enter, Space ya da tıklama da olur";
+        [SerializeField] private string startHint = "Enter, Boşluk ya da tıklama da olur";
         [SerializeField] private float slideSeconds = 0.55f;
         [SerializeField] private float vibrateSeconds = 0.9f;
 

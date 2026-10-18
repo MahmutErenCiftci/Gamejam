@@ -10,7 +10,8 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>
     /// "AFET FARKINDALIK RAPORU" (maket: S/eqD_mock_report.png): lacivert başlık bandı, rozet + etiket + puan,
     /// ✓/✗ ikonlu 8 istatistik satırı, "Öğrenilecekler" listesi (yanlışlar + ipuçları), [Tekrar Dene] / [Menüye Dön].
-    /// Butonlar: [Devam: Sel Bölümü] (birincil; DEPREM → SEL, Sel sahnesi build listesindeyse) [Tekrar Dene] [Menüye Dön].
+    /// Butonlar: [Devam: Sel Bölümü] / [Oyunu Bitir] (birincil; yalnız toplanma alanına varılan denemede, metni
+    /// GameFlow.ContinueLabel: Sel henüz oynanmadıysa Sel'e, oynandıysa oyun sonuna) [Tekrar Dene] [Menüye Dön].
     /// Klavye: ←/→ (A/D) seçim, Enter/Space/E onay, 1/2/3 = soldan sağa buton; fare ile tıklanır.
     /// Seçim report.choice'a "Next", "Retry" ya da "Menu" olarak yazılır ("Next"te önce ekran kararır);
     /// sahne geçişini sistem yapar (EarthquakeResultManager.ApplyChoice; ekran açık kalır).
@@ -20,7 +21,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     {
         [SerializeField] private EarthquakeUISkin skin;
         [SerializeField] private int sortingOrder = 95;
-        [SerializeField] private string defaultTitle = "AFET FARKINDALIK RAPORU";
+        [SerializeField] private string defaultTitle = "DEPREM FARKINDALIK RAPORU";
         [SerializeField] private string notesTitle = "Öğrenilecekler";
         [SerializeField] private string retryLabel = "Tekrar Dene";
         [SerializeField] private string menuLabel = "Menüye Dön";
@@ -38,7 +39,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         public const string ChoiceRetry = "Retry";
         public const string ChoiceMenu = "Menu";
-        /// <summary>"Devam: Sel Bölümü" (EarthquakeResultManager.ApplyChoice → GameSceneRouter.ContinueToNextChapter).</summary>
+        /// <summary>"Devam: Sel Bölümü" / "Oyunu Bitir" (EarthquakeResultManager.ApplyChoice → GameFlow.ContinueAfter).</summary>
         public const string ChoiceNext = "Next";
 
         private const float PanelW = 440f, PanelH = 330f;
@@ -197,8 +198,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         private void LayoutButtons()
         {
             order.Clear();
-            bool next = showContinue && GameSceneRouter.NextChapterAfter(AfetUyanisi.Shared.ChapterId.Earthquake).HasValue &&
-                        Application.CanStreamedLevelBeLoaded(GameSceneRouter.FirstSceneOf(AfetUyanisi.Shared.ChapterId.Flood));
+            // FLOW: "Devam" yalnız bu denemede deprem tamamlandıysa (toplanma alanı; kitaplık altında kalınmadı).
+            const AfetUyanisi.Shared.ChapterId eq = AfetUyanisi.Shared.ChapterId.Earthquake;
+            bool next = showContinue && GameFlow.CompletedThisAttempt(eq) && GameFlow.CanContinueAfter(eq);
+            if (next) buttonLabels[BtnNext].text = GameFlow.NextChapter(eq).HasValue ? continueLabel : GameFlow.ContinueLabel(eq);
             if (next) order.Add(BtnNext);
             order.Add(BtnRetry);
             order.Add(BtnMenu);
@@ -237,7 +240,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         private void MoveFocus(int dir)
         {
             int k = Mathf.Max(0, order.IndexOf(focus));
-            focus = order[Mathf.Clamp(k + dir, 0, order.Count - 1)];
+            int nf = order[Mathf.Clamp(k + dir, 0, order.Count - 1)];
+            if (nf != focus) GameAudio.PlaySfx("SFX_UI_Hover", 0.35f); // klavye gezintisi de duyulsun (P-UI)
+            focus = nf;
             RefreshButtons();
         }
 
@@ -329,6 +334,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 }
                 yield return null;
             }
+            // Fare tıkının sesi AudioAutoWiring'den (EqButton) gelir; klavye onayı burada duyulur (P-UI).
+            if (clicked != chosen) GameAudio.PlaySfx("SFX_UI_Click", 0.5f);
             for (int i = 0; i < 3; i++) eqButtons[i].Interactable = false;
             focus = chosen;
             RefreshButtons();

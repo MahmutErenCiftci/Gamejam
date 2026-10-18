@@ -244,7 +244,7 @@
     }
   ],
   "result": {
-    "title_success": "Tebrikler! Bilinçli davrandın.",
+    "title_success": "Bölüm tamam. Sudan uzak durdun.",
     "title_with_mistakes": "Bölümü tamamladın! Yanlışlarından ders çıkardın.",
     "learned": [
       "Sel uyarılarını ciddiye al.",
@@ -254,6 +254,6 @@
       "Güvenli alternatif rota seç.",
       "Resmî kurumların duyurularını takip et."
     ],
-    "note": "Bu bir farkındalık oyunudur. Gerçek bir afette resmî kurumların talimatlarına uy."
+    "note": ""
   }
 }

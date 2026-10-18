@@ -7,8 +7,9 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>
     /// Yatak odasındaki afet çantası (dünyadaki obje). Aynı objedeki Interactable'ı EarthquakeModeController kaydeder:
     ///  • Hazırlıkta (sayaç akarken) E → afet çantası mini oyunu (EmergencyBagMinigameController); sayaç DURMAZ.
-    ///  • Hazırlandıktan sonra çanta kapalı/dolu görünür, üstünde küçük yeşil tik süzülür.
-    ///  • Sarsıntıdan SONRA E → hazırsa çanta alınır (bagTaken), hazır değilse "çanta boş" dersi.
+    ///  • Mini oyun başarıyla bitince çanta kendiliğinden Cenk'in sırtına geçer (PutOn: kısa giyme anı → MarkTaken →
+    ///    CenkOutfit deprem çantalı sprite'lar). Yerden ayrıca alma ya da ek tuş yoktur.
+    ///  • Sarsıntıdan SONRA E → hazırlanmamışsa "çanta boş" dersi.
     /// Sarsıntı sırasında çanta kullanılamaz (öncelik Çök–Kapan–Tutun). Tek çanta hikâyesi için eski deprem çantası
     /// objeleri (replacedBags, ör. salondaki "QuakeBag") deprem modunda gizlenir.
     /// </summary>
@@ -137,7 +138,40 @@ namespace AfetUyanisi.Chapters.Earthquake
             Prepared?.Invoke(this);
         }
 
-        /// <summary>Sarsıntıdan sonra hazır çanta alındı: dünyadan kalkar, Cenk'in sırtında görünür (CenkOutfit).</summary>
+        /// <summary>
+        /// Kısa "sırta takma" anı: çantanın bir kopyası küçülerek Cenk'in sırtına doğru kayar (1/64 birime yuvarlanmış,
+        /// piksel-keskin), sonra MarkTaken ile dünyadaki çanta kalkar ve Cenk deprem çantalı görünür. Zaten alındıysa hemen döner.
+        /// </summary>
+        public System.Collections.IEnumerator PutOn(Transform wearer, float seconds)
+        {
+            if (IsTaken) yield break;
+            if (wearer != null && bagRenderer != null && bagRenderer.sprite != null && seconds > 0f)
+            {
+                var fly = new GameObject("BagPutOnFx").AddComponent<SpriteRenderer>();
+                fly.sprite = bagRenderer.sprite;
+                fly.sortingLayerID = bagRenderer.sortingLayerID;
+                fly.sortingOrder = 32000;
+                fly.transform.position = bagRenderer.transform.position;
+                fly.transform.localScale = bagRenderer.transform.lossyScale;
+                bagRenderer.enabled = false;
+                if (outlineRenderer != null) outlineRenderer.enabled = false;
+                if (readyMarker != null) readyMarker.gameObject.SetActive(false);
+                Vector3 from = fly.transform.position, scale0 = fly.transform.localScale;
+                for (float t = 0f; t < seconds; t += Time.deltaTime)
+                {
+                    float k = Mathf.SmoothStep(0f, 1f, t / seconds);
+                    Vector3 to = wearer.position + new Vector3(0f, 0.42f, 0f);
+                    Vector3 p = Vector3.Lerp(from, to, k) + new Vector3(0f, Mathf.Sin(k * Mathf.PI) * 0.25f, 0f);
+                    fly.transform.position = new Vector3(Mathf.Round(p.x * 64f) / 64f, Mathf.Round(p.y * 64f) / 64f, p.z);
+                    fly.transform.localScale = scale0 * Mathf.Lerp(1f, 0.55f, k);
+                    yield return null;
+                }
+                Destroy(fly.gameObject);
+            }
+            MarkTaken();
+        }
+
+        /// <summary>Hazır çanta alındı (mini oyun başarısından sonra PutOn çağırır): dünyadan kalkar, Cenk'in sırtında görünür (CenkOutfit).</summary>
         public void MarkTaken()
         {
             IsTaken = true;

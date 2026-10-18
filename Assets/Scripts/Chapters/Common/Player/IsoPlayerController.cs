@@ -33,6 +33,10 @@ namespace AfetUyanisi.Chapters
         /// <summary>Hız çarpanı (1 = normal). Ör. akşam sel bölümünde rüzgâr geçidi hafifçe yavaşlatır; etkiyi veren geri 1'e koyar.</summary>
         public float SpeedMultiplier { get; set; } = 1f;
 
+        /// <summary>Dışarıdan verilen hız (dünya birimi / sn), girdiden gelen hıza eklenir; CanMove false iken de uygulanır.
+        /// Ör. akşam sel rüzgâr koridoru Cenk'i koridor boyunca yürütür ya da geri savurur. Çarpışmalar geçerli kalır; etkiyi veren geri sıfırlar.</summary>
+        public Vector2 ExternalVelocity { get; set; }
+
         /// <summary>Rigidbody'nin anlık hızı (sadece okuma; testler için).</summary>
         public Vector2 Velocity => body != null ? body.linearVelocity : Vector2.zero;
 
@@ -54,8 +58,11 @@ namespace AfetUyanisi.Chapters
         private void Update()
         {
             Vector2 input = CanMove ? GameInput.MoveVector : Vector2.zero;
-            targetVelocity = new Vector2(input.x, input.y * verticalSpeedScale) * (speed * Mathf.Clamp(SpeedMultiplier, 0f, 2f));
-            if (characterAnimator != null) characterAnimator.SetMotion(input);
+            targetVelocity = new Vector2(input.x, input.y * verticalSpeedScale) * (speed * Mathf.Clamp(SpeedMultiplier, 0f, 2f)) + ExternalVelocity;
+            Vector2 motion = input;
+            if (motion.sqrMagnitude <= 0.0001f && ExternalVelocity.sqrMagnitude > 0.0001f)
+                motion = new Vector2(ExternalVelocity.x, ExternalVelocity.y / Mathf.Max(0.01f, verticalSpeedScale));
+            if (characterAnimator != null) characterAnimator.SetMotion(motion);
         }
 
         private void FixedUpdate()

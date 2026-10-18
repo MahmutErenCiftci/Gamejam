@@ -2,58 +2,58 @@
   "version": "1.0",
   "countdownSeconds": 120,
   "phone": {
-    "app": "AFET FARKINDALIK SİMÜLASYONU",
-    "title": "DEPREM SENARYOSU: 02:00",
-    "body": "Çevreni incele, riskleri belirle ve güvenli davranışları seç!",
-    "note": "Bu bir eğitim simülasyonudur. Depremler önceden kesin olarak tahmin edilemez.",
+    "app": "EŞİK",
+    "title": "DEPREM HAZIRLIĞI: 02:00",
+    "body": "İki dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
+    "note": "",
     "button": "BAŞLA"
   },
   "inspectables": [
     { "id": "phone", "title": "Telefon", "hazard": "Info",
-      "text": "Simülasyon bildirimi geldi. Gerçekte depremler önceden bilinemez; bu yüzden hazırlığı her gün yapmalıyız.",
-      "afterText": "Önemli bilgileri resmî kurumların duyurularından takip et. Söylentilere inanma." },
+      "text": "Depremin ne zaman olacağını kimse bilemez. Hazırlık o yüzden şimdiden yapılır.",
+      "afterText": "Haberleri resmî kurumlardan takip et. Söylentiye inanma." },
     { "id": "bedroom_window", "title": "Yatak Odası Penceresi", "hazard": "Hazard",
-      "text": "Sarsıntıda camlar kırılabilir. Deprem anında pencereden uzak dur. Yatağı da pencerenin dibine koymamak gerekir.",
+      "text": "Sarsıntıda cam kırılabilir. Deprem anında pencereden uzak dur.",
       "afterText": "Cam kırılmış! Kırıkların üstüne basma, ayakkabını giy." },
     { "id": "bookshelf", "title": "Kitaplık", "hazard": "Hazard",
-      "text": "Uzun ve duvara sabitlenmemiş! Sarsıntıda devrilebilir. Depremden ÖNCE duvara sabitlenmeli, bir büyüğüne söyle. Deprem anında yanında durma.",
-      "afterText": "Kitaplar yere düştü. Sabitlenmemiş eşyalar böyle tehlikeli olur. Dikkatli geç." },
+      "text": "Uzun ve duvara sabitlenmemiş. Sarsıntıda devrilebilir! Önceden duvara sabitlenmeli. Deprem anında yanında durma.",
+      "afterText": "Kitaplar yere saçılmış. Dikkatli geç." },
     { "id": "desk", "title": "Çalışma Masası", "hazard": "Protective",
-      "text": "Sağlam bir masa! Deprem anında altına gir: ÇÖK, KAPAN (başını ve enseni koru), TUTUN (sarsıntı bitene kadar masanın ayağını tut)." },
+      "text": "Sağlam masa. Deprem anında altına gir: çök, başını ve enseni koru, masanın ayağına tutun." },
     { "id": "wardrobe", "title": "Gardırop", "hazard": "Hazard",
-      "text": "Ağır ve uzun bir dolap. Sabitlenmezse devrilebilir. Depremden önce duvara sabitlenmeli. Sarsıntıda yanında durma." },
+      "text": "Ağır, uzun bir dolap. Duvara sabitlenmezse devrilebilir. Sarsıntıda yanında durma." },
     { "id": "bedroom_door", "title": "Oda Kapısı", "hazard": "Exit",
-      "text": "Salona açılıyor. Sarsıntı sırasında odadan odaya koşma; olduğun yerde güvenli bir şekilde korun." },
+      "text": "Salona açılıyor. Sarsıntı sırasında odadan odaya koşma, olduğun yerde korun." },
     { "id": "mother", "title": "Anne", "hazard": "Info",
-      "text": "Annen salonda. Deprem planınızı birlikte konuşun: evde nerede korunacağınızı bilin. Toplanma alanımız binanın önündeki parktaki tabelanın yanı; ayrı düşersek orada buluşuruz." },
+      "text": "Annen salonda. Toplanma alanınız binanın önündeki parkta, tabelanın yanı. Ayrı düşerseniz orada buluşursunuz." },
     { "id": "dining_table", "title": "Yemek Masası", "hazard": "Protective",
-      "text": "Evin en sağlam masası. Deprem anında altında ÇÖK–KAPAN–TUTUN yap. Masanın ayağını sıkıca tut, sarsıntı bitene kadar bırakma." },
+      "text": "Evin en sağlam masası. Deprem anında altında Çök–Kapan–Tutun yap, sarsıntı bitene kadar masanın ayağını bırakma." },
     { "id": "living_window", "title": "Salon Penceresi", "hazard": "Hazard",
-      "text": "Geniş bir cam! Sarsıntıda kırılabilir. Deprem anında pencere önünde durma, dışarı bakmaya çalışma.",
+      "text": "Geniş bir cam, sarsıntıda kırılabilir. Deprem anında pencere önünde durma.",
       "afterText": "Pencerenin önünde cam kırıkları var. Üstünden geçme." },
     { "id": "mirror", "title": "Boy Aynası", "hazard": "Hazard",
-      "text": "Büyük cam ayna kırılabilir ya da devrilebilir. Deprem anında aynadan uzak dur. Aynalar duvara sağlam sabitlenmeli.",
+      "text": "Büyük ayna kırılabilir ya da devrilebilir. Deprem anında aynadan uzak dur.",
       "afterText": "Ayna kırılmış! Yerdeki cam parçalarına basma." },
     { "id": "cabinet", "title": "Vitrin Dolabı", "hazard": "Hazard",
-      "text": "İçi cam eşya dolu! Sarsıntıda kapakları açılıp eşyalar düşebilir. Dolap duvara sabitlenmeli, kapaklara kilit takılmalı.",
+      "text": "İçi cam eşya dolu. Sarsıntıda kapaklar açılıp eşyalar düşebilir. Dolap duvara sabitlenmeli.",
       "afterText": "Dolaptan düşen eşyalar kırılmış. Yaklaşma, üstünden geçme." },
     { "id": "fridge", "title": "Buzdolabı", "hazard": "Hazard",
-      "text": "Ağır bir eşya; sarsıntıda kayabilir ya da devrilebilir. Depremden önce sabitlenmeli. Deprem anında yanında durma." },
+      "text": "Ağır bir eşya, sarsıntıda kayabilir ya da devrilebilir. Deprem anında yanında durma." },
     { "id": "stove", "title": "Ocak", "hazard": "Safety",
-      "text": "Elektrikli ocak açık. Sarsıntı başlamadan kapat; sıcak plakaya dokunma. Vana ve sigorta yerlerini bir büyüğünle öğren, tesisata dokunma. Sarsıntı sırasında ocağa gitme: Çök–Kapan–Tutun.",
-      "afterText": "Kapattığın plaka hâlâ sıcak olabilir; dokunma. Gaz kokusu alırsan ışık ve düğmelere dokunma, ateş yakma. Bir büyüğüne haber ver." },
+      "text": "Ocak açık kalmış. Sarsıntı başlamadan kapat, sıcak plakaya dokunma. Sarsıntı başladıysa ocağa gitme: Çök–Kapan–Tutun.",
+      "afterText": "Plaka hâlâ sıcak olabilir, dokunma. Gaz kokusu alırsan düğmelere dokunma, ateş yakma, bir büyüğüne söyle." },
     { "id": "quake_bag", "title": "Deprem Çantası", "hazard": "Safety",
-      "text": "İçinde su, el feneri, düdük, ilk yardım seti ve yedek pil var. Kapının yanında hazır. Sarsıntı sırasında arama; sarsıntı bitince al.",
+      "text": "Su, el feneri, düdük, ilk yardım seti, yedek pil. Kapının yanında hazır. Sarsıntı bitince al.",
       "afterText": "Sarsıntı bitti, şimdi çantanı alabilirsin." },
     { "id": "apartment_door", "title": "Daire Kapısı", "hazard": "Exit",
-      "text": "Sarsıntı sırasında dışarı koşma! Koşarken düşebilir, yaralanabilirsin. Sarsıntı bitince çantanı alıp sakince çık.",
+      "text": "Sarsıntı sırasında dışarı koşma, düşüp yaralanabilirsin. Sarsıntı bitince çantanı al, sakince çık.",
       "afterText": "Sarsıntı bitti. Çantanı aldıysan kapıdan sakince çık, merdivene yürü." },
     { "id": "elevator", "title": "Asansör", "hazard": "Exit",
-      "text": "Depremde ve depremden sonra asansör KULLANILMAZ. Elektrik kesilebilir, içinde mahsur kalabilirsin. Merdiveni kullan." },
+      "text": "Depremde ve sonrasında asansöre binilmez. Elektrik kesilirse içinde kalırsın. Merdiveni kullan." },
     { "id": "stairs", "title": "Merdiven", "hazard": "Safety",
-      "text": "Sarsıntı bittikten sonra merdivenden koşmadan, tırabzana tutunarak in. Sarsıntı sırasında merdivene koşma." },
+      "text": "Sarsıntı bitince merdivenden koşmadan, tırabzana tutunarak in." },
     { "id": "assembly_sign", "title": "Toplanma Alanı", "hazard": "Safety",
-      "text": "Depremden sonra burada toplanırız. Ailenle buluş, resmî duyuruları takip et. Hasarlı binaya geri dönme." }
+      "text": "Depremden sonra burada toplanılır. Ailenle burada buluş, hasarlı binaya geri dönme." }
   ],
   "warnings": [
     { "id": "mirror", "title": "CAM TEHLİKESİ!",
@@ -63,11 +63,11 @@
     { "id": "bookshelf", "title": "DEVRİLME TEHLİKESİ!",
       "text": "Sabitlenmemiş uzun eşyalar devrilebilir. Yanında bekleme." },
     { "id": "glass_after", "title": "CAM KIRIKLARI!",
-      "text": "Yerde cam kırıkları var — üstünden geçme, ayakkabını giy." }
+      "text": "Yerde cam kırıkları var. Üstünden geçme!" }
   ],
   "questions": [
     { "id": "Q1", "speaker": "ANNE", "topic": "protect", "lesson": "Deprem anı: sağlam masanın altında Çök–Kapan–Tutun.", "question": "Deprem sırasında ne yapmalıyız?", "timeLimit": 5, "penalty": 30,
-      "correctFeedback": "Aferin! Sağlam masanın altında başını ve enseni koru, sarsıntı bitene kadar tutun.",
+      "correctFeedback": "Evet! Masanın altında başını ve enseni korur, sarsıntı bitene kadar tutunuruz.",
       "timeoutFeedback": "Doğrusu: Sağlam bir masanın altında Çök–Kapan–Tutun yapmalıyız.",
       "options": [
         { "text": "Pencereye koşmalıyız", "correct": false,
@@ -91,7 +91,7 @@
           "explanation": "Elektrik her an kesilebilir, asansör de hasar görmüş olabilir. Hiç kullanılmaz." }
       ] },
     { "id": "Q3", "speaker": "ANNE", "topic": "glass", "lesson": "Camlar: pencere ve aynalardan uzak dur.", "question": "Deprem sırasında camlara yakın durmalı mıyız?", "timeLimit": 5, "penalty": 30,
-      "correctFeedback": "Çok iyi! Camlardan, aynalardan ve devrilebilecek eşyalardan uzak dururuz.",
+      "correctFeedback": "Evet. Camlardan, aynalardan, devrilebilecek eşyalardan uzak dururuz.",
       "timeoutFeedback": "Doğrusu: Hayır, camlardan uzak durmalıyız.",
       "options": [
         { "text": "Evet", "correct": false,
@@ -117,15 +117,15 @@
     "steps": ["ÇÖK", "KAPAN", "TUTUN"],
     "promptDrop": "[E] Çök",
     "promptCover": "[E] Başını ve enseni koru",
-    "promptHold": "[SPACE] basılı tut; [A] / [D] ile dengeyi düzelt",
+    "promptHold": "[BOŞLUK] basılı tut, [A] / [D] ile dengede kal",
     "balance": {
       "warning": "DEPREM!",
       "title": "TUTUN!",
       "subtitle": "Sarsıntı bitene kadar tutun ve dengede kal",
       "controls": "İşareti YEŞİLDE tut:  A sola,  D sağa çeker",
-      "startHint": "Başlamak için SPACE'e bas ve basılı tut",
-      "note": "Tutunuyorsun — başını ve enseni koru",
-      "release": "SPACE'i bırakma — tutunmaya devam et!",
+      "startHint": "BOŞLUK tuşuna bas ve bırakma",
+      "note": "Tutunuyorsun. Başını ve enseni koru!",
+      "release": "Bırakma, tutunmaya devam et!",
       "initial": "Sarsıntı başladı",
       "strong": "Sarsıntı güçleniyor",
       "irregular": "Sarsıntı düzensiz, dikkat!",
@@ -134,19 +134,19 @@
       "driftLeft": "A ile ortaya dön",
       "driftRight": "D ile ortaya dön",
       "timeLeft": "{0} sn",
-      "resultGood": "Sarsıntı bitti — iyi tutundun!",
+      "resultGood": "Sarsıntı bitti. Sıkı tutundun!",
       "resultHard": "Sarsıntı bitti. Biraz zorlandın ama korunmaya devam ettin.",
       "success": "Sarsıntı bitene kadar tutundun ve dengeni korudun.",
-      "feedback": "Biraz zorlandın: sarsıntı bitene kadar SPACE'i bırakmadan tutunmaya çalış.",
+      "feedback": "Biraz zorlandın. Sarsıntı bitene kadar BOŞLUK tuşunu bırakma.",
       "score": "Denge: {0}/100",
-      "resultNote": "Gerçek depremde de sarsıntı bitene kadar başını ve enseni koru, tutunmaya devam et."
+      "resultNote": "Sarsıntı bitene kadar başını ve enseni korumaya devam et."
     },
     "promptDropInPlace": "[E] Olduğun yerde çök",
     "promptCoverInPlace": "[E] Kollarınla başını ve enseni koru",
     "releaseWarning": "Sarsıntı bitene kadar tutun!",
     "noResponseHint": "Hemen korun! [E] ile çök, başını ve enseni koru.",
-    "tableSuccess": "Harika! Sağlam masanın altında Çök–Kapan–Tutun yaptın.",
-    "inPlaceSuccess": "İyi! Koşmadan olduğun yerde çöktün ve başını, enseni korudun.",
+    "tableSuccess": "Sağlam masanın altında Çök–Kapan–Tutun yaptın.",
+    "inPlaceSuccess": "Koşmadan olduğun yerde çöktün, başını ve enseni korudun.",
     "exposed": {
       "window": "Pencereye çok yakındın! Camlar kırılabilir; deprem anında pencereden uzak dur.",
       "mirror": "Aynaya çok yakındın! Kırılabilecek camlardan uzak durmalısın.",
@@ -156,17 +156,17 @@
   },
   "after": {
     "checkHazards": "Önce çevreni kontrol et: cam kırıkları, düşen eşyalar, gaz kokusu.",
-    "glassWarning": "Yerde cam kırıkları var — üstünden geçme, ayakkabını giy.",
+    "glassWarning": "Yerde cam kırıkları var. Üstünden geçme!",
     "elevator": "Asansör kullanılmaz! Elektrik kesilebilir, mahsur kalabilirsin. Merdiveni kullan.",
     "stairs": "Merdivenden koşmadan, tırabzana tutunarak in.",
     "bagTaken": "Deprem çantanı aldın. Su, el feneri, düdük ve ilk yardım seti yanında.",
     "bagReminder": "Çıkmadan önce kapının yanındaki deprem çantanı al.",
     "doorLockedBefore": "Sarsıntı sırasında dışarı koşulmaz. Şimdi evde güvenli yerini belirle.",
     "assembly": "Toplanma alanına ulaştın. Resmî duyuruları takip et, hasarlı binaya geri dönme.",
-    "readyHint": "Hazırlığın tamam! Güvenli bir yerde bekle. [Space] Simülasyonu hızlandır"
+    "readyHint": "Güvenli bir yerde bekle. [BOŞLUK] Zamanı hızlandır"
   },
   "results": {
-    "title": "AFET FARKINDALIK RAPORU",
+    "title": "DEPREM FARKINDALIK RAPORU",
     "labels": [
       { "minScore": 85, "label": "AFET BİLİNCİ USTASI" },
       { "minScore": 65, "label": "HAZIRLIKLI" },
@@ -174,10 +174,10 @@
       { "minScore": 0, "label": "DAHA FAZLA ÖĞREN" }
     ],
     "labelMessages": [
-      { "minScore": 85, "text": "Muhteşem! Tehlikeleri buldun ve doğru davrandın." },
-      { "minScore": 65, "text": "Çok iyi! Küçük eksiklerini de tamamlarsan usta olursun." },
-      { "minScore": 40, "text": "Güzel bir başlangıç! Açıklamaları okuyup tekrar dene." },
-      { "minScore": 0, "text": "Her deneme bir şey öğretir. Hadi bir kez daha deneyelim!" }
+      { "minScore": 85, "text": "Tehlikeleri buldun, doğru yerde korundun." },
+      { "minScore": 65, "text": "Birkaç eksik kaldı. Onları da tamamlarsan usta olursun." },
+      { "minScore": 40, "text": "İyi başlangıç. Açıklamaları oku, bir daha dene." },
+      { "minScore": 0, "text": "Bir daha dene, bu sefer daha iyi olacak." }
     ],
     "readyText": "Hazırlık tamam",
     "lessons": {
@@ -192,14 +192,14 @@
       "hazards": "Hazırlık: evdeki riskli eşyaları önceden incele."
     },
     "tips": {
-      "wrongAnswer": "Yanlış cevapların açıklamalarını tekrar oku; doğru bilgi hayat kurtarır.",
+      "wrongAnswer": "Yanlış cevapların açıklamalarını bir daha oku.",
       "timeout": "Zor anda da güvenli davranışı hatırla: Çök–Kapan–Tutun.",
       "noProtection": "Sarsıntı başlayınca hemen Çök–Kapan–Tutun: sağlam masanın altında ya da olduğun yerde başını koru.",
       "exposure": "Deprem anında camlardan, aynalardan ve devrilebilecek eşyalardan uzak dur.",
       "elevator": "Depremde ve sonrasında asansör kullanılmaz; merdiveni sakince kullan.",
       "noBag": "Sarsıntı bitince deprem çantanı al; içinde su, el feneri, düdük ve ilk yardım seti var.",
-      "fewHazards": "Evdeki tehlikeleri önceden bilmek önemlidir. Bir dahaki sefere daha çok eşyayı incele."
+      "fewHazards": "Bir dahaki sefere evdeki eşyalara daha çok bak."
     },
-    "note": "Bu bir farkındalık simülasyonudur. Gerçek bir afette resmî kurumların talimatlarına uy."
+    "note": ""
   }
 }

@@ -50,6 +50,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private int fallenShelfMinus = 5;
         [Tooltip("Kitaplık oyuncunun üstüne devrildiyse puanın üst sınırı (bölüm başarısız)")]
         [SerializeField] private int injuredScoreCap = 15;
+        [Tooltip("Her yanlış karar puanın üst sınırını bu kadar düşürür (100 - n×bu). Yanlış karar varken en üst rozet (USTA) verilmez.")]
+        [SerializeField] private int wrongDecisionCap = 8;
 
         public ResultReportViewBase View { get => view; set => view = value; }
 
@@ -125,6 +127,20 @@ namespace AfetUyanisi.Chapters.Earthquake
             wrong += s.Exposures;
             r.correctDecisions = correct;
             r.wrongDecisions = wrong;
+            // Rozet ve puan satırlarla çelişmesin ("USTA 100/100" ama 1 yanlış olmasın): yanlış karar puanı sınırlar,
+            // en üst seviyenin eşiğinin altına indirir; etiket ve rozet yeniden puandan seçilir.
+            if (wrong > 0 && !s.hitByBookshelf)
+            {
+                int top = TopLabelMin(res);
+                int cap = Mathf.Max(0, 100 - wrongDecisionCap * wrong);
+                if (top > 0) cap = Mathf.Min(cap, top - 1);
+                if (r.score > cap)
+                {
+                    r.score = cap;
+                    r.label = res.LabelFor(r.score);
+                    r.labelMessage = res.MessageFor(r.score);
+                }
+            }
 
             // --- Metinler ---
             r.protectionText = ProtectionText(s.protection);
@@ -140,6 +156,15 @@ namespace AfetUyanisi.Chapters.Earthquake
                 r.tips.Add($"Eksik hazırlık ({r.prepDone}/{r.prepTotal}): {missing}.");
             }
             return r;
+        }
+
+        /// <summary>En üst rozetin (USTA) en düşük puanı (etiket listesindeki en büyük minScore); liste yoksa 0.</summary>
+        private static int TopLabelMin(EqResultTexts res)
+        {
+            int top = 0;
+            if (res != null && res.labels != null)
+                foreach (var l in res.labels) if (l != null && l.minScore > top) top = l.minScore;
+            return top;
         }
 
         /// <summary>Raporu gösterir; bitince report.choice dolu olur ("Retry"/"Menu"; otomatik testte boş kalabilir).</summary>
@@ -246,18 +271,17 @@ namespace AfetUyanisi.Chapters.Earthquake
         }
 
         /// <summary>
-        /// Rapordaki seçimi uygular: Next → sıradaki bölüm (DEPREM → SEL, menüsüz, yalnız bir kez),
-        /// Retry → RestartCurrentChapter (depremi baştan), Menu → ReturnToMenu.
+        /// Rapordaki seçimi uygular: Next → GameFlow.ContinueAfter (Sel henüz oynanmadıysa Sel, oynandıysa oyun sonu;
+        /// menüsüz, yükleme kilidi sayesinde yalnız bir kez), Retry → RestartCurrentChapter (depremi baştan; GameFlow
+        /// durumu değişmez), Menu → ReturnToMenu (oyun sıfırlanır).
         /// </summary>
         public static void ApplyChoice(string choice)
         {
             if (choice == "Next")
             {
-                if (!GameSceneRouter.ContinueToNextChapter(ChapterId.Earthquake))
-                {
-                    Debug.LogWarning("[EQ] Sonraki bölüm (Sel) yüklenemedi; menüye dönülüyor.");
-                    GameSceneRouter.ReturnToMenu();
-                }
+                // "Devam" yalnız toplanma alanına varılan denemede görünür (EarthquakeModeController.ReportPhase → CompleteChapter).
+                if (!GameFlow.IsCompleted(ChapterId.Earthquake)) GameFlow.CompleteChapter(ChapterId.Earthquake);
+                GameFlow.ContinueAfter(ChapterId.Earthquake);
             }
             else if (choice == "Retry")
             {

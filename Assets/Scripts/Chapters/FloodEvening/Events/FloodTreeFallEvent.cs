@@ -92,6 +92,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private GameObject[] armOnFallen = Array.Empty<GameObject>();
         [Tooltip("Yere değince görünür (yerdeki yaprak/dal döküntüsü).")]
         [SerializeField] private GameObject[] showOnImpact = Array.Empty<GameObject>();
+        [Tooltip("Yere değince gizlenir (P-FLOOD: gövdenin altında kalan sağlam duvar dilimleri; yerine kırık duvar showOnImpact ile gelir).")]
+        [SerializeField] private GameObject[] hideOnImpact = Array.Empty<GameObject>();
 
         [Header("Cenk")]
         [Tooltip("Cenk'in döneceği nokta (genelde ağacın yere düşeceği yer).")]
@@ -101,6 +103,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private Vector2 alertOffset = new Vector2(0f, 1.25f);
         [Tooltip("İkinci kırılmada Cenk'in ağaçtan uzağa irkilme mesafesi (engel varsa daha az).")]
         [SerializeField, Min(0f)] private float flinchDistance = 0.14f;
+        [Tooltip("İsteğe bağlı (P-FLOOD): ikinci kırılmadan kontrol geri gelene kadar Cenk'in irkilme pozu (ör. CHR_Cenk_Startled_SouthEast)")]
+        [SerializeField] private Sprite startledPose;
 
         [Header("Efekt")]
         [SerializeField] private Sprite leafSprite;
@@ -132,6 +136,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private string impactSfx = "SFX_Quake_Rumble";
         [SerializeField] private string impactSfx2 = "SFX_Books_Fall";
         [SerializeField] private string splashSfx = "SFX_Water_Splash";
+        [Tooltip("İkinci kırılmada başlayan düşüş sesi (P-FLOOD: SFX_FE_Tree_Fall; klibin çarpması ~0,9 sn'de, düşüş süresiyle eşleşir)")]
+        [SerializeField] private string fallSfx = "";
 
         [Header("Metin (isteğe bağlı)")]
         [Tooltip("Düştükten sonra Hub.Say ile istenen satır (flood_evening.json). Boşsa hiçbir şey söylenmez.")]
@@ -166,6 +172,34 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public bool HasFallen { get; private set; }
         /// <summary>Animasyon şu an sürüyor mu.</summary>
         public bool IsPlaying { get; private set; }
+        /// <summary>Kameranın sinematikte baktığı nokta: ağacın yere düşeceği hattın ortası (P-FLOOD: bölüm kamerası buraya kayar).</summary>
+        public Vector3 FocusPoint => LookTarget();
+
+        /// <summary>
+        /// P-FLOOD (ritimle it/çek): yatan gövdede birkaç yaprak ve ince dal parçası savrulur (her iyi vuruşta). Ağacın kendi
+        /// parçacık sistemi ve sprite'ları kullanılır; ağaç düşmeden hiçbir şey yapmaz. offset = gövdenin o anki kayması (dünya).
+        /// </summary>
+        public void EmitShoveDebris(int leaves, int twigs, Vector2 offset)
+        {
+            if (!HasFallen) return;
+            Vector2 local = transform.InverseTransformVector(offset);
+            for (int i = 0; i < leaves; i++)
+            {
+                Vector2 at = Vector2.Lerp(impactFrom, impactTo, R(0.35f, 1f)) + local + new Vector2(0f, R(0f, 0.35f));
+                var p = Spawn(RandomLeaf(), at, new Vector2(R(-0.8f, 0.8f), R(0.6f, 1.5f)), R(1.4f, 2.2f));
+                if (p == null) break;
+                p.Gravity = 1.7f; p.Drag = 1.9f; p.Sway = R(0.15f, 0.4f); p.Phase = R(0f, 6.28f); p.Spin = R(-360f, 360f);
+                p.GroundY = at.y - R(0.1f, 0.45f);
+            }
+            for (int i = 0; i < twigs; i++)
+            {
+                Vector2 at = Vector2.Lerp(impactFrom, impactTo, R(0.2f, 0.9f)) + local + new Vector2(0f, R(0f, 0.2f));
+                var p = Spawn(twigSprite, at, new Vector2(R(-1f, 1f), R(0.7f, 1.4f)), R(1.0f, 1.6f));
+                if (p == null) break;
+                p.Gravity = 6f; p.Drag = 0.8f; p.Spin = R(-600f, 600f);
+                p.GroundY = at.y - R(0.1f, 0.35f);
+            }
+        }
 
         /// <summary>Ağaç yere değdiğinde (collider'lar açılırken).</summary>
         public event Action Impact;
@@ -383,10 +417,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
             // 3) İkinci, sert kırılma: Cenk irkilip yarım adım geri çekilir.
             Sfx(crackSfx, 1f);
+            Sfx(fallSfx, 1f);
             SpawnChips(crackChips);
             SetBreak(1f);
             Shake(1.2f, 0.15f);
             StartCoroutine(Flinch());
+            SetPose(true);
             for (float t = 0f; t < snapSeconds; t += Time.deltaTime)
             {
                 SetTree(lean + Mathf.Sin(t * 60f) * 0.8f * Dir, 0f);
@@ -468,8 +504,17 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 FloodEveningHub.Say(afterLineId, afterFallback);
         }
 
+        private void SetPose(bool on)
+        {
+            if (startledPose == null || player == null) return;
+            var anim = player.GetComponent<IsoCharacterAnimator>();
+            if (anim == null) return;
+            if (on) anim.ShowPose(startledPose); else anim.ClearPose();
+        }
+
         private void Finish()
         {
+            SetPose(false);
             IsPlaying = false;
             routine = null;
             if (lockedPlayer && player != null)
@@ -486,6 +531,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (routine != null) StopCoroutine(routine);
             routine = null;
             ShowAlert(false);
+            if (IsPlaying) SetPose(false);
             if (IsPlaying)
             {
                 IsPlaying = false;
@@ -522,6 +568,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (fallZoneBlock != null) fallZoneBlock.enabled = !fallen;
             foreach (var c in closeOnImpact) if (c != null) c.enabled = fallen;
             foreach (var go in showOnImpact) if (go != null) go.SetActive(fallen);
+            foreach (var go in hideOnImpact) if (go != null) go.SetActive(!fallen);
         }
 
         private void ArmBranches()

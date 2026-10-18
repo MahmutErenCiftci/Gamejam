@@ -1,0 +1,27 @@
+{
+  "pin": "4729",
+
+  "lock_reset_title": "KİLİT SIFIRLANMIŞ",
+  "lock_reset_body": "Kilit sıfırlanmış. Yeni kod gerekli.",
+  "lock_hint_mailbox": "Posta kutusuna bir bak.",
+
+  "mailbox_prompt": "Posta Kutusunu Kontrol Et",
+  "mailbox_empty": "Posta kutusu boş. Kod: {0}",
+  "lock_prompt": "Kilidi Kontrol Et",
+  "lock_prompt_pin": "Kodu Gir",
+
+  "letter_header": "APARTMAN YÖNETİMİ",
+  "letter_body1": "Elektronik kapı kilidi için yeni sıfırlama kodunuz:",
+  "letter_body2": "Lütfen bu kodu giriş paneline giriniz.",
+  "letter_close": "[E] Kapat",
+
+  "pin_title": "GİRİŞ KODU",
+  "pin_wrong": "HATALI KOD",
+  "pin_ok": "KOD DOĞRU",
+  "pin_hint": "Rakamlara fare ile tıkla",
+  "handle_hint": "SOL TIK BASILI TUT VE AŞAĞI SÜRÜKLE",
+  "cancel_hint": "[Esc] Geri",
+
+  "end_title": "EVE ULAŞTIN!",
+  "end_subtitle": "EŞİK · SEL BÖLÜMÜ TAMAMLANDI"
+}

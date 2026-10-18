@@ -33,6 +33,12 @@ P('Props', 'BusStopRoof', ST + 'PROP_Street_BusStop_Roof', -1.0, 4.4, { order: 5
 P('Props', 'ParkedCar_1', SU + 'PROP_StreetBG_Car_C', 5.5, 0.55, { col: rectC(0.9, 0.35) });
 P('Props', 'ParkedCar_End', SU + 'PROP_StreetBG_Car_A', 14.6, 1.0, { col: rectC(0.9, 0.35) }); // sokak sonu: araba + duvar → ara sokağa dön
 for (const [n, s, gx, gy] of [['Drain_1', 'Drain', -6, 2.6], ['Drain_2', 'Drain', 6, 2.6], ['Puddle_1', 'Puddle_M', -3, 1.2], ['Puddle_2', 'Puddle_S', 1, 3.6], ['Puddle_3', 'Puddle_L', 9, 1.6], ['Puddle_4', 'Puddle_S', 12.5, 3.4]]) decal(n, s, gx, gy);
+// (18 Eki, FLOOD-EDIT) A'nın batı ucu: çimenli arsa + alçak duvar yerine okul tarafından gelen yolun devamı (map.js A_YOLU).
+// Sokak bir ev, bir lamba, bir ızgara ve birikintiyle sürer; yürüme sınırı gx -16'da biter, yol harita kenarına uzanır.
+// (Cephe açıkça verilir: FAC sırası değişmesin, diğer evlerin görünümü aynı kalsın.)
+houseX(-27, 5, 'Facade_B'); P('Buildings', 'Apt_A5', SU + 'PROP_StreetBG_Apt_2', -32, 12, { order: -70, h: 0 });
+lamp('A0', -14, 4.6);
+for (const [n, s, gx, gy] of [['Drain_0', 'Drain', -14, 2.6], ['Puddle_0', 'Puddle_S', -11.5, 1.3], ['Puddle_00', 'Puddle_M', -20, 3.3]]) decal(n, s, gx, gy);
 
 // ================================================================ B: ara sokak (+gy)
 for (const gy of [5, 6.2, 7.4, 8.6, 9.8]) fenceY(16, gy); tree('B_Yard1', 'Tree_Round', 19, 8); tree('B_Yard2', 'Bush', 17.5, 6.5);
@@ -83,6 +89,8 @@ tree('Yard_Tree2', 'Tree_Small', 39.8, 20.0); tree('Yard_Bench', 'Bench', 37, 24
 for (const [n, s, gx, gy] of [['GPuddle_1', 'Puddle_L', 32, 28.2], ['GDrain_1', 'Drain', 38, 27.4], ['GPuddle_2', 'Puddle_S', 44, 28.5]]) decal(n, s, gx, gy);
 // H
 houseY(46, 18.2, 'Facade_A'); houseY(46, 22.5, 'Facade_Home');
+// (18 Eki, P-FLOOD) G → H köşesindeki boş arsa (gx 46, gy 26.8..31) bir evle kapatıldı: ağaca giden yolda cephe sırası kesintisiz.
+houseY(46, 26.8, 'Facade_A');
 lamp('H1', 45.6, 17.6);                                                            // köşe lambası (I'ye dönüş)
 for (const [n, s, gx, gy] of [['HPuddle_1', 'Puddle_M', 43, 23], ['HDrain_1', 'Drain', 44.5, 19.5], ['HPuddle_2', 'Puddle_S', 42.5, 15.5]]) decal(n, s, gx, gy);
 // I (ağaç olayı burada; ağaç + dal Eren/Arda prefabı, burada sadece boşluk ve çapalar)
@@ -90,20 +98,32 @@ for (const gx of [47.5, 51.8]) houseX(gx, 18);
 tree('I_Bush1', 'Bush', 47, 11.4); tree('I_Bush2', 'Bush', 52, 11.5);
 lamp('I1', 54.4, 17.6);
 for (const [n, s, gx, gy] of [['IPuddle_1', 'Puddle_S', 48, 14.5], ['IPuddle_2', 'Puddle_M', 57, 16]]) decal(n, s, gx, gy);
-// J
-houseY(60, 4.4, 'Facade_B'); houseY(60, 8.7, 'Facade_A'); houseY(60, 13, 'Facade_Home');
-lamp('J1', 59.6, 6.4);
-for (const [n, s, gx, gy] of [['JPuddle_1', 'Puddle_M', 57, 10], ['JDrain_1', 'Drain', 56, 6.5]]) decal(n, s, gx, gy);
+houseX(56.1, 18, 'Facade_A');                                                        // I'nin sonu: köşeyi kapatan ev
+// J: son sokak (gx 56..59, apartmanın ön bahçesine iner). Ön tarafta alçak duvar + saksı çalıları, arkada evler
+houseY(59, 4.6, 'Facade_B'); houseY(59, 8.9, 'Facade_Home');
+for (const gy of [1.5, 5.5, 9.5]) tree('J_Pot_' + gy, 'Bush', 55.2, gy);
+for (const gy of [11.6, 6.2, 1.0]) lamp('J_' + gy, 58.6, gy);
+for (const [n, s, gx, gy] of [['JPuddle_1', 'Puddle_M', 57.5, 10.2], ['JPuddle_2', 'Puddle_S', 57, 5.2], ['JPuddle_3', 'Puddle_M', 58, 1.6], ['JDrain_1', 'Drain', 56.6, 7.6], ['JDrain_2', 'Drain', 58.2, 3.4]]) decal(n, s, gx, gy);
 
-// ================================================================ GÜVENLİ MEYDAN (devam noktası)
-P('SafeArea', 'Sign_SafeZone', 'N:PROP_FE_Sign_SafeZone', 53.5, 3.4, { col: rectC(0.45, 0.08) });
-for (const [gx, gy] of [[50, 3.4], [63.5, 3.4], [56.5, -2.4]]) P('SafeArea', 'Lamp_P_' + gx, AS + 'PROP_Assembly_Lamp', gx, gy, { col: dia(0.12), light: true });
-for (const [gx, gy] of [[61, 2.6]]) P('SafeArea', 'Bench_P_' + gx, AS + 'PROP_Assembly_Bench', gx, gy, { col: rectC(0.5, 0.25) });
-P('SafeArea', 'Neighbor_A', AS + 'PROP_Assembly_Neighbor_A', 58.5, 0.5, { col: dia(0.15) });
-P('SafeArea', 'Neighbor_B', AS + 'PROP_Assembly_Neighbor_B', 59.3, 0.0, { col: dia(0.15) });
-P('SafeArea', 'WaterStack', AS + 'PROP_Assembly_WaterStack', 63.2, -1.6, { col: rectC(0.3, 0.3) });
-for (let gx = 50; gx < 55; gx += 2.5) P('SafeArea', 'Hedge_P_' + gx, AS + 'PROP_Assembly_Hedge_X', gx + 0.5, 4.6, { order: -60 });
-
+// ================================================================ APARTMANIN ÖN BAHÇESİ (avlu, devam noktası): yüksek taş duvar + bina girintisi
+// ===== APARTMAN FİNALİ (final-world agent) =====
+// Cenk'in apartmanı (59,-1): Facade_Home yerine giriş katı yeniden çizilmiş cephe (tools/sel_aksam_final/world/build_world_art.js;
+// aynı boyut ve pivot, kapı boşluğu saydam). Kanat, hol, posta kutusu, lamba, paspas ve saksılar FE_ApartmentFinal prefabında,
+// AptFacade çapasına göre (build_scene.cs'teki APARTMAN FİNALİ bloğu). Gövde aynı (Body_Home).
+P('Buildings', 'Facade_Apt_59_-1', 'A:FloodEvening/Final/World/PROP_FE_Apt_Facade', 59, -1, { order: -50, h: 0 });
+P('Buildings', 'Body_59_-1', SU + 'PROP_StreetBG_Body_Home', 59, -1, { order: -62, h: 0 });
+// tente + komşular + su yığını girişin önünden avlunun sağ-ön köşesine alındı (kapıya ve posta kutusuna giden yol açık)
+// (18 Eki, FLOOD-MECH) toplanma alanı süsü (yardım tentesi) kaldırıldı: avlu apartmanın ön bahçesi.
+for (const [n, s, gx, gy] of [['APuddle_1', 'Puddle_S', 58.8, -2.7], ['APuddle_2', 'Puddle_M', 62.0, -2.9], ['APuddle_3', 'Puddle_S', 56.6, -4.3]]) decal(n, s, gx, gy);
+// ===== /APARTMAN FİNALİ =====
+// (18 Eki, FLOOD-MECH) "GÜVENLİ YÜKSEK ALAN / TOPLANMA" tabelası kaldırıldı: avlu artık toplanma alanı değil, apartmanın ön bahçesi.
+for (const [gx, gy] of [[53.8, -2.6], [62.4, -7.4], [56.4, -7.4]]) P('Shelter', 'Lamp_S_' + gx, AS + 'PROP_Assembly_Lamp', gx, gy, { col: dia(0.12), light: true });
+P('Shelter', 'Bench_1', AS + 'PROP_Assembly_Bench', 55.6, -5.6, { col: rectC(0.5, 0.25) });
+P('Shelter', 'Bench_2', AS + 'PROP_Assembly_Bench', 61.6, -5.4, { col: rectC(0.5, 0.25) });
+// ===== APARTMAN FİNALİ (final-world agent): avlu düzeni =====
+// (18 Eki, P-FLOOD, lider kararı) apartmanın önündeki yaşlı çift (Neighbor_A/B) kaldırıldı: avluda Cenk yalnız.
+// (18 Eki, FLOOD-MECH) toplanma alanı süsü (su kolisi yığını) kaldırıldı.
+// ===== /APARTMAN FİNALİ =====
 
 // kanal / sel kenarı ağaçları
 tree('Canal_Tree1', 'Tree_Small', 20, -2); tree('Canal_Tree2', 'Tree_Small', 24.5, 0.5);
@@ -111,13 +131,28 @@ tree('Canal_Tree1', 'Tree_Small', 20, -2); tree('Canal_Tree2', 'Tree_Small', 24.
 const gates = [];
 const anchors = {
   Spawn: [-7.5, 2.6], WarningSpot: [-5.5, 2.6], IntroView: [2, 4], Fork: [27, 14.5], LowRoad: [29, 4.5], HighRoad: [27.5, 21],
-  TreeStopSpot: [47.2, 15.5], TreeFallSpot: [51, 15.5], BranchSpot: [51, 15.5], SafeZone: [56, 0.5], SafeSpot: [56.5, 0.8],
-  'SafeZone/StandPoint': [56, 0.5],
+  TreeStopSpot: [47.2, 15.5], TreeFallSpot: [51, 15.5], BranchSpot: [51, 15.5],
+  SafeZone: [58, -4.8], SafeSpot: [58, -4.6], 'SafeZone/StandPoint': [58, -4.8],
+  AptFacade: [59, -1], AptDoor: [60.05, -1.42],               // APARTMAN FİNALİ (final-world agent): prefab kökü + kapı önü
 };
 const areas = {
   'LowRoad/BarrierZone': { box: true, from: [31.6, 2], to: [33.6, 7] },
   HighRoad: { poly: [[25, 20], [30, 20], [30, 23], [25, 23]], trigger: true },
   TreeStopSpot: { poly: [[46.2, 13], [48.2, 13], [48.2, 18], [46.2, 18]], trigger: true },
-  SafeZone: { poly: [[49.5, -3], [64.5, -3], [64.5, 3.6], [49.5, 3.6]], trigger: true },
+  SafeZone: { poly: [[53.5, -7.6], [62.6, -7.6], [62.6, -2.2], [53.5, -2.2]], trigger: true },
 };
+// ===== ÇEVRE TEHLİKELERİ (FLOOD-MECH, 18 Eki) — veri: hazards_def.js, sprite'lar: hazards.js (install'dan ÖNCE çalışır) =====
+{
+  const HD = require('./hazards_def.js'); const HZ = 'A:FloodEvening/ENV/Hazards/';
+  for (const [id, [gx, gy, axis]] of Object.entries(HD.POLES)) P('Hazards/Poles', 'Pole_' + id, HZ + 'PROP_FE_Pole_' + axis.toUpperCase(), gx, gy, { col: dia(0.13) });
+  // tel dilimleri: dünya konumu ve dilim sprite adı hazards.js çıktısından (out/hazards.json)
+  const hjPath = __dirname + '/out/hazards.json';
+  if (require('fs').existsSync(hjPath)) for (const s of JSON.parse(require('fs').readFileSync(hjPath, 'utf8')).strips)
+    objs.push({ group: s.group, name: s.name, s: 'A:' + s.file.slice('Assets/Art/'.length, -'.png'.length), sn: s.sprite, wx: s.wx, wy: s.wy, gx: 0, gy: 0, h: 0, order: 0 });
+  // kopuk tel bölgeleri: Hazards/Zone_n = kablo ucunun suya değdiği nokta, Safe_k = geri itme hedefleri (çalışma anında ElectricHazardZone)
+  for (const z of HD.SNAPPED) { anchors['Hazards/' + z.id] = z.contact; z.safe.forEach((p, k) => { anchors['Hazards/' + z.id + '/Safe_' + k] = p; }); }
+  // yoldaki enkaz: Debris/<Tür>_<n> (çalışma anında FloodDebrisField; hafifler sel %30'u geçince yüzer)
+  HD.DEBRIS.forEach(([kind, gx, gy], i) => { anchors['Debris/' + kind + '_' + i] = [gx, gy]; });
+}
+// ===== /ÇEVRE TEHLİKELERİ =====
 module.exports = { objs, anchors, areas, gates };

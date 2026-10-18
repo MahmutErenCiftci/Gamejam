@@ -86,6 +86,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private AudioClip warnClip;
         [SerializeField] private AudioClip failClip;
         [SerializeField] private AudioClip crashClip;
+        [Tooltip("Dekoratif bant uygulanırken (matkap/sıkma yerine). Boşsa Resources/Audio/SFX/SFX_EQ_Tape")]
+        [SerializeField] private AudioClip tapeClip;
 
         [Header("Metinler")]
         [SerializeField] private string actionLabel = "Kitaplığı sabitle";
@@ -193,6 +195,18 @@ namespace AfetUyanisi.Chapters.Earthquake
                 audioSource.playOnAwake = false;
                 audioSource.spatialBlend = 0f;
             }
+            // SES: sahnede klip atanmadıysa Resources/Audio/SFX dosyaları (SFX_EQ_*)
+            openClip = EqSfx.Load(openClip, "SFX_EQ_Inspect");
+            selectClip = EqSfx.Load(selectClip, "SFX_UI_Confirm");
+            drillClip = EqSfx.Load(drillClip, "SFX_EQ_Shelf_Drill");
+            fastenClip = EqSfx.Load(fastenClip, "SFX_EQ_Shelf_Fasten");
+            wobbleClip = EqSfx.Load(wobbleClip, "SFX_EQ_Shelf_Wobble");
+            shakeClip = EqSfx.Load(shakeClip, "SFX_EQ_Shelf_Wobble");
+            warnClip = EqSfx.Load(warnClip, "SFX_EQ_Hazard_Warn");
+            crashClip = EqSfx.Load(crashClip, "SFX_EQ_Shelf_Crash");
+            successClip = EqSfx.Load(successClip, "SFX_Correct");
+            failClip = EqSfx.Load(failClip, "SFX_Wrong");
+            tapeClip = EqSfx.Load(tapeClip, "SFX_EQ_Tape");
         }
 
         private void OnEnable()
@@ -421,7 +435,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 bool holding = (!eNeedsRelease && GameInput.InteractHeld) || view.PointerHoldingActivePoint;
                 float before = holdProgress;
                 holdProgress = Mathf.Clamp01(holdProgress + (holding ? Time.deltaTime / holdSeconds : -Time.deltaTime / holdDecaySeconds));
-                if (holding && before <= 0f) Play(drillClip);
+                // SES: dekoratif bant kendi sesini çalar (rulodan çekme + yapıştırma); ankraj/vida matkap + sıkma
+                if (holding && before <= 0f) Play(material == AnchorMaterial.Tape ? tapeClip : drillClip);
                 view.SetHoldProgress(holdProgress, holding);
                 if (holdProgress >= 1f)
                 {
@@ -430,7 +445,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     view.PlaceHardware(installed - 1, (int)material, true);
                     view.SetInstallProgress(installed);
                     view.SetActivePoint(installed < 2 ? installed : -1, installed);
-                    Play(fastenClip);
+                    if (material != AnchorMaterial.Tape) Play(fastenClip);
                     Log($"bağlantı {installed}/2 tamam ({material})");
                 }
             }
@@ -644,6 +659,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (hit)
             {
                 Log("C: kitaplık OYUNCUNUN ÜSTÜNE devrildi → yaralandı");
+                EqSfx.Play(EqSfx.Injured); // SES: yaralanma
                 StartCoroutine(ScreenFlash(new Color(0.85f, 0.26f, 0.23f, 0.55f), 0.7f));
                 StartCoroutine(BlinkPlayer());
             }
@@ -831,7 +847,9 @@ namespace AfetUyanisi.Chapters.Earthquake
 
         private void Play(AudioClip clip)
         {
-            if (clip != null && audioSource != null) audioSource.PlayOneShot(clip);
+            if (clip == null || audioSource == null) return;
+            Debug.Log("[EQ-SFX] " + clip.name + " (kitaplık)");
+            audioSource.PlayOneShot(clip, GameAudio.SfxLevel);
         }
 
         private void Log(string message)

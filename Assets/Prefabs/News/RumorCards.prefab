@@ -4358,7 +4358,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Kurgusal duyuru
+  m_Text: 
 --- !u!1 &9107418548024382416
 GameObject:
   m_ObjectHideFlags: 0
