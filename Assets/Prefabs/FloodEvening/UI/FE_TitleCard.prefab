@@ -46,5 +46,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodEveningTitleCard
   font: {fileID: 0}
   sortingOrder: 120
-  holdSeconds: 3.2
+  holdSeconds: 4.2
   minSeconds: 0.9
+  chapterLabel: "Sel B\xF6l\xFCm\xFC"
+  background: {fileID: 21300000, guid: 0899019c35c0fde4989067e30b08180b, type: 3}
+  puddleFrames:
+  - {fileID: 21300000, guid: 130c25d15d677154095d3836d9a2807b, type: 3}
+  - {fileID: 21300000, guid: 999eb15d9f31d5742825422080f75419, type: 3}
+  - {fileID: 21300000, guid: fce808b04791ab747887b414089b5645, type: 3}
+  - {fileID: 21300000, guid: dc256475503ff104991c949f78b84e40, type: 3}
+  - {fileID: 21300000, guid: dc0efae05a2aa9b44865fcb4a5b3d8e0, type: 3}
+  - {fileID: 21300000, guid: 387899f9734fa624396827e2ae8acaf5, type: 3}
+  - {fileID: 21300000, guid: 2c0770fe70b595d42a582ee1e75aa780, type: 3}
+  - {fileID: 21300000, guid: cab01e535eb321a41aae2aa17d3b1183, type: 3}
+  child: {fileID: 21300000, guid: 2726fe083c083664d97573d304ea4557, type: 3}
+  cloudFlash: {fileID: 21300000, guid: 48181f228f1c891488f03c4e2f205e82, type: 3}
+  nearDrops: 70
+  farDrops: 60
+  flashAt: 1.35
+  thunderAt: 2.1
+  thunderSfx: SFX_FE_Thunder_2
+  thunderVolume: 0.6
