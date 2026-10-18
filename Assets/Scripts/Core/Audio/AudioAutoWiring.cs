@@ -493,6 +493,7 @@ namespace AfetUyanisi.Core
             string wantedMusic = null, wantedAmbience = null;
             float music = 1f, ambience = 1f;
             string scene = audibleScene.IsValid() ? audibleScene.name : "";
+            bool floodScene = false;
 
             // Menü: müzik alçak (~0.35); oda/yağmur ortamını menünün kendi efektleri çalıyor, burada ortam yok.
             if (scene == "MainMenu") { wantedMusic = "MUS_Menu_Loop"; music = 0.7f; }
@@ -510,8 +511,12 @@ namespace AfetUyanisi.Core
                 bool active = p > 0f || AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.FreeRoam;
                 wantedMusic = active ? "MUS_Tension_Loop" : "MUS_Calm_Loop";
                 music = active ? Mathf.Round(Mathf.Lerp(0.55f, 0.9f, p) * 10f) / 10f : 0.5f;
-                wantedAmbience = "AMB_Rain_Light_Loop";
-                ambience = 0.6f;
+                // 120 sn sel sayacı: yağmur sesi ilerlemeyle hafiften sağanağa geçer (sağanak döngüsü %55'ten sonra), eve girerken kısılır.
+                bool heavyRain = p >= 0.55f;
+                wantedAmbience = heavyRain ? "AMB_Rain_Heavy_Loop" : "AMB_Rain_Light_Loop";
+                ambience = heavyRain ? Mathf.Lerp(0.6f, 1f, (p - 0.55f) / 0.45f) : Mathf.Lerp(0.45f, 0.85f, p / 0.55f);
+                ambience = Mathf.Round(ambience * AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.OutdoorAudio01 * 20f) / 20f;
+                floodScene = true;
             }
 
             var mode = ActiveMode();
@@ -533,6 +538,7 @@ namespace AfetUyanisi.Core
 
             foreach (var state in rains)
             {
+                if (floodScene) break; // akşam selde yağmur sesini sel ilerlemesi belirler
                 if (state.Source == null || !state.Source.isActiveAndEnabled || !state.Source.IsRaining) continue;
                 bool heavy = state.Downpour || state.Source.TargetIntensity >= 0.9f;
                 wantedAmbience = heavy ? "AMB_Rain_Heavy_Loop" : "AMB_Rain_Light_Loop";

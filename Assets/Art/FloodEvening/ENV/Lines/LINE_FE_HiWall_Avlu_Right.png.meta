@@ -1,0 +1,522 @@
+fileFormatVersion: 2
+guid: 01068459475cdc718df8f7f047229f47
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1532384036650765137
+    second: LINE_FE_HiWall_Avlu_Right_0
+  - first:
+      213: 3243876473531196380
+    second: LINE_FE_HiWall_Avlu_Right_1
+  - first:
+      213: 2413379040303957517
+    second: LINE_FE_HiWall_Avlu_Right_2
+  - first:
+      213: 3016797484793667445
+    second: LINE_FE_HiWall_Avlu_Right_3
+  - first:
+      213: 1295170683000512595
+    second: LINE_FE_HiWall_Avlu_Right_4
+  - first:
+      213: 460118410587153853
+    second: LINE_FE_HiWall_Avlu_Right_5
+  - first:
+      213: 2162512206795599232
+    second: LINE_FE_HiWall_Avlu_Right_6
+  - first:
+      213: 3599505804727086460
+    second: LINE_FE_HiWall_Avlu_Right_7
+  - first:
+      213: 1632598532945515504
+    second: LINE_FE_HiWall_Avlu_Right_8
+  - first:
+      213: 1103246938439279670
+    second: LINE_FE_HiWall_Avlu_Right_9
+  - first:
+      213: 2618076552704231895
+    second: LINE_FE_HiWall_Avlu_Right_10
+  - first:
+      213: 2216575213736767317
+    second: LINE_FE_HiWall_Avlu_Right_11
+  - first:
+      213: 243168040865055959
+    second: LINE_FE_HiWall_Avlu_Right_12
+  - first:
+      213: 2068508479602280994
+    second: LINE_FE_HiWall_Avlu_Right_13
+  - first:
+      213: 2075380117404395259
+    second: LINE_FE_HiWall_Avlu_Right_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 105
+        width: 16
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.142857}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61e8eec811fc8485f43bb947693afb60
+      internalID: 1532384036650765137
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 97
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bebbf89fc87ba2727f9aedd935dc024f
+      internalID: 3243876473531196380
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 89
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0652512df825f93c15070283cb5f0c54
+      internalID: 2413379040303957517
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 81
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4be30a3f1ca1058ee911cf46681596f
+      internalID: 3016797484793667445
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 73
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 146d2a5a9f709cb6f0348bdae6295ff9
+      internalID: 1295170683000512595
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 65
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac85a138dbe1de8475f62a88ad76a0ce
+      internalID: 460118410587153853
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 57
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22fda493c8f24b94cd71585ff9978066
+      internalID: 2162512206795599232
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 49
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7eb865c8446f0c0525e331671453f0
+      internalID: 3599505804727086460
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 41
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 373f9b2eb763047524235272cda30910
+      internalID: 1632598532945515504
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 33
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 637e3f9b51c2b23cf33b5c5d0e4bb083
+      internalID: 1103246938439279670
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 25
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3441f6c0551cb64dddc26f3eb748a336
+      internalID: 2618076552704231895
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 17
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb9c68e7f8e4c207a74d20761992319f
+      internalID: 2216575213736767317
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 9
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9ffed4b8705c0f596b7be1e1090d786
+      internalID: 243168040865055959
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1
+        width: 16
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5, y: 0.130435}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52a8e21a38fc572f2b6e138fe58f1d0f
+      internalID: 2068508479602280994
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_HiWall_Avlu_Right_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 12
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5, y: 0.048387}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8c46595bfd7c82762bd8d996a26cfd0
+      internalID: 2075380117404395259
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LINE_FE_HiWall_Avlu_Right_0: 1532384036650765137
+      LINE_FE_HiWall_Avlu_Right_1: 3243876473531196380
+      LINE_FE_HiWall_Avlu_Right_2: 2413379040303957517
+      LINE_FE_HiWall_Avlu_Right_3: 3016797484793667445
+      LINE_FE_HiWall_Avlu_Right_4: 1295170683000512595
+      LINE_FE_HiWall_Avlu_Right_5: 460118410587153853
+      LINE_FE_HiWall_Avlu_Right_6: 2162512206795599232
+      LINE_FE_HiWall_Avlu_Right_7: 3599505804727086460
+      LINE_FE_HiWall_Avlu_Right_8: 1632598532945515504
+      LINE_FE_HiWall_Avlu_Right_9: 1103246938439279670
+      LINE_FE_HiWall_Avlu_Right_10: 2618076552704231895
+      LINE_FE_HiWall_Avlu_Right_11: 2216575213736767317
+      LINE_FE_HiWall_Avlu_Right_12: 243168040865055959
+      LINE_FE_HiWall_Avlu_Right_13: 2068508479602280994
+      LINE_FE_HiWall_Avlu_Right_14: 2075380117404395259
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

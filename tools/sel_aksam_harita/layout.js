@@ -90,20 +90,33 @@ for (const gx of [47.5, 51.8]) houseX(gx, 18);
 tree('I_Bush1', 'Bush', 47, 11.4); tree('I_Bush2', 'Bush', 52, 11.5);
 lamp('I1', 54.4, 17.6);
 for (const [n, s, gx, gy] of [['IPuddle_1', 'Puddle_S', 48, 14.5], ['IPuddle_2', 'Puddle_M', 57, 16]]) decal(n, s, gx, gy);
-// J
-houseY(60, 4.4, 'Facade_B'); houseY(60, 8.7, 'Facade_A'); houseY(60, 13, 'Facade_Home');
-lamp('J1', 59.6, 6.4);
-for (const [n, s, gx, gy] of [['JPuddle_1', 'Puddle_M', 57, 10], ['JDrain_1', 'Drain', 56, 6.5]]) decal(n, s, gx, gy);
+houseX(56.1, 18, 'Facade_A');                                                        // I'nin sonu: köşeyi kapatan ev
+// J: dar RÜZGÂR KORİDORU (gx 56..59). Ön tarafta alçak duvar + saksı çalıları, arkada evler; rüzgâr efekti çalışma anında (FE_WindCorridor)
+houseY(59, 4.6, 'Facade_B'); houseY(59, 8.9, 'Facade_Home');
+for (const gy of [1.5, 5.5, 9.5]) tree('J_Pot_' + gy, 'Bush', 55.2, gy);
+for (const gy of [11.6, 6.2, 1.0]) lamp('J_' + gy, 58.6, gy);
+for (const [n, s, gx, gy] of [['JPuddle_1', 'Puddle_M', 57.5, 10.2], ['JPuddle_2', 'Puddle_S', 57, 5.2], ['JPuddle_3', 'Puddle_M', 58, 1.6], ['JDrain_1', 'Drain', 56.6, 7.6], ['JDrain_2', 'Drain', 58.2, 3.4]]) decal(n, s, gx, gy);
 
-// ================================================================ GÜVENLİ MEYDAN (devam noktası)
-P('SafeArea', 'Sign_SafeZone', 'N:PROP_FE_Sign_SafeZone', 53.5, 3.4, { col: rectC(0.45, 0.08) });
-for (const [gx, gy] of [[50, 3.4], [63.5, 3.4], [56.5, -2.4]]) P('SafeArea', 'Lamp_P_' + gx, AS + 'PROP_Assembly_Lamp', gx, gy, { col: dia(0.12), light: true });
-for (const [gx, gy] of [[61, 2.6]]) P('SafeArea', 'Bench_P_' + gx, AS + 'PROP_Assembly_Bench', gx, gy, { col: rectC(0.5, 0.25) });
-P('SafeArea', 'Neighbor_A', AS + 'PROP_Assembly_Neighbor_A', 58.5, 0.5, { col: dia(0.15) });
-P('SafeArea', 'Neighbor_B', AS + 'PROP_Assembly_Neighbor_B', 59.3, 0.0, { col: dia(0.15) });
-P('SafeArea', 'WaterStack', AS + 'PROP_Assembly_WaterStack', 63.2, -1.6, { col: rectC(0.3, 0.3) });
-for (let gx = 50; gx < 55; gx += 2.5) P('SafeArea', 'Hedge_P_' + gx, AS + 'PROP_Assembly_Hedge_X', gx + 0.5, 4.6, { order: -60 });
-
+// ================================================================ KORUNAKLI AVLU (devam noktası): yüksek taş duvar + bina girintisi + tente, rüzgâr yok
+// ===== APARTMAN FİNALİ (final-world agent) =====
+// Cenk'in apartmanı (59,-1): Facade_Home yerine giriş katı yeniden çizilmiş cephe (tools/sel_aksam_final/world/build_world_art.js;
+// aynı boyut ve pivot, kapı boşluğu saydam). Kanat, hol, posta kutusu, lamba, paspas ve saksılar FE_ApartmentFinal prefabında,
+// AptFacade çapasına göre (build_scene.cs'teki APARTMAN FİNALİ bloğu). Gövde aynı (Body_Home).
+P('Buildings', 'Facade_Apt_59_-1', 'A:FloodEvening/Final/World/PROP_FE_Apt_Facade', 59, -1, { order: -50, h: 0 });
+P('Buildings', 'Body_59_-1', SU + 'PROP_StreetBG_Body_Home', 59, -1, { order: -62, h: 0 });
+// tente + komşular + su yığını girişin önünden avlunun sağ-ön köşesine alındı (kapıya ve posta kutusuna giden yol açık)
+P('Shelter', 'Canopy', AS + 'PROP_Assembly_Canopy', 62.0, -6.9, { col: rectC(0.2, 0.2) });
+for (const [n, s, gx, gy] of [['APuddle_1', 'Puddle_S', 58.8, -2.7], ['APuddle_2', 'Puddle_M', 62.0, -2.9], ['APuddle_3', 'Puddle_S', 56.6, -4.3]]) decal(n, s, gx, gy);
+// ===== /APARTMAN FİNALİ =====
+P('Shelter', 'Sign_SafeZone', 'N:PROP_FE_Sign_SafeZone', 54.6, -1.6, { col: rectC(0.45, 0.08) });
+for (const [gx, gy] of [[53.8, -2.6], [62.4, -7.4], [56.4, -7.4]]) P('Shelter', 'Lamp_S_' + gx, AS + 'PROP_Assembly_Lamp', gx, gy, { col: dia(0.12), light: true });
+P('Shelter', 'Bench_1', AS + 'PROP_Assembly_Bench', 55.6, -5.6, { col: rectC(0.5, 0.25) });
+P('Shelter', 'Bench_2', AS + 'PROP_Assembly_Bench', 61.6, -5.4, { col: rectC(0.5, 0.25) });
+// ===== APARTMAN FİNALİ (final-world agent): avlu düzeni =====
+P('Shelter', 'Neighbor_A', AS + 'PROP_Assembly_Neighbor_A', 61.3, -7.4, { col: dia(0.15) });
+P('Shelter', 'Neighbor_B', AS + 'PROP_Assembly_Neighbor_B', 62.3, -7.6, { col: dia(0.15) });
+P('Shelter', 'WaterStack', AS + 'PROP_Assembly_WaterStack', 62.4, -4.4, { col: rectC(0.3, 0.3) });
+// ===== /APARTMAN FİNALİ =====
 
 // kanal / sel kenarı ağaçları
 tree('Canal_Tree1', 'Tree_Small', 20, -2); tree('Canal_Tree2', 'Tree_Small', 24.5, 0.5);
@@ -111,13 +124,17 @@ tree('Canal_Tree1', 'Tree_Small', 20, -2); tree('Canal_Tree2', 'Tree_Small', 24.
 const gates = [];
 const anchors = {
   Spawn: [-7.5, 2.6], WarningSpot: [-5.5, 2.6], IntroView: [2, 4], Fork: [27, 14.5], LowRoad: [29, 4.5], HighRoad: [27.5, 21],
-  TreeStopSpot: [47.2, 15.5], TreeFallSpot: [51, 15.5], BranchSpot: [51, 15.5], SafeZone: [56, 0.5], SafeSpot: [56.5, 0.8],
-  'SafeZone/StandPoint': [56, 0.5],
+  TreeStopSpot: [47.2, 15.5], TreeFallSpot: [51, 15.5], BranchSpot: [51, 15.5],
+  WindIntro: [57.5, 10.5], WindCorridor: [57.5, 6], WindEntry: [57.5, 12.6], WindExit: [57.5, -1.6],
+  SafeZone: [58, -4.8], SafeSpot: [58, -4.6], 'SafeZone/StandPoint': [58, -4.8],
+  AptFacade: [59, -1], AptDoor: [60.05, -1.42],               // APARTMAN FİNALİ (final-world agent): prefab kökü + kapı önü
 };
 const areas = {
   'LowRoad/BarrierZone': { box: true, from: [31.6, 2], to: [33.6, 7] },
   HighRoad: { poly: [[25, 20], [30, 20], [30, 23], [25, 23]], trigger: true },
   TreeStopSpot: { poly: [[46.2, 13], [48.2, 13], [48.2, 18], [46.2, 18]], trigger: true },
-  SafeZone: { poly: [[49.5, -3], [64.5, -3], [64.5, 3.6], [49.5, 3.6]], trigger: true },
+  WindIntro: { poly: [[56, 9.6], [59, 9.6], [59, 11.4], [56, 11.4]], trigger: true },
+  WindCorridor: { poly: [[56, -1.3], [59, -1.3], [59, 12.8], [56, 12.8]], trigger: true },
+  SafeZone: { poly: [[53.5, -7.6], [62.6, -7.6], [62.6, -2.2], [53.5, -2.2]], trigger: true },
 };
 module.exports = { objs, anchors, areas, gates };

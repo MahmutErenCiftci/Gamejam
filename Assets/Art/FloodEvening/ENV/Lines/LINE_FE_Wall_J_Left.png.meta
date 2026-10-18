@@ -62,6 +62,36 @@ TextureImporter:
   - first:
       213: 1525095697635371367
     second: LINE_FE_Wall_J_Left_19
+  - first:
+      213: 1650812763620558111
+    second: LINE_FE_Wall_J_Left_20
+  - first:
+      213: 1907202835327161386
+    second: LINE_FE_Wall_J_Left_21
+  - first:
+      213: 3081251898776191295
+    second: LINE_FE_Wall_J_Left_22
+  - first:
+      213: 3529344941954296488
+    second: LINE_FE_Wall_J_Left_23
+  - first:
+      213: 803241544320249131
+    second: LINE_FE_Wall_J_Left_24
+  - first:
+      213: 4148578268797747778
+    second: LINE_FE_Wall_J_Left_25
+  - first:
+      213: 1181386833180476317
+    second: LINE_FE_Wall_J_Left_26
+  - first:
+      213: 2174476245302546940
+    second: LINE_FE_Wall_J_Left_27
+  - first:
+      213: 2107208687308723091
+    second: LINE_FE_Wall_J_Left_28
+  - first:
+      213: 665740487316010344
+    second: LINE_FE_Wall_J_Left_29
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -176,7 +206,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 142
+        y: 222
         width: 16
         height: 37
       alignment: 9
@@ -198,7 +228,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 134
+        y: 214
         width: 16
         height: 41
       alignment: 9
@@ -220,7 +250,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 126
+        y: 206
         width: 16
         height: 39
       alignment: 9
@@ -242,7 +272,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 48
-        y: 118
+        y: 198
         width: 16
         height: 39
       alignment: 9
@@ -264,7 +294,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 110
+        y: 190
         width: 16
         height: 39
       alignment: 9
@@ -286,7 +316,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 102
+        y: 182
         width: 16
         height: 39
       alignment: 9
@@ -308,7 +338,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 94
+        y: 174
         width: 16
         height: 39
       alignment: 9
@@ -330,7 +360,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 112
-        y: 86
+        y: 166
         width: 16
         height: 39
       alignment: 9
@@ -352,7 +382,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 78
+        y: 158
         width: 16
         height: 39
       alignment: 9
@@ -374,7 +404,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 144
-        y: 70
+        y: 150
         width: 16
         height: 39
       alignment: 9
@@ -396,7 +426,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 62
+        y: 142
         width: 16
         height: 39
       alignment: 9
@@ -418,7 +448,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 176
-        y: 54
+        y: 134
         width: 16
         height: 39
       alignment: 9
@@ -440,7 +470,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 46
+        y: 126
         width: 16
         height: 39
       alignment: 9
@@ -462,7 +492,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 208
-        y: 38
+        y: 118
         width: 16
         height: 39
       alignment: 9
@@ -484,7 +514,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
-        y: 30
+        y: 110
         width: 16
         height: 39
       alignment: 9
@@ -506,7 +536,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 240
-        y: 22
+        y: 102
         width: 16
         height: 39
       alignment: 9
@@ -528,7 +558,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 14
+        y: 94
         width: 16
         height: 39
       alignment: 9
@@ -550,7 +580,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 272
-        y: 6
+        y: 86
         width: 16
         height: 39
       alignment: 9
@@ -572,11 +602,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 0
+        y: 78
         width: 16
-        height: 37
+        height: 39
       alignment: 9
-      pivot: {x: 0.5, y: 0.148649}
+      pivot: {x: 0.5, y: 0.192308}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData:
       outline: []
@@ -594,6 +624,226 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 304
+        y: 70
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7bfae2463a9af921a849cf070271958
+      internalID: 1525095697635371367
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 62
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b17176cf897123a94c4508d867e435e4
+      internalID: 1650812763620558111
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_21
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 54
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f5cd5cbc2fb8affbe99a86301b63623
+      internalID: 1907202835327161386
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_22
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 46
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72047327930eee4f481336ec9c8966b7
+      internalID: 3081251898776191295
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_23
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 38
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db688b51ffc33506ec4a0ade41bf8d6c
+      internalID: 3529344941954296488
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_24
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 30
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c64f215d6c30fd8e19d926739a45b4b
+      internalID: 803241544320249131
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_25
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 22
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 948c92263f44ed988bfbe6ce6ea99bfe
+      internalID: 4148578268797747778
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_26
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 14
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d11988b77bfaaa96d38aef8400a6ffee
+      internalID: 1181386833180476317
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_27
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 6
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16af393fc62de92e3c1b660ef8b09215
+      internalID: 2174476245302546940
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_28
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 16
+        height: 37
+      alignment: 9
+      pivot: {x: 0.5, y: 0.148649}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfa6fe5efb9091068b4af88a559b6589
+      internalID: 2107208687308723091
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_J_Left_29
+      rect:
+        serializedVersion: 2
+        x: 464
         y: 4
         width: 2
         height: 27
@@ -605,8 +855,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b7bfae2463a9af921a849cf070271958
-      internalID: 1525095697635371367
+      spriteID: f9f8949d402733088f2f5357801128b7
+      internalID: 665740487316010344
       vertices: []
       indices:
       edges: []
@@ -645,6 +895,16 @@ TextureImporter:
       LINE_FE_Wall_J_Left_17: 1771627606746843238
       LINE_FE_Wall_J_Left_18: 2337214151612765783
       LINE_FE_Wall_J_Left_19: 1525095697635371367
+      LINE_FE_Wall_J_Left_20: 1650812763620558111
+      LINE_FE_Wall_J_Left_21: 1907202835327161386
+      LINE_FE_Wall_J_Left_22: 3081251898776191295
+      LINE_FE_Wall_J_Left_23: 3529344941954296488
+      LINE_FE_Wall_J_Left_24: 803241544320249131
+      LINE_FE_Wall_J_Left_25: 4148578268797747778
+      LINE_FE_Wall_J_Left_26: 1181386833180476317
+      LINE_FE_Wall_J_Left_27: 2174476245302546940
+      LINE_FE_Wall_J_Left_28: 2107208687308723091
+      LINE_FE_Wall_J_Left_29: 665740487316010344
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

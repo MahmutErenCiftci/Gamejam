@@ -62,6 +62,12 @@ TextureImporter:
   - first:
       213: 2009466283883531167
     second: LINE_FE_Wall_I_Front_19
+  - first:
+      213: 3818685310324603545
+    second: LINE_FE_Wall_I_Front_20
+  - first:
+      213: 3807527132672316661
+    second: LINE_FE_Wall_I_Front_21
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -574,9 +580,9 @@ TextureImporter:
         x: 288
         y: 141
         width: 16
-        height: 38
+        height: 39
       alignment: 9
-      pivot: {x: 0.5, y: 0.197368}
+      pivot: {x: 0.5, y: 0.192308}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData:
       outline: []
@@ -594,7 +600,51 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 304
-        y: 148
+        y: 149
+        width: 16
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.192308}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b22e702a50102b19cd6b73d61ad981
+      internalID: 2009466283883531167
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 157
+        width: 16
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: 0.197368}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a127f7b3d231df1b31f9b17235d847a4
+      internalID: 3818685310324603545
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_21
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 164
         width: 2
         height: 27
       alignment: 9
@@ -605,8 +655,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 24b22e702a50102b19cd6b73d61ad981
-      internalID: 2009466283883531167
+      spriteID: ed0793e9fca45ac9765b22809d22c2c5
+      internalID: 3807527132672316661
       vertices: []
       indices:
       edges: []
@@ -645,6 +695,8 @@ TextureImporter:
       LINE_FE_Wall_I_Front_17: 2706904588210235304
       LINE_FE_Wall_I_Front_18: 3978023235457110348
       LINE_FE_Wall_I_Front_19: 2009466283883531167
+      LINE_FE_Wall_I_Front_20: 3818685310324603545
+      LINE_FE_Wall_I_Front_21: 3807527132672316661
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

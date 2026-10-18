@@ -1,0 +1,263 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &319007700283685995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3116206900380226443}
+  - component: {fileID: 3600025875141920900}
+  m_Layer: 0
+  m_Name: FE_WindCorridor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3116206900380226443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319007700283685995}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8414797139657728990}
+  - {fileID: 5315981065697113972}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3600025875141920900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319007700283685995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d751e42c813f08c45b7d63daba303dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.WindCorridor
+  player: {fileID: 0}
+  introArea: {fileID: 0}
+  shelterArea: {fileID: 0}
+  entry: {fileID: 0}
+  exit: {fileID: 0}
+  shelterSpot: {fileID: 0}
+  gusts:
+  - push: 1
+    strength: 0
+    seconds: 3.2
+  - push: 0
+    strength: 0
+    seconds: 1.2
+  - push: -1
+    strength: 1
+    seconds: 3
+  - push: 1
+    strength: 1
+    seconds: 2.6
+  - push: 0
+    strength: 0
+    seconds: 1
+  - push: 1
+    strength: 2
+    seconds: 2.4
+  - push: -1
+    strength: 2
+    seconds: 2.4
+  - push: 0
+    strength: 0
+    seconds: 1
+  - push: -1
+    strength: 1
+    seconds: 2.8
+  - push: 1
+    strength: 0
+    seconds: 2.6
+  loopFrom: 2
+  warnSeconds: 1
+  introSeconds: 0.9
+  calmSpeed: 0.4
+  braceSpeedLight: 0.34
+  braceSpeedMedium: 0.28
+  braceSpeedStrong: 0.22
+  shelterSpeed: 0.75
+  stumbleBack: 0.35
+  stumbleSeconds: 0.35
+  recoverSeconds: 0.35
+  gustGrace: 0.45
+  inputThreshold: 0.3
+  centerPull: 2.2
+  braceLeanLeft:
+  - {fileID: 2035538761722071494, guid: 3b078315b777d052e462ac328a141be6, type: 3}
+  - {fileID: 1926344347467472501, guid: 3b078315b777d052e462ac328a141be6, type: 3}
+  - {fileID: 3413535752228580755, guid: 3b078315b777d052e462ac328a141be6, type: 3}
+  - {fileID: 2727006463576269686, guid: 3b078315b777d052e462ac328a141be6, type: 3}
+  braceLeanRight:
+  - {fileID: 3695278537147007690, guid: dd05816591848377f79bc4fbe4407145, type: 3}
+  - {fileID: 3449989716241486189, guid: dd05816591848377f79bc4fbe4407145, type: 3}
+  - {fileID: 2957949900978226142, guid: dd05816591848377f79bc4fbe4407145, type: 3}
+  - {fileID: 3300512991727866133, guid: dd05816591848377f79bc4fbe4407145, type: 3}
+  stumbleLeft:
+  - {fileID: 518671379009727797, guid: 9a6017bf31378d1cea8d8abf335cb6c5, type: 3}
+  - {fileID: 760027427589840191, guid: 9a6017bf31378d1cea8d8abf335cb6c5, type: 3}
+  - {fileID: 2943085401750397812, guid: 9a6017bf31378d1cea8d8abf335cb6c5, type: 3}
+  - {fileID: 873092143311527376, guid: 9a6017bf31378d1cea8d8abf335cb6c5, type: 3}
+  stumbleRight:
+  - {fileID: 1355591927985951979, guid: 8c0a5d3ff25485068086035b0f3486fe, type: 3}
+  - {fileID: 2567006172428199437, guid: 8c0a5d3ff25485068086035b0f3486fe, type: 3}
+  - {fileID: 3617417578641094498, guid: 8c0a5d3ff25485068086035b0f3486fe, type: 3}
+  - {fileID: 2195422654581159914, guid: 8c0a5d3ff25485068086035b0f3486fe, type: 3}
+  recoverLeft:
+  - {fileID: 285258943564344709, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  - {fileID: 51214273924038279, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  - {fileID: 1066203107679258356, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  - {fileID: 972347624924871999, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  - {fileID: 3968397402231284277, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  - {fileID: 2343060219156740465, guid: 2db3d7435cf516a072018c3c32e6dd5e, type: 3}
+  recoverRight:
+  - {fileID: 1884802545807149338, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  - {fileID: 1198211953423106810, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  - {fileID: 449468484454647992, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  - {fileID: 2956280094387924409, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  - {fileID: 1145370852031831936, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  - {fileID: 1550079992614885492, guid: 54775b7507d1150a63c044a11bf69ed8, type: 3}
+  reactLeft:
+  - {fileID: 563040972339981595, guid: 0b3570bd20585a8b9375b3ecb8659bed, type: 3}
+  - {fileID: 1803891787238485239, guid: 0b3570bd20585a8b9375b3ecb8659bed, type: 3}
+  frameSeconds: 0.12
+  hud: {fileID: 1637608488769969038}
+  fx: {fileID: 5994799796894152801}
+  loopId: AMB_Wind_Gust_Loop
+  gustSfx: SFX_Wind_Gust
+  audioChannel: Wind
+--- !u!1 &547064383719573591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5315981065697113972}
+  - component: {fileID: 1637608488769969038}
+  m_Layer: 0
+  m_Name: Hud
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5315981065697113972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547064383719573591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3116206900380226443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1637608488769969038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547064383719573591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afaead5dfd02ee24b9c00809154e2da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.WindHud
+  banner: {fileID: 21300000, guid: c6e7575a570ad2364565385e9eb3c57d, type: 3}
+  arrowLeft: {fileID: 21300000, guid: 2b508b1a4cdc6c5d7bb3c00eddc0f3fe, type: 3}
+  arrowRight: {fileID: 21300000, guid: 79ab6a904504e5dfae62cb2bd6ec1e5b, type: 3}
+  hintA: {fileID: 21300000, guid: bd79c9fbe158950e9c462cf888c9c2b3, type: 3}
+  hintD: {fileID: 21300000, guid: 0ec34b984ec627e1e643436ebc482942, type: 3}
+  alert: {fileID: 21300000, guid: 3e859531360b23e591f1cda3e8b6c293, type: 3}
+  chevLeft: {fileID: 21300000, guid: e425471e3a5079e0b33098227a7476a6, type: 3}
+  chevRight: {fileID: 21300000, guid: 7987db8337b933f5c7a4fab6025dfbf9, type: 3}
+  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  sortingOrder: 66
+  subtitle: "KUVVETL\u0130 R\xDCZG\xC2R"
+  infoBody: "Ok, r\xFCzg\xE2r\u0131n seni itti\u011Fi y\xF6n\xFC g\xF6sterir.\nTers y\xF6ndeki tu\u015Fa basarak dengeni koru.\nAyn\u0131 y\xF6ne basarsan geriye savrulursun."
+  infoButton: "[E] Anlad\u0131m"
+  lightLabel: "HAF\u0130F R\xDCZG\xC2R"
+  mediumLabel: "ORTA R\xDCZG\xC2R"
+  strongLabel: "\u015E\u0130DDETL\u0130 R\xDCZG\xC2R"
+  goodLabel: "DENGEDES\u0130N"
+  holdLabel: "TERS TU\u015EA BAS!"
+  wrongLabel: SAVRULDUN!
+  calmLabel: "SAK\u0130N \xB7 \u0130LERLE"
+  warnLabel: "R\xDCZG\xC2R D\xD6N\xDCYOR!"
+  shelterText: "R\xFCzg\xE2r kesildi. Buras\u0131 korunakl\u0131!"
+--- !u!1 &8251688818836382226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8414797139657728990}
+  - component: {fileID: 5994799796894152801}
+  m_Layer: 0
+  m_Name: Fx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8414797139657728990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8251688818836382226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3116206900380226443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5994799796894152801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8251688818836382226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf28e55712360244a477184985fe5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.WindFx
+  leafSprites:
+  - {fileID: 21300000, guid: de6bffab2fd1b46cc52d5622bb4985e5, type: 3}
+  - {fileID: 21300000, guid: 2bdb2c1ee67535d085a97bc8f159c7f0, type: 3}
+  - {fileID: 21300000, guid: 8a6d2c3c9b277bbfcb1d16bc8e0b5489, type: 3}
+  - {fileID: 21300000, guid: 6f388d79d39e1720b41ea80b7d3032f0, type: 3}
+  streakSprite: {fileID: 21300000, guid: 02d2d66980217a8463bb34118899f6fa, type: 3}
+  follow: {fileID: 0}
+  area: {x: 8, y: 4.6}
+  maxLeaves: 42
+  maxStreaks: 16
+  sortingOrder: 400

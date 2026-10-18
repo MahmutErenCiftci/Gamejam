@@ -44,16 +44,60 @@ FloodEveningController (tek akış/sonuç sorumlusu)
    kart    uyarı (1 kez)  sokaklar  └─ uzun yol (HighRoad) ─► LongRoad ─► Obstacle (tree_fell) ─► FinalApproach (branch_cleared, FE_FINAL)
                                                                                                     └─► SafeZone/devam noktası ─► Success ─► sonuç
 ```
-* **Süre baskısı yok:** geri sayım, süre dolması ve başarısızlık kaldırıldı. Zaman kaybı yalnızca gerçek yürüme süresi. Su seviyesi göstergesi varsayılan kapalı (`showWaterGauge`).
-* Ortam ilerlemesi `FloodEveningHub.Progress01` (serbest dolaşmada ~150 sn'de 1'e çıkar): yalnız yağmur ve çevresel su görseli.
+* **120 sn sel sayacı (lider kararı 18 Eki 01:45):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç durur → apartman finali → bitiş. Süre dolarsa başarısız ekranı ([R] Tekrar Dene).
 * Durum geri gitmez. Dal itilir itilmez bölüm bitmez; oyuncu devam noktasına yürüyünce biter.
 * Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), rüzgâr (`WindGustZone`, FE_WindPass), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
+
+## 1b. 120 sn sel sistemi (Mahmut)
+
+- **Tek başlangıç:** telefon bildirimi kapanınca `FloodEveningController.StartFloodSequence()` bir kez çalışır (tekrar çağrılırsa hiçbir şey olmaz). Bildirim sırasında süre akmaz.
+- **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / 120`. Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur.
+- **Süre ne zaman akar:**
+  - Akar: serbest yürüyüş, dal itme, rüzgâr koridoru.
+  - Durur: diyalog, okuma panelleri (`info*`, `read*`, `warning*`…), zorunlu sinematik (`treefall*`, `cine*`), pause (timeScale 0), başarı/başarısızlık.
+- **Ölçülen süreler (bot, kusursuz yürüyüş):**
+  - En kısa rota: güvenli bölgeye sayaç 58 sn'de (%48).
+  - Kısa yolu deneyip dönme + rüzgârda karışık tepki: 77 sn (%64).
+  - İnsan oyuncu için ~90–100 sn bekleniyor.
+- **Aşamalar:**
+  - %25: YAĞIŞ ARTIYOR.
+  - %50: SU YÜKSELİYOR.
+  - %75: KRİTİK TEHLİKE (uyarı sesi).
+  - %90: SU HIZLA YÜKSELİYOR.
+  - %100: SEL KRİTİK SEVİYEYE ULAŞTI, başarısız.
+- **Gösterge:** `UI/FloodGaugeView.cs`, sağ kenarda SEL DURUMU paneli.
+  - Tüp her kare dokuya çizilir; rakamlar elle çizilmiş piksel rakamlar.
+  - Çerçeve rengi: mavi, %75'te turuncu, %100'de kırmızı ve taşma; güvenli bölgede yeşil.
+  - Ölçek (0–1,5 m) temsilîdir.
+- **Harita suyu:** `Flow/FloodWaterField.cs` + `Assets/Art/FloodEvening/ENV/Flood/FE_FloodWater.shader` (haritayı kaplayan tek sprite, 2D ışıklı).
+  - Veri dosyası: `FE_FloodData.png`, `tools/sel_aksam_harita/flood.js` üretir.
+  - Dolma sırası: kısa yol ve kanal kıyısı ilk dolar, uzun yol giderek, rüzgâr koridoru en son; avlu kuru kalır.
+  - Görünüm: ıslak zemin → birikinti → sığ → derin su, kenar köpüğü, akış yönünde dalga ve yağmur halkaları.
+  - Oyuncu: ayak halkaları ve suya gömülen ayak çizgisi; derin suda hafif yavaşlama (0,85 / 0,72).
+- **Yol kapanmaları (tasarlanmış):**
+  - Kısa yol girişi %42'de kapanır.
+  - Geldiğin sokak (C → kavşak) %75'te kapanır.
+  - Oyuncu kapının arkasında kalacaksa o yol kapanmaz; hedefe giden yol hiç kesilmez.
+- **Ses:**
+  - Yağmur hafiften sağanağa geçer (`AudioAutoWiring`).
+  - Akan su sesi `AMB_Flood_Water_Loop` ilerledikçe artar.
+  - Uyarı sesleri: `SFX_Flood_Warn`, `SFX_Flood_Critical`. Sesler `tools/audio/generate_flood.js` ile üretilir.
+- **Test kısayolları (yalnız Editor/Development):**
+  - F5 / F6 / F7 / F8 / F9 = %0 / 25 / 50 / 75 / 100.
+  - F10 = sayaç ×4.
+  - F11 = su katmanını aç/kapa.
+  - FloodWaterField seçiliyken sahne görünümünde kapılar çizilir.
+- **Metinler:** controller'da Türkçe varsayılanlarla tanımlı. `flood_evening.json` "ui" altına şu anahtarlar eklenirse onlar kullanılır:
+  - `flood_fail_title`, `flood_fail_body`, `flood_fail_retry`
+  - `toast_critical_*`, `toast_hurry_*`, `toast_home_*`
+  - `end_title`, `end_subtitle`
+- **Apartman finali:** `IFloodEveningFinale` (`Begin()`, `IsComplete`). Avluya varınca sayaç durur, ardından `Begin()` çağrılır. `home_entered` gelince kararma ve bitiş ekranı ("GÜVENLİ BÖLGEYE ULAŞTIN!" / "AFET UYANIŞI — BÖLÜM TAMAMLANDI").
 
 ## 2. Hub (modüller ↔ controller), `Assets/Scripts/Chapters/FloodEvening/FloodEveningHub.cs`
 
 | Olay / alan | Kim yazar | Değerler |
 |---|---|---|
-| `Progress01`, `Paused`, `FreeRoam` | Controller | ortam ilerlemesi 0..1; okuma/diyalog sırasında duruyor mu; oyuncu serbest mi |
+| `Progress01`, `Paused`, `FreeRoam`, `FloodStarted`, `FloodStopped`, `FloodSeconds`, `OutdoorAudio01` | Controller | sel ilerlemesi 0..1 (120 sn); sayaç duruyor mu; oyuncu serbest mi; sayaç başladı / durdu; toplam süre; dış ses çarpanı |
 | `NotifyOpened(id)` / `NotifyClosed(id)` | Modül | ör. `treefall`, `branch`; açıkken hareket kilitli |
 | `Complete(id)` | Modül | `warning_read`, `high_road`, `tree_fell`, `branch_cleared`, `safe_zone` (+ eski: `rumor_checked`, `gate_opened`, `code_opened`) |
 | `ReportMistake(id)` | Modül | `low_road` artık hata sayılmaz (nötr "kısa yol denendi"); diğerleri sonuçta listelenir |

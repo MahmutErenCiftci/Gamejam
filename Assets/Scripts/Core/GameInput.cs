@@ -70,12 +70,35 @@ namespace AfetUyanisi.Core
         /// <summary>Geri / ayarları kapat: Esc.</summary>
         public static bool BackPressed => Pressed(Key.Escape);
 
+        /// <summary>Tekrar dene: R (sonuç / başarısız ekranları).</summary>
+        public static bool RetryPressed => Pressed(Key.R);
+
+        /// <summary>Yalnız geliştirici kısayolları (F5..F12 vb.): Editor ve Development build dışında her zaman false.</summary>
+        public static bool DevKeyPressed(Key key)
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            return Pressed(key);
+#else
+            return false;
+#endif
+        }
+
         public static bool ClickPressed
         {
             get
             {
                 var mouse = Mouse.current;
                 return mouse != null && mouse.leftButton.wasPressedThisFrame;
+            }
+        }
+
+        /// <summary>Sağ fare tuşu bu karede basıldı (yakın plan panelini geri kapatma).</summary>
+        public static bool RightClickPressed
+        {
+            get
+            {
+                var mouse = Mouse.current;
+                return mouse != null && mouse.rightButton.wasPressedThisFrame;
             }
         }
 

@@ -1,0 +1,522 @@
+fileFormatVersion: 2
+guid: d02592a5e20f8bb2b855c3bf6139122f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1210376606067249149
+    second: LINE_FE_Rail_Avlu_Left_0
+  - first:
+      213: 2032151112167316820
+    second: LINE_FE_Rail_Avlu_Left_1
+  - first:
+      213: 2463651321371270570
+    second: LINE_FE_Rail_Avlu_Left_2
+  - first:
+      213: 2262668897120581156
+    second: LINE_FE_Rail_Avlu_Left_3
+  - first:
+      213: 4538598697563152803
+    second: LINE_FE_Rail_Avlu_Left_4
+  - first:
+      213: 3428368384213581812
+    second: LINE_FE_Rail_Avlu_Left_5
+  - first:
+      213: 915650660436497727
+    second: LINE_FE_Rail_Avlu_Left_6
+  - first:
+      213: 1582853998753990179
+    second: LINE_FE_Rail_Avlu_Left_7
+  - first:
+      213: 226751875058501675
+    second: LINE_FE_Rail_Avlu_Left_8
+  - first:
+      213: 2154337040848034028
+    second: LINE_FE_Rail_Avlu_Left_9
+  - first:
+      213: 447407290683210526
+    second: LINE_FE_Rail_Avlu_Left_10
+  - first:
+      213: 2863390477236536318
+    second: LINE_FE_Rail_Avlu_Left_11
+  - first:
+      213: 3285740917821018129
+    second: LINE_FE_Rail_Avlu_Left_12
+  - first:
+      213: 1343713185282977654
+    second: LINE_FE_Rail_Avlu_Left_13
+  - first:
+      213: 2212710463964629518
+    second: LINE_FE_Rail_Avlu_Left_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 105
+        width: 16
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.232143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f93932b6978b29fc66603c6086b041c
+      internalID: 1210376606067249149
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 97
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 450147285edef11dd07de303cc0eb8fa
+      internalID: 2032151112167316820
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 89
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb5dfd6d05abffa9262fb25833959c48
+      internalID: 2463651321371270570
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 81
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76a22478f00e914f78dc5147785c57cd
+      internalID: 2262668897120581156
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 73
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ae247af12e56fda99d5c5a461f5bfbb
+      internalID: 4538598697563152803
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 65
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 085b5519c666b76e8c2eb053c2edbcef
+      internalID: 3428368384213581812
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 57
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0aa84053b4152dbdd9206d0e84bfc87
+      internalID: 915650660436497727
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 49
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b330c5319f9ccf700e6c36f180e5038
+      internalID: 1582853998753990179
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 41
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2890ed7957b8a9a662f273cfbce83e00
+      internalID: 226751875058501675
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_9
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 33
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3508ee1a839e1f37afd0a4761229d708
+      internalID: 2154337040848034028
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 25
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 045efacdbc3a9ec5a5a3382d7720ab45
+      internalID: 447407290683210526
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_11
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 17
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d79e4ea05a959af126f75381ccaaed97
+      internalID: 2863390477236536318
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 9
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 912d8bd87f71276f4c7082405299edce
+      internalID: 3285740917821018129
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd8e2d204d098c6086c69a7f14c80732
+      internalID: 1343713185282977654
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_Avlu_Left_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 6
+        height: 23
+      alignment: 9
+      pivot: {x: 0.5, y: 0.086957}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3f6db4704f85cd0b79485e30832780b
+      internalID: 2212710463964629518
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LINE_FE_Rail_Avlu_Left_0: 1210376606067249149
+      LINE_FE_Rail_Avlu_Left_1: 2032151112167316820
+      LINE_FE_Rail_Avlu_Left_2: 2463651321371270570
+      LINE_FE_Rail_Avlu_Left_3: 2262668897120581156
+      LINE_FE_Rail_Avlu_Left_4: 4538598697563152803
+      LINE_FE_Rail_Avlu_Left_5: 3428368384213581812
+      LINE_FE_Rail_Avlu_Left_6: 915650660436497727
+      LINE_FE_Rail_Avlu_Left_7: 1582853998753990179
+      LINE_FE_Rail_Avlu_Left_8: 226751875058501675
+      LINE_FE_Rail_Avlu_Left_9: 2154337040848034028
+      LINE_FE_Rail_Avlu_Left_10: 447407290683210526
+      LINE_FE_Rail_Avlu_Left_11: 2863390477236536318
+      LINE_FE_Rail_Avlu_Left_12: 3285740917821018129
+      LINE_FE_Rail_Avlu_Left_13: 1343713185282977654
+      LINE_FE_Rail_Avlu_Left_14: 2212710463964629518
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

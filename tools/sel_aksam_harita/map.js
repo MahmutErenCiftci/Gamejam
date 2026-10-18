@@ -2,7 +2,7 @@
 // +gx = ekranda sağ-yukarı, +gy = ekranda sol-yukarı.
 // Rota:  A (başlangıç sokağı, +gx) → köşe → B (ara sokak, +gy) → köşe → C (+gx) → KAVŞAK meydanı
 //   KISA YOL: D (-gy, aşağı-sağ) → köşe → E (+gx) → YIKINTI (gx 34) → ötesi derin sel (gx 36..49) → güvenli meydan görünür
-//   UZUN YOL: F (+gy) → köşe → G (+gx) → köşe → H (-gy) → köşe → I (+gx): AĞAÇ OLAYI + dal → köşe → J (-gy) → GÜVENLİ MEYDAN
+//   UZUN YOL: F (+gy) → köşe → G (+gx) → köşe → H (-gy) → köşe → I (+gx): AĞAÇ OLAYI + dal → köşe → J: dar RÜZGÂR KORİDORU (-gy) → KORUNAKLI AVLU
 const G = { gx0: -26, gx1: 80, gy0: -16, gy1: 44 };
 const inR = (gx, gy, x0, x1, y0, y1) => gx >= x0 && gx < x1 && gy >= y0 && gy < y1;
 
@@ -17,16 +17,16 @@ const R = {                     // yürünebilir dikdörtgenler [x0, x1, y0, y1)
   F: [25, 30, 19, 31],
   G: [30, 46, 26, 31],
   H: [41, 46, 13, 26],
-  I: [46, 60, 13, 18],
-  J: [55, 60, 4, 13],
-  PLAZA: [49, 65, -3, 4],
+  I: [46, 59, 13, 18],
+  J: [56, 59, -1, 13],          // rüzgâr koridoru: 3 hücre geniş, 14 hücre uzun
+  AVLU: [53, 63, -8, -1],       // korunaklı avlu (devam noktası)
 };
 const inRect = (gx, gy, k) => inR(gx, gy, ...R[k]);
 const WALK_KEYS = Object.keys(R);
 function corridorOf(gx, gy) { for (const k of WALK_KEYS) if (inRect(gx, gy, k)) return k; return null; }
 
 // Sel suyu bölgeleri
-const isCanal = (gx, gy) => gy >= -9 && gy < -3 && gx < 66;                       // sokağın önündeki kanal + meydanın önü
+const isCanal = (gx, gy) => gy >= -9 && gy < -3 && gx < 50;                       // sokağın önündeki kanal
 const isFlood = (gx, gy) => inR(gx, gy, 36, 49, -9, 7);                          // kısa yolun ötesi: derin akan sel
 function H(gx, gy) {
   if (isFlood(gx, gy)) return gx === 36 ? -24 : -40;
@@ -41,7 +41,7 @@ function SURF(gx, gy) {
   if (k === 'A') {
     return gy === 0 ? (((gx * 7 + gy) % 3) ? 'Road_A' : 'Road_B') : gy === 1 ? 'Road_Lane' : gy === 2 ? 'Road_Gutter' : gy === 3 ? 'Curb' : (((gx * 5) % 4) ? 'Sidewalk_A' : 'Sidewalk_B');
   }
-  if (k === 'FORK' || k === 'PLAZA') return ((gx + gy) & 1) ? 'PathA' : 'PathB';
+  if (k === 'FORK' || k === 'AVLU') return ((gx + gy) & 1) ? 'PathA' : 'PathB';
   if (k) return 'cobble';
   if (inR(gx, gy, RUBBLE_GX, 36, 2, 7)) return 'cobble~mud';                      // yıkıntının altı (çamurlu)
   if (isFlood(gx, gy) || isCanal(gx, gy)) return 'mud';
@@ -67,10 +67,12 @@ const LINES = [
   { id: 'Rail_E_Front', kind: 'rail', axis: 'x', at: 2, from: 25, to: 36 },
   { id: 'Wall_F_Left', kind: 'wall', axis: 'y', at: 25, from: 19, to: 31 },
   { id: 'Wall_H_Left', kind: 'wall', axis: 'y', at: 41, from: 13, to: 26 },
-  { id: 'Wall_I_Front', kind: 'wall', axis: 'x', at: 13, from: 46, to: 55 },
-  { id: 'Wall_J_Left', kind: 'wall', axis: 'y', at: 55, from: 4, to: 13 },
-  { id: 'Rail_Plaza_Left', kind: 'rail', axis: 'y', at: 49, from: -3, to: 4 },
-  { id: 'Rail_Plaza_Front', kind: 'rail', axis: 'x', at: -3, from: 49, to: 65 },
+  { id: 'Wall_I_Front', kind: 'wall', axis: 'x', at: 13, from: 46, to: 56 },
+  { id: 'Wall_J_Left', kind: 'wall', axis: 'y', at: 56, from: -1, to: 13 },
+  { id: 'HiWall_Avlu_Back', kind: 'hiwall', axis: 'x', at: -1, from: 53, to: 56 },
+  { id: 'HiWall_Avlu_Right', kind: 'hiwall', axis: 'y', at: 63, from: -8, to: -1 },
+  { id: 'Rail_Avlu_Front', kind: 'rail', axis: 'x', at: -8, from: 53, to: 63 },
+  { id: 'Rail_Avlu_Left', kind: 'rail', axis: 'y', at: 53, from: -8, to: -1 },
 ];
 
 module.exports = { G, H, WALK, VOID, SURF, FACE, WATER, WATER_LEVELS, LINES, RUBBLE_GX, BARRIER_GX: RUBBLE_GX, inR, R, corridorOf };

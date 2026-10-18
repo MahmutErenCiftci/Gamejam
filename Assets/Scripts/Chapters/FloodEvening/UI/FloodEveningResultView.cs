@@ -206,6 +206,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 {
                     int key = GameInput.ChoiceKeyPressed;
                     if (key == 1 || key == 2) chosen = key - 1;
+                    else if (GameInput.RetryPressed) chosen = 0;
                     else if (GameInput.LeftPressed) { focus = 0; Refresh(); }
                     else if (GameInput.RightPressed) { focus = 1; Refresh(); }
                     else if (GameInput.ConfirmPressed || GameInput.InteractPressed) chosen = focus;
