@@ -1,0 +1,340 @@
+fileFormatVersion: 2
+guid: 6a264814afd9f3c05931b31e5347d41e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3874916584254591191
+    second: FX_FE_Sway_Tree_Pine_Storm_0
+  - first:
+      213: 872376214010919382
+    second: FX_FE_Sway_Tree_Pine_Storm_1
+  - first:
+      213: 3973036264980481977
+    second: FX_FE_Sway_Tree_Pine_Storm_2
+  - first:
+      213: 1805636047238792716
+    second: FX_FE_Sway_Tree_Pine_Storm_3
+  - first:
+      213: 3334628659633011408
+    second: FX_FE_Sway_Tree_Pine_Storm_4
+  - first:
+      213: 3976578325893296226
+    second: FX_FE_Sway_Tree_Pine_Storm_5
+  - first:
+      213: 1878518219363754573
+    second: FX_FE_Sway_Tree_Pine_Storm_6
+  - first:
+      213: 62322789354990586
+    second: FX_FE_Sway_Tree_Pine_Storm_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.492958, y: 0.161765}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6dac8d4ac2443443f473e22a1ff4a9f
+      internalID: 3874916584254591191
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e158a9b37570455d81c003e96440cf65
+      internalID: 872376214010919382
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_2
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12bb4441bfb4b1d8005e783b7438a840
+      internalID: 3973036264980481977
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_3
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a3fa4ac6d8222410686c0c5529c3667
+      internalID: 1805636047238792716
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_4
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90303640cfcd0de17dc05a743953c460
+      internalID: 3334628659633011408
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_5
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef32258e426ebc6adeefaf45ed83a95
+      internalID: 3976578325893296226
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_6
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b358f92118ed2a1a45cef1a738f8613c
+      internalID: 1878518219363754573
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_FE_Sway_Tree_Pine_Storm_7
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 0
+        width: 68
+        height: 118
+      alignment: 9
+      pivot: {x: 0.5, y: 0.101695}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeb8d363aeaf32bfc829cb6d9539a638
+      internalID: 62322789354990586
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FX_FE_Sway_Tree_Pine_Storm_0: 3874916584254591191
+      FX_FE_Sway_Tree_Pine_Storm_1: 872376214010919382
+      FX_FE_Sway_Tree_Pine_Storm_2: 3973036264980481977
+      FX_FE_Sway_Tree_Pine_Storm_3: 1805636047238792716
+      FX_FE_Sway_Tree_Pine_Storm_4: 3334628659633011408
+      FX_FE_Sway_Tree_Pine_Storm_5: 3976578325893296226
+      FX_FE_Sway_Tree_Pine_Storm_6: 1878518219363754573
+      FX_FE_Sway_Tree_Pine_Storm_7: 62322789354990586
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

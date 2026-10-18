@@ -1,0 +1,89 @@
+{
+  "chapter_id": "earthquake_home",
+  "version": "1.0",
+  "scenes": [
+    {
+      "id": "EQH_WAKE",
+      "title": "Telefon Çalıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Telefonum mu çalıyor? Bu saatte kim ya?" }
+      ]
+    },
+    {
+      "id": "EQH_PHONE_AFTER",
+      "title": "Hazırlık Başlıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "İki dakika mı? Tamam, hemen evi kontrol edeyim." }
+      ]
+    },
+    {
+      "id": "EQH_MOTHER_CALL",
+      "title": "Annenin Seslenişi",
+      "lines": [
+        { "speaker": "Anne", "text": "Cenk! Bir bakar mısın?" }
+      ]
+    },
+    {
+      "id": "EQH_MOTHER_GREET",
+      "title": "Anneyle Karşılaşma",
+      "lines": [
+        { "speaker": "Anne", "text": "Günaydın canım! Gel, deprem planımıza bir bakalım." },
+        { "speaker": "Çocuk", "text": "Sabah sabah mı anne? Peki, tamam." }
+      ]
+    },
+    {
+      "id": "EQH_MOTHER_PLAN",
+      "title": "Toplanma Alanı Hatırlatması",
+      "lines": [
+        { "speaker": "Anne", "text": "Unutma: <color=#18A957>toplanma alanımız</color> parktaki tabelanın yanı. Ayrı düşersek orada buluşuruz." },
+        { "speaker": "Çocuk", "text": "Parktaki tabela. Tamam, unutmam." }
+      ]
+    },
+    {
+      "id": "EQH_READY",
+      "title": "Hazırlık Tamam",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Tamam, her şey hazır. Şimdi beklemek kaldı." }
+      ]
+    },
+    {
+      "id": "EQH_QUAKE",
+      "title": "Sarsıntı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Yer sallanıyor!</color>" }
+      ]
+    },
+    {
+      "id": "EQH_AFTER_MOTHER",
+      "title": "Sarsıntı Sonrası",
+      "lines": [
+        { "speaker": "Anne", "text": "Cenk! İyi misin?" },
+        { "speaker": "Çocuk", "text": "İyiyim... Çok korktum ama." }
+      ]
+    },
+    {
+      "id": "EQH_BAG",
+      "title": "Deprem Çantası",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Çanta sırtımda." }
+      ]
+    },
+    {
+      "id": "EQH_EXIT",
+      "title": "Binadan Çıkış",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Asansör yok, merdivenden ineriz." }
+      ]
+    },
+    {
+      "id": "EQH_ASSEMBLY",
+      "title": "Toplanma Alanı",
+      "lines": [
+        { "speaker": "Anne", "text": "Geldik. İkimiz de iyiyiz, en önemlisi bu." },
+        { "speaker": "Çocuk", "text": "Eve ne zaman dönebiliriz?" },
+        { "speaker": "Anne", "text": "Bina kontrol edilmeden <color=#E8392B>içeri girmeyiz</color>. Burada bekleyip duyuruları takip edeceğiz." },
+        { "speaker": "Çocuk", "text": "Tamam. Ama elimi bırakma, olur mu?" }
+      ]
+    }
+  ]
+}

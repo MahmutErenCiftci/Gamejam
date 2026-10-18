@@ -1,0 +1,35 @@
+{
+  "id": "flood_f05_rumors",
+  "prompt": "Hangi bilgiye güvenirsin?",
+  "fictionNotice": "",
+  "cards": [
+    {
+      "id": "rumor_road",
+      "official": false,
+      "sourceLabel": "Kaynak: bilinmiyor",
+      "text": "Telefonda mesaj geldi: İleride yol sel yüzünden kapanmış!",
+      "feedback": "Bu mesaj elden ele dolaşıyor; ilk kimin yazdığı belli değil. Kaynağı doğrulanmadan güvenme."
+    },
+    {
+      "id": "rumor_bridge",
+      "official": false,
+      "sourceLabel": "Kaynak: bilinmiyor",
+      "text": "Köprünün tamamen yıkıldığını duydum.",
+      "feedback": "Bu bir duyum. Doğrulanmamış bilgi paylaşılırsa insanları gereksiz paniğe ya da yanlış yöne sürükleyebilir."
+    },
+    {
+      "id": "official_road",
+      "official": true,
+      "sourceLabel": "Resmî yol duyurusu · Bugün 08:15",
+      "text": "Su birikmesi nedeniyle cadde trafiğe kapatılmıştır. Suyla kaplı alanlara girmeyin, görevlilerin yönlendirmesine uyun.",
+      "feedback": "Doğru. Kaynağı, tarihi ve saati belli olan resmî duyuruyu esas al; söylentiyi paylaşmadan önce doğrula."
+    },
+    {
+      "id": "rumor_dam",
+      "official": false,
+      "sourceLabel": "Kaynak: bilinmiyor",
+      "text": "Birileri baraj taşmış diyor.",
+      "feedback": "Kimin söylediği bilinmiyor. Mesajlar birbiriyle bile çelişiyor; resmî açıklamayı kontrol et."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "chapter": "flood",
+  "groups": [
+    { "id": "bedroom", "title": "SEL · YATAK ODASI", "banner": "", "activateOn": [{ "type": "room", "key": "Bedroom" }, { "type": "step", "key": "F01_WAKE" }] },
+    { "id": "bathroom", "title": "SEL · BANYO", "banner": "", "activateOn": [{ "type": "room", "key": "Bathroom" }, { "type": "step", "key": "F02_WASH" }] },
+    { "id": "kitchen", "title": "SEL · MUTFAK", "banner": "", "activateOn": [{ "type": "step", "key": "F03_NEWS" }] },
+    { "id": "street", "title": "SEL · SOKAK", "banner": "", "activateOn": [{ "type": "step", "key": "F05_EXIT" }] },
+    { "id": "bus", "title": "SEL · OTOBÜS", "banner": "", "activateOn": [{ "type": "step", "key": "F06_RUMORS" }] },
+    { "id": "route", "title": "SEL · OKUL YOLU", "banner": "", "activateOn": [{ "type": "step", "key": "F06_ARRIVE" }] }
+  ],
+  "objectives": [
+    { "id": "F_ALARM", "group": "bedroom", "text": "Alarmı kapat", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Clock" }] },
+    { "id": "F_BACKPACK", "group": "bedroom", "text": "Çantanı al", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Backpack" }, { "type": "point", "key": "F01_WAKE/Door" }] },
+    { "id": "F_BATHROOM", "group": "bedroom", "text": "Banyoya git", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Door" }, { "type": "point", "key": "F01_WAKE/Door" }] },
+    { "id": "F_WINDOW", "group": "bedroom", "text": "Pencereden bak", "kind": "Bonus",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Window" }] },
+    { "id": "F_UMBRELLA", "group": "bedroom", "text": "Şemsiyeni al", "kind": "Bonus",
+      "completeOn": [{ "type": "point", "key": "Bedroom/Umbrella" }] },
+
+    { "id": "F_WASH", "group": "bathroom", "text": "Yüzünü yıka", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bathroom/Sink" }, { "type": "point", "key": "F02_WASH/Sink" }] },
+    { "id": "F_KITCHEN", "group": "bathroom", "text": "Mutfağa git", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "Bathroom/KitchenDoor" }, { "type": "point", "key": "F02_WASH/Door" }] },
+
+    { "id": "F_MOTHER", "group": "kitchen", "text": "Anneni dinle", "kind": "Main",
+      "completeOn": [{ "type": "say", "key": "F03_MOTHER_CHAT" }] },
+    { "id": "F_NEWS", "group": "kitchen", "text": "Haberi izle", "kind": "Main",
+      "completeOn": [{ "type": "news", "key": "NEWS_F03_TV" }] },
+    { "id": "F_DECISION_1", "group": "kitchen", "text": "Doğru kararı ver", "kind": "Main",
+      "completeOn": [{ "type": "decision", "key": "F_D1" }] },
+    { "id": "F_COAT", "group": "kitchen", "text": "Yağmurluğunu giy", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "F04_MOTHER/Coat" }] },
+    { "id": "F_EXIT", "group": "kitchen", "text": "Dışarı çık", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "F04_MOTHER/ExitDoor" }] },
+
+    { "id": "F_BUS_STOP", "group": "street", "text": "Durağa yürü", "kind": "Main",
+      "completeOn": [{ "type": "step", "key": "F05_BUSSTOP" }] },
+    { "id": "F_KEEP_DRY", "group": "street", "text": "Sudan uzak dur", "kind": "Keep", "keepUntil": "route",
+      "completeOn": [{ "type": "event", "key": "F08_GATE" }],
+      "warnOn": [{ "type": "event", "key": "F05_PUDDLE_WARNING" }, { "type": "event", "key": "F05_DRAIN_WARNING" }, { "type": "event", "key": "F07_WATER_WARNING" }] },
+    { "id": "F_POSTER", "group": "street", "text": "Afişi oku", "kind": "Bonus",
+      "completeOn": [{ "type": "event", "key": "F05_POSTER" }] },
+    { "id": "F_BOARD", "group": "street", "text": "Otobüse bin", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "F05_BOARD" }] },
+
+    { "id": "F_DECISION_2", "group": "bus", "text": "Söylentiye değil resmî kaynağa güven", "kind": "Main",
+      "completeOn": [{ "type": "decision", "key": "F_D2" }] },
+
+    { "id": "F_GET_OFF", "group": "route", "text": "Otobüsten in", "kind": "Main",
+      "completeOn": [{ "type": "point", "key": "F06_ARRIVE/ExitDoor" }] },
+    { "id": "F_SIGN", "group": "route", "text": "Tabelayı incele", "kind": "Bonus",
+      "completeOn": [{ "type": "event", "key": "F07_SIGN" }] },
+    { "id": "F_BRIDGE", "group": "route", "text": "Köprüden güvenli geç", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "F08_GATE" }] },
+    { "id": "F_SCHOOL", "group": "route", "text": "Okula ulaş", "kind": "Main",
+      "completeOn": [{ "type": "say", "key": "F08_SAFEROUTE" }] }
+  ]
+}

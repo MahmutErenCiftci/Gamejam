@@ -1,0 +1,1692 @@
+fileFormatVersion: 2
+guid: 71ac06cf34772bc46a86c0a23cc3031f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8934948906825754254
+    second: CityLights3_0
+  - first:
+      213: 8588245953642174278
+    second: CityLights3_1
+  - first:
+      213: -5233560950281597919
+    second: CityLights3_2
+  - first:
+      213: 7123873280280250000
+    second: CityLights3_3
+  - first:
+      213: 4059951034257348652
+    second: CityLights3_4
+  - first:
+      213: 348602471615238518
+    second: CityLights3_5
+  - first:
+      213: -1896770568411160980
+    second: CityLights3_6
+  - first:
+      213: 3146310278485134689
+    second: CityLights3_7
+  - first:
+      213: 8750358706246370199
+    second: CityLights3_8
+  - first:
+      213: 7159983032674597734
+    second: CityLights3_9
+  - first:
+      213: -3597417580361321746
+    second: CityLights3_10
+  - first:
+      213: 5627109166374060521
+    second: CityLights3_11
+  - first:
+      213: -2928770063764199560
+    second: CityLights3_12
+  - first:
+      213: -4383347975857004608
+    second: CityLights3_13
+  - first:
+      213: 2906206855767522676
+    second: CityLights3_14
+  - first:
+      213: 78930810427929305
+    second: CityLights3_15
+  - first:
+      213: 8969417726287633325
+    second: CityLights3_16
+  - first:
+      213: 1616705262693410139
+    second: CityLights3_17
+  - first:
+      213: 3128688921077844536
+    second: CityLights3_18
+  - first:
+      213: -88723083671851419
+    second: CityLights3_19
+  - first:
+      213: -1762084207385850834
+    second: CityLights3_20
+  - first:
+      213: -305809186783343132
+    second: CityLights3_21
+  - first:
+      213: 1648568342589953953
+    second: CityLights3_22
+  - first:
+      213: 2888768921084819251
+    second: CityLights3_23
+  - first:
+      213: -7604529499363453142
+    second: CityLights3_24
+  - first:
+      213: -7817209217733898922
+    second: CityLights3_25
+  - first:
+      213: 7703676092875857870
+    second: CityLights3_26
+  - first:
+      213: -8885754708912648295
+    second: CityLights3_27
+  - first:
+      213: -670794312214254056
+    second: CityLights3_28
+  - first:
+      213: 6812386273716643822
+    second: CityLights3_29
+  - first:
+      213: 398355326637718897
+    second: CityLights3_30
+  - first:
+      213: -2145288578136017372
+    second: CityLights3_31
+  - first:
+      213: 6041180885254237050
+    second: CityLights3_32
+  - first:
+      213: 6095225601268791932
+    second: CityLights3_33
+  - first:
+      213: 5319937992553523015
+    second: CityLights3_34
+  - first:
+      213: -135332593215454884
+    second: CityLights3_35
+  - first:
+      213: -8104216286245467139
+    second: CityLights3_36
+  - first:
+      213: 4028020208251939670
+    second: CityLights3_37
+  - first:
+      213: -5984710521430072723
+    second: CityLights3_38
+  - first:
+      213: -5509908708621570262
+    second: CityLights3_39
+  - first:
+      213: 2801944363026135304
+    second: CityLights3_40
+  - first:
+      213: 7703677977046229741
+    second: CityLights3_41
+  - first:
+      213: 5311999889997834869
+    second: CityLights3_42
+  - first:
+      213: -3478763577682902779
+    second: CityLights3_43
+  - first:
+      213: 7954799006839241795
+    second: CityLights3_44
+  - first:
+      213: -5340722483855211287
+    second: CityLights3_45
+  - first:
+      213: -157796253721658128
+    second: CityLights3_46
+  - first:
+      213: 8309943659029148195
+    second: CityLights3_47
+  - first:
+      213: 4082379300248437506
+    second: CityLights3_48
+  - first:
+      213: -5370745324796060381
+    second: CityLights3_49
+  - first:
+      213: 5499967142027389018
+    second: CityLights3_50
+  - first:
+      213: 666781598533745174
+    second: CityLights3_51
+  - first:
+      213: -4217261382199362001
+    second: CityLights3_52
+  - first:
+      213: -5051321664327690576
+    second: CityLights3_53
+  - first:
+      213: -602765226442816410
+    second: CityLights3_54
+  - first:
+      213: 6093707499425934941
+    second: CityLights3_55
+  - first:
+      213: 6715450530903750009
+    second: CityLights3_56
+  - first:
+      213: -6526895978535499210
+    second: CityLights3_57
+  - first:
+      213: -8350205408209890803
+    second: CityLights3_58
+  - first:
+      213: 2754139181953490081
+    second: CityLights3_59
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CityLights3_0
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 532
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e862d9df0b05ffb70800000000000000
+      internalID: 8934948906825754254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_1
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 502
+        width: 98
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 647178e31349f2770800000000000000
+      internalID: 8588245953642174278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_2
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 521
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12c0c185b08ae57b0800000000000000
+      internalID: -5233560950281597919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_3
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 459
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 096400821051dd260800000000000000
+      internalID: 7123873280280250000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_4
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 457
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c28936284f7d75830800000000000000
+      internalID: 4059951034257348652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_5
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 470
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6711378d91c76d400800000000000000
+      internalID: 348602471615238518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_6
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 461
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6edf61b7315da5e0800000000000000
+      internalID: -1896770568411160980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_7
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 485
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d44464780f9ab20800000000000000
+      internalID: 3146310278485134689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_8
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 461
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793cf07c1e48f6970800000000000000
+      internalID: 8750358706246370199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_9
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 465
+        width: 96
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66bb46c02ae5d5360800000000000000
+      internalID: 7159983032674597734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_10
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 452
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee271d545c7631ec0800000000000000
+      internalID: -3597417580361321746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_11
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 437
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e1021e19f1871e40800000000000000
+      internalID: 5627109166374060521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_12
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 432
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8776980f42bea57d0800000000000000
+      internalID: -2928770063764199560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_13
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 429
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cf9d1c6d383b23c0800000000000000
+      internalID: -4383347975857004608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_14
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 428
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47df3d1dcbbe45820800000000000000
+      internalID: 2906206855767522676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_15
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 411
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d2f365672b681100800000000000000
+      internalID: 78930810427929305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_16
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 416
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab577966e5c97c70800000000000000
+      internalID: 8969417726287633325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_17
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 397
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b556859eed0bf6610800000000000000
+      internalID: 1616705262693410139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_18
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 396
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83a8b894ff55b6b20800000000000000
+      internalID: 3128688921077844536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_19
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 404
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56eac5253dac4cef0800000000000000
+      internalID: -88723083671851419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_20
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 392
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2cc072dfb1db87e0800000000000000
+      internalID: -1762084207385850834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_21
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 376
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ed4ab43a2c81cbf0800000000000000
+      internalID: -305809186783343132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_22
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 373
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a757005c24e0e610800000000000000
+      internalID: 1648568342589953953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_23
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 341
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 337f2734708f61820800000000000000
+      internalID: 2888768921084819251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_24
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 333
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a27567af5b8477690800000000000000
+      internalID: -7604529499363453142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_25
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 341
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65dcf0242a1b38390800000000000000
+      internalID: -7817209217733898922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_26
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 331
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecfd8843794f8ea60800000000000000
+      internalID: 7703676092875857870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_27
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 285
+        width: 117
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99fc106cb257fa480800000000000000
+      internalID: -8885754708912648295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_28
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 313
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81eed17802cd0b6f0800000000000000
+      internalID: -670794312214254056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_29
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 317
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee7a0ade8357a8e50800000000000000
+      internalID: 6812386273716643822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_30
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 305
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d30aa1f0e378500800000000000000
+      internalID: 398355326637718897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_31
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 301
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 426ff7787676a32e0800000000000000
+      internalID: -2145288578136017372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_32
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 289
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b6571f10696d350800000000000000
+      internalID: 6041180885254237050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_33
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 285
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7a3e75f367969450800000000000000
+      internalID: 6095225601268791932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_34
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 257
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 747e1410b6734d940800000000000000
+      internalID: 5319937992553523015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_35
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 241
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c514cd639b33f1ef0800000000000000
+      internalID: -135332593215454884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_36
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 245
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfb4763c93a088f80800000000000000
+      internalID: -8104216286245467139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_37
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 221
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65ba3fcb90766e730800000000000000
+      internalID: 4028020208251939670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_38
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 169
+        width: 29
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d622e963d7902fca0800000000000000
+      internalID: -5984710521430072723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_39
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 195
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2fa7c5e83fd883b0800000000000000
+      internalID: -5509908708621570262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_40
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 205
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 809b4968d8182e620800000000000000
+      internalID: 2801944363026135304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_41
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 209
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de227d5ed46f8ea60800000000000000
+      internalID: 7703677977046229741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_42
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 125
+        width: 35
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57a2c3a71c308b940800000000000000
+      internalID: 5311999889997834869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_43
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 185
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 501c4a615f2f8bfc0800000000000000
+      internalID: -3478763577682902779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_44
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 189
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34c7846ec8f156e60800000000000000
+      internalID: 7954799006839241795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_45
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 193
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e44ed18231f1e5b0800000000000000
+      internalID: -5340722483855211287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_46
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 41
+        width: 48
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fc780ea4256fcdf0800000000000000
+      internalID: -157796253721658128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_47
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 161
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32231fbdab9d25370800000000000000
+      internalID: 8309943659029148195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_48
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 169
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20347bd185687a830800000000000000
+      internalID: 4082379300248437506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_49
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 111
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32dd07025974775b0800000000000000
+      internalID: -5370745324796060381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_50
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 96
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58ecd0c9fec35c40800000000000000
+      internalID: 5499967142027389018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_51
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 42
+        width: 82
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61afe53c452e04900800000000000000
+      internalID: 666781598533745174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_52
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 53
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2eb80ded174975c0800000000000000
+      internalID: -4217261382199362001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_53
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 20
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6538795b916e9b0800000000000000
+      internalID: -5051321664327690576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_54
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 62
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6640bea583c82a7f0800000000000000
+      internalID: -602765226442816410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_55
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 60
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5eaa645fa2319450800000000000000
+      internalID: 6093707499425934941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_56
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 39
+        width: 105
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 975f9398da2123d50800000000000000
+      internalID: 6715450530903750009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_57
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 25
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63a477140becb65a0800000000000000
+      internalID: -6526895978535499210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_58
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 1
+        width: 73
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d029a1a2c6c1e1c80800000000000000
+      internalID: -8350205408209890803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CityLights3_59
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 9
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ac92527efaa83620800000000000000
+      internalID: 2754139181953490081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CityLights3_0: 8934948906825754254
+      CityLights3_1: 8588245953642174278
+      CityLights3_10: -3597417580361321746
+      CityLights3_11: 5627109166374060521
+      CityLights3_12: -2928770063764199560
+      CityLights3_13: -4383347975857004608
+      CityLights3_14: 2906206855767522676
+      CityLights3_15: 78930810427929305
+      CityLights3_16: 8969417726287633325
+      CityLights3_17: 1616705262693410139
+      CityLights3_18: 3128688921077844536
+      CityLights3_19: -88723083671851419
+      CityLights3_2: -5233560950281597919
+      CityLights3_20: -1762084207385850834
+      CityLights3_21: -305809186783343132
+      CityLights3_22: 1648568342589953953
+      CityLights3_23: 2888768921084819251
+      CityLights3_24: -7604529499363453142
+      CityLights3_25: -7817209217733898922
+      CityLights3_26: 7703676092875857870
+      CityLights3_27: -8885754708912648295
+      CityLights3_28: -670794312214254056
+      CityLights3_29: 6812386273716643822
+      CityLights3_3: 7123873280280250000
+      CityLights3_30: 398355326637718897
+      CityLights3_31: -2145288578136017372
+      CityLights3_32: 6041180885254237050
+      CityLights3_33: 6095225601268791932
+      CityLights3_34: 5319937992553523015
+      CityLights3_35: -135332593215454884
+      CityLights3_36: -8104216286245467139
+      CityLights3_37: 4028020208251939670
+      CityLights3_38: -5984710521430072723
+      CityLights3_39: -5509908708621570262
+      CityLights3_4: 4059951034257348652
+      CityLights3_40: 2801944363026135304
+      CityLights3_41: 7703677977046229741
+      CityLights3_42: 5311999889997834869
+      CityLights3_43: -3478763577682902779
+      CityLights3_44: 7954799006839241795
+      CityLights3_45: -5340722483855211287
+      CityLights3_46: -157796253721658128
+      CityLights3_47: 8309943659029148195
+      CityLights3_48: 4082379300248437506
+      CityLights3_49: -5370745324796060381
+      CityLights3_5: 348602471615238518
+      CityLights3_50: 5499967142027389018
+      CityLights3_51: 666781598533745174
+      CityLights3_52: -4217261382199362001
+      CityLights3_53: -5051321664327690576
+      CityLights3_54: -602765226442816410
+      CityLights3_55: 6093707499425934941
+      CityLights3_56: 6715450530903750009
+      CityLights3_57: -6526895978535499210
+      CityLights3_58: -8350205408209890803
+      CityLights3_59: 2754139181953490081
+      CityLights3_6: -1896770568411160980
+      CityLights3_7: 3146310278485134689
+      CityLights3_8: 8750358706246370199
+      CityLights3_9: 7159983032674597734
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

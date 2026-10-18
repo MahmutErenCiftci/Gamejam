@@ -1,0 +1,1328 @@
+fileFormatVersion: 2
+guid: 3691efe28b1854748be85d9bbae7f7d0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4836650814703926504
+    second: FX_Rain_Sheet_0
+  - first:
+      213: -2817440863683459135
+    second: FX_Rain_Sheet_1
+  - first:
+      213: 2672098540511249241
+    second: FX_Rain_Sheet_2
+  - first:
+      213: -7950787174992802915
+    second: FX_Rain_Sheet_3
+  - first:
+      213: -4058228617347403168
+    second: FX_Rain_Sheet_4
+  - first:
+      213: -6579481145621809712
+    second: FX_Rain_Sheet_5
+  - first:
+      213: -5931675535311519524
+    second: FX_Rain_Sheet_6
+  - first:
+      213: -3733097226096943406
+    second: FX_Rain_Sheet_7
+  - first:
+      213: 7854348299013644788
+    second: FX_Rain_Sheet_8
+  - first:
+      213: 1835834929283794242
+    second: FX_Rain_Sheet_9
+  - first:
+      213: 9152440366037562862
+    second: FX_Rain_Sheet_10
+  - first:
+      213: 5101067828212524495
+    second: FX_Rain_Sheet_11
+  - first:
+      213: 8336735118556208854
+    second: FX_Rain_Sheet_12
+  - first:
+      213: 5553560980150573688
+    second: FX_Rain_Sheet_13
+  - first:
+      213: 4156887330088166892
+    second: FX_Rain_Sheet_14
+  - first:
+      213: -3926782660493837184
+    second: FX_Rain_Sheet_15
+  - first:
+      213: 1408165181706066395
+    second: FX_Rain_Sheet_16
+  - first:
+      213: -8600222244024210512
+    second: FX_Rain_Sheet_17
+  - first:
+      213: 7128759103094291411
+    second: FX_Rain_Sheet_18
+  - first:
+      213: -3417262132544230001
+    second: FX_Rain_Sheet_19
+  - first:
+      213: 5768076183928046052
+    second: FX_Rain_Sheet_20
+  - first:
+      213: 7362554340727578000
+    second: FX_Rain_Sheet_21
+  - first:
+      213: 1037471385315360827
+    second: FX_Rain_Sheet_22
+  - first:
+      213: 5847647627608033136
+    second: FX_Rain_Sheet_23
+  - first:
+      213: -7590999689050062786
+    second: FX_Rain_Sheet_24
+  - first:
+      213: -4028176639669034404
+    second: FX_Rain_Sheet_25
+  - first:
+      213: 3571660152642195947
+    second: FX_Rain_Sheet_26
+  - first:
+      213: 5953942351209979888
+    second: FX_Rain_Sheet_27
+  - first:
+      213: -5492905496262868876
+    second: FX_Rain_Sheet_28
+  - first:
+      213: -4973570666214099215
+    second: FX_Rain_Sheet_29
+  - first:
+      213: -4813403198332138107
+    second: FX_Rain_Sheet_30
+  - first:
+      213: 5958176315358922900
+    second: FX_Rain_Sheet_31
+  - first:
+      213: 5281919522706580948
+    second: FX_Rain_Sheet_32
+  - first:
+      213: 2829752952398349114
+    second: FX_Rain_Sheet_33
+  - first:
+      213: 5691757590482667052
+    second: FX_Rain_Sheet_34
+  - first:
+      213: -2168633669186784221
+    second: FX_Rain_Sheet_35
+  - first:
+      213: 7478055494505572342
+    second: FX_Rain_Sheet_36
+  - first:
+      213: -9154113754037758207
+    second: FX_Rain_Sheet_37
+  - first:
+      213: 5081231348292798894
+    second: FX_Rain_Sheet_38
+  - first:
+      213: -1264813932395601700
+    second: FX_Rain_Sheet_39
+  - first:
+      213: 436620608140413273
+    second: FX_Rain_Sheet_40
+  - first:
+      213: 5266662103625999304
+    second: FX_Rain_Sheet_41
+  - first:
+      213: -5741692333076184926
+    second: FX_Rain_Sheet_42
+  - first:
+      213: 7381276981203799276
+    second: FX_Rain_Sheet_43
+  - first:
+      213: -848219775309234207
+    second: FX_Rain_Sheet_44
+  - first:
+      213: 573147181595823451
+    second: FX_Rain_Sheet_45
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0, y: 0}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 115
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81308fea5b3c0ecb0800000000000000
+      internalID: -4836650814703926504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 108
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c74a70467076e8d0800000000000000
+      internalID: -2817440863683459135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 86
+        width: 14
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95343081773351520800000000000000
+      internalID: 2672098540511249241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 119
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9b82dd703129a190800000000000000
+      internalID: -7950787174992802915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 116
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 062feade2964ea7c0800000000000000
+      internalID: -4058228617347403168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 108
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d5f4d4f1ccf0b4a0800000000000000
+      internalID: -6579481145621809712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 114
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0c1ea27847eada0800000000000000
+      internalID: -5931675535311519524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 111
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dede760adf513cc0800000000000000
+      internalID: -3733097226096943406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f1e6e0f920400d60800000000000000
+      internalID: 7854348299013644788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 90
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 245073a34223a7910800000000000000
+      internalID: 1835834929283794242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 78
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee57d9d6500040f70800000000000000
+      internalID: 9152440366037562862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 80
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc5e7c3c922aac640800000000000000
+      internalID: 5101067828212524495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 94
+        width: 10
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6de1110ab6802b370800000000000000
+      internalID: 8336735118556208854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 96
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87a58549946321d40800000000000000
+      internalID: 5553560980150573688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 95
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce52a39a00b30b930800000000000000
+      internalID: 4156887330088166892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 62
+        width: 15
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08cf91ba9f34189c0800000000000000
+      internalID: -3926782660493837184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 75
+        width: 18
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd9d9a0a5ceca8310800000000000000
+      internalID: 1408165181706066395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 75
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bb268b5f6fd5a880800000000000000
+      internalID: -8600222244024210512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 75
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3db744d62a07ee260800000000000000
+      internalID: 7128759103094291411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 70
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8dae4522327390d0800000000000000
+      internalID: -3417262132544230001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 65
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e10c6c8ab25c0050800000000000000
+      internalID: 5768076183928046052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 60
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09dd3961a2c0d2660800000000000000
+      internalID: 7362554340727578000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 45
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b30ca5a6ab6d56e00800000000000000
+      internalID: 1037471385315360827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 45
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0778b3ff884072150800000000000000
+      internalID: 5847647627608033136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 49
+        width: 10
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e30021c600a57a690800000000000000
+      internalID: -7590999689050062786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 57
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c52200c30ba0918c0800000000000000
+      internalID: -4028176639669034404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 29
+        width: 13
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be1d7a04cf5119130800000000000000
+      internalID: 3571660152642195947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 43
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ff5609e507a0a250800000000000000
+      internalID: 5953942351209979888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 54
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4700676cd8745c3b0800000000000000
+      internalID: -5492905496262868876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 49
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f6710784d35afab0800000000000000
+      internalID: -4973570666214099215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 53
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58d0faa2b4b533db0800000000000000
+      internalID: -4813403198332138107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 39
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4984d128ac1bfa250800000000000000
+      internalID: 5958176315358922900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 25
+        width: 10
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d5602332d52d4940800000000000000
+      internalID: 5281919522706580948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 43
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3301d9415d454720800000000000000
+      internalID: 2829752952398349114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 24
+        width: 13
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c264a505f5f2dfe40800000000000000
+      internalID: 5691757590482667052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 36
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3247b24fa2777e1e0800000000000000
+      internalID: -2168633669186784221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 14
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f7a9a01ad367c760800000000000000
+      internalID: 7478055494505572342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 0
+        width: 15
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 107df019a0e06f080800000000000000
+      internalID: -9154113754037758207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_38
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 23
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea942906df8248640800000000000000
+      internalID: 5081231348292798894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_39
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd068940e6a727ee0800000000000000
+      internalID: -1264813932395601700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_40
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 12
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95903d931203f0600800000000000000
+      internalID: 436620608140413273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_41
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 0
+        width: 16
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c3a3ae7741f61940800000000000000
+      internalID: 5266662103625999304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_42
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 4
+        width: 17
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0096d6e396150b0800000000000000
+      internalID: -5741692333076184926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_43
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cec8b658e409f6660800000000000000
+      internalID: 7381276981203799276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_44
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ef3b31cb948a34f0800000000000000
+      internalID: -848219775309234207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FX_Rain_Sheet_45
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 8
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5d0903335a34f700800000000000000
+      internalID: 573147181595823451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FX_Rain_Sheet_0: -4836650814703926504
+      FX_Rain_Sheet_1: -2817440863683459135
+      FX_Rain_Sheet_10: 9152440366037562862
+      FX_Rain_Sheet_11: 5101067828212524495
+      FX_Rain_Sheet_12: 8336735118556208854
+      FX_Rain_Sheet_13: 5553560980150573688
+      FX_Rain_Sheet_14: 4156887330088166892
+      FX_Rain_Sheet_15: -3926782660493837184
+      FX_Rain_Sheet_16: 1408165181706066395
+      FX_Rain_Sheet_17: -8600222244024210512
+      FX_Rain_Sheet_18: 7128759103094291411
+      FX_Rain_Sheet_19: -3417262132544230001
+      FX_Rain_Sheet_2: 2672098540511249241
+      FX_Rain_Sheet_20: 5768076183928046052
+      FX_Rain_Sheet_21: 7362554340727578000
+      FX_Rain_Sheet_22: 1037471385315360827
+      FX_Rain_Sheet_23: 5847647627608033136
+      FX_Rain_Sheet_24: -7590999689050062786
+      FX_Rain_Sheet_25: -4028176639669034404
+      FX_Rain_Sheet_26: 3571660152642195947
+      FX_Rain_Sheet_27: 5953942351209979888
+      FX_Rain_Sheet_28: -5492905496262868876
+      FX_Rain_Sheet_29: -4973570666214099215
+      FX_Rain_Sheet_3: -7950787174992802915
+      FX_Rain_Sheet_30: -4813403198332138107
+      FX_Rain_Sheet_31: 5958176315358922900
+      FX_Rain_Sheet_32: 5281919522706580948
+      FX_Rain_Sheet_33: 2829752952398349114
+      FX_Rain_Sheet_34: 5691757590482667052
+      FX_Rain_Sheet_35: -2168633669186784221
+      FX_Rain_Sheet_36: 7478055494505572342
+      FX_Rain_Sheet_37: -9154113754037758207
+      FX_Rain_Sheet_38: 5081231348292798894
+      FX_Rain_Sheet_39: -1264813932395601700
+      FX_Rain_Sheet_4: -4058228617347403168
+      FX_Rain_Sheet_40: 436620608140413273
+      FX_Rain_Sheet_41: 5266662103625999304
+      FX_Rain_Sheet_42: -5741692333076184926
+      FX_Rain_Sheet_43: 7381276981203799276
+      FX_Rain_Sheet_44: -848219775309234207
+      FX_Rain_Sheet_45: 573147181595823451
+      FX_Rain_Sheet_5: -6579481145621809712
+      FX_Rain_Sheet_6: -5931675535311519524
+      FX_Rain_Sheet_7: -3733097226096943406
+      FX_Rain_Sheet_8: 7854348299013644788
+      FX_Rain_Sheet_9: 1835834929283794242
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

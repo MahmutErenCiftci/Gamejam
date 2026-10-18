@@ -1,0 +1,262 @@
+{
+  "chapter_id": "flood_evening",
+  "version": "0.2",
+  "scenes": [
+    {
+      "id": "FE_TITLE",
+      "title": "Giriş Kartı",
+      "lines": [
+        { "speaker": "EVE DÖNÜŞ", "text": "Okul çıkışı, sağanak yağmur" }
+      ]
+    },
+    {
+      "id": "FE_INTRO",
+      "title": "Yağmur Bastırıyor",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Of, yağmur iyice bastırdı. Sokaklar göle döndü." },
+        { "speaker": "Çocuk", "text": "Telefonum titriyor. Bildirim gelmiş." }
+      ]
+    },
+    {
+      "id": "FE_AFTER_WARNING",
+      "title": "Uyarıdan Sonra",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Tamam, <color=#E8392B>suya ve kapalı yollara</color> girmek yok. Tabelaları takip edip eve gideyim." }
+      ]
+    },
+    {
+      "id": "FE_FORK",
+      "title": "Yol Ayrımı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Kısa yol, uzun yol... Kısa yolun arkası köşeden görünmüyor ki." },
+        { "speaker": "Çocuk", "text": "Uzun yola da güvenli güzergâh yazmışlar." }
+      ]
+    },
+    {
+      "id": "FE_SHORT_CLOSED",
+      "title": "Kısa Yol Kapalı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Kapalıymış. Geri dönüp öbür yoldan gideyim." }
+      ]
+    },
+    {
+      "id": "FE_OBJECTIVE",
+      "title": "Görev",
+      "lines": [
+        { "speaker": "Görev", "text": "Güvenli güzergâhı takip et." }
+      ]
+    },
+    {
+      "id": "FE_BARRIER_STOP",
+      "title": "Kapalı Yol",
+      "lines": [
+        { "speaker": "Uyarı", "text": "<color=#E8392B>Bu yol kapalı.</color> Suyun derinliğini ve akıntısını bilemezsin. Güvenli rotaya dön." },
+        { "speaker": "Çocuk", "text": "Yok, buradan geçilmez. Geri dönüyorum." }
+      ]
+    },
+    {
+      "id": "FE_RUMOR_INTRO",
+      "title": "Söylenti",
+      "lines": [
+        { "speaker": "Komşu", "text": "Mahalle grubuna bir mesaj düştü: \"Kestirme açıkmış, herkes oradan gidiyor.\"" },
+        { "speaker": "Çocuk", "text": "Kim yazmış bunu?" },
+        { "speaker": "Komşu", "text": "Bilmem, biri iletmiş. Kaynak yok." },
+        { "speaker": "Çocuk", "text": "O zaman önce <color=#3CCFC4>resmî duyuruya</color> bir bakalım." }
+      ]
+    },
+    {
+      "id": "FE_RUMOR_CHECKED",
+      "title": "Kaynak Kontrolü",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Bakın, alçak yol kapatılmış! Kestirme falan açık değil." },
+        { "speaker": "Komşu", "text": "İyi ki baktın. Ben de bunu kimseye iletmeyeyim." },
+        { "speaker": "Çocuk", "text": "Ben yukarıdaki yoldan gidiyorum." }
+      ]
+    },
+    {
+      "id": "FE_BRANCH_SEEN",
+      "title": "Düşen Dal",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Koca bir dal yolu kapatmış. Üstünden atlamayayım." },
+        { "speaker": "Çocuk", "text": "Yanda bir geçit var, oradan geçerim." }
+      ]
+    },
+    {
+      "id": "FE_TREE_FELL",
+      "title": "Ağaç Düştü",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Ağaç yola devrildi! Az kalsın altında kalıyordum." },
+        { "speaker": "Çocuk", "text": "Yolu tamamen kapattı. İtip çekerek kenara kaydırabilirim." }
+      ]
+    },
+    {
+      "id": "FE_PATH_OPEN",
+      "title": "Yol Açıldı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yol açıldı." }
+      ]
+    },
+    {
+      "id": "FE_BRANCH_DONE",
+      "title": "Alternatif Geçit",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Tamamdır, geçit açık." }
+      ]
+    },
+    {
+      "id": "FE_GATE_HINT",
+      "title": "Bahçe Kapısı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Bu kapı yukarı çıkıyor. Kolu çevireyim." }
+      ]
+    },
+    {
+      "id": "FE_GATE_OPEN",
+      "title": "Kapı Açıldı",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Açıldı!" }
+      ]
+    },
+    {
+      "id": "FE_CODE_HINT",
+      "title": "Şifreli Giriş",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Şifreli kapı... İpuçları buralarda bir yerde olmalı." }
+      ]
+    },
+    {
+      "id": "FE_CODE_WRONG",
+      "title": "Yanlış Şifre",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Olmadı. Levhalara bir daha bakayım." }
+      ]
+    },
+    {
+      "id": "FE_CODE_OPEN",
+      "title": "Şifre Doğru",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Buldum! Açıldı." }
+      ]
+    },
+    {
+      "id": "FE_FINAL",
+      "title": "Son Aşama",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yağmur iyice arttı. Eve az kaldı." },
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Kablolara ve yüzen eşyalara</color> yaklaşmayayım." }
+      ]
+    },
+    {
+      "id": "FE_WATER_CUT",
+      "title": "Yol Suyla Kesildi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yol <color=#E8392B>suyla kesilmiş</color>. Suya girmem, burada beklerim." }
+      ]
+    },
+    {
+      "id": "FE_SAFE",
+      "title": "Güvenli Bölge",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Apartmana geldim! Hemen içeri gireyim." }
+      ]
+    },
+    {
+      "id": "FE_TIMEOUT",
+      "title": "Süre Doldu",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Yollar suyla kapandı. Yüksek bir yerde kalıp yardım bekleyeceğim." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_SUCCESS",
+      "title": "Sonuç: Başarı",
+      "lines": [
+        { "speaker": "Sonuç", "text": "Eve ulaştın!" }
+      ]
+    },
+    {
+      "id": "FE_RESULT_TIMEOUT",
+      "title": "Sonuç: Süre Doldu",
+      "lines": [
+        { "speaker": "Sonuç", "text": "Süre doldu. Yollar suyla kesildi; yüksek ve kuru bir yerde kalıp yardım bekle." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_STEPS",
+      "title": "Sonuç: Doğru Kararlar (speaker = Hub adım id'si)",
+      "lines": [
+        { "speaker": "warning_read", "text": "Sel uyarısını okudun." },
+        { "speaker": "rumor_checked", "text": "Söylentiye inanmadan resmî duyuruya baktın." },
+        { "speaker": "branch_cleared", "text": "Küçük dalı kenara itip yan geçidi açtın." },
+        { "speaker": "gate_opened", "text": "Bahçe kapısını açtın." },
+        { "speaker": "code_opened", "text": "İpuçlarından şifreyi buldun." },
+        { "speaker": "safe_zone", "text": "Suya girmeden apartmanına ulaştın." },
+        { "speaker": "high_road", "text": "Kuru, işaretli yolu seçtin." }
+      ]
+    },
+    {
+      "id": "FE_RESULT_MISTAKES",
+      "title": "Sonuç: Düzeltilen Yanlışlar (speaker = Hub hata id'si)",
+      "lines": [
+        { "speaker": "short_road_tried", "text": "Kısa yolu denedin, kapalıydı. Bariyeri aşmadan geri döndün." },
+        { "speaker": "low_road", "text": "Kapalı alçak yola yöneldin ama bariyerde durup geri döndün." },
+        { "speaker": "rumor_trusted", "text": "Önce söylentiye güvendin, resmî duyuruyu görünce vazgeçtin." },
+        { "speaker": "wrong_code", "text": "Şifreyi önce yanlış girdin, sonra doğrusunu buldun." },
+        { "speaker": "power_shock", "text": "Kablonun değdiği suya yaklaştın. Elektrikli sudan uzak dur." }
+      ]
+    }
+  ],
+  "decisions": [],
+  "result": {
+    "title_success": "Eve ulaştın!",
+    "title_with_mistakes": "Eve ulaştın! Birkaç hatayı da düzelttin.",
+    "title_timeout": "Süre doldu. Yollar suyla kesildi.",
+    "learned": [
+      "Suyla kaplı yola girme.",
+      "Kapatılmış yolları kullanma.",
+      "Sarkan kabloya ve yakınındaki suya yaklaşma.",
+      "Söylentiye değil, resmî duyuruya güven.",
+      "Eve çabuk varmak için risk alma."
+    ],
+    "note": ""
+  },
+  "ui": [
+    { "id": "objective_route", "text": "Güvenli güzergâhı takip et." },
+    { "id": "branch_mash_action", "text": "Art arda bas: engeli kenara it" },
+    { "id": "branch_mash_hint", "text": "[E] Art arda bas: engeli kenara it" },
+    { "id": "card_note", "text": "" },
+    { "id": "gauge_title", "text": "SU SEVİYESİ" },
+    { "id": "gauge_note", "text": "Çevredeki su\nSuya hiç girme!" },
+    { "id": "stage_1", "text": "Yağmur başladı" },
+    { "id": "stage_2", "text": "Yağmur artıyor" },
+    { "id": "stage_3", "text": "Su yükseliyor" },
+    { "id": "stage_4", "text": "Tehlike artıyor" },
+    { "id": "toast_stage2_title", "text": "YAĞIŞ ARTIYOR" },
+    { "id": "toast_stage2_body", "text": "Yağmur şiddetlendi. Tabelaları takip et." },
+    { "id": "toast_stage3_title", "text": "SU YÜKSELİYOR" },
+    { "id": "toast_stage3_body", "text": "Alçak yerler su doluyor. Suya girme, kuru yoldan ilerle." },
+    { "id": "toast_stage4_title", "text": "DİKKATLİ OL" },
+    { "id": "toast_stage4_body", "text": "Kuru yoldan ayrılma. Eve az kaldı." },
+    { "id": "toast_final_title", "text": "SON AŞAMA" },
+    { "id": "toast_final_body", "text": "Apartmanına ulaş." },
+    { "id": "toast_safe_title", "text": "APARTMAN" },
+    { "id": "toast_safe_body", "text": "Apartmanına ulaştın. Şimdi içeri gir." },
+    { "id": "toast_timeout_title", "text": "SÜRE DOLDU" },
+    { "id": "toast_timeout_body", "text": "Kuru bir yerde kal, yardım bekle." },
+    { "id": "toast_say_title", "text": "DİKKAT" },
+    { "id": "warning_fallback_title", "text": "SEL UYARISI" },
+    { "id": "warning_fallback_body", "text": "Su baskını riski var. Suyla kaplı ve kapalı yollara girmeyin, işaretli güvenli yolu izleyin." },
+    { "id": "result_header", "text": "SEL FARKINDALIK RAPORU" },
+    { "id": "result_timeout_title", "text": "Süre doldu." },
+    { "id": "result_success_message", "text": "Suya girmeden eve vardın." },
+    { "id": "result_correct_header", "text": "Doğru kararların" },
+    { "id": "result_corrected_header", "text": "Düzeltilen yanlışlar" },
+    { "id": "result_lessons_header", "text": "Unutma" },
+    { "id": "result_no_correct", "text": "Henüz doğru karar kaydı yok." },
+    { "id": "result_stayed_dry", "text": "Süre dolunca suya girmedin, kuru ve güvenli yerde kaldın." },
+    { "id": "result_retry", "text": "Sel Bölümünü Tekrar Dene" },
+    { "id": "result_menu", "text": "Menüye Dön" },
+    { "id": "end_title", "text": "EVE ULAŞTIN!" },
+    { "id": "end_subtitle", "text": "EŞİK · SEL BÖLÜMÜ TAMAMLANDI" }
+  ]
+}

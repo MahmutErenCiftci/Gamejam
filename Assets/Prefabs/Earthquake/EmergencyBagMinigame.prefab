@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6893443144825243492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7741107031320410329}
+  - component: {fileID: 4537159847112317002}
+  - component: {fileID: 1503312601713755114}
+  m_Layer: 0
+  m_Name: EmergencyBagMinigame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7741107031320410329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6893443144825243492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4537159847112317002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6893443144825243492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05b6015b6eff2b344874e3041cc93f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.EmergencyBagMinigameController
+  items:
+  - {fileID: 11400000, guid: 8376f914b687f9148a1a9afed6ec0640, type: 2}
+  - {fileID: 11400000, guid: e88eadbeacf64e34a9c1d754ab331bc1, type: 2}
+  - {fileID: 11400000, guid: 82ac9dc9dd751d94682c16d670a9c48e, type: 2}
+  - {fileID: 11400000, guid: 9dd59bf3ba303e745a77db535cfb8e5a, type: 2}
+  - {fileID: 11400000, guid: 689ae6a6398830145a01f9d438faa5b0, type: 2}
+  - {fileID: 11400000, guid: 6694637c2b7ec96489680802c122c374, type: 2}
+  - {fileID: 11400000, guid: de5b0c0d34a6e974a86ba7e81173c999, type: 2}
+  - {fileID: 11400000, guid: fdb03ce314174644c880747c7c0fd7b9, type: 2}
+  - {fileID: 11400000, guid: c39209b99dfa8d141a3163f08e8f60de, type: 2}
+  - {fileID: 11400000, guid: 990bc53c5d50b754481a7240e4edf4aa, type: 2}
+  - {fileID: 11400000, guid: a210bfec6e88a7a45b934dd35714965f, type: 2}
+  - {fileID: 11400000, guid: d358bfa48d3141543bc6c02f9390813d, type: 2}
+  slotCount: 9
+  frontPocket: 1
+  skin: {fileID: 0}
+  sortingOrder: 84
+  artScale: 2
+  bagBody: {fileID: 21300000, guid: f06bdbccb34dc63449137b15f58fe402, type: 3}
+  bagLid: {fileID: 21300000, guid: d109df9fe6b9f59478c92df343ad7b57, type: 3}
+  bagGlow: {fileID: 21300000, guid: 5774c5bc8dd689844bfdcb99550a6818, type: 3}
+  zipHandle: {fileID: 21300000, guid: b8f773e58aff3d54981c04b2f4c2c59c, type: 3}
+  slotSprite: {fileID: 21300000, guid: dc01dc4f7c5f2094e8cdb48dbe05546c, type: 3}
+  slotFrame: {fileID: 21300000, guid: 90f3a1d038398b54095a8c840b097713, type: 3}
+  tableSprite: {fileID: 21300000, guid: 06faaa5d4087f274884becc02d7f091e, type: 3}
+  cardFrame: {fileID: 21300000, guid: d8ca7fb55bd23d246a1fdf1b73ab8af4, type: 3}
+  itemShadow: {fileID: 21300000, guid: 9e75a6d76a573b842b67b22a5468f788, type: 3}
+  sparkle: {fileID: 21300000, guid: 4748e460ce243694786a410f7ff1877a, type: 3}
+  arrow: {fileID: 21300000, guid: 1535c3d8badfa2c44bba894668fba928, type: 3}
+  cenkPortrait: {fileID: 21300000, guid: 96e6f322fd3100f49923e308dc6037b1, type: 3}
+  zoomFactor: 2
+  zoomSeconds: 0.5
+  returnSeconds: 0.45
+  dimAlpha: 0.62
+  focusOffset: {x: -0.6, y: 0.2}
+  interactClip: {fileID: 8300000, guid: b312417b688241f44813554ad13169e7, type: 3}
+  zipOpenClip: {fileID: 8300000, guid: e9354c5e166230c43b4ad1bb986a20d6, type: 3}
+  pickupClip: {fileID: 8300000, guid: 5be7dffb5a75b6a449fec73e8a78fe8b, type: 3}
+  dropClip: {fileID: 8300000, guid: aa82fac3dbd5412409f9121d743aa96a, type: 3}
+  correctClip: {fileID: 8300000, guid: 1987bff36b3128241aa28b10c26289b9, type: 3}
+  warningClip: {fileID: 8300000, guid: 3cdcf4347aa2675468a2f27128a93f01, type: 3}
+  removeClip: {fileID: 8300000, guid: e1cf3bf9cf6986b4bb194e85b726743c, type: 3}
+  zipTickClip: {fileID: 8300000, guid: e1766c4665ba85e4194cecff9e28b3c5, type: 3}
+  zipCloseClip: {fileID: 8300000, guid: 77dc6844d61ad5a47a224545974bbd4c, type: 3}
+  successClip: {fileID: 8300000, guid: 3610c993c1df860428b056ca6e30cb68, type: 3}
+  volume: 0.8
+  title: "AFET \xC7ANTASI"
+  instruction: "Gerekli e\u015Fyalar\u0131 \xE7antaya s\xFCr\xFCkle."
+  speakerName: CENK
+  introLine: "Afet \xE7antas\u0131nda neler olmal\u0131? Gerekli e\u015Fyalar\u0131 se\xE7meliyim."
+  idleHint: "E\u015Fyay\u0131 fareyle tut, \xE7antan\u0131n i\xE7ine b\u0131rak."
+  fullWarning: "\xC7anta doldu! \xD6ncelikli ihtiya\xE7lar\u0131n\u0131 kontrol et."
+  unnecessaryDefault: "Bu e\u015Fya gerekli malzemeler i\xE7in yer b\u0131rakmayabilir."
+  comfortDefault: "Moral verir ama \xF6nceli\u011Fi d\xFC\u015F\xFCk. \xD6nce temel ihtiya\xE7lar!"
+  closePrompt: "\xC7antay\u0131 kapat."
+  zipHint: "Fermuar\u0131 tut ve sonuna kadar sa\u011Fa s\xFCr\xFCkle."
+  successTitle: "Afet \xE7antas\u0131 haz\u0131r!"
+  successBody: "Temel ihtiya\xE7lar\u0131n\u0131 haz\u0131rlad\u0131n."
+  successBadge: HAZIRLIK TAMAMLANDI
+  removeLabel: "\xC7\u0131kar"
+  escLabel: "\xC7\u0131k"
+  packedLabel: "\xC7ANTADAK\u0130LER"
+  zipBlockedText: "\xD6nce fermuar\u0131 biraz a\xE7."
+  logSteps: 1
+--- !u!82 &1503312601713755114
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6893443144825243492}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

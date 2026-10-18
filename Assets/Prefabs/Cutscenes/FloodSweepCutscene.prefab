@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1088701191346949500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1501799834930822438}
+  - component: {fileID: 7331702035367046529}
+  m_Layer: 0
+  m_Name: FloodSweepCutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1501799834930822438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088701191346949500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7331702035367046529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088701191346949500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e573df2ea1a3140b00fde1b916c5ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Cutscenes.FloodSweepCutscene
+  walkFrames:
+  - {fileID: 4819774088411126463, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  - {fileID: -6303428276604875671, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  - {fileID: -6713720332328808647, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  - {fileID: 2246855754502993498, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  - {fileID: 3399406354871696169, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  - {fileID: 954948591974042357, guid: 4941d61ad5d04964c82c0db9f737455a, type: 3}
+  startledSouthEast: {fileID: 21300000, guid: 87a692bc802bfe448aee52071285c31c, type: 3}
+  startledSouthWest: {fileID: 21300000, guid: 8c27632a3b16f684fa41a976fbac8ec6, type: 3}
+  roadTiles:
+  - {fileID: 21300000, guid: d33816e8bd5b04a47bb54bbd8c0a3813, type: 3}
+  - {fileID: 21300000, guid: 20fcaf81b412140429b6bd85b667642c, type: 3}
+  laneTile: {fileID: 21300000, guid: 3440668f2e601f046887379828792a99, type: 3}
+  sidewalkTiles:
+  - {fileID: 21300000, guid: 26bde8bc796401c4d8fdfbd1eecb5440, type: 3}
+  - {fileID: 21300000, guid: 4f51eec01692b2a45ac1341860f4cfad, type: 3}
+  curbTile: {fileID: 21300000, guid: a4e47df15fb19ee4fbd3571cd7864efc, type: 3}
+  facades:
+  - {fileID: 21300000, guid: 84bb507336a6d2045bf68d93252d692c, type: 3}
+  - {fileID: 21300000, guid: 482093e66b3503a43b17af87bdfa90e5, type: 3}
+  - {fileID: 21300000, guid: b89ba737e30efe043965638f76be79a8, type: 3}
+  lampSprite: {fileID: 21300000, guid: 6e4eb650c933fd24c8c479dfd8472795, type: 3}
+  treeSprite: {fileID: 21300000, guid: ec2de12bc8c6d414591a4d76affa4be3, type: 3}
+  skySprite: {fileID: -4056897018739133756, guid: 2cc1fa4455732664ca8b5cca8bb9eca7, type: 3}
+  rainDropSprites:
+  - {fileID: 21300000, guid: a5653409667688749986b0b78cf5d3ee, type: 3}
+  - {fileID: 21300000, guid: 661db20fce41b264cb0540d4b81a440e, type: 3}
+  - {fileID: 21300000, guid: e1daf77060bcd5f489ba6739727b82eb, type: 3}
+  rainSplashSprite: {fileID: 21300000, guid: 8f1ac13ad5e637e42858efa61c72aea5, type: 3}
+  rainRippleSprite: {fileID: 21300000, guid: c7cb329b60cf2a143be7636d5dd307a9, type: 3}
+  spriteMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  cameraDepth: 50
+  backgroundColor: {r: 0.14901961, g: 0.16470589, b: 0.21176471, a: 1}
+  walkEnd: 1.4
+  enterEnd: 2.2
+  struggleEnd: 3.1
+  fallEnd: 3.55
+  sweptEnd: 6.4
+  fadeStart: 6.5
+  endTime: 7.2
+  sweptCutPx: 40
+  flowSpeed: 2.4
+  playOnStart: 0
+  loop: 0

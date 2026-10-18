@@ -1,0 +1,1894 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using AfetUyanisi.Chapters.Rooms;
+using AfetUyanisi.Chapters.TempUI;
+using AfetUyanisi.Core;
+using AfetUyanisi.Shared;
+using UnityEngine;
+
+namespace AfetUyanisi.Chapters.Earthquake
+{
+    /// <summary>
+    /// DEPREM MODU — 60 sn farkındalık simülasyonu, EarthquakeHome sahnesinin baştan sona akışı (EQ_SPEC A–E):
+    ///  A. Siyahtan açılış, Cenk uyuyor → telefon titrer/çalar → kısa kararma, Cenk yatağın yanında uyanır → kamera telefona
+    ///     kayar → telefon bildirimi [BAŞLA] → 60 sn sayaç.
+    ///  B. Serbest keşif: E ile TEK SEFERLİK inceleme (kart açıkken sayaç durur; incelenen nesnenin E ipucu kalkar),
+    ///     tehlike bölgeleri (ayna: uyarı + bir kerelik ceza). Afet çantası mini oyunu başarıyla bitince çanta kendiliğinden
+    ///     Cenk'in sırtına geçer (WearBag). Başlangıç odasının (yatak odası) kapısı startRoomRequiredTasks bitene kadar kilitli
+    ///     ("Önce odadaki hazırlıklarını tamamlamalısın."). Anne tek sorusunu (Q1) KENDİLİĞİNDEN ve bir kez sorar: hazırlığın ilk
+    ///     motherMinSeconds sn'sinde değil, mini oyun/kart/diyalog açıkken değil; bir görev bittikten birkaç sn sonra (ya da sayaç
+    ///     q1At'e inince), en geç oyuncu odadan çıkmaya kalkınca. Annede E ile konuşma yok. Q2/Q3 süreli soruları
+    ///     timedFollowUpQuestions ile açılır (varsayılan kapalı). Görevler bitti → "[Space] Simülasyonu hızlandır" (kalan süre 5 sn).
+    ///  C. Sayaç 0 → SARSINTI: kamera/eşya/toz/ışık, Çök–Kapan–Tutun (masaya yakınsa masa altında, değilse yerinde),
+    ///     tehlike bölgesindeyse maruziyet.
+    ///  D. Sonrası: ortam değişir, anne "İyi misin?" → Q4, cam kırıkları uyarısı (ceza yok, kayıt), çanta (hazırlanmadıysa ders kartı),
+    ///     daire kapısı → koridor (asansör = yanlış karar kaydı, merdiven) → toplanma alanı.
+    ///  E. AFET FARKINDALIK RAPORU → Tekrar Dene / Menüye Dön.
+    /// Oda geçişleri: kapı Interactable'ı (EarthquakeDoor) → sayaç durur → kararma → spawn + kamera noktası → açılma.
+    /// Görünümler yalnızca *ViewBase sözleşmeleriyle kullanılır; bağlı değilse Console'a yazılır ve akış kendiliğinden devam eder.
+    /// debugAutoPlay: bütün akışı seçilen senaryoyla (debugScenario) kendisi oynar; her adım Console'a "[EQ] t=.." diye yazılır.
+    /// </summary>
+    public class EarthquakeModeController : MonoBehaviour
+    {
+        /// <summary>Otomatik test senaryoları.</summary>
+        public enum DebugScenario { AllCorrect, AllWrong, Timeouts, MirrorPenalty, NoProtection }
+
+        [Header("Veri")]
+        [Tooltip("Assets/Data/Earthquake/earthquake_mode.json (boşsa gömülü varsayılan metinler)")]
+        [SerializeField] private TextAsset modeJson;
+        [Tooltip("DialogueRunnerAdapter (DialogueRunner storyJson = Assets/Data/Story/earthquake_home.json)")]
+        [SerializeField] private DialogueRunnerBase dialogue;
+        [Tooltip("İsteğe bağlı: diyalog oynatıcısı yokken balon satırları buradan Console'a yazılır (earthquake_home.json)")]
+        [SerializeField] private TextAsset storyJson;
+
+        [Header("Oyuncu")]
+        [Tooltip("Cenk (IsoPlayerController + IsoCharacterAnimator). Boşsa sahnede bulunur.")]
+        [SerializeField] private IsoPlayerController player;
+        [Tooltip("İrkilme pozu (uyanınca ve sarsıntı başında, isteğe bağlı)")]
+        [SerializeField] private Sprite startledPose;
+        [SerializeField] private float startledSeconds = 0.5f;
+
+        [Header("Yatak ve uyanış")]
+        [Tooltip("Yatağın SpriteRenderer'ı (uyuyan Cenk'li ↔ boş)")]
+        [SerializeField] private SpriteRenderer bedRenderer;
+        [SerializeField] private Sprite bedSleeping;
+        [SerializeField] private Sprite bedEmpty;
+        [Tooltip("İsteğe bağlı: yatakta uyuyan Cenk ayrı bir obje ise (uyanınca gizlenir)")]
+        [SerializeField] private GameObject sleepingKid;
+        [Tooltip("Uyanınca Cenk'in belireceği nokta (boşsa yatak odasının 'WakeSpawn' çocuğu, o da yoksa spawn)")]
+        [SerializeField] private Transform wakeSpawn;
+        [SerializeField] private Vector2 wakeFacing = new Vector2(0f, -1f);
+
+        [Header("Odalar")]
+        [Tooltip("Boşsa sahnedeki bütün EarthquakeRoom'lar")]
+        [SerializeField] private EarthquakeRoom[] rooms = Array.Empty<EarthquakeRoom>();
+
+        [Header("Sistem bileşenleri (boşsa sahnede aranır, yoksa bu objeye eklenir)")]
+        [SerializeField] private EmergencyCountdownManager countdown;
+        [SerializeField] private TimePenaltySystem penalties;
+        [SerializeField] private TimedDecisionController decisions;
+        [SerializeField] private PhoneAlertController phone;
+        [SerializeField] private EarthquakeEventController quakeEvents;
+        [SerializeField] private ProtectionMinigameController protection;
+        [SerializeField] private EarthquakeResultManager results;
+
+        [Header("Görünümler (UI agent'ı; boşsa sahnede aranır, yoksa Console)")]
+        [SerializeField] private CountdownViewBase countdownView;
+        [SerializeField] private PhoneAlertViewBase phoneView;
+        [SerializeField] private InfoCardViewBase cardView;
+        [SerializeField] private TimedQuestionViewBase questionView;
+        [SerializeField] private ProtectionViewBase protectionView;
+        [SerializeField] private ResultReportViewBase reportView;
+
+        [Header("Ekip parçaları")]
+        [Tooltip("Boşsa TempInteractionHint oluşturulur")]
+        [SerializeField] private InteractionHintBase hint;
+        [Tooltip("Boşsa TempScreenFader oluşturulur")]
+        [SerializeField] private ScreenFaderBase fader;
+        [Tooltip("Boşsa bu objeye eklenir")]
+        [SerializeField] private RoomInteractor interactor;
+
+        [Header("Özel noktalar (boşsa adla bulunur: Mother, QuakeBag, Elevator, Phone)")]
+        [SerializeField] private Interactable mother;
+        [Tooltip("Toplanma alanındaki anne (boşsa salondaki anne, toplanma alanının 'MotherSpot' noktasına taşınır)")]
+        [SerializeField] private GameObject assemblyMother;
+        [SerializeField] private InspectableObject quakeBag;
+        [Tooltip("Çanta alınınca gizlenecek görsel (boşsa çantanın SpriteRenderer'ları)")]
+        [SerializeField] private GameObject quakeBagVisual;
+        [SerializeField] private Interactable elevator;
+        [SerializeField] private Transform phoneProp;
+
+        [Header("Akış ayarları")]
+        [SerializeField] private float fadeInSeconds = 1.5f;
+        [Tooltip("Sakin oda süresi (telefon çalmadan önce)")]
+        [SerializeField] private float calmSeconds = 1f;
+        [Tooltip("Uyanmadan önce telefonun çalma süresi")]
+        [SerializeField] private float ringSeconds = 2f;
+        [SerializeField] private float wakeFadeSeconds = 0.25f;
+        [SerializeField] private float transitionFadeSeconds = 0.3f;
+        [Tooltip("Anne sorusu yedeği: oyuncu hiçbir görevi bitirmese de sayaç bu değere inince anne kendiliğinden sorar")]
+        [SerializeField] private float q1At = 45f;
+        [SerializeField] private float q2At = 32f;
+        [SerializeField] private float q3At = 17f;
+        [Tooltip("İki soru arasında oyuncunun serbestçe dolaştığı en az süre (sayacın gerçekten aktığı sn). " +
+                 "Ceza sayacı bir sonraki sorunun eşiğinin altına atlatsa bile sorular art arda açılmaz; " +
+                 "sayaç bu arada biterse bekleyen hazırlık sorusu düşer (ceza ve puan kaybı yok).")]
+        [SerializeField] private float minQuestionGap = 8f;
+        [Tooltip("Hazırlık tamam ipucu için gereken en az inceleme")]
+        [SerializeField] private int minInspectedForReady = 4;
+        [Tooltip("Hızlandırınca kalan süre (sn)")]
+        [SerializeField] private float accelerateTo = 5f;
+        [Tooltip("Hazırlık tamam ipucunun tekrar gösterilme aralığı (sn)")]
+        [SerializeField] private float readyHintRepeat = 15f;
+        [Tooltip("Sarsıntının en kısa süresi (sn)")]
+        [SerializeField] private float minShakeSeconds = 4f;
+        [Tooltip("Sarsıntı bitince tozun çökme süresi (sn)")]
+        [SerializeField] private float settleSeconds = 1.2f;
+        [Tooltip("Görünüm yokken kartın ekranda kalma süresi (sn)")]
+        [SerializeField] private float fallbackCardSeconds = 2f;
+        [Tooltip("Toast süresi (sn)")]
+        [SerializeField] private float toastSeconds = 3.5f;
+
+        [Header("Başlangıç odası kapısı")]
+        [Tooltip("Başlangıç odasından (yatak odası) çıkmadan önce bitmesi gereken görevler (PreparationQuestManager id'leri; " +
+                 "listede olmayan id yok sayılır). Sayaç bitince (sarsıntı) kapı her durumda açılır.")]
+        [SerializeField] private string[] startRoomRequiredTasks = { "emergency_bag", "secure_bookshelf", "check_windows", "safe_spot" };
+        [SerializeField] private string startRoomLockedTitle = "ODADAN ÇIKMADAN ÖNCE";
+        [SerializeField] private string startRoomLockedText = "Önce odadaki hazırlıklarını tamamlamalısın.";
+        [Tooltip("Kilitli kapıya yaklaşınca çıkan uyarının en kısa tekrar aralığı (sn)")]
+        [SerializeField] private float lockedToastCooldown = 4f;
+
+        [Header("Annenin otomatik sorusu (tek sefer)")]
+        [Tooltip("Annenin hazırlıkta kendiliğinden sorduğu soru (earthquake_mode.json questions[].id)")]
+        [SerializeField] private string motherQuestionId = "Q1";
+        [Tooltip("Hazırlık başladıktan sonra anne en erken kaç sn sonra sorabilir")]
+        [SerializeField] private float motherMinSeconds = 5f;
+        [Tooltip("Bir görev bittikten sonra anne sormadan önce oyuncunun serbest dolaştığı süre (sn)")]
+        [SerializeField] private float motherAfterTaskDelay = 2.5f;
+        [Tooltip("Sorudan sonra annenin toplanma alanını hatırlattığı balon (earthquake_home.json)")]
+        [SerializeField] private string motherPlanLine = "EQH_MOTHER_PLAN";
+        [Tooltip("Eski süreli sorular Q2 (sayaç q2At) ve Q3 (q3At). Kapalıyken anne hazırlıkta yalnızca bir soru sorar.")]
+        [SerializeField] private bool timedFollowUpQuestions;
+
+        [Header("Afet çantası sırta")]
+        [Tooltip("Çantayı sırta takarken kısa eğilme pozu (boşsa korunmanın çökme pozu)")]
+        [SerializeField] private Sprite bagWearPose;
+        [Tooltip("Çantanın sırta kayma süresi (sn)")]
+        [SerializeField] private float bagWearSeconds = 0.35f;
+
+        [Header("Anne: sarsıntıda Çök–Kapan–Tutun")]
+        [Tooltip("Annenin korunma pozu kareleri (güneye bakar; 2 kare = sarsıntıda hafif titreme). Boşsa anne ayakta kalır.")]
+        [SerializeField] private Sprite[] motherCoverPoses;
+        [Tooltip("Sarsıntı sürerken titreme karelerinin değişme aralığı (sn)")]
+        [SerializeField] private float motherCoverFrameSeconds = 0.12f;
+        [Tooltip("Annenin yanında sağlam masa varsa (bu mesafe içinde) masanın yanına geçer: masanın saklanma noktası + motherCoverOffset. Cenk masanın altına girer, anne yanında; pencere/vitrinden uzak taraf.")]
+        [SerializeField] private float motherTableRadius = 1.5f;
+        [SerializeField] private Vector2 motherCoverOffset = new Vector2(0.5f, -0.3f);
+
+        [Header("Balon replikleri (earthquake_home.json)")]
+        [SerializeField] private string wakeLine = "EQH_WAKE";
+        [SerializeField] private string phoneAfterLine = "EQH_PHONE_AFTER";
+        [SerializeField] private string motherCallLine = "EQH_MOTHER_CALL";
+        [SerializeField] private string readyLine = "EQH_READY";
+        [SerializeField] private string quakeLine = "EQH_QUAKE";
+        [SerializeField] private string afterMotherLine = "EQH_AFTER_MOTHER";
+        [SerializeField] private string bagLine = "EQH_BAG";
+        [SerializeField] private string exitLine = "EQH_EXIT";
+        [SerializeField] private string assemblyLine = "EQH_ASSEMBLY";
+
+        [Header("Toplanma alanı")]
+        [Tooltip("Toplanma alanına varınca oyuncu serbest yürür; annesine bu kadar yaklaşınca son konuşma başlar (0 = yürümeden hemen konuşma)")]
+        [SerializeField] private float assemblyMeetRadius = 1.1f;
+        [Tooltip("Oyuncu annesinin yanına gitmezse konuşma en çok bu kadar sn sonra kendiliğinden başlar")]
+        [SerializeField] private float assemblyMeetTimeout = 30f;
+        [Tooltip("İlk bilgi kartından sonra, oyuncu hâlâ yürüyorsa gösterilen ipucu")]
+        [SerializeField] private string assemblyMeetHint = "Annen tabelanın yanında seni bekliyor. Yanına git.";
+
+        [Header("Hata ayıklama / otomatik test")]
+        [Tooltip("İşaretliyse bütün akışı kendisi oynar (tuş gerekmez), adımlar Console'a yazılır")]
+        [SerializeField] private bool debugAutoPlay;
+        [SerializeField] private DebugScenario debugScenario = DebugScenario.AllCorrect;
+        [Tooltip("Otomatik oyunda engelleyen görünümler (kart, telefon, rapor, diyalog) de açılsın (girdiyi test aracı verir)")]
+        [SerializeField] private bool autoPlayUseViews;
+        [Tooltip("Otomatik oyunda Time.timeScale (ör. 3 = üç kat hızlı)")]
+        [SerializeField, Range(0.5f, 8f)] private float debugTimeScale = 1f;
+        [Tooltip("Otomatik oyun bitince rapordaki seçimi uygulasın mı (Tekrar Dene sahneyi yeniden yükler)")]
+        [SerializeField] private bool autoNavigateAtEnd;
+
+        // --- Çalışma durumu ---
+        private EarthquakeModeData data;
+        private readonly EarthquakeStats stats = new EarthquakeStats();
+        private EarthquakePhase phase = EarthquakePhase.Intro;
+        private EarthquakeRoom currentRoom;
+        private readonly List<InspectableObject> inspectables = new List<InspectableObject>();
+        private readonly List<EarthquakeDoor> doors = new List<EarthquakeDoor>();
+        private readonly List<HazardZone> zones = new List<HazardZone>();
+        private readonly Dictionary<Interactable, Func<IEnumerator>> fallbackDoors = new Dictionary<Interactable, Func<IEnumerator>>();
+        private readonly HashSet<string> askedQuestions = new HashSet<string>();
+        private readonly HashSet<Interactable> specialPoints = new HashSet<Interactable>();
+        private readonly object interactorToken = new object();
+        private readonly object eventToken = new object();
+        private readonly object transitionToken = new object();
+        private bool interactorPaused;
+        private bool freeRoam;
+        private bool transitioning;
+        private bool readyShown;
+        private float lastReadyToast = -999f;
+        private bool bagReminderShown;
+        private bool reachedAssembly;
+        private Interactable apartmentDoorPoint;
+        private EarthquakeDoor apartmentDoor;
+        private float previousTimeScale = 1f;
+        private bool timeScaleChanged;
+        private float freeSinceQuestion = 999f;
+        private string pendingQuestionLogged;
+        private EmergencyBagInteractable emergencyBag;
+        private PreparationQuestManager quests;
+        private EarthquakeRoom startRoom;
+        private readonly HashSet<Interactable> startExitPoints = new HashSet<Interactable>();
+        private bool motherAsked;
+        private bool motherProgress;      // hazırlıkta en az bir görev bitti / çanta sırta takıldı
+        private float motherFreeTime;     // son görevden (ya da engelden) beri kesintisiz serbest dolaşma süresi
+        private float prepStartedAt = -1f;
+        private bool bagWearing;
+        private Interactable lockPromptPoint;
+        private Coroutine motherCoverRoutine;
+        private bool motherShaking;
+        private Sprite motherStandSprite;
+        private float nextLockedToastAt;
+
+        // --- Testler için okunur durum ---
+        public EarthquakePhase Phase => phase;
+        public EarthquakeRoom CurrentRoom => currentRoom;
+        public EarthquakeStats Stats => stats;
+        public EarthquakeReport LastReport { get; private set; }
+        public bool IsFinished { get; private set; }
+        public EarthquakeModeData Data => data;
+        public bool AutoPlay => debugAutoPlay;
+        public DebugScenario Scenario => debugScenario;
+        /// <summary>Anne hazırlıktaki tek sorusunu sordu mu (test).</summary>
+        public bool MotherAsked => motherAsked;
+        /// <summary>Başlangıç odası kapısı hâlâ kilitli mi (eksik görev var ve sarsıntı olmadı).</summary>
+        public bool StartRoomLocked => (phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep) && !countdown.HasExpired
+                                       && MissingStartRoomTasks().Count > 0;
+
+        // --- YÖNLENDİRME (EarthquakeGuidance) için okunur durum: ok/kontur yalnızca serbest dolaşmada görünür ---
+        /// <summary>Serbest dolaşma var ve hiçbir engel yok (mini oyun, kart, diyalog, soru, oda geçişi, çanta takma).</summary>
+        public bool GuidanceFree => freeRoam && !transitioning && !bagWearing && interactor != null && !interactor.IsBusy
+                                    && !interactor.IsSaying && !decisions.IsAsking && !Mode.EarthquakeMinigameHub.AnyOpen;
+        public bool PrepTimeOver => countdown == null || countdown.HasExpired;
+        public RoomInteractor Interactor => interactor;
+        public PreparationQuestManager Quests => quests;
+        public EmergencyBagInteractable EmergencyBag => emergencyBag;
+        public IReadOnlyList<EarthquakeDoor> Doors => doors;
+        public bool ReachedAssembly => reachedAssembly;
+        public EarthquakeRoom RoomOfId(EarthquakeRoom.RoomId id) => RoomOf(id);
+        /// <summary>Toplanma alanında oyuncunun yürüyeceği anne (WaitAssemblyMeet ile aynı seçim).</summary>
+        public Transform AssemblyMeetTarget
+        {
+            get
+            {
+                if (assemblyMother != null) return assemblyMother.transform;
+                if (mother != null && mother.gameObject.activeInHierarchy) return mother.transform;
+                var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+                return assembly != null ? assembly.FindChild("MotherSpot") : null;
+            }
+        }
+        // --- YÖNLENDİRME sonu ---
+
+        private bool Bypass => debugAutoPlay && !autoPlayUseViews;
+
+        // =====================================================================
+        // Kurulum
+        // =====================================================================
+
+        private void Awake()
+        {
+            if (!GameSession.CurrentChapter.HasValue || GameSession.CurrentChapter.Value != ChapterId.Earthquake)
+                GameSession.StartChapter(ChapterId.Earthquake);
+
+            data = EarthquakeModeData.Load(modeJson);
+
+            if (player == null) player = FindAnyObjectByType<IsoPlayerController>(FindObjectsInactive.Include);
+            if (rooms == null || rooms.Length == 0)
+                rooms = FindObjectsByType<EarthquakeRoom>(FindObjectsInactive.Include);
+
+            ResolveComponents();
+            ResolveViews();
+            quests = FindAnyObjectByType<PreparationQuestManager>(FindObjectsInactive.Include);
+            if (quests != null) quests.TaskCompleted += OnQuestCompleted;
+            startRoom = RoomOf(EarthquakeRoom.RoomId.Bedroom) ?? (rooms.Length > 0 ? rooms[0] : null);
+            ConfigureQuestions();
+
+            if (hint == null) hint = new GameObject("TempInteractionHint").AddComponent<TempInteractionHint>();
+            if (fader == null) fader = new GameObject("TempScreenFader").AddComponent<TempScreenFader>();
+            if (interactor == null) interactor = gameObject.AddComponent<RoomInteractor>();
+            interactor.Configure(player, dialogue, hint, storyJson);
+            interactor.AutoAdvance = Bypass;
+            interactor.InteractionEnabled = false;
+            interactor.Used += OnPointUsed;
+            if (player != null) player.CanMove = false;
+
+            ResolveSpecialPoints();
+            SetupPoints();
+            SetupZones();
+
+            if (protection != null)
+            {
+                protection.Player = player;
+                protection.Texts = data.protection;
+            }
+            if (phone != null)
+            {
+                if (phone.PhoneProp == null && phoneProp != null) phone.PhoneProp = phoneProp;
+                phone.Hint = hint;
+            }
+            ApplyAutoPlaySettings();
+            // YÖNLENDİRME: ok + kontur + ŞİMDİ satırı + kontrol ipucu (sahnede yoksa bu objeye eklenir)
+            if (FindAnyObjectByType<EarthquakeGuidance>(FindObjectsInactive.Include) == null) gameObject.AddComponent<EarthquakeGuidance>();
+        }
+
+        private void Start()
+        {
+            Log($"deprem modu açıldı (veri {data.version}, {inspectables.Count} inceleme, {stats.hazardsTotal} tehlike, " +
+                $"{doors.Count} kapı, {zones.Count} bölge, {rooms.Length} oda, otomatik: {(debugAutoPlay ? debugScenario.ToString() : "kapalı")})");
+            StartCoroutine(Run());
+        }
+
+        private void OnDestroy()
+        {
+            if (interactor != null) interactor.Used -= OnPointUsed;
+            if (quests != null) quests.TaskCompleted -= OnQuestCompleted;
+            if (timeScaleChanged) Time.timeScale = previousTimeScale;
+        }
+
+        /// <summary>
+        /// Hazırlık soruları: anne yalnızca motherQuestionId'yi kendiliğinden sorar. timedFollowUpQuestions kapalıysa Q2/Q3
+        /// baştan "düşmüş" sayılır (sorulmaz, puandan düşmez) ve görev listesindeki anne görevi tek soruya iner.
+        /// </summary>
+        private void ConfigureQuestions()
+        {
+            if (timedFollowUpQuestions) return;
+            foreach (var id in new[] { "Q2", "Q3" })
+            {
+                if (id == motherQuestionId || data.FindQuestion(id) == null) continue;
+                askedQuestions.Add(id);
+                stats.droppedQuestions.Add(id);
+            }
+            if (quests != null) quests.RestrictQuestions(new[] { motherQuestionId });
+        }
+
+        private void OnQuestCompleted(string id)
+        {
+            motherProgress = true;
+            motherFreeTime = 0f;
+        }
+
+        private void ResolveComponents()
+        {
+            countdown = Resolve(countdown);
+            penalties = Resolve(penalties);
+            decisions = Resolve(decisions);
+            phone = Resolve(phone);
+            quakeEvents = Resolve(quakeEvents);
+            protection = Resolve(protection);
+            results = Resolve(results);
+
+            penalties.Countdown = penalties.Countdown != null ? penalties.Countdown : countdown;
+            if (decisions.Countdown == null) decisions.Countdown = countdown;
+            if (decisions.Penalties == null) decisions.Penalties = penalties;
+        }
+
+        private T Resolve<T>(T current) where T : Component
+        {
+            if (current != null) return current;
+            var found = FindAnyObjectByType<T>(FindObjectsInactive.Include);
+            return found != null ? found : gameObject.AddComponent<T>();
+        }
+
+        private void ResolveViews()
+        {
+            if (countdownView == null) countdownView = FindAnyObjectByType<CountdownViewBase>(FindObjectsInactive.Include);
+            if (phoneView == null) phoneView = FindAnyObjectByType<PhoneAlertViewBase>(FindObjectsInactive.Include);
+            if (cardView == null) cardView = FindAnyObjectByType<InfoCardViewBase>(FindObjectsInactive.Include);
+            if (questionView == null) questionView = FindAnyObjectByType<TimedQuestionViewBase>(FindObjectsInactive.Include);
+            if (protectionView == null) protectionView = FindAnyObjectByType<ProtectionViewBase>(FindObjectsInactive.Include);
+            if (reportView == null) reportView = FindAnyObjectByType<ResultReportViewBase>(FindObjectsInactive.Include);
+
+            if (countdown.View == null) countdown.View = countdownView;
+            if (decisions.View == null) decisions.View = questionView;
+            if (phone.View == null) phone.View = phoneView;
+            if (protection.View == null) protection.View = protectionView;
+            if (results.View == null) results.View = reportView;
+
+            Log($"görünümler: sayaç {Has(countdown.View)}, telefon {Has(phone.View)}, kart {Has(cardView)}, soru {Has(decisions.View)}, " +
+                $"korunma {Has(protection.View)}, rapor {Has(results.View)}");
+        }
+
+        private static string Has(UnityEngine.Object o) => o != null ? "var" : "YOK(Console)";
+
+        private void ResolveSpecialPoints()
+        {
+            if (mother == null) mother = FindNamed<Interactable>("Mother");
+            if (quakeBag == null) quakeBag = FindNamed<InspectableObject>("QuakeBag");
+            if (elevator == null) elevator = FindNamed<Interactable>("Elevator");
+            if (phoneProp == null)
+            {
+                var p = FindNamed<Transform>("Phone");
+                if (p != null) phoneProp = p;
+            }
+            if (wakeSpawn == null)
+            {
+                var bed = RoomOf(EarthquakeRoom.RoomId.Bedroom);
+                if (bed != null) wakeSpawn = bed.FindChild("WakeSpawn");
+            }
+        }
+
+        /// <summary>Sahnede (kapalılar dahil) adı tam eşleşen ilk bileşen.</summary>
+        private T FindNamed<T>(string objectName) where T : Component
+        {
+            foreach (var root in gameObject.scene.GetRootGameObjects())
+                foreach (var c in root.GetComponentsInChildren<T>(true))
+                    if (c.gameObject.name == objectName) return c;
+            return null;
+        }
+
+        private void SetupPoints()
+        {
+            var registered = new HashSet<Interactable>();
+
+            // Kapılar
+            doors.AddRange(FindObjectsByType<EarthquakeDoor>(FindObjectsInactive.Include));
+            foreach (var door in doors)
+            {
+                var d = door;
+                if (d.Point == null) continue;
+                d.Point.Setup(d.Kind == EarthquakeDoor.DoorKind.ApartmentExit ? d.LockedLabel : d.Label, "", false, false);
+                interactor.Register(d.Point, before: () => UseDoor(d));
+                registered.Add(d.Point);
+                if (d.Kind == EarthquakeDoor.DoorKind.ApartmentExit) { apartmentDoor = d; apartmentDoorPoint = d.Point; }
+                if (d.Kind == EarthquakeDoor.DoorKind.Room && startRoom != null && startRoom.Owns(d)) startExitPoints.Add(d.Point);
+            }
+            // Bileşensiz kapılar için ad yedeği
+            RegisterFallbackDoor("BedroomDoor", EarthquakeDoor.DoorKind.Room, EarthquakeRoom.RoomId.Living, "Salona geç", registered);
+            RegisterFallbackDoor("LivingDoor", EarthquakeDoor.DoorKind.Room, EarthquakeRoom.RoomId.Bedroom, "Odana dön", registered);
+            RegisterFallbackDoor("ApartmentDoor", EarthquakeDoor.DoorKind.ApartmentExit, EarthquakeRoom.RoomId.Stairwell, "Kapıya bak", registered);
+            RegisterFallbackDoor("Stairs", EarthquakeDoor.DoorKind.StairsDown, EarthquakeRoom.RoomId.Assembly, "Merdivenden in", registered);
+
+            // Anne: E ile konuşma yok (soruyu kendiliğinden sorar, bkz. MotherDue/MotherEvent)
+            if (mother != null && !registered.Contains(mother))
+            {
+                mother.SetAvailable(false);
+                registered.Add(mother);
+            }
+            // Asansör
+            if (elevator != null && !registered.Contains(elevator))
+            {
+                elevator.Setup("Asansöre bin", "", false, false);
+                interactor.Register(elevator, before: UseElevator);
+                registered.Add(elevator);
+            }
+
+            // Kapı/anne/asansör noktaları otomatik turda "inceleme" sayılmasın
+            foreach (var p in registered) specialPoints.Add(p);
+
+            // İncelenebilirler (çanta dahil; kapı/anne/asansör olanlar yalnızca veri alır)
+            foreach (var insp in FindObjectsByType<InspectableObject>(FindObjectsInactive.Include))
+            {
+                insp.ApplyData(data.FindInspectable(insp.Id));
+                if (insp.Point == null) continue;
+                // Kaldırılan incelemeler (telefon, gardırop, buzdolabı, TV, vitrin, salon penceresi): eşya dekor kalır, E yok.
+                if (Array.IndexOf(PreparationQuestManager.RetiredInspectionIds, insp.Id) >= 0)
+                {
+                    insp.Point.SetAvailable(false);
+                    registered.Add(insp.Point);
+                    Log($"'{insp.Id}' incelemesi kaldırıldı (dekor)");
+                    continue;
+                }
+                inspectables.Add(insp);
+                if (registered.Contains(insp.Point)) continue;
+                var i = insp;
+                if (i.Id == "stove")
+                {
+                    var stove = i.GetComponent<StoveFireController>();
+                    if (stove == null) stove = i.gameObject.AddComponent<StoveFireController>();
+                    if (stove.Configure(i, this, FindAnyObjectByType<PreparationQuestManager>(), countdown, () =>
+                    {
+                        i.MarkInspected(); stats.AddInspected(i.Id, i.IsHazard);
+                        if (!countdown.HasExpired) Toast("OCAK KAPATILDI", "Plaka hâlâ sıcak olabilir. Dokunma.", 2f);
+                    })) interactor.Register(i.Point, before: stove.Use);
+                    else
+                    {
+                        Debug.LogError("[EQ] Ocak görseli veya görev bağlantısı bulunamadı.", i);
+                        i.Point.SetAvailable(false);
+                    }
+                }
+                else if (i == quakeBag)
+                {
+                    i.Point.Setup("Deprem çantasına bak", "", false, false);
+                    interactor.Register(i.Point, before: UseBag);
+                }
+                else
+                {
+                    i.Point.Setup(i.ActionLabel, "", false, false);
+                    interactor.Register(i.Point, before: () => Inspect(i));
+                }
+                registered.Add(i.Point);
+                if (!i.HasData) Log($"uyarı: '{i.Id}' için JSON inspectables kaydı yok, yedek metin kullanılıyor");
+            }
+            // Afet çantası (mini oyun): hazırlıkta sayaç DURMADAN mini oyun açılır; sarsıntıdan sonra çanta alınır.
+            foreach (var bag in FindObjectsByType<EmergencyBagInteractable>(FindObjectsInactive.Include))
+            {
+                if (bag.Point == null || registered.Contains(bag.Point)) continue;
+                var b = bag;
+                if (emergencyBag == null) emergencyBag = b;
+                b.ApplyLabel(EarthquakePhase.Prep);
+                interactor.Register(b.Point, before: () => UseEmergencyBag(b));
+                registered.Add(b.Point);
+                specialPoints.Add(b.Point);
+                stats.emergencyBagMinigame = true;
+            }
+            stats.hazardsTotal = inspectables.FindAll(x => x.IsHazard).Count;
+            stats.questionsTotal = data.questions != null ? data.questions.Length : 4;
+
+            // Bağlanmamış (diyalogsuz) noktalar ölü ipucu göstermesin
+            foreach (var p in FindObjectsByType<Interactable>(FindObjectsInactive.Include))
+            {
+                if (registered.Contains(p) || !string.IsNullOrEmpty(p.DialogueId)) continue;
+                p.SetAvailable(false);
+                Log($"'{p.name}' noktası deprem modunda kullanılmıyor (kapatıldı)");
+            }
+        }
+
+        private void RegisterFallbackDoor(string objectName, EarthquakeDoor.DoorKind kind, EarthquakeRoom.RoomId target, string label,
+            HashSet<Interactable> registered)
+        {
+            var point = FindNamed<Interactable>(objectName);
+            if (point == null || registered.Contains(point)) return;
+            var room = RoomOf(target);
+            if (room == null) return;
+            point.Setup(label, "", false, false);
+            Func<IEnumerator> use = () => UseDoorKind(kind, room, room.DefaultSpawn, room.DefaultFacing, point);
+            fallbackDoors[point] = use;
+            interactor.Register(point, before: use);
+            registered.Add(point);
+            if (kind == EarthquakeDoor.DoorKind.ApartmentExit) apartmentDoorPoint = point;
+            if (kind == EarthquakeDoor.DoorKind.Room && startRoom != null && startRoom.Owns(point)) startExitPoints.Add(point);
+            Log($"kapı yedeği: '{objectName}' → {target} (EarthquakeDoor bileşeni yok)");
+        }
+
+        private void SetupZones()
+        {
+            zones.AddRange(FindObjectsByType<HazardZone>(FindObjectsInactive.Include));
+            foreach (var z in zones)
+            {
+                z.Bind(player, penalties, countdown, cardView, () => phase, IsBlocked, data.FindWarning(z.WarningId));
+                z.Penalized += OnZonePenalized;
+                z.Entered += OnZoneEntered;
+            }
+        }
+
+        private void ApplyAutoPlaySettings()
+        {
+            decisions.BypassBlockingViews = Bypass;
+            phone.BypassBlockingViews = Bypass;
+            results.BypassBlockingViews = Bypass;
+            if (!debugAutoPlay) return;
+
+            decisions.AutoChooser = q =>
+            {
+                switch (debugScenario)
+                {
+                    case DebugScenario.AllWrong: return q.FirstWrongIndex;
+                    case DebugScenario.Timeouts: return -1;
+                    default: return q.CorrectIndex;
+                }
+            };
+            decisions.AutoAnswerDelay = 1f;
+            switch (debugScenario)
+            {
+                case DebugScenario.AllWrong: protection.Auto = ProtectionMinigameController.AutoInput.RespondWithRelease; break;
+                case DebugScenario.NoProtection: protection.Auto = ProtectionMinigameController.AutoInput.NoInput; break;
+                default: protection.Auto = ProtectionMinigameController.AutoInput.Respond; break;
+            }
+            if (!Mathf.Approximately(debugTimeScale, 1f))
+            {
+                previousTimeScale = Time.timeScale;
+                Time.timeScale = debugTimeScale;
+                timeScaleChanged = true;
+            }
+        }
+
+        // =====================================================================
+        // Akış
+        // =====================================================================
+
+        private IEnumerator Run()
+        {
+            yield return IntroPhase();
+            yield return PrepPhase();
+            yield return QuakePhase();
+            // Kitaplık üstüne devrildiyse sarsıntı sonrası adımlar atlanır: bölüm "YARALANDIN" raporuyla biter.
+            if (stats.hitByBookshelf)
+            {
+                countdown.SetStatusText(null);
+                countdown.SetVisible(false);
+            }
+            else yield return AfterPhase();
+            yield return ReportPhase();
+        }
+
+        // ---------------- A. Uyanış + telefon ----------------
+        private IEnumerator IntroPhase()
+        {
+            phase = EarthquakePhase.Intro;
+            Log("A: siyah ekran, Cenk uyuyor (07:00)");
+            fader.SetOpaque(true);
+            SetFreeRoam(false);
+            SetPlayerVisible(false);
+            SetBedSleeping(true);
+            countdown.SetVisible(false);
+            var bedroom = RoomOf(EarthquakeRoom.RoomId.Bedroom) ?? (rooms.Length > 0 ? rooms[0] : null);
+            EnterRoom(bedroom);
+
+            yield return WaitForSteadyFrames();
+            yield return fader.FadeIn(fadeInSeconds);
+            yield return new WaitForSeconds(calmSeconds);
+
+            Log("A: telefon çalıyor");
+            phone.StartRinging();
+            yield return new WaitForSeconds(ringSeconds);
+
+            Log("A: kısa kararma → Cenk uyanır");
+            yield return fader.FadeOut(wakeFadeSeconds);
+            SetBedSleeping(false);
+            Transform spawn = wakeSpawn != null ? wakeSpawn : (bedroom != null ? bedroom.DefaultSpawn : null);
+            PlacePlayer(spawn, wakeFacing);
+            yield return fader.FadeIn(wakeFadeSeconds);
+            yield return Startled();
+            yield return Say(wakeLine);
+
+            Log("A: kamera telefona kayar, bildirim");
+            yield return phone.FocusCamera(bedroom != null ? bedroom.CameraAnchor.position : Vector3.zero);
+            yield return phone.ShowAlert(data.phone);
+            phone.StopRinging();
+            if (bedroom != null)
+            {
+                yield return EarthquakeCameraUtil.MoveTo(bedroom.CameraAnchor.position, false, 0.4f);
+                // Yakın kamera (GameCameraSettings): serbest dolaşımda oyuncuyu oda içinde yumuşak takip et.
+                if (bedroom.Bounds == null && player != null && player.gameObject.activeInHierarchy)
+                    EarthquakeCameraUtil.FollowRoom(player.transform, bedroom.transform, bedroom.CameraAnchor.position, false);
+            }
+            yield return Say(phoneAfterLine);
+        }
+
+        // ---------------- B. 60 sn hazırlık ----------------
+        private IEnumerator PrepPhase()
+        {
+            phase = EarthquakePhase.Prep;
+            countdown.StartTimer(data.countdownSeconds);
+            prepStartedAt = Time.time;
+            Log($"B: {data.countdownSeconds:0} sn sayaç başladı, serbest keşif");
+            SetFreeRoam(true);
+            if (debugAutoPlay) StartCoroutine(AutoPilotPrep());
+
+            while (!countdown.HasExpired)
+            {
+                if (CanStartEvent())
+                {
+                    if (MotherDue())
+                    {
+                        yield return MotherEvent(true);
+                        continue;
+                    }
+                    string due = timedFollowUpQuestions ? NextDueQuestion() : null;
+                    if (due != null)
+                    {
+                        yield return ScheduledQuestion(due);
+                        continue;
+                    }
+                    if (readyShown && !stats.acceleratedReady && GameInput.AcceleratePressed) Accelerate();
+                    if (IsReady())
+                    {
+                        if (!readyShown)
+                        {
+                            yield return ShowReady();
+                            continue;
+                        }
+                        RepeatReadyToast();
+                    }
+                }
+                yield return null;
+            }
+
+            // Sarsıntı: açık mini oyunlar (afet çantası...) anında kesilir; açık bir etkileşim varsa bitmesini bekle.
+            Mode.EarthquakeMinigameHub.RequestInterruptAll();
+            SetFreeRoam(false);
+            DropUnaskedQuestions();
+            while (interactor.IsBusy || decisions.IsAsking || transitioning || bagWearing) yield return null;
+            for (float t = 0f; Mode.EarthquakeMinigameHub.AnyOpen && t < 2f; t += Time.unscaledDeltaTime) yield return null;
+        }
+
+        private string NextDueQuestion()
+        {
+            // Q1 (annenin kendiliğinden sorusu) MotherDue/MotherEvent ile gelir; burada yalnızca isteğe bağlı Q2/Q3.
+            float r = countdown.GetRemainingTime();
+            string due = null;
+            if (askedQuestions.Contains("Q1") && !askedQuestions.Contains("Q2") && r <= q2At) due = "Q2";
+            else if (askedQuestions.Contains("Q2") && !askedQuestions.Contains("Q3") && r <= q3At) due = "Q3";
+            if (due == null) return null;
+            // Art arda soru yok: önceki sorudan sonra oyuncu en az minQuestionGap sn serbest dolaşmış olmalı
+            // (ör. Q2'deki -30 ceza sayacı 65'ten 35'e atlatınca Q3 hemen açılmaz).
+            if (freeSinceQuestion < minQuestionGap)
+            {
+                if (pendingQuestionLogged != due)
+                {
+                    pendingQuestionLogged = due;
+                    Log($"B: {due} sırada — önceki sorudan sonra {minQuestionGap:0} sn serbest dolaşma bekleniyor");
+                }
+                return null;
+            }
+            return due;
+        }
+
+        /// <summary>Sayaç bittiğinde hâlâ sorulmamış hazırlık soruları düşer (ceza yok, puanlamada sayılmaz).</summary>
+        private void DropUnaskedQuestions()
+        {
+            foreach (var id in new[] { "Q1", "Q2", "Q3" })
+            {
+                if (askedQuestions.Contains(id) || data.FindQuestion(id) == null) continue;
+                askedQuestions.Add(id);
+                stats.droppedQuestions.Add(id);
+                Log($"B: sayaç bitti, {id} sorulamadı → düşürüldü (ceza yok)");
+            }
+        }
+
+        private IEnumerator ScheduledQuestion(string id)
+        {
+            SetFreeRoam(false);
+            countdown.PushPause(eventToken);
+            if (id == "Q1")
+            {
+                Log($"B: sayaç {q1At:0} → anne seslenir (Q1)");
+                yield return Say(motherCallLine);
+            }
+            FacePlayerToMother();
+            yield return AskQuestion(id);
+            countdown.PopPause(eventToken);
+            if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+        }
+
+        /// <summary>
+        /// Hazırlık tamam: anne sorusunu sordu (açıksa Q2/Q3 de), görev listesi bitti (sorusu sorulmuş ama süresi dolan anne
+        /// görevi de bitmiş sayılır; görev yöneticisi yoksa en az minInspectedForReady inceleme) ve henüz hızlandırılmadı.
+        /// </summary>
+        private bool IsReady() =>
+            (motherAsked || data.FindQuestion(motherQuestionId) == null)
+            && (!timedFollowUpQuestions || (askedQuestions.Contains("Q2") && askedQuestions.Contains("Q3")))
+            && QuestsSettled() && !stats.acceleratedReady
+            && countdown.GetRemainingTime() > accelerateTo + 0.5f; // son saniyelerde hızlandırma ipucu anlamsız
+
+        private bool QuestsSettled()
+        {
+            if (quests == null) return stats.InspectedCount >= minInspectedForReady;
+            foreach (var t in quests.Tasks)
+            {
+                if (t == null || quests.IsDone(t.id)) continue;
+                bool asked = t.source == PrepTaskSource.AnswerAll && t.keys != null && Array.TrueForAll(t.keys, k => askedQuestions.Contains(k));
+                if (!asked) return false;
+            }
+            return true;
+        }
+
+        // ---------------- Annenin otomatik sorusu + başlangıç odası kapısı ----------------
+
+        /// <summary>
+        /// Anne şimdi sorabilir mi: henüz sormadı, hazırlık sürüyor, ilk motherMinSeconds geçti, mini oyun/diyalog/çanta takma yok
+        /// (kart/soru/geçiş CanStartEvent'te). Oyuncu gerekli görevleri bitirip kapıya geldiyse hemen (çıkıştan önce garanti);
+        /// değilse bir görev bittikten (ya da sayaç q1At'e indikten) sonra motherAfterTaskDelay sn serbest dolaşınca.
+        /// </summary>
+        private bool MotherDue()
+        {
+            if (motherAsked || phase != EarthquakePhase.Prep || countdown.HasExpired || bagWearing) return false;
+            if (data.FindQuestion(motherQuestionId) == null) return false;
+            if (Mode.EarthquakeMinigameHub.AnyOpen || interactor.IsSaying) return false;
+            if (prepStartedAt < 0f || Time.time - prepStartedAt < motherMinSeconds || Time.timeSinceLevelLoad < motherMinSeconds) return false;
+            if (AtStartRoomExit() && MissingStartRoomTasks().Count == 0) return true;
+            if (motherFreeTime < motherAfterTaskDelay) return false;
+            return motherProgress || countdown.GetRemainingTime() <= q1At;
+        }
+
+        /// <summary>
+        /// Annenin tek seferlik sorusu: seslenir (EQH_MOTHER_CALL) → soru (mevcut süreli soru arayüzü, ceza/geri bildirim aynı) →
+        /// toplanma alanı hatırlatması (EQH_MOTHER_PLAN). Sayaç bu sırada durur. manageFreeRoam: kapı etkileşiminin içinden
+        /// çağrılınca false (hareketi RoomInteractor yönetir).
+        /// </summary>
+        private IEnumerator MotherEvent(bool manageFreeRoam)
+        {
+            if (motherAsked) yield break;
+            motherAsked = true;
+            Log($"B: anne kendiliğinden soruyor ({motherQuestionId}, tek sefer, hazırlığın {Time.time - prepStartedAt:0.0}. sn'si)");
+            if (manageFreeRoam) SetFreeRoam(false);
+            countdown.PushPause(eventToken);
+            yield return Say(motherCallLine);
+            FacePlayerToMother();
+            yield return AskQuestion(motherQuestionId);
+            yield return Say(motherPlanLine);
+            countdown.PopPause(eventToken);
+            motherFreeTime = 0f;
+            if (manageFreeRoam && phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+        }
+
+        private bool AtStartRoomExit() => interactor.Current != null && startExitPoints.Contains(interactor.Current);
+
+        /// <summary>Başlangıç odasından çıkmak için henüz bitmemiş görevler (görev yöneticisinde tanımlı olanlar).</summary>
+        private List<PrepTaskDefinition> MissingStartRoomTasks()
+        {
+            var missing = new List<PrepTaskDefinition>();
+            if (quests == null || startRoomRequiredTasks == null) return missing;
+            foreach (var id in startRoomRequiredTasks)
+            {
+                var t = quests.Find(id);
+                if (t != null && !quests.IsDone(id)) missing.Add(t);
+            }
+            return missing;
+        }
+
+        private void ShowStartRoomLocked(List<PrepTaskDefinition> missing)
+        {
+            nextLockedToastAt = Time.time + lockedToastCooldown;
+            var labels = missing.ConvertAll(t => t.label);
+            Log($"B: başlangıç odası kapısı kilitli — eksik: {string.Join(", ", labels)}");
+            EqSfx.Play(EqSfx.DoorLocked, 0.8f); // SES: kilitli kapı
+            Toast(startRoomLockedTitle, startRoomLockedText + "\nEksik: " + string.Join(", ", labels), toastSeconds);
+        }
+
+        private IEnumerator ShowReady()
+        {
+            readyShown = true;
+            Log($"B: hazırlık tamam ({stats.InspectedCount} inceleme) → [Space] hızlandır ipucu");
+            SetFreeRoam(false);
+            countdown.PushPause(eventToken);
+            yield return Say(readyLine);
+            countdown.PopPause(eventToken);
+            RepeatReadyToast();
+            if (!countdown.HasExpired) SetFreeRoam(true);
+        }
+
+        private void RepeatReadyToast()
+        {
+            if (Time.time - lastReadyToast < readyHintRepeat) return;
+            lastReadyToast = Time.time;
+            Toast("HAZIRLIK TAMAM", data.after.readyHint, Mathf.Max(toastSeconds, 5f));
+        }
+
+        private void Accelerate()
+        {
+            stats.remainingAtAccelerate = countdown.GetRemainingTime();
+            if (countdown.Accelerate(accelerateTo))
+            {
+                stats.acceleratedReady = true;
+                Log($"B: simülasyon hızlandırıldı ({stats.remainingAtAccelerate:0.0} sn kalmıştı)");
+            }
+        }
+
+        // ---------------- C. Sarsıntı + korunma ----------------
+        private IEnumerator QuakePhase()
+        {
+            if (phase == EarthquakePhase.Quake || phase == EarthquakePhase.After || phase == EarthquakePhase.Report) yield break;
+            phase = EarthquakePhase.Quake;
+            SetFreeRoam(false);
+            countdown.SetVisible(false);
+            stats.remainingAtQuake = countdown.GetRemainingTime();
+            countdown.SetStatusText("SARSINTI!");
+            Log("C: SARSINTI başlıyor");
+
+            Vector3 pos = player != null ? player.transform.position : Vector3.zero;
+            var exposedZones = zones.FindAll(z => z.IsActiveIn(EarthquakePhase.Quake) && z.Contains(pos));
+            foreach (var z in exposedZones) Log($"C: oyuncu tehlike bölgesinde: {z.Id} ({z.ExposureKind})");
+
+            quakeEvents.BeginShake();
+            StartCoroutine(QuakeExtraSfx()); // SES: bina gıcırtısı + toz/moloz (aralıklı)
+            MotherTakeCover();
+            float shakeStart = Time.time;
+            yield return Startled();
+            // Balon engellemesin ve tuş istemesin: kendi kendine kapanır, E yalnızca korunmaya gider.
+            if (HasStory(quakeLine)) StartCoroutine(SayTimed(quakeLine, 1.8f));
+
+            ProtectionMinigameController.Result result = null;
+            bool protectionDone = false;
+            var protectionRoutine = StartCoroutine(protection.Run(pos, r => { result = r; protectionDone = true; }));
+            // Sabitlenmemiş kitaplık oyuncunun üstüne devrilirse korunma anında kesilir.
+            while (!protectionDone && !stats.hitByBookshelf) yield return null;
+            if (stats.hitByBookshelf)
+            {
+                if (!protectionDone && protectionRoutine != null) StopCoroutine(protectionRoutine);
+                if (protection.View != null) protection.View.Hide();
+                yield return InjuredByBookshelf(shakeStart);
+                yield break;
+            }
+            while (Time.time - shakeStart < minShakeSeconds && !stats.hitByBookshelf) yield return null;
+            if (stats.hitByBookshelf) { yield return InjuredByBookshelf(shakeStart); yield break; }
+            quakeEvents.EndShake();
+            StartCoroutine(DelayedSfx("SFX_EQ_Car_Alarm", 2.5f, 0.55f)); // SES: sarsıntıdan birkaç sn sonra araba alarmı
+            motherShaking = false; // sarsıntı bitti: anne tutunmaya devam eder, D evresinde kalkar
+            countdown.SetStatusText("SARSINTI BİTTİ");
+            yield return new WaitForSeconds(settleSeconds);
+
+            var outcome = result != null ? result.outcome : ProtectionOutcome.None;
+            stats.protectionUnderTable = result != null && result.table != null && outcome == ProtectionOutcome.TableDropCoverHold;
+            stats.protectionHoldReleased = result != null && result.releasedDuringHold;
+            stats.protectionIncomplete = result != null && outcome != ProtectionOutcome.None && !result.holdCompleted;
+            stats.protectionBalancePlayed = result != null && result.balancePlayed;
+            stats.protectionBalanceScore = result != null ? result.balanceScore : 0;
+            stats.protectionHeldRatio = result != null ? result.heldRatio : 0;
+
+            var feedback = new List<string>();
+            switch (outcome)
+            {
+                case ProtectionOutcome.TableDropCoverHold: feedback.Add(data.protection.tableSuccess); break;
+                case ProtectionOutcome.InPlaceDropCover: feedback.Add(data.protection.inPlaceSuccess); break;
+                default: feedback.Add(data.protection.none); break;
+            }
+            if (stats.protectionIncomplete) feedback.Add(data.protection.releaseWarning);
+            if (result != null && result.balancePlayed)
+            {
+                var balanceText = data.protection.balance ?? new EqBalanceTexts();
+                feedback.Add(result.holdCompleted && result.balanceScore >= 35 ? balanceText.success : balanceText.feedback);
+                feedback.Add(string.Format(balanceText.score, result.balanceScore));
+                feedback.Add(balanceText.resultNote);
+            }
+            foreach (var z in exposedZones)
+            {
+                string text = data.protection.ExposedText(z.ExposureKind);
+                if (stats.AddExposure("quake:" + EarthquakeModeData.NormalizeId(z.ExposureKind), text) && !string.IsNullOrEmpty(text))
+                    feedback.Add(text);
+            }
+            if (stats.bookshelfFell)
+                feedback.Add("Sabitlenmemiş kitaplık devrildi! Yanında olsaydın üstüne düşebilirdi.");
+            if (outcome == ProtectionOutcome.InPlaceDropCover && exposedZones.Count > 0) outcome = ProtectionOutcome.Exposed;
+            stats.protection = outcome;
+            Log($"C: korunma = {outcome} ({EarthquakeResultManager.ProtectionText(outcome)}), maruziyet {exposedZones.Count}");
+
+            quakeEvents.ApplyAftermath();
+            protection.RestoreAfter();
+            bool good = outcome == ProtectionOutcome.TableDropCoverHold || outcome == ProtectionOutcome.InPlaceDropCover;
+            yield return ShowCard("SARSINTI BİTTİ", string.Join("\n", feedback), good ? HazardClass.Protective : HazardClass.Hazard);
+        }
+
+        /// <summary>
+        /// Kitaplık oyuncunun üstüne devrildi: sarsıntı kısa sürede biter, korunma "yapılmadı" sayılır ve
+        /// "YARALANDIN" kartı gösterilir (çocuk dostu: kan/ağır yaralanma yok, annesi yanına gelir).
+        /// </summary>
+        private IEnumerator InjuredByBookshelf(float shakeStart)
+        {
+            SetFreeRoam(false);
+            Log("C: kitaplık oyuncunun üstüne devrildi → YARALANDIN (bölüm başarısız)");
+            float until = Mathf.Min(minShakeSeconds, (Time.time - shakeStart) + 1.2f);
+            while (Time.time - shakeStart < until) yield return null;
+            quakeEvents.EndShake();
+            MotherStandUp(); // annen hemen yanına koşar
+            countdown.SetStatusText("SARSINTI BİTTİ");
+            yield return new WaitForSeconds(settleSeconds);
+
+            stats.protection = ProtectionOutcome.None;
+            stats.AddExposure("quake:bookshelf", "Devrilen kitaplığın yanındaydın.");
+            quakeEvents.ApplyAftermath();
+            protection.RestoreAfter();
+            yield return ShowCard("KİTAPLIK ÜSTÜNE DEVRİLDİ!",
+                "Sabitlenmemiş kitaplık sarsıntıda devrildi ve üstüne düştü. Yaralandın, annen hemen yanına koştu.\n" +
+                "Depremden ÖNCE uzun mobilyaları duvara sabitle; sarsıntıda onlardan uzak dur, sağlam masanın altına gir.",
+                HazardClass.Hazard);
+        }
+
+        // ---------------- D. Sarsıntı sonrası ----------------
+        private IEnumerator AfterPhase()
+        {
+            phase = EarthquakePhase.After;
+            countdown.SetStatusText(null);
+            countdown.SetVisible(false);
+            Log("D: sarsıntı sonrası — anne: İyi misin?");
+            MotherStandUp();
+
+            FacePlayerToMother();
+            yield return Say(afterMotherLine);
+            yield return AskQuestion("Q4");
+            Toast("ÖNCE TEHLİKELERİ KONTROL ET", data.after.checkHazards, toastSeconds + 1f);
+
+            if (quakeBag != null && quakeBag.Point != null) quakeBag.Point.Setup("Deprem çantasını al", "", false, false);
+            if (emergencyBag != null) emergencyBag.ApplyLabel(EarthquakePhase.After);
+            if (apartmentDoorPoint != null)
+            {
+                string exitLabel = apartmentDoor != null ? apartmentDoor.Label : null;
+                if (string.IsNullOrEmpty(exitLabel) || exitLabel == "Geç") exitLabel = "Dışarı çık";
+                apartmentDoorPoint.Setup(exitLabel, "", false, false);
+            }
+
+            SetFreeRoam(true);
+            if (debugAutoPlay) StartCoroutine(AutoPilotAfter());
+
+            while (!reachedAssembly) yield return null;
+            while (interactor.IsBusy || transitioning) yield return null;
+
+            Log("D: toplanma alanı");
+            Toast("TOPLANMA ALANI", data.after.assembly, toastSeconds + 1f);
+            yield return WaitAssemblyMeet();
+            SetFreeRoam(false);
+            FacePlayerToMother();
+            yield return Say(assemblyLine);
+        }
+
+        /// <summary>Toplanma alanında oyuncu annesinin yanına yürüyene kadar (ya da süre dolana kadar) bekler.
+        /// Otomatik oyunda ve assemblyMeetRadius 0 iken beklemez.</summary>
+        private IEnumerator WaitAssemblyMeet()
+        {
+            Transform target = assemblyMother != null ? assemblyMother.transform
+                : mother != null && mother.gameObject.activeInHierarchy ? mother.transform : null;
+            if (target == null)
+            {
+                var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+                target = assembly != null ? assembly.FindChild("MotherSpot") : null;
+            }
+            if (debugAutoPlay || assemblyMeetRadius <= 0f || target == null || player == null) yield break;
+
+            Log("D: toplanma alanında annesine yürüyor");
+            float hintAt = toastSeconds + 1.5f;
+            bool hinted = false;
+            for (float t = 0f; t < assemblyMeetTimeout; t += Time.deltaTime)
+            {
+                bool busy = interactor.IsBusy || transitioning;
+                if (!busy && Vector2.Distance(player.transform.position, target.position) <= assemblyMeetRadius) break;
+                if (!hinted && !busy && t >= hintAt)
+                {
+                    hinted = true;
+                    Toast("ANNENİ BUL", assemblyMeetHint, toastSeconds + 1f);
+                }
+                yield return null;
+            }
+            while (interactor.IsBusy || transitioning) yield return null;
+            Log("D: anneyle buluştu");
+        }
+
+        // ---------------- E. Rapor ----------------
+        private IEnumerator ReportPhase()
+        {
+            phase = EarthquakePhase.Report;
+            stats.penaltySeconds = penalties.TotalSeconds();
+            if (!stats.bagTaken)
+                stats.AddMistake(emergencyBag != null && !stats.emergencyBagPrepared ? "Afet çantasını depremden önce hazırlamadın." : "Deprem çantasını almadın.");
+            // FLOW: toplanma alanına varıldı (kitaplık altında kalınmadı) → deprem tamamlandı; rapordaki birincil buton
+            // "Devam: Sel Bölümü" (sel oynanmadıysa) ya da "Oyunu Bitir" olur (GameFlow, EarthquakeResultManager.ApplyChoice).
+            if (reachedAssembly && !stats.hitByBookshelf) GameFlow.CompleteChapter(ChapterId.Earthquake);
+            var report = results.Build(stats, data);
+            LastReport = report;
+            Log($"E: rapor (puan {report.score}, {report.label})");
+            yield return results.Show(report, debugAutoPlay);
+            IsFinished = true;
+            Log($"E: bitti, seçim: {(string.IsNullOrEmpty(report.choice) ? "(yok)" : report.choice)}");
+
+            if (debugAutoPlay && !autoNavigateAtEnd) yield break;
+            EarthquakeResultManager.ApplyChoice(report.choice);
+        }
+
+        // =====================================================================
+        // Nokta kullanımları
+        // =====================================================================
+
+        /// <summary>
+        /// Tek seferlik inceleme (InspectableObject.BeginInspection): ilk E'de işaretlenir, görev ilerler (stats → PreparationQuestManager),
+        /// E ipucu kalkar ve kart gösterilir; zaten incelendiyse hiçbir şey olmaz.
+        /// </summary>
+        private IEnumerator Inspect(InspectableObject insp)
+        {
+            if (!insp.BeginInspection())
+            {
+                Log($"inceleme: {insp.Id} zaten incelendi (tek seferlik), yok sayıldı");
+                yield break;
+            }
+            // "Bulunan tehlikeler" yalnızca sarsıntıdan ÖNCE fark edilen tehlikeleri sayar.
+            bool preQuake = phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep;
+            stats.AddInspected(insp.Id, insp.IsHazard && preQuake);
+            Log($"inceleme: {insp.Id} ({insp.Kind}) — toplam {stats.InspectedCount}, tehlike {stats.HazardsFound}/{stats.hazardsTotal}");
+            EqSfx.Play(EqSfx.Inspect, 0.8f); // SES: inceleme kartı açılıyor
+            yield return ShowCard(insp.Title, insp.TextFor(phase), insp.Kind);
+        }
+
+        private IEnumerator AskQuestion(string id)
+        {
+            if (askedQuestions.Contains(id)) yield break;
+            askedQuestions.Add(id);
+            var q = data.FindQuestion(id);
+            if (q == null)
+            {
+                Log($"soru {id} veride yok, atlandı");
+                yield break;
+            }
+            TimedDecisionController.Result result = null;
+            EqSfx.Play(EqSfx.QuestionOpen, 0.8f); // SES: annenin sorusu açılıyor
+            yield return decisions.Ask(q, r => result = r);
+            freeSinceQuestion = 0f;
+            pendingQuestionLogged = null;
+            if (result == null) yield break;
+            int ci = q.CorrectIndex;
+            stats.answers.Add(new EarthquakeStats.AnswerRecord
+            {
+                questionId = q.id,
+                question = q.question,
+                chosenIndex = result.chosenIndex,
+                correct = result.correct,
+                timedOut = result.timedOut,
+                correctText = ci >= 0 ? q.options[ci].text : "",
+                explanation = ci >= 0 ? q.options[ci].explanation : result.feedback
+            });
+        }
+
+        private IEnumerator UseBag()
+        {
+            if (phase != EarthquakePhase.After)
+            {
+                yield return Inspect(quakeBag);
+                yield break;
+            }
+            if (stats.bagTaken) yield break;
+            stats.bagTaken = true;
+            stats.AddInspected(quakeBag.Id, quakeBag.IsHazard);
+            Log("D: deprem çantası alındı");
+            quakeBag.Point.SetAvailable(false);
+            HideBagVisual();
+            WearQuakeBag();
+            EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
+            yield return Say(bagLine);
+            Toast("DEPREM ÇANTASI", data.after.bagTaken, toastSeconds);
+        }
+
+        // Alınan deprem çantası Cenk'in sırtında görünür (CenkOutfit: deprem çantalı sprite'lar).
+        private static void WearQuakeBag()
+        {
+            GameSession.MarkQuakeBagTaken();
+            CenkOutfit.RefreshAll();
+        }
+
+        private void HideBagVisual()
+        {
+            if (quakeBagVisual != null)
+            {
+                quakeBagVisual.SetActive(false);
+                return;
+            }
+            foreach (var r in quakeBag.GetComponentsInChildren<SpriteRenderer>(true)) r.enabled = false;
+        }
+
+        /// <summary>
+        /// Afet çantası (EmergencyBagInteractable). Hazırlıkta mini oyunu açar ve hemen döner: sayaç DURMAZ, serbest dolaşma
+        /// mini oyun kapanana kadar kapalıdır (sorular/olaylar araya girmez). Sarsıntıdan sonra: hazırsa çanta alınır
+        /// (bagTaken), değilse "çanta boş" ders kartı. Sarsıntı sırasında kullanılamaz (öncelik Çök–Kapan–Tutun).
+        /// </summary>
+        private IEnumerator UseEmergencyBag(EmergencyBagInteractable bag)
+        {
+            if (phase == EarthquakePhase.Prep && !countdown.HasExpired && !bag.IsPrepared && bag.Minigame != null)
+            {
+                SetFreeRoam(false);
+                bool opened = bag.OpenMinigame(completedBag =>
+                {
+                    bag.ApplyLabel(phase);
+                    if (completedBag)
+                    {
+                        stats.emergencyBagPrepared = true;
+                        stats.AddInspected("emergency_bag", false);
+                        Log("B: afet çantası hazırlandı (mini oyun tamamlandı) → sırta takılıyor");
+                        StartCoroutine(WearBag(bag)); // serbest dolaşmayı sonunda kendisi açar
+                        return;
+                    }
+                    if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+                });
+                Log(opened ? "B: afet çantası mini oyunu açıldı (sayaç akmaya devam ediyor)" : "B: afet çantası mini oyunu açılamadı");
+                if (!opened && phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+                yield break;
+            }
+            if (phase == EarthquakePhase.After)
+            {
+                if (bag.IsPrepared)
+                {
+                    if (stats.bagTaken) yield break;
+                    stats.bagTaken = true;
+                    stats.AddInspected("emergency_bag", false);
+                    Log("D: hazırlanan afet çantası alındı");
+                    bag.MarkTaken();
+                    EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
+                    yield return Say(bagLine);
+                    Toast("AFET ÇANTASI", bag.TakenToast, toastSeconds);
+                    yield break;
+                }
+                bag.MarkEmptyChecked();
+                Log("D: afet çantası hazırlanmamıştı → ders kartı");
+                yield return ShowCard("AFET ÇANTASI HAZIR DEĞİL", bag.EmptyAfterText, HazardClass.Hazard);
+                yield break;
+            }
+            yield return ShowCard(bag.Title, bag.IsPrepared ? bag.ReadyText : "Afet çantası boş. Sarsıntıdan önce hazırlamalısın.", HazardClass.Safety);
+        }
+
+        /// <summary>
+        /// Mini oyun başarısından sonra (arayüz kapanmış, kamera dönmüş): kısa "sırta takma" anı — Cenk çantaya döner, kısa eğilme
+        /// pozu, çanta küçülerek sırtına kayar (EmergencyBagInteractable.PutOn) → GameSession.MarkQuakeBagTaken + CenkOutfit.RefreshAll
+        /// (deprem çantalı yürüyüş/poz sprite'ları) → bagTaken. Sarsıntı başlamışsa animasyonsuz hemen takılır.
+        /// </summary>
+        private IEnumerator WearBag(EmergencyBagInteractable bag)
+        {
+            if (bag == null || bag.IsTaken) yield break;
+            bool animate = phase == EarthquakePhase.Prep && !countdown.HasExpired && player != null && player.gameObject.activeInHierarchy;
+            bagWearing = true;
+            if (animate)
+            {
+                SetFreeRoam(false);
+                var anim = player.GetComponent<IsoCharacterAnimator>();
+                Sprite pose = bagWearPose != null ? bagWearPose : (protection != null ? protection.DropPose : null);
+                if (anim != null) anim.Face(bag.transform.position - player.transform.position);
+                yield return new WaitForSeconds(0.1f);
+                if (anim != null && pose != null) anim.ShowPose(pose);
+                yield return new WaitForSeconds(0.15f);
+                yield return bag.PutOn(player.transform, bagWearSeconds);
+                yield return new WaitForSeconds(0.25f);
+                if (anim != null && pose != null) anim.ClearPose();
+            }
+            else bag.MarkTaken();
+            EqSfx.Play(EqSfx.BagWear, 0.9f); // SES: çanta sırta
+            stats.bagTaken = true;
+            bagWearing = false;
+            motherProgress = true;
+            motherFreeTime = 0f;
+            Log("B: afet çantası Cenk'in sırtında (görev tamam)");
+            if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+            // Olumlu geri bildirim: kırmızı uyarı toast'ı değil, kendiliğinden kapanan kısa balon (görev tiki HUD'da).
+            if (animate && HasStory(bagLine)) StartCoroutine(SayTimed(bagLine, 1.6f));
+        }
+
+        private IEnumerator UseElevator()
+        {
+            if (phase != EarthquakePhase.After)
+            {
+                var info = data.FindInspectable("elevator");
+                yield return ShowCard(info != null ? info.title : "Asansör", info != null ? info.text : data.after.elevator, HazardClass.Exit);
+                yield break;
+            }
+            if (!stats.elevatorTried)
+            {
+                stats.elevatorTried = true;
+                stats.AddMistake(data.after.elevator);
+                Log("D: asansör denendi → yanlış karar kaydı (ilerletmez)");
+            }
+            yield return ShowCard("ASANSÖR KULLANILMAZ!", data.after.elevator, HazardClass.Hazard);
+        }
+
+        private IEnumerator UseDoor(EarthquakeDoor door) =>
+            UseDoorKind(door.Kind, door.TargetRoom, door.TargetSpawn, door.ArriveFacing, door.Point);
+
+        private IEnumerator UseDoorKind(EarthquakeDoor.DoorKind kind, EarthquakeRoom room, Transform spawn, Vector2 facing, Interactable point)
+        {
+            switch (kind)
+            {
+                case EarthquakeDoor.DoorKind.ApartmentExit:
+                    if (phase != EarthquakePhase.After)
+                    {
+                        var info = data.FindInspectable("apartment_door");
+                        stats.AddInspected("apartment_door", false);
+                        Log("B: daire kapısı kilitli — sarsıntıda dışarı koşulmaz");
+                        EqSfx.Play(EqSfx.DoorLocked, 0.8f); // SES: kilitli kapı
+                        yield return ShowCard(info != null ? info.title : "Daire Kapısı", data.after.doorLockedBefore, HazardClass.Exit);
+                        yield break;
+                    }
+                    if (!stats.bagTaken && !bagReminderShown)
+                    {
+                        bagReminderShown = true;
+                        Log("D: çanta alınmadan çıkış denendi → hatırlatma");
+                        yield return ShowCard(emergencyBag != null ? "AFET ÇANTASI" : "DEPREM ÇANTASI",
+                            emergencyBag != null ? emergencyBag.ExitReminder : data.after.bagReminder, HazardClass.Safety);
+                        yield break;
+                    }
+                    Log("D: daire kapısı → koridor");
+                    yield return Transition(room, spawn, facing);
+                    if (mother != null && assemblyMother != null) mother.gameObject.SetActive(false);
+                    break;
+
+                case EarthquakeDoor.DoorKind.StairsDown:
+                    if (phase != EarthquakePhase.After)
+                    {
+                        var info = data.FindInspectable("stairs");
+                        yield return ShowCard(info != null ? info.title : "Merdiven", info != null ? info.text : data.after.stairs, HazardClass.Safety);
+                        yield break;
+                    }
+                    stats.usedStairs = true;
+                    stats.AddInspected("stairs", false);
+                    Log("D: merdivenden iniliyor → toplanma alanı");
+                    Toast("MERDİVEN", data.after.stairs, toastSeconds);
+                    yield return Say(exitLine);
+                    yield return Transition(room, spawn, facing, PrepareAssembly);
+                    reachedAssembly = true;
+                    EqSfx.Play(EqSfx.AssemblyArrive, 0.9f); // SES: toplanma alanına varış
+                    break;
+
+                default:
+                    // Başlangıç odası kapısı: hazırlıkta gerekli görevler bitmeden açılmaz; bittiyse ve anne henüz sormadıysa
+                    // önce annenin sorusu (çıkıştan önce garanti), sonra geçiş. Sarsıntıdan sonra kapı her zaman açık.
+                    if (startExitPoints.Contains(point) && (phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep)
+                        && !countdown.HasExpired)
+                    {
+                        var missing = MissingStartRoomTasks();
+                        if (missing.Count > 0 && !debugAutoPlay)
+                        {
+                            ShowStartRoomLocked(missing);
+                            yield break;
+                        }
+                        if (!motherAsked && data.FindQuestion(motherQuestionId) != null)
+                        {
+                            Log("B: odadan çıkmadan önce anne sorusu (garanti)");
+                            yield return MotherEvent(false);
+                            if (countdown.HasExpired) yield break; // ceza sayacı bitirdiyse sarsıntı başlar
+                        }
+                    }
+                    Log($"kapı → {(room != null ? room.Id.ToString() : "?")}");
+                    yield return Transition(room, spawn, facing);
+                    break;
+            }
+        }
+
+        private void PrepareAssembly()
+        {
+            if (assemblyMother != null)
+            {
+                assemblyMother.SetActive(true);
+                return;
+            }
+            var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+            var spot = assembly != null ? assembly.FindChild("MotherSpot") : null;
+            if (mother != null && spot != null)
+            {
+                mother.gameObject.SetActive(true);
+                mother.transform.position = spot.position;
+                mother.SetAvailable(false);
+            }
+        }
+
+        // =====================================================================
+        // Oda geçişi, kamera, oyuncu
+        // =====================================================================
+
+        private IEnumerator Transition(EarthquakeRoom room, Transform spawn, Vector2 facing, Action beforeFadeIn = null)
+        {
+            if (room == null)
+            {
+                Log("geçiş: hedef oda yok, atlandı");
+                yield break;
+            }
+            transitioning = true;
+            countdown.PushPause(transitionToken);
+            EqSfx.Play(EqSfx.DoorOpen, 0.8f); // SES: kapıdan geçiş
+            yield return fader.FadeOut(transitionFadeSeconds);
+            PlacePlayer(spawn != null ? spawn : room.DefaultSpawn, facing.sqrMagnitude > 0.0001f ? facing : room.DefaultFacing);
+            EnterRoom(room);
+            beforeFadeIn?.Invoke();
+            yield return null;
+            yield return fader.FadeIn(transitionFadeSeconds);
+            countdown.PopPause(transitionToken);
+            transitioning = false;
+            Log($"oda: {room.Id}");
+        }
+
+        private void EnterRoom(EarthquakeRoom room)
+        {
+            if (room == null) return;
+            currentRoom = room;
+            if (room.Bounds != null && player != null) EarthquakeCameraUtil.Follow(player.transform, room.Bounds);
+            else if (player != null && player.gameObject.activeInHierarchy)
+                EarthquakeCameraUtil.FollowRoom(player.transform, room.transform, room.CameraAnchor.position, true);
+            else EarthquakeCameraUtil.CutTo(room.CameraAnchor.position);
+        }
+
+        private EarthquakeRoom RoomOf(EarthquakeRoom.RoomId id)
+        {
+            if (rooms == null) return null;
+            foreach (var r in rooms)
+                if (r != null && r.Id == id) return r;
+            return null;
+        }
+
+        private void PlacePlayer(Transform spawn, Vector2 facing)
+        {
+            if (player == null) return;
+            player.gameObject.SetActive(true);
+            player.PlaceAt(spawn != null ? spawn.position : player.transform.position, facing);
+        }
+
+        private void SetPlayerVisible(bool visible)
+        {
+            if (player != null) player.gameObject.SetActive(visible);
+        }
+
+        private void SetFreeRoam(bool on)
+        {
+            freeRoam = on;
+            interactor.InteractionEnabled = on;
+            if (player != null) player.CanMove = on;
+        }
+
+        private void SetBedSleeping(bool sleeping)
+        {
+            if (bedRenderer != null)
+            {
+                var sprite = sleeping ? bedSleeping : bedEmpty;
+                if (sprite != null) bedRenderer.sprite = sprite;
+            }
+            if (sleepingKid != null) sleepingKid.SetActive(sleeping);
+        }
+
+        private IEnumerator Startled()
+        {
+            if (startledPose == null || player == null) yield break;
+            var anim = player.GetComponent<IsoCharacterAnimator>();
+            if (anim == null) yield break;
+            anim.ShowPose(startledPose);
+            yield return new WaitForSeconds(startledSeconds);
+            anim.ClearPose();
+        }
+
+        /// <summary>
+        /// Sarsıntı başlayınca anne de Çök–Kapan–Tutun yapar: olduğu yerde (yemek masasının yanında; pencere/kitaplık yanında
+        /// durmaz) çömelir, kollarıyla başını ve ensesini korur; sarsıntı sürerken iki kare arasında hafifçe titrer. D evresinde
+        /// ("İyi misin?") MotherStandUp ile kalkar; başka odadaysa Cenk onu ancak kalktıktan sonra görür.
+        /// </summary>
+        private void MotherTakeCover()
+        {
+            if (mother == null || !mother.gameObject.activeInHierarchy || motherCoverPoses == null || motherCoverPoses.Length == 0 || motherCoverPoses[0] == null) return;
+            var sr = mother.GetComponent<SpriteRenderer>();
+            if (sr != null && motherCoverRoutine == null) motherStandSprite = sr.sprite;
+            if (motherCoverRoutine != null) StopCoroutine(motherCoverRoutine);
+            motherShaking = true;
+            motherCoverRoutine = StartCoroutine(MotherCoverLoop(mother.GetComponent<IsoCharacterAnimator>(), sr));
+            Log("C: anne de Çök–Kapan–Tutun yapıyor");
+        }
+
+        private IEnumerator MotherCoverLoop(IsoCharacterAnimator anim, SpriteRenderer sr)
+        {
+            // Yakında sağlam masa varsa kısa bir atılışla masanın yanına geçer (0,25 sn), sonra çömelir.
+            SturdyTable table = null; float best = motherTableRadius;
+            foreach (var t in FindObjectsByType<SturdyTable>(FindObjectsInactive.Exclude))
+            {
+                float d = Vector2.Distance(t.HidePosition, mother.transform.position);
+                if (d <= best) { best = d; table = t; }
+            }
+            if (table != null)
+            {
+                Vector3 from = mother.transform.position, to = table.HidePosition + (Vector3)motherCoverOffset;
+                to.z = from.z;
+                if (anim != null) anim.Face(to - from);
+                for (float t = 0f; t < 0.25f; t += Time.deltaTime) { mother.transform.position = Vector3.Lerp(from, to, t / 0.25f); yield return null; }
+                mother.transform.position = to;
+                Log($"C: anne masanın yanına geçti ({table.name})");
+            }
+            for (int i = 0; ; i++)
+            {
+                var pose = motherShaking ? motherCoverPoses[i % motherCoverPoses.Length] : motherCoverPoses[0];
+                if (pose == null) pose = motherCoverPoses[0];
+                if (anim != null) anim.ShowPose(pose);
+                else if (sr != null) sr.sprite = pose;
+                yield return new WaitForSeconds(Mathf.Max(0.05f, motherCoverFrameSeconds));
+            }
+        }
+
+        /// <summary>SES: sarsıntı sürerken bina gıcırtısı ve toz/moloz efektleri (birer-ikişer, aralıklı).</summary>
+        private IEnumerator QuakeExtraSfx()
+        {
+            var plan = new (float at, string id, float vol)[] { (0.7f, "SFX_EQ_Building_Creak", 0.8f), (1.9f, "SFX_EQ_Dust_Debris", 0.7f), (3.3f, "SFX_EQ_Building_Creak", 0.6f), (4.6f, "SFX_EQ_Dust_Debris", 0.5f) };
+            float start = Time.time;
+            foreach (var p in plan)
+            {
+                while (Time.time - start < p.at) { if (!quakeEvents.IsShaking) yield break; yield return null; }
+                EqSfx.Play(p.id, p.vol);
+            }
+        }
+
+        private static IEnumerator DelayedSfx(string id, float delay, float vol)
+        {
+            yield return new WaitForSeconds(delay);
+            EqSfx.Play(id, vol);
+        }
+
+        /// <summary>Annenin korunma pozunu bitirir (yürüme/durma animasyonuna döner). Korunmada değilse bir şey yapmaz.</summary>
+        private void MotherStandUp()
+        {
+            motherShaking = false;
+            if (motherCoverRoutine == null) return;
+            StopCoroutine(motherCoverRoutine);
+            motherCoverRoutine = null;
+            if (mother == null) return;
+            var anim = mother.GetComponent<IsoCharacterAnimator>();
+            if (anim != null) anim.ClearPose();
+            else { var sr = mother.GetComponent<SpriteRenderer>(); if (sr != null && motherStandSprite != null) sr.sprite = motherStandSprite; }
+            Log("D: anne kalktı");
+        }
+
+        private void FacePlayerToMother()
+        {
+            if (player == null || mother == null || !mother.gameObject.activeInHierarchy) return;
+            Vector2 toMother = mother.transform.position - player.transform.position;
+            if (toMother.sqrMagnitude > 25f) return; // başka odadaysa dönme
+            var anim = player.GetComponent<IsoCharacterAnimator>();
+            if (anim != null) anim.Face(toMother);
+            var motherAnim = mother.GetComponent<IsoCharacterAnimator>();
+            if (motherAnim != null) motherAnim.Face(-toMother);
+        }
+
+        private static IEnumerator WaitForSteadyFrames()
+        {
+            int steady = 0;
+            for (int i = 0; i < 30 && steady < 2; i++)
+            {
+                yield return null;
+                steady = Time.unscaledDeltaTime < 0.1f ? steady + 1 : 0;
+            }
+        }
+
+        // =====================================================================
+        // Olaylar, yardımcılar
+        // =====================================================================
+
+        private void OnPointUsed(Interactable point)
+        {
+            if (point != null && point.GetComponent<StoveFireController>() != null) return;
+            if (interactorPaused) return;
+            countdown.PushPause(interactorToken);
+            interactorPaused = true;
+        }
+
+        private void Update()
+        {
+            // Mini oyunlar (kitaplık, afet çantası) sayacı DURDURMAZ: açık bir mini oyun varsa etkileşim duraklatması kalkar.
+            if (interactorPaused && (!interactor.IsBusy || Mode.EarthquakeMinigameHub.AnyOpen))
+            {
+                countdown.PopPause(interactorToken);
+                interactorPaused = false;
+            }
+            // Soru arası serbest dolaşma süresi: yalnızca sayaç gerçekten akarken (kart/soru/geçiş/balon sırasında değil).
+            if (phase == EarthquakePhase.Prep && freeRoam && countdown.IsRunning && !countdown.IsPaused)
+                freeSinceQuestion += Time.deltaTime;
+
+            // Annenin sorusu için "doğal an": görevden sonra kesintisiz serbest dolaşma süresi (mini oyun/kart/diyalog sıfırlar).
+            bool calm = phase == EarthquakePhase.Prep && CanStartEvent() && !bagWearing && !Mode.EarthquakeMinigameHub.AnyOpen && !interactor.IsSaying;
+            motherFreeTime = calm ? motherFreeTime + Time.deltaTime : 0f;
+
+            // Kilitli başlangıç odası kapısına yaklaşınca uyarı (her yaklaşmada bir kez, en sık lockedToastCooldown sn'de bir).
+            var at = phase == EarthquakePhase.Prep && interactor.Current != null && startExitPoints.Contains(interactor.Current) ? interactor.Current : null;
+            if (at != lockPromptPoint)
+            {
+                lockPromptPoint = at;
+                if (at != null && !debugAutoPlay && !countdown.HasExpired && Time.time >= nextLockedToastAt)
+                {
+                    var missing = MissingStartRoomTasks();
+                    if (missing.Count > 0) ShowStartRoomLocked(missing);
+                }
+            }
+        }
+
+        private void OnZonePenalized(HazardZone zone)
+        {
+            if (!stats.mirrorPenaltyZones.Contains(zone.Id)) stats.mirrorPenaltyZones.Add(zone.Id);
+            stats.AddMistake($"{zone.WarningTitle} {zone.WarningText}");
+            Log($"B: tehlike bölgesi cezası ({zone.Id})");
+        }
+
+        private void OnZoneEntered(HazardZone zone, EarthquakePhase zonePhase)
+        {
+            if (zonePhase != EarthquakePhase.After) return;
+            string text = !string.IsNullOrEmpty(zone.WarningText) ? zone.WarningText : data.after.glassWarning;
+            if (stats.AddExposure("after:" + zone.Id, text)) Log($"D: cam kırıkları üzerinden geçildi ({zone.Id}) — uyarı, ceza yok, kayıt");
+        }
+
+        private bool IsBlocked() => !freeRoam || transitioning || interactor.IsBusy || decisions.IsAsking;
+
+        private bool CanStartEvent() => freeRoam && !transitioning && !interactor.IsBusy && !decisions.IsAsking;
+
+        private IEnumerator ShowCard(string title, string body, HazardClass kind)
+        {
+            Log($"KART [{kind}] {title}: {body}");
+            if (cardView != null && !Bypass)
+            {
+                yield return cardView.ShowCard(title, body, kind);
+                yield break;
+            }
+            float wait = Bypass ? 0.4f : fallbackCardSeconds;
+            yield return null;
+            for (float t = 0f; t < wait; t += Time.deltaTime)
+            {
+                if (!Bypass && t > 0.2f && GameInput.ContinuePressed) break;
+                yield return null;
+            }
+        }
+
+        private void Toast(string title, string body, float seconds)
+        {
+            if (string.IsNullOrEmpty(body)) return;
+            Log($"TOAST {title}: {body}");
+            if (cardView != null) cardView.ShowToast(title, body, seconds);
+        }
+
+        private IEnumerator Say(string id)
+        {
+            if (string.IsNullOrEmpty(id)) yield break;
+            if (!HasStory(id))
+            {
+                Log($"(balon yok) {id}");
+                yield break;
+            }
+            Log($"balon {id}");
+            yield return interactor.Say(id);
+        }
+
+        /// <summary>
+        /// Balonu girdi beklemeden gösterir ve süre dolunca kapatır (sarsıntı anı: E'yi diyalog değil korunma almalı).
+        /// DialogueRunner meşgulse ya da otomatik oyunda normal Say'e düşer.
+        /// </summary>
+        private IEnumerator SayTimed(string id, float seconds)
+        {
+            var adapter = dialogue as DialogueRunnerAdapter;
+            var runner = adapter != null ? adapter.Runner : null;
+            var scene = runner != null && runner.Data != null ? runner.Data.FindScene(id) : null;
+            var bubble = runner != null ? runner.GetComponentInChildren<AfetUyanisi.Dialogue.SpeechBubble>(true) : null;
+            if (Bypass || scene == null || scene.lines == null || bubble == null || runner.IsBusy)
+            {
+                yield return Say(id);
+                yield break;
+            }
+            Log($"balon {id} (kendiliğinden kapanır)");
+            foreach (var line in scene.lines)
+            {
+                var speaker = AfetUyanisi.Dialogue.DialogueSpeaker.Find(line.speaker);
+                if (speaker == null) continue;
+                bubble.Show(speaker, line.text);
+                bubble.Text.text = line.text;
+                yield return new WaitForSeconds(seconds);
+                if (runner.IsBusy) yield break; // araya gerçek bir diyalog girdiyse balon artık onun
+                bubble.Hide();
+            }
+        }
+
+        private bool HasStory(string id)
+        {
+            var adapter = dialogue as DialogueRunnerAdapter;
+            if (adapter != null && adapter.Runner != null)
+            {
+                var d = adapter.Runner.Data;
+                return d != null && d.scenes != null && Array.Exists(d.scenes, s => s.id == id);
+            }
+            return dialogue != null || storyJson != null;
+        }
+
+        private void Log(string message)
+        {
+            float remaining = countdown != null ? countdown.GetRemainingTime() : 0f;
+            Debug.Log($"[EQ] t={Time.timeSinceLevelLoad:0.0} sayaç={remaining:0.0} {phase} → {message}", this);
+        }
+
+        // =====================================================================
+        // Otomatik oyun (debugAutoPlay)
+        // =====================================================================
+
+        private IEnumerator AutoPilotPrep()
+        {
+            Log($"OTO: hazırlık senaryosu {debugScenario}");
+            var bedroom = RoomOf(EarthquakeRoom.RoomId.Bedroom);
+            var living = RoomOf(EarthquakeRoom.RoomId.Living);
+            bool thorough = debugScenario == DebugScenario.AllCorrect || debugScenario == DebugScenario.MirrorPenalty;
+
+            // 1) Yatak odasındakileri incele
+            int limit = thorough ? 99 : 2;
+            foreach (var insp in InspectablesIn(bedroom))
+            {
+                if (limit-- <= 0) break;
+                yield return AutoUse(insp.Point);
+            }
+
+            // Timeouts: annenin 95'te seslenmesini (zamanlı Q1) yatak odasında bekle
+            if (debugScenario == DebugScenario.Timeouts)
+                while (!askedQuestions.Contains("Q1") && !countdown.HasExpired) yield return null;
+
+            // 2) Salona geç
+            if (currentRoom != living) yield return AutoGoTo(EarthquakeRoom.RoomId.Living);
+
+            // 3) Ayna cezası testi
+            if (debugScenario == DebugScenario.MirrorPenalty || debugScenario == DebugScenario.AllWrong)
+                yield return AutoMirrorDwell();
+
+            // 4) Anne sorusunu kendiliğinden sorar (MotherDue); E ile konuşma yok.
+
+            // 5) Salondakileri incele
+            limit = thorough ? 99 : 3;
+            foreach (var insp in InspectablesIn(living))
+            {
+                if (insp == quakeBag && !thorough) continue;
+                if (limit-- <= 0) break;
+                yield return AutoUse(insp.Point);
+            }
+            if (apartmentDoorPoint != null && thorough) yield return AutoUse(apartmentDoorPoint);
+            if (emergencyBag != null && thorough && !emergencyBag.IsPrepared)
+            {
+                Log("OTO: afet çantası hazır sayıldı (mini oyun otomatik testte oynanmaz)");
+                emergencyBag.MarkPrepared();
+                stats.emergencyBagPrepared = true;
+                emergencyBag.ApplyLabel(phase);
+                emergencyBag.MarkTaken(); // başarıda çanta sırta geçer
+                stats.bagTaken = true;
+            }
+
+            // 6) Sarsıntıyı bekleyeceği yer
+            yield return WaitIdle();
+            AutoPositionForQuake();
+
+            // 7) Q2/Q3 sayaçla gelir; hazırlık tamamsa hızlandır
+            while (!countdown.HasExpired)
+            {
+                if (readyShown && !stats.acceleratedReady && CanStartEvent()
+                    && (debugScenario == DebugScenario.AllCorrect || debugScenario == DebugScenario.MirrorPenalty))
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    if (CanStartEvent()) { Log("OTO: [Space] hızlandır"); Accelerate(); }
+                }
+                yield return null;
+            }
+        }
+
+        private IEnumerator AutoPilotAfter()
+        {
+            Log($"OTO: sonrası senaryosu {debugScenario}");
+            yield return WaitIdle();
+            if (currentRoom == null || currentRoom.Id != EarthquakeRoom.RoomId.Living)
+                yield return AutoGoTo(EarthquakeRoom.RoomId.Living);
+
+            if (debugScenario == DebugScenario.AllWrong)
+            {
+                var glass = zones.Find(z => z.IsActiveIn(EarthquakePhase.After));
+                if (glass != null)
+                {
+                    Log($"OTO: cam kırıklarına basılıyor ({glass.Id})");
+                    player.PlaceAt(glass.InnerPoint(), new Vector2(0f, -1f));
+                    yield return new WaitForSeconds(1f);
+                    if (LivingRoom != null) player.PlaceAt(LivingRoom.DefaultSpawn.position, new Vector2(0f, -1f));
+                    yield return new WaitForSeconds(0.3f);
+                }
+            }
+            else if (emergencyBag != null) yield return AutoUse(emergencyBag.Point);
+            else if (quakeBag != null) yield return AutoUse(quakeBag.Point);
+
+            // Daire kapısı (AllWrong: çantasız ilk deneme hatırlatma verir, ikinci denemede çıkar)
+            for (int i = 0; i < 3 && currentRoom != null && currentRoom.Id == EarthquakeRoom.RoomId.Living; i++)
+                if (apartmentDoorPoint != null) yield return AutoUse(apartmentDoorPoint);
+
+            if (debugScenario == DebugScenario.AllWrong && elevator != null) yield return AutoUse(elevator);
+
+            var stairs = doors.Find(d => d.Kind == EarthquakeDoor.DoorKind.StairsDown);
+            Interactable stairsPoint = stairs != null ? stairs.Point : null;
+            if (stairsPoint == null)
+                foreach (var kv in fallbackDoors)
+                    if (kv.Key.name == "Stairs") stairsPoint = kv.Key;
+            if (stairsPoint != null) yield return AutoUse(stairsPoint);
+            else
+            {
+                Log("OTO: merdiven bulunamadı → toplanma alanına doğrudan geçiliyor");
+                stats.usedStairs = true;
+                var assembly = RoomOf(EarthquakeRoom.RoomId.Assembly);
+                yield return Transition(assembly, assembly != null ? assembly.DefaultSpawn : null, Vector2.zero, PrepareAssembly);
+                reachedAssembly = true;
+            }
+        }
+
+        private EarthquakeRoom LivingRoom => RoomOf(EarthquakeRoom.RoomId.Living);
+
+        private List<InspectableObject> InspectablesIn(EarthquakeRoom room)
+        {
+            if (room == null) return new List<InspectableObject>();
+            return inspectables.FindAll(i => room.Owns(i) && i.gameObject.activeInHierarchy && i.Point != null && i.Point.Available
+                                             && !specialPoints.Contains(i.Point));
+        }
+
+        private IEnumerator WaitIdle()
+        {
+            while (!CanStartEvent()) yield return null;
+        }
+
+        private IEnumerator AutoUse(Interactable point)
+        {
+            if (point == null) yield break;
+            yield return WaitIdle();
+            if (phase == EarthquakePhase.Prep && countdown.HasExpired) yield break;
+            Log($"OTO: [E] {point.name} ({point.ActionLabel})");
+            yield return interactor.Use(point);
+            yield return null;
+        }
+
+        private IEnumerator AutoGoTo(EarthquakeRoom.RoomId target)
+        {
+            var door = doors.Find(d => d.Kind == EarthquakeDoor.DoorKind.Room && d.TargetRoom != null && d.TargetRoom.Id == target
+                                       && currentRoom != null && currentRoom.Owns(d));
+            Interactable point = door != null ? door.Point : null;
+            if (point == null)
+            {
+                string fallbackName = target == EarthquakeRoom.RoomId.Living ? "BedroomDoor" : "LivingDoor";
+                foreach (var kv in fallbackDoors)
+                    if (kv.Key.name == fallbackName) point = kv.Key;
+            }
+            if (point != null)
+            {
+                yield return AutoUse(point);
+                yield break;
+            }
+            Log($"OTO: {target} kapısı bulunamadı → doğrudan geçiş");
+            var room = RoomOf(target);
+            yield return Transition(room, room != null ? room.DefaultSpawn : null, Vector2.zero);
+        }
+
+        private IEnumerator AutoMirrorDwell()
+        {
+            var mirror = zones.Find(z => EarthquakeModeData.SameId(z.WarningId, "mirror") && z.IsActiveIn(EarthquakePhase.Prep));
+            if (mirror == null)
+            {
+                Log("OTO: ayna bölgesi yok, ayna testi atlandı");
+                yield break;
+            }
+            Vector3 away = LivingRoom != null ? LivingRoom.DefaultSpawn.position : player.transform.position;
+            int before = penalties.CountOf(TimePenaltySystem.PenaltyType.MirrorExposure);
+            for (int visit = 1; visit <= 2; visit++)
+            {
+                yield return WaitIdle();
+                Log($"OTO: ayna bölgesine giriliyor ({visit}. kez), 4 sn bekleniyor");
+                player.PlaceAt(mirror.InnerPoint(), new Vector2(-1f, 1f));
+                for (float t = 0f; t < 4f; t += Time.deltaTime) yield return null;
+                player.PlaceAt(away, new Vector2(0f, -1f));
+                yield return new WaitForSeconds(0.6f);
+                int count = penalties.CountOf(TimePenaltySystem.PenaltyType.MirrorExposure) - before;
+                Log($"OTO: ayna cezası sayısı = {count} (beklenen 1)");
+            }
+        }
+
+        private void AutoPositionForQuake()
+        {
+            if (player == null) return;
+            switch (debugScenario)
+            {
+                case DebugScenario.AllWrong:
+                {
+                    var z = zones.Find(x => x.IsActiveIn(EarthquakePhase.Quake) && currentRoom != null && currentRoom.Owns(x)
+                                            && !EarthquakeModeData.SameId(x.WarningId, "mirror"))
+                            ?? zones.Find(x => x.IsActiveIn(EarthquakePhase.Quake));
+                    if (z != null)
+                    {
+                        Log($"OTO: sarsıntıyı tehlike bölgesinde bekliyor ({z.Id})");
+                        player.PlaceAt(z.InnerPoint(), new Vector2(0f, -1f));
+                    }
+                    break;
+                }
+                case DebugScenario.Timeouts:
+                {
+                    // Masadan uzak, bölge dışında bir yer: oda spawn'ı (uygun değilse biraz kaydırılır).
+                    Vector3 p = currentRoom != null ? currentRoom.DefaultSpawn.position : player.transform.position;
+                    for (int i = 0; i < 8 && (protection.FindTable(p) != null || zones.Exists(z => z.IsActiveIn(EarthquakePhase.Quake) && z.Contains(p))); i++)
+                        p += new Vector3(0.5f, -0.25f, 0f);
+                    Log("OTO: sarsıntıyı masadan uzakta bekliyor (yerinde Ç-K)");
+                    player.PlaceAt(p, new Vector2(0f, -1f));
+                    break;
+                }
+                default:
+                {
+                    SturdyTable table = null;
+                    foreach (var t in protection.Tables)
+                        if (t != null && currentRoom != null && currentRoom.Owns(t)) { table = t; break; }
+                    if (table == null && protection.Tables.Length > 0) table = protection.Tables[0];
+                    if (table != null)
+                    {
+                        Log($"OTO: sarsıntıyı sağlam masanın yanında bekliyor ({table.name})");
+                        player.PlaceAt(table.ApproachPosition, new Vector2(0f, 1f));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}

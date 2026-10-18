@@ -1,0 +1,85 @@
+{
+  "chapter_id": "rooms",
+  "version": "0.1-taslak",
+  "scenes": [
+    {
+      "id": "ROOM_WAKE_F",
+      "title": "Uyanış (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Saat yedi olmuş... Yine okula geç kalmayayım." }
+      ]
+    },
+    {
+      "id": "ROOM_WAKE_E",
+      "title": "Uyanış (Deprem)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Saat yedi olmuş... Hadi bakalım, kalkma vakti." }
+      ]
+    },
+    {
+      "id": "ROOM_CLOCK",
+      "title": "Alarm",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Tamam tamam, kalktım! Alarmı kapatayım." }
+      ]
+    },
+    {
+      "id": "ROOM_WINDOW_F",
+      "title": "Pencere (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Gökyüzü kapkara... Bugün yağmur yağacak galiba." }
+      ]
+    },
+    {
+      "id": "ROOM_WINDOW_E",
+      "title": "Pencere (Deprem)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Hava çok güzel. Güzel bir gün olacak." }
+      ]
+    },
+    {
+      "id": "ROOM_DESK",
+      "title": "Çanta",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Çantam dün akşamdan hazır. Hazırlıklı olmak her zaman iyidir." }
+      ]
+    },
+    {
+      "id": "ROOM_UMBRELLA",
+      "title": "Şemsiye (sadece Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Şemsiyemi de alayım, hava bozabilir." }
+      ]
+    },
+    {
+      "id": "ROOM_DESK_F",
+      "title": "Çantayı al (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Çantamı da alayım, okula geç kalmayayım." }
+      ]
+    },
+    {
+      "id": "ROOM_NEED_BAG",
+      "title": "Kapı: çanta alınmadı (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Önce çantamı almalıyım." }
+      ]
+    },
+    {
+      "id": "ROOM_WASH_F",
+      "title": "Lavabo (Sel)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Oh, su buz gibi! Şimdi uyandım işte." },
+        { "speaker": "Çocuk", "text": "Bakalım kahvaltıda ne var?" }
+      ]
+    },
+    {
+      "id": "ROOM_WASH_E",
+      "title": "Lavabo (Deprem)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Oh, su buz gibi! Şimdi uyandım işte." },
+        { "speaker": "Çocuk", "text": "Kahvaltı hazır, hadi masaya!" }
+      ]
+    }
+  ]
+}

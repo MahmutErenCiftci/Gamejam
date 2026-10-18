@@ -1,0 +1,21 @@
+{
+  "id": "flood_evening_rumor",
+  "prompt": "Hangi bilgiye güvenirsin?",
+  "fictionNotice": "",
+  "cards": [
+    {
+      "id": "rumor_shortcut",
+      "official": false,
+      "sourceLabel": "Kaynak: bilinmiyor",
+      "text": "Kestirme açıkmış, herkes oradan gidiyor.",
+      "feedback": "Bu mesajı kimin yazdığı belli değil. Doğrulanmamış söylenti seni kapalı ve suyla kaplı yola yönlendirebilir."
+    },
+    {
+      "id": "official_route",
+      "official": true,
+      "sourceLabel": "Resmî duyuru · Bugün 19:35",
+      "text": "Dere kenarındaki alçak yol su baskını nedeniyle kapatıldı. Yüksek yoldaki işaretli güvenli rotayı izleyin.",
+      "feedback": "Doğru. Kaynağı ve saati belli resmî duyuruya göre alçak yol kapalı; işaretli yüksek yoldan güvenli bölgeye git."
+    }
+  ]
+}

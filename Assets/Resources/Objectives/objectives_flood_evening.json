@@ -1,0 +1,38 @@
+{
+  "chapter": "flood_evening",
+  "groups": [
+    { "id": "warning", "title": "SEL · UYARI", "banner": "", "activateOn": [{ "type": "event", "key": "FE_START" }] },
+    { "id": "route", "title": "SEL · GÜZERGÂH", "banner": "", "activateOn": [{ "type": "event", "key": "FE_ROUTE" }] },
+    { "id": "obstacle", "title": "SEL · YOL KAPANDI", "banner": "YOL AÇILDI!", "activateOn": [{ "type": "event", "key": "FE_OBSTACLE" }] },
+    { "id": "final", "title": "SEL · EVE DOĞRU", "banner": "APARTMANA ULAŞTIN!", "activateOn": [{ "type": "event", "key": "FE_FINAL" }] },
+    { "id": "home", "title": "SEL · EVE DÖNÜŞ", "banner": "EVE ULAŞTIN!", "activateOn": [{ "type": "event", "key": "safe_zone" }] }
+  ],
+  "objectives": [
+    { "id": "FE_WARN", "group": "warning", "text": "Sel uyarısını oku", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "warning_read" }] },
+    { "id": "FE_FOLLOW", "group": "route", "text": "Güvenli güzergâhı takip et", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "high_road" }] },
+    { "id": "FE_PUSH", "group": "obstacle", "text": "Devrilen ağacı it, çek: yolu aç", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "branch_cleared" }] },
+    { "id": "FE_KEEP_WATER", "group": "route", "text": "Yükselen sudan kaç, kuru yoldan ilerle", "kind": "Keep", "keepUntil": "final",
+      "completeOn": [{ "type": "event", "key": "safe_zone" }] },
+    { "id": "FE_KEEP_POWER", "group": "route", "text": "Elektrikli suyu fark et, uzak dur", "kind": "Keep", "keepUntil": "final",
+      "completeOn": [{ "type": "event", "key": "safe_zone" }],
+      "warnOn": [{ "type": "event", "key": "power_shock" }] },
+    { "id": "FE_KEEP_DEBRIS", "group": "route", "text": "Yüzen engellerden uzak dur", "kind": "Keep", "keepUntil": "final",
+      "completeOn": [{ "type": "event", "key": "safe_zone" }],
+      "warnOn": [{ "type": "event", "key": "debris_bump" }] },
+    { "id": "FE_HOME_REACH", "group": "final", "text": "Apartmanına ulaş", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "safe_zone" }] },
+    { "id": "FE_HOME_LOCK", "group": "home", "text": "Kapı kilidini kontrol et", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "lock_checked" }] },
+    { "id": "FE_HOME_PIN_FIND", "group": "home", "text": "Kapı kodunu bul", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "pin_found" }] },
+    { "id": "FE_HOME_PIN_ENTER", "group": "home", "text": "Kodu gir", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "pin_entered" }] },
+    { "id": "FE_HOME_HANDLE", "group": "home", "text": "Kapı kolunu çevir", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "handle_turned" }] },
+    { "id": "FE_HOME_ENTER", "group": "home", "text": "Eve gir", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "home_entered" }] }
+  ]
+}
