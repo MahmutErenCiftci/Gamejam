@@ -173,6 +173,138 @@ TextureImporter:
   - first:
       213: 2228575678779599897
     second: LINE_FE_Rail_A_Front_56
+  - first:
+      213: 1473416093224231893
+    second: LINE_FE_Rail_A_Front_57
+  - first:
+      213: 1909777757336226571
+    second: LINE_FE_Rail_A_Front_58
+  - first:
+      213: 924801264136703043
+    second: LINE_FE_Rail_A_Front_59
+  - first:
+      213: 595346409695661174
+    second: LINE_FE_Rail_A_Front_60
+  - first:
+      213: 1668527124331462839
+    second: LINE_FE_Rail_A_Front_61
+  - first:
+      213: 582564454040472233
+    second: LINE_FE_Rail_A_Front_62
+  - first:
+      213: 1685930050473777377
+    second: LINE_FE_Rail_A_Front_63
+  - first:
+      213: 4221243129422641387
+    second: LINE_FE_Rail_A_Front_64
+  - first:
+      213: 2164201123005158262
+    second: LINE_FE_Rail_A_Front_65
+  - first:
+      213: 4424050662929467945
+    second: LINE_FE_Rail_A_Front_66
+  - first:
+      213: 2030422719781223261
+    second: LINE_FE_Rail_A_Front_67
+  - first:
+      213: 3600319612427482484
+    second: LINE_FE_Rail_A_Front_68
+  - first:
+      213: 1553227225038137237
+    second: LINE_FE_Rail_A_Front_69
+  - first:
+      213: 2586124687680469940
+    second: LINE_FE_Rail_A_Front_70
+  - first:
+      213: 853140806502150909
+    second: LINE_FE_Rail_A_Front_71
+  - first:
+      213: 2168116885447606335
+    second: LINE_FE_Rail_A_Front_72
+  - first:
+      213: 894432339419499982
+    second: LINE_FE_Rail_A_Front_73
+  - first:
+      213: 523318305142509522
+    second: LINE_FE_Rail_A_Front_74
+  - first:
+      213: 2640400096774672157
+    second: LINE_FE_Rail_A_Front_75
+  - first:
+      213: 235256305232445088
+    second: LINE_FE_Rail_A_Front_76
+  - first:
+      213: 3830785074842381990
+    second: LINE_FE_Rail_A_Front_77
+  - first:
+      213: 1894652099985523315
+    second: LINE_FE_Rail_A_Front_78
+  - first:
+      213: 1006313325155941274
+    second: LINE_FE_Rail_A_Front_79
+  - first:
+      213: 721935837552686775
+    second: LINE_FE_Rail_A_Front_80
+  - first:
+      213: 1267302512732275150
+    second: LINE_FE_Rail_A_Front_81
+  - first:
+      213: 1015323883096499276
+    second: LINE_FE_Rail_A_Front_82
+  - first:
+      213: 995547553700625052
+    second: LINE_FE_Rail_A_Front_83
+  - first:
+      213: 3950487244856775191
+    second: LINE_FE_Rail_A_Front_84
+  - first:
+      213: 2705656445642769952
+    second: LINE_FE_Rail_A_Front_85
+  - first:
+      213: 2832841082632600998
+    second: LINE_FE_Rail_A_Front_86
+  - first:
+      213: 1680778193022317755
+    second: LINE_FE_Rail_A_Front_87
+  - first:
+      213: 1766941868329558198
+    second: LINE_FE_Rail_A_Front_88
+  - first:
+      213: 4580189909190643809
+    second: LINE_FE_Rail_A_Front_89
+  - first:
+      213: 1436253794852381486
+    second: LINE_FE_Rail_A_Front_90
+  - first:
+      213: 1187816744379674918
+    second: LINE_FE_Rail_A_Front_91
+  - first:
+      213: 4602195195664610816
+    second: LINE_FE_Rail_A_Front_92
+  - first:
+      213: 4607936398099159872
+    second: LINE_FE_Rail_A_Front_93
+  - first:
+      213: 2167896875460778466
+    second: LINE_FE_Rail_A_Front_94
+  - first:
+      213: 3282031177390535333
+    second: LINE_FE_Rail_A_Front_95
+  - first:
+      213: 893182837618613751
+    second: LINE_FE_Rail_A_Front_96
+  - first:
+      213: 3972076175225635138
+    second: LINE_FE_Rail_A_Front_97
+  - first:
+      213: 2717064635694293137
+    second: LINE_FE_Rail_A_Front_98
+  - first:
+      213: 3157979447610349710
+    second: LINE_FE_Rail_A_Front_99
+  - first:
+      213: 4415400739000095393
+    second: LINE_FE_Rail_A_Front_100
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -1520,6 +1652,974 @@ TextureImporter:
         serializedVersion: 2
         x: 896
         y: 446
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da76ffb815f3c08762de79321571e1ea
+      internalID: 2228575678779599897
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_57
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 454
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5899e07240f522809461128fd178bb8c
+      internalID: 1473416093224231893
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_58
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 462
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41658898b5a126719afa26989657facd
+      internalID: 1909777757336226571
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_59
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 470
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 762cc55d968cc45773577f3991216b7e
+      internalID: 924801264136703043
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_60
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 478
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7c4461a5d53bc094ec00800fed96a97
+      internalID: 595346409695661174
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_61
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 486
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339ef7d9d60716960bcf53ded06e0887
+      internalID: 1668527124331462839
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_62
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 494
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424a29fa48e1a9ac5cfd0f885aa6ed72
+      internalID: 582564454040472233
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_63
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 502
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1864d1337531077f52135fd3f5788473
+      internalID: 1685930050473777377
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_64
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 510
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e066904376ea8491dd9e1ea674181366
+      internalID: 4221243129422641387
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_65
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 518
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6775ebdbd312d7ac727db81225ffd361
+      internalID: 2164201123005158262
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_66
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 526
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fa795716ef99ae799414d5fd7e23a18
+      internalID: 4424050662929467945
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_67
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 534
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee05db83e5efede782ae65ff39d4bf09
+      internalID: 2030422719781223261
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_68
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 542
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ba4ddd39c35713a34b6ef780ca0f92f
+      internalID: 3600319612427482484
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_69
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 550
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 796348c4ab94003c7cc5d3338d067837
+      internalID: 1553227225038137237
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_70
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 558
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c37f49e72e0a307df3b42fec48cc43
+      internalID: 2586124687680469940
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_71
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 566
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca8669be5ea993ebc5e53a92c3d8cd36
+      internalID: 853140806502150909
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_72
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 574
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abb6ad42509d2ba68945121aad9188a1
+      internalID: 2168116885447606335
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_73
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 582
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbd8f87e7e29bcfd67e87b04b86e15f1
+      internalID: 894432339419499982
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_74
+      rect:
+        serializedVersion: 2
+        x: 1184
+        y: 590
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb7481e92548c306ddf958dd491338ab
+      internalID: 523318305142509522
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_75
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 598
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6254bb491853b9f2bc3d79cecea05dc6
+      internalID: 2640400096774672157
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_76
+      rect:
+        serializedVersion: 2
+        x: 1216
+        y: 606
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d301bbeeb8bd9ddca7c1dffcce84eb8
+      internalID: 235256305232445088
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_77
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 614
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e807426cb96ff59da0a7a9bb59bbc80
+      internalID: 3830785074842381990
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_78
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 622
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13282c5596b5ff9b41631fcdae171241
+      internalID: 1894652099985523315
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_79
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 630
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81fd86a4437d6a778f8f8db02bdfcbd2
+      internalID: 1006313325155941274
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_80
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 638
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0752fbec90f9780aef174c811d6192f
+      internalID: 721935837552686775
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_81
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 646
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd3cbaca270c0f3c92ddd27cd1a50d8d
+      internalID: 1267302512732275150
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_82
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 654
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a7bf67b8f9f86302be24998646b653
+      internalID: 1015323883096499276
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_83
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 662
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c87159308e511d780af9039c0a93f74d
+      internalID: 995547553700625052
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_84
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 670
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e6b13bf3f79f97f5df037ed75618ee
+      internalID: 3950487244856775191
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_85
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 678
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ff2315dcca4566e2e6461bfb3cd4e3
+      internalID: 2705656445642769952
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_86
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 686
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70e889ac14e934c740515424967bc32
+      internalID: 2832841082632600998
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_87
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 694
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522dbd563370d91fca49fdf36c16574c
+      internalID: 1680778193022317755
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_88
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 702
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a76a5aed193342ac7801688dde385dc9
+      internalID: 1766941868329558198
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_89
+      rect:
+        serializedVersion: 2
+        x: 1424
+        y: 710
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d7d3a76a5716d2fb770fc523e4a14e
+      internalID: 4580189909190643809
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_90
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 718
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff315af7be5f4e1a6f0e6721898bed2
+      internalID: 1436253794852381486
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_91
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 726
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88d252138ca6a104828f20067c7ac976
+      internalID: 1187816744379674918
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_92
+      rect:
+        serializedVersion: 2
+        x: 1472
+        y: 734
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d52af5a506273e5e0366cd63bbb0fcf
+      internalID: 4602195195664610816
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_93
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 742
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b904de251c10a3d8cdd5255d77882df7
+      internalID: 4607936398099159872
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_94
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 750
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb805a572300553fac0af82aff26c5d3
+      internalID: 2167896875460778466
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_95
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 758
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92109dd3aac99b21619773b3bdddd06f
+      internalID: 3282031177390535333
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_96
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 766
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90099a63f88b0ff9fda8684cb7824449
+      internalID: 893182837618613751
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_97
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 774
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92ee6b91252591d337a2f75be2efbc0
+      internalID: 3972076175225635138
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_98
+      rect:
+        serializedVersion: 2
+        x: 1568
+        y: 782
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca63bc154e5f3a979fd0bdd827c7ee36
+      internalID: 2717064635694293137
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_99
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 790
+        width: 16
+        height: 30
+      alignment: 9
+      pivot: {x: 0.5, y: 0.216667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4d79209708334d75a28ebc2c7fac75a
+      internalID: 3157979447610349710
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Rail_A_Front_100
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 798
         width: 6
         height: 23
       alignment: 9
@@ -1530,8 +2630,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da76ffb815f3c08762de79321571e1ea
-      internalID: 2228575678779599897
+      spriteID: 425a4f6fa98f1ebe6e7202f61d43af24
+      internalID: 4415400739000095393
       vertices: []
       indices:
       edges: []
@@ -1607,6 +2707,50 @@ TextureImporter:
       LINE_FE_Rail_A_Front_54: 1845753806929023477
       LINE_FE_Rail_A_Front_55: 2152486698806242004
       LINE_FE_Rail_A_Front_56: 2228575678779599897
+      LINE_FE_Rail_A_Front_57: 1473416093224231893
+      LINE_FE_Rail_A_Front_58: 1909777757336226571
+      LINE_FE_Rail_A_Front_59: 924801264136703043
+      LINE_FE_Rail_A_Front_60: 595346409695661174
+      LINE_FE_Rail_A_Front_61: 1668527124331462839
+      LINE_FE_Rail_A_Front_62: 582564454040472233
+      LINE_FE_Rail_A_Front_63: 1685930050473777377
+      LINE_FE_Rail_A_Front_64: 4221243129422641387
+      LINE_FE_Rail_A_Front_65: 2164201123005158262
+      LINE_FE_Rail_A_Front_66: 4424050662929467945
+      LINE_FE_Rail_A_Front_67: 2030422719781223261
+      LINE_FE_Rail_A_Front_68: 3600319612427482484
+      LINE_FE_Rail_A_Front_69: 1553227225038137237
+      LINE_FE_Rail_A_Front_70: 2586124687680469940
+      LINE_FE_Rail_A_Front_71: 853140806502150909
+      LINE_FE_Rail_A_Front_72: 2168116885447606335
+      LINE_FE_Rail_A_Front_73: 894432339419499982
+      LINE_FE_Rail_A_Front_74: 523318305142509522
+      LINE_FE_Rail_A_Front_75: 2640400096774672157
+      LINE_FE_Rail_A_Front_76: 235256305232445088
+      LINE_FE_Rail_A_Front_77: 3830785074842381990
+      LINE_FE_Rail_A_Front_78: 1894652099985523315
+      LINE_FE_Rail_A_Front_79: 1006313325155941274
+      LINE_FE_Rail_A_Front_80: 721935837552686775
+      LINE_FE_Rail_A_Front_81: 1267302512732275150
+      LINE_FE_Rail_A_Front_82: 1015323883096499276
+      LINE_FE_Rail_A_Front_83: 995547553700625052
+      LINE_FE_Rail_A_Front_84: 3950487244856775191
+      LINE_FE_Rail_A_Front_85: 2705656445642769952
+      LINE_FE_Rail_A_Front_86: 2832841082632600998
+      LINE_FE_Rail_A_Front_87: 1680778193022317755
+      LINE_FE_Rail_A_Front_88: 1766941868329558198
+      LINE_FE_Rail_A_Front_89: 4580189909190643809
+      LINE_FE_Rail_A_Front_90: 1436253794852381486
+      LINE_FE_Rail_A_Front_91: 1187816744379674918
+      LINE_FE_Rail_A_Front_92: 4602195195664610816
+      LINE_FE_Rail_A_Front_93: 4607936398099159872
+      LINE_FE_Rail_A_Front_94: 2167896875460778466
+      LINE_FE_Rail_A_Front_95: 3282031177390535333
+      LINE_FE_Rail_A_Front_96: 893182837618613751
+      LINE_FE_Rail_A_Front_97: 3972076175225635138
+      LINE_FE_Rail_A_Front_98: 2717064635694293137
+      LINE_FE_Rail_A_Front_99: 3157979447610349710
+      LINE_FE_Rail_A_Front_100: 4415400739000095393
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

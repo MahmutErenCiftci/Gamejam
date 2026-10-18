@@ -127,12 +127,24 @@ const fac = newL();
     front: (s, t) => t < 0.25 ? CONC_T : (t > 0.8 ? CONC_S : CONC_F), left: CONC_S,
   });
   // --- apartman adı levhası (saçağın üstünde): "GÜNEŞ APT."
+  // Harfler tek tek, bütün olarak yerleştirilir (sütun sütun kaydırma 3x5 harfleri bozuyordu: N→H, Ü/Ş noktaları kayboluyordu).
+  // Her harf, levhanın kendi sütun merkezindeki eğime oturur; levha 12 px: alt kenar 1 + çengel (Ş) 1 + harf 5 + boşluk 1 + nokta 1 + üst pay 2 + kenar 1.
   {
-    const txt = 'GÜNEŞ APT.'; const tw = C.textW(txt); const pu0 = (G.uL + G.uR) / 2 - (tw + 4) / 64; const ph0 = cn.h1 + 4;
-    const pw = (tw + 4) / 32; // u genişliği
-    fac.quad([pu0, -0.02, ph0], [pw, 0, 0], [0, 0, 9], (s, t) => (s < 0.03 || s > 0.97 || t < 0.11 || t > 0.89) ? [40, 44, 52] : [28, 58, 96]);
-    const t3 = C.text3(txt); const X0 = P(fac, pu0, -0.02, 0)[0] + 2; // her sütun eğime göre kayar
-    for (const [x, y] of t3.px) { const X = Math.round(X0 + x), u = (X + 0.5 - OX) / 32 + 0.02; const Yb = OY - 16 * (u - 0.02) - (ph0 + 2); fac.put(X, Math.round(Yb - 5 + y), [236, 236, 228]); }
+    const txt = 'GÜNEŞ APT.'; const tw = C.textW(txt, 1); const PH = 12;
+    const pu0 = (G.uL + G.uR) / 2 - (tw + 6) / 64; const ph0 = cn.h1 + 2;
+    const pw = (tw + 6) / 32; // u genişliği (yatay piksel = tw + 6)
+    fac.quad([pu0, -0.02, ph0], [pw, 0, 0], [0, 0, PH], (s, t) => (s * (tw + 6) < 1 || s * (tw + 6) >= tw + 5 || t * PH < 1 || t * PH >= PH - 1) ? [40, 44, 52] : [28, 58, 96]);
+    const X0 = Math.round(P(fac, pu0, -0.02, 0)[0]) + 3;
+    let gx = 0;
+    for (const ch of txt) {
+      const g = C.text3(ch, 1); const gw = Math.max(1, g.w);
+      const Xc = X0 + gx + gw / 2;                         // harf merkezi sütunu
+      const u = (Xc - OX) / 32 - 0.02;                      // levha düzleminde (d = -0.02) X = OX + 32(u + 0.02)
+      const Yb = OY - 16 * (u - 0.02) - ph0;                // levhanın alt kenarı (sürekli Y)
+      const base = Math.round(Yb - 3);                      // harf satırı 4 (alt) → levhanın 3. iç pikseli
+      for (const [x, y] of g.px) fac.put(X0 + gx + x, base - 4 + y, [240, 238, 226]);
+      gx += (ch === ' ' ? 2 : gw + 1);
+    }
   }
   // --- kapı numarası (eski mavi levha, sola-aşağı taşındı)
   {

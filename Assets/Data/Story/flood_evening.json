@@ -61,13 +61,6 @@
       ]
     },
     {
-      "id": "FE_WIND_ENTER",
-      "title": "Sert Rüzgâr",
-      "lines": [
-        { "speaker": "Çocuk", "text": "Rüzgâr çok sert. Acele etmeden, işaretli rotadan ilerlemeliyim." }
-      ]
-    },
-    {
       "id": "FE_BRANCH_SEEN",
       "title": "Düşen Dal",
       "lines": [
@@ -121,8 +114,8 @@
       "id": "FE_FINAL",
       "title": "Son Aşama",
       "lines": [
-        { "speaker": "Çocuk", "text": "Yağmur daha da arttı. <color=#3CCFC4>Belirlenmiş güvenli yüksek bölgeye</color> ulaşmalıyım." },
-        { "speaker": "Çocuk", "text": "Her bina güvenli değil. Toplanma tabelasının gösterdiği yere gideyim." }
+        { "speaker": "Çocuk", "text": "Yağmur daha da arttı. <color=#3CCFC4>Apartmanıma</color> bir an önce ulaşmalıyım." },
+        { "speaker": "Çocuk", "text": "Apartmanıma az kaldı. Kuru kenardan, sarkan kablolardan ve sürüklenen eşyalardan uzak durarak ilerleyeceğim." }
       ]
     },
     {
@@ -137,7 +130,7 @@
       "id": "FE_SAFE",
       "title": "Güvenli Bölge",
       "lines": [
-        { "speaker": "Görevli", "text": "Burası belirlenmiş güvenli toplanma alanı. Burada bekle, yönlendirmeleri izle." },
+        { "speaker": "Çocuk", "text": "Apartmanımın bahçesine ulaştım. Su buraya gelmiyor." },
         { "speaker": "Çocuk", "text": "Güvendeyim. Resmî duyuruları takip edeceğim." }
       ]
     },
@@ -171,7 +164,7 @@
         { "speaker": "branch_cleared", "text": "Dala dokunmadan işaretli alternatif geçidi kullandın." },
         { "speaker": "gate_opened", "text": "Güvenli bölgenin bahçe kapısını açtın." },
         { "speaker": "code_opened", "text": "İpuçlarını okuyup girişin şifresini buldun." },
-        { "speaker": "safe_zone", "text": "Belirlenmiş güvenli yüksek bölgeye ulaştın." },
+        { "speaker": "safe_zone", "text": "Suya girmeden apartmanına ulaştın." },
         { "speaker": "high_road", "text": "Kuru ve işaretli yüksek yolu seçtin." }
       ]
     },
@@ -181,7 +174,8 @@
       "lines": [
         { "speaker": "low_road", "text": "Kapatılmış alçak yola yöneldin; bariyerde durup güvenli rotaya döndün." },
         { "speaker": "rumor_trusted", "text": "Önce kaynağı belirsiz söylentiye güvendin; resmî duyuruyu görünce düzelttin." },
-        { "speaker": "wrong_code", "text": "Şifreyi önce yanlış girdin; ipuçlarını yeniden okuyup doğrusunu buldun." }
+        { "speaker": "wrong_code", "text": "Şifreyi önce yanlış girdin; ipuçlarını yeniden okuyup doğrusunu buldun." },
+        { "speaker": "power_shock", "text": "Sarkan kablonun değdiği suya yaklaştın; elektrikli sudan uzak durup başka yoldan dolaştın." }
       ]
     }
   ],
@@ -193,7 +187,7 @@
     "learned": [
       "Suyla kaplı yola girme.",
       "Kapatılmış yolları kullanma.",
-      "Söylentinin kaynağını doğrula.",
+      "Sarkan kabloya ve yakınındaki suya yaklaşma.",
       "Güvenli yüksek bölgelere ilişkin resmî yönlendirmeleri izle.",
       "Eve ulaşmak uğruna risk alma."
     ],

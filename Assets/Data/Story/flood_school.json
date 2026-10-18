@@ -1,0 +1,101 @@
+{
+  "chapter_id": "flood_school",
+  "version": 1,
+  "scenes": [
+    {
+      "id": "FS_TEACHER",
+      "title": "Okul Çıkışı",
+      "lines": [
+        { "speaker": "Öğretmen", "text": "Yağmur çok şiddetlendi. Okul Caddesi'ni <color=#E8392B>su bastı</color>, sakın suya yaklaşmayın!" },
+        { "speaker": "Öğretmen", "text": "<color=#18A957>Köprüdeki yaya yolundan</color> geçin, sonra doğruca eve gidin." },
+        { "speaker": "Çocuk", "text": "Tamam öğretmenim. Görüşürüz!" }
+      ]
+    },
+    {
+      "id": "FS_SHORTCUT",
+      "title": "Kestirme mi, Köprü mü?",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Caddeden kestirsem eve çok daha çabuk varırım... Ama orası <color=#E8392B>su altında</color>." },
+        { "speaker": "Çocuk", "text": "Su çok hızlı akıyor. Köprü biraz uzakta ama <color=#18A957>yaya yolu suyun üstünde</color>. Ne yapmalıyım?" }
+      ]
+    },
+    {
+      "id": "FS_SWEPT",
+      "title": "Dur! (yanlış seçimde)",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#E8392B>Dur!</color> Suya girersem akıntı beni böyle sürükleyebilir." },
+        { "speaker": "Çocuk", "text": "Suyun ne kadar derin ve hızlı olduğunu <color=#E8392B>bilemem</color>. Akan suya asla girilmez." }
+      ]
+    },
+    {
+      "id": "FS_DECIDED",
+      "title": "Karar",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Sudan geçmeyeceğim.</color> Köprüdeki yaya yolundan gidiyorum." },
+        { "speaker": "Çocuk", "text": "Biraz uzun sürecek ama olsun. <color=#18A957>Güvende olmak</color> daha önemli." }
+      ]
+    },
+    {
+      "id": "FS_BRIDGE",
+      "title": "Köprüde",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Su köprünün altından <color=#E8392B>çok hızlı</color> akıyor! Kenara eğilmeden, yaya yolundan yürüyeyim." }
+      ]
+    },
+    {
+      "id": "FS_CROSSED",
+      "title": "Köprü Geçildi",
+      "lines": [
+        { "speaker": "Çocuk", "text": "Geçtim! Yağmur hiç dinmiyor... <color=#18A957>Sudan uzak durarak</color> eve doğru yürüyeyim." }
+      ]
+    },
+    {
+      "id": "FS_SIGN",
+      "title": "Tabela",
+      "lines": [
+        { "speaker": "Çocuk", "text": "\"<color=#E8392B>SU BİRİKİNTİSİ TEHLİKELİDİR!</color>\" Okul Caddesi araçlara da yayalara da kapalı." },
+        { "speaker": "Çocuk", "text": "Yayalar <color=#18A957>köprü üstü yaya yolunu</color> kullanmalı. Ben de öyle yaptım." }
+      ]
+    },
+    {
+      "id": "F07_WATER_WARNING",
+      "title": "Suya Yaklaşma",
+      "lines": [
+        { "speaker": "Çocuk", "text": "<color=#18A957>Suya yaklaşmamalıyım</color>, <color=#E8392B>akıntı ve derinlik belli olmaz!</color>" }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "FS_D1",
+      "prompt": "Kestirme yolu su bastı, köprü biraz uzakta. Ne yapmalısın?",
+      "time_limit": 0,
+      "required_correct": 1,
+      "timeout_feedback": "",
+      "choices": [
+        {
+          "id": "FS_D1_A",
+          "key": 1,
+          "text": "Kestirmeden, akan suyun içinden geç.",
+          "correct": false,
+          "feedback": "Akan suyun derinliği ve gücü görünenden fazladır. Diz hizasındaki akıntı bile insanı sürükleyebilir. Asla girme!",
+          "wrong_example": "Akan suya girmek"
+        },
+        {
+          "id": "FS_D1_B",
+          "key": 2,
+          "text": "Köprüdeki yaya yolunu kullan.",
+          "correct": true,
+          "feedback": "Doğru! Suyla kaplı yola girmek yerine köprüdeki yaya yolunu seçtin.",
+          "wrong_example": ""
+        }
+      ]
+    }
+  ],
+  "result": {
+    "title_success": "",
+    "title_with_mistakes": "",
+    "learned": [],
+    "note": ""
+  }
+}

@@ -29,8 +29,6 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private Text toastTitle, toastBody, toastGlyph;
         private readonly Queue<Toast> toasts = new Queue<Toast>();
         private Coroutine toastRoutine;
-        private WindHud windHud;          // rüzgâr göstergesi üst ortadayken şerit alta iner
-        private bool windHudSearched;
         private Vector2 toastAnchor = new Vector2(-1f, -1f), toastPos;
         // Şerit 280 birim: sol üstteki görev paneliyle (640x360 tabanında x 8..176) çakışmasın diye gerekirse sağa kayar
         private static readonly Vector2 ToastSize = new Vector2(280f, 44f);
@@ -135,18 +133,13 @@ namespace AfetUyanisi.Chapters.FloodEvening
             toastRoutine = null;
         }
 
-        /// <summary>Şerit normalde üst ortada; rüzgâr koridorunun göstergesi/bildirimi oradayken alt ortaya iner.</summary>
+        /// <summary>Şerit üst ortada (görev panelinin sağında).</summary>
         private void PlaceToast()
         {
-            if (!windHudSearched) { windHudSearched = true; windHud = FindAnyObjectByType<WindHud>(FindObjectsInactive.Include); }
-            bool low = windHud != null && windHud.TopBusy;
-            Vector2 anchor = new Vector2(0.5f, low ? 0f : 1f), pos = new Vector2(0f, low ? 10f : -8f);
-            if (!low)
-            {
-                // üstte: görev paneli sol üstte → şeridin sol kenarı panelin sağında kalsın (en-boy oranı değişse de)
-                float w = ((RectTransform)canvas.transform).rect.width;
-                pos.x = Mathf.Max(0f, Mathf.Ceil(ToastMinLeft - (w * 0.5f - ToastSize.x * 0.5f)));
-            }
+            Vector2 anchor = new Vector2(0.5f, 1f), pos = new Vector2(0f, -8f);
+            // görev paneli sol üstte → şeridin sol kenarı panelin sağında kalsın (en-boy oranı değişse de)
+            float w = ((RectTransform)canvas.transform).rect.width;
+            pos.x = Mathf.Max(0f, Mathf.Ceil(ToastMinLeft - (w * 0.5f - ToastSize.x * 0.5f)));
             if (anchor == toastAnchor && pos == toastPos) return;
             toastAnchor = anchor; toastPos = pos;
             FeUi.Place(toastRoot, anchor.x, anchor.y, pos, ToastSize);

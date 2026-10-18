@@ -19,14 +19,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public string note;
         /// <summary>Doğru karar yoksa gösterilecek satır.</summary>
         public string emptyCorrect;
-        /// <summary>Oyuncunun seçimi: "Retry" ya da "Menu".</summary>
+        /// <summary>Oyuncunun seçimi: "Next", "Retry" ya da "Menu".</summary>
         public string choice;
     }
 
     /// <summary>
-    /// Sonuç ve öğrenme ekranı (LEAD): başlık (Güvenli bölgeye ulaştın / süre doldu), açıklama, "Doğru kararların",
-    /// "Düzeltilen yanlışlar", "Unutma" (öğrenilenler) ve [Sel Bölümünü Tekrar Dene] [Menüye Dön].
-    /// Klavye: ←/→ (A/D) seçim, Enter/Space/E onay, 1/2 kısayol; fare ile tıklanır. Canvas 110.
+    /// Sonuç ve öğrenme ekranı (LEAD): başlık (Eve güvenle ulaştın / süre doldu), açıklama, "Doğru kararların",
+    /// "Düzeltilen yanlışlar", "Unutma" (öğrenilenler) ve iki buton: birincil + [Menüye Dön].
+    /// Birincil buton başarısız ekranda [R] Tekrar Dene ("Retry"), başarı ekranında SetPrimaryAction ile
+    /// "Devam: Deprem Bölümü" / "Oyunu Bitir" ("Next"; seçilince ekran kararır) olur (GameFlow).
+    /// Klavye: ←/→ (A/D) seçim, Enter/Space/E onay, 1/2 kısayol (R yalnız Tekrar Dene'de); fare ile tıklanır. Canvas 110.
     /// Seçim result.choice'a yazılır; sahne geçişini controller yapar.
     /// </summary>
     public class FloodEveningResultView : MonoBehaviour
@@ -38,6 +40,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
         public const string ChoiceRetry = "Retry";
         public const string ChoiceMenu = "Menu";
+        /// <summary>Başarı ekranının birincil butonu: sıradaki afet ya da oyun sonu (GameFlow.ContinueAfter).</summary>
+        public const string ChoiceNext = "Next";
+        [Tooltip("'Devam' seçilince ekranın kararma süresi (sn)")]
+        [SerializeField] private float continueFadeSeconds = 0.6f;
+        private string primaryChoice = ChoiceRetry;
+        private Image blackout;
 
         private const float PanelW = 560f, PanelH = 324f;
 
@@ -66,6 +74,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
             lessonsHeader.text = lessons ?? "";
             buttonTexts[0].text = retry ?? "";
             buttonTexts[1].text = menu ?? "";
+            primaryChoice = ChoiceRetry;
+        }
+
+        /// <summary>Birincil (sol) butonun seçimini ve metnini değiştirir (ör. ChoiceNext + "Devam: Deprem Bölümü").
+        /// SetLabels birincil butonu yeniden Tekrar Dene yapar.</summary>
+        public void SetPrimaryAction(string choice, string label)
+        {
+            Build();
+            primaryChoice = string.IsNullOrEmpty(choice) ? ChoiceRetry : choice;
+            if (label != null) buttonTexts[0].text = label;
         }
 
         private void Awake() => Build();
@@ -130,6 +148,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
             BuildButton(0, 120f, 176f);
             BuildButton(1, 312f, 128f);
 
+            blackout = FeUi.Img("Blackout", canvas.transform, new Color(0f, 0f, 0f, 0f), true);
+            FeUi.Stretch(blackout.rectTransform);
+            blackout.gameObject.SetActive(false);
+
             group.alpha = 0f;
             canvas.gameObject.SetActive(false);
         }
@@ -163,6 +185,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Build();
             if (result == null) result = new FloodEveningResult();
             result.choice = null;
+            blackout.gameObject.SetActive(false);
             Color accent = result.success ? FeUi.Green : FeUi.Amber;
             titleText.text = result.title ?? "";
             titleText.color = accent;
@@ -206,7 +229,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 {
                     int key = GameInput.ChoiceKeyPressed;
                     if (key == 1 || key == 2) chosen = key - 1;
-                    else if (GameInput.RetryPressed) chosen = 0;
+                    else if (GameInput.RetryPressed && primaryChoice == ChoiceRetry) chosen = 0;
                     else if (GameInput.LeftPressed) { focus = 0; Refresh(); }
                     else if (GameInput.RightPressed) { focus = 1; Refresh(); }
                     else if (GameInput.ConfirmPressed || GameInput.InteractPressed) chosen = focus;
@@ -221,7 +244,20 @@ namespace AfetUyanisi.Chapters.FloodEvening
             rt.anchoredPosition = p0 + new Vector2(0f, -1f);
             for (float k = 0f; k < 0.12f; k += Time.unscaledDeltaTime) yield return null;
             rt.anchoredPosition = p0;
-            result.choice = chosen == 0 ? ChoiceRetry : ChoiceMenu;
+            result.choice = chosen == 0 ? primaryChoice : ChoiceMenu;
+            if (result.choice == ChoiceNext)
+            {
+                // Menüye dönmeden kısa kararma; sıradaki afet kendi giriş kartıyla açılır.
+                blackout.gameObject.SetActive(true);
+                blackout.transform.SetAsLastSibling();
+                float dur = Mathf.Max(0.05f, continueFadeSeconds);
+                for (float k = 0f; k < dur; k += Time.unscaledDeltaTime)
+                {
+                    blackout.color = new Color(0f, 0f, 0f, Mathf.Clamp01(k / dur));
+                    yield return null;
+                }
+                blackout.color = Color.black;
+            }
         }
 
         public void Hide()

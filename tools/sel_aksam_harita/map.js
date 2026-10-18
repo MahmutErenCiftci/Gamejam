@@ -3,12 +3,12 @@
 // Rota:  A (başlangıç sokağı, +gx) → köşe → B (ara sokak, +gy) → köşe → C (+gx) → KAVŞAK meydanı
 //   KISA YOL: D (-gy, aşağı-sağ) → köşe → E (+gx) → YIKINTI (gx 34) → ötesi derin sel (gx 36..49) → güvenli meydan görünür
 //   UZUN YOL: F (+gy) → köşe → G (+gx) → köşe → H (-gy) → köşe → I (+gx): AĞAÇ OLAYI + dal → köşe → J: dar RÜZGÂR KORİDORU (-gy) → KORUNAKLI AVLU
-const G = { gx0: -26, gx1: 80, gy0: -16, gy1: 44 };
+const G = { gx0: -34, gx1: 80, gy0: -16, gy1: 44 };   // (18 Eki, FLOOD-EDIT) gx0 -26 → -34: okuldan gelen yol batıda harita kenarına uzar
 const inR = (gx, gy, x0, x1, y0, y1) => gx >= x0 && gx < x1 && gy >= y0 && gy < y1;
 
 const RUBBLE_GX = 34;           // kısa yol yürüme alanı gx < 34
 const R = {                     // yürünebilir dikdörtgenler [x0, x1, y0, y1)
-  A: [-10, 16, 0, 5],
+  A: [-16, 16, 0, 5],           // (18 Eki, FLOOD-EDIT) batı ucu -10 → -16: çimenli boş arsa + alçak duvar yerine yol (okuldan geliş)
   B: [11, 16, 5, 17],
   C: [16, 24, 12, 17],
   FORK: [23, 31, 10, 19],
@@ -37,7 +37,8 @@ function WALK(gx, gy) { return corridorOf(gx, gy) !== null; }
 function VOID(gx, gy) { return gy >= 42; }
 
 function SURF(gx, gy) {
-  const k = corridorOf(gx, gy);
+  // A_YOLU: A sokağının batıya, okul tarafına uzanan görsel devamı (yürünmez; yürüme sınırı gx -16'da biter, yol harita kenarına kadar sürer)
+  const k = corridorOf(gx, gy) || (inR(gx, gy, G.gx0, R.A[0], R.A[2], R.A[3]) ? 'A' : null);
   if (k === 'A') {
     return gy === 0 ? (((gx * 7 + gy) % 3) ? 'Road_A' : 'Road_B') : gy === 1 ? 'Road_Lane' : gy === 2 ? 'Road_Gutter' : gy === 3 ? 'Curb' : (((gx * 5) % 4) ? 'Sidewalk_A' : 'Sidewalk_B');
   }
@@ -58,9 +59,9 @@ const WATER_LEVELS = { Canal: [-30, -21, -12], LowRoad: [-18, -10, -5] };   // S
 
 // Görsel duvar/korkuluk hatları (block: true → yürüme maskesini de keser)
 const LINES = [
-  { id: 'Rail_A_Front', kind: 'rail', axis: 'x', at: 0, from: -12, to: 16 },
+  { id: 'Rail_A_Front', kind: 'rail', axis: 'x', at: 0, from: -34, to: 16 },     // (18 Eki, FLOOD-EDIT) yolla birlikte batıya uzadı
   { id: 'Wall_A_End', kind: 'wall', axis: 'y', at: 16, from: 0, to: 5 },
-  { id: 'Wall_A_Start', kind: 'wall', axis: 'y', at: -10, from: 0, to: 5 },
+  // (18 Eki, FLOOD-EDIT) Wall_A_Start (gx -10 alçak duvar) kaldırıldı: sokak okul tarafına yol olarak devam ediyor
   { id: 'Wall_B_Left', kind: 'wall', axis: 'y', at: 11, from: 5, to: 17 },
   { id: 'Wall_C_Front', kind: 'wall', axis: 'x', at: 12, from: 16, to: 23 },
   { id: 'Wall_D_Left', kind: 'wall', axis: 'y', at: 25, from: 2, to: 10 },

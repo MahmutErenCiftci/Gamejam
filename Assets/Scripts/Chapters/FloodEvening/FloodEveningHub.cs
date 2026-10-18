@@ -3,7 +3,7 @@ using System;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Akşam sel bölümünün modülleri (rüzgâr, dal, kapı, şifre, söylenti, bariyer) ile FloodEveningController arasındaki
+    /// Akşam sel bölümünün modülleri (dal, kapı, şifre, söylenti, bariyer) ile FloodEveningController arasındaki
     /// ortak nokta. Modüller bunu çağırır/dinler; controller'a doğrudan bağlanmaz.
     /// </summary>
     public static class FloodEveningHub
@@ -42,6 +42,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             Progress01 = 0f; Paused = false; FreeRoam = false; FloodStarted = false; FloodStopped = false; FloodSeconds = 120f; OutdoorAudio01 = 1f;
             MinigameOpened = null; MinigameClosed = null; StepCompleted = null; Mistake = null; SayRequest = null; ResetRequested = null;
+            // FLOW: her sahne geçişinde sel sayacı bayrakları sıfırlanır (sel bittikten sonra açılan depreme sızmasın).
+            AfetUyanisi.Core.GameSceneRouter.SceneChanging -= OnSceneChanging;
+            AfetUyanisi.Core.GameSceneRouter.SceneChanging += OnSceneChanging;
+        }
+
+        // İlerleme/ses çarpanı burada sıfırlanmaz: eski sahne kapanana kadar (bir kare) su ve yağmur sesi yerinde kalsın;
+        // onları FloodEveningController OnDestroy/Awake sıfırlar.
+        private static void OnSceneChanging()
+        {
+            FloodStarted = false; FloodStopped = false; FreeRoam = false;
         }
     }
 }

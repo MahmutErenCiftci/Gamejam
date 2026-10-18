@@ -1,0 +1,22 @@
+{
+  "chapter": "flood_school",
+  "groups": [
+    { "id": "school", "title": "SEL · OKUL ÇIKIŞI", "banner": "KÖPRÜYÜ GEÇTİN!", "activateOn": [{ "type": "event", "key": "FS_START" }] },
+    { "id": "home", "title": "SEL · MAHALLEYE DÖNÜŞ", "banner": "", "activateOn": [{ "type": "event", "key": "FS_CROSSED" }] }
+  ],
+  "objectives": [
+    { "id": "FS_EXIT", "group": "school", "text": "Okuldan çık", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "FS_EXITED" }] },
+    { "id": "FS_BRIDGE_REACH", "group": "school", "text": "Köprü bölgesine ilerle", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "FS_BRIDGE_REACHED" }] },
+    { "id": "FS_CROSS", "group": "school", "text": "Köprüyü geç", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "FS_CROSSED" }] },
+    { "id": "FS_KEEP_DRY", "group": "school", "text": "Suya girme", "kind": "Keep", "keepUntil": "home",
+      "completeOn": [{ "type": "event", "key": "FS_LEFT" }],
+      "warnOn": [{ "type": "event", "key": "F07_WATER_WARNING" }, { "type": "event", "key": "FS_SWEPT" }] },
+    { "id": "FS_SIGN", "group": "home", "text": "Uyarı tabelasını oku", "kind": "Bonus",
+      "completeOn": [{ "type": "event", "key": "FS_SIGN" }] },
+    { "id": "FS_HOME", "group": "home", "text": "Mevcut sel güzergâhına bağlan", "kind": "Main",
+      "completeOn": [{ "type": "event", "key": "FS_LEFT" }] }
+  ]
+}

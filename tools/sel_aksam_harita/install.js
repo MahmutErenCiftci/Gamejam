@@ -46,7 +46,8 @@ function resolve(s) {
 }
 // ---- layout objects
 for (const o of L.objs) {
-  const [x, y] = world(o.gx, o.gy, o.h); const [p, sn] = resolve(o.s);
+  // wx/wy: doğrudan dünya konumu, sn: çoklu sprite dosyasında belirli dilim (tel dilimleri, hazards.js)
+  const [x, y] = o.wx !== undefined ? [o.wx, o.wy] : world(o.gx, o.gy, o.h); const [p, sn0] = resolve(o.s); const sn = o.sn || sn0;
   const parent = o.parent || o.group;
   lines.push(['SPR', parent, o.name, p, sn, ...W(x, y), o.order, o.flip ? 1 : 0].join('|'));
   if (o.col) { const pts = o.col.map(([du, dv]) => [(x + (du - dv) / 2).toFixed(4), (y + (du + dv) / 4).toFixed(4)].join(',')).join(';'); lines.push(['COL', parent + '/' + o.name, 'solid', pts].join('|')); }

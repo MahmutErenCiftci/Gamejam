@@ -397,7 +397,8 @@ namespace AfetUyanisi.Chapters.Objectives
             GameSession.SetFlag(sessionKey);
             // Sel: akşam mahalle seli (FloodEvening) kendi görev listesini kullanır; eski sabah akışı objectives_flood.json.
             string name = chapter == ChapterId.Flood
-                ? (gameObject.scene.name == GameSceneRouter.FloodScene ? "flood_evening" : "flood")
+                ? (gameObject.scene.name == GameSceneRouter.FloodScene ? "flood_evening"
+                    : gameObject.scene.name == GameSceneRouter.FloodSchoolScene ? "flood_school" : "flood")
                 : "earthquake";
             var json = Resources.Load<TextAsset>("Objectives/objectives_" + name);
             try

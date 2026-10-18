@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Akşam sel olay modüllerinin (rüzgâr göstergesi, dal/geçit paneli, bariyer uyarısı) kodla kurulan uGUI parçaları:
+    /// Akşam sel olay modüllerinin (dal/geçit paneli, bariyer uyarısı) kodla kurulan uGUI parçaları:
     /// 640x360 referanslı Screen Space Overlay canvas, koyu panel + turkuaz vurgu paleti, metin ve yerleşim yardımcıları.
     /// </summary>
     internal static class EventsUi

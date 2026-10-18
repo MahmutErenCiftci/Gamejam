@@ -77,6 +77,7 @@ namespace AfetUyanisi.Chapters
                 case "FloodChapter":
                     return cameraPosition.x < 15f ? KitchenPalette : StormPalette;
                 case "FloodEvening":
+                case "FloodSchool": // Sel okul çıkışı: aynı akşam (FloodEvening'e kesintisiz geçer)
                     return EveningPalette;
                 case "EarthquakeHome":
                 case "EarthquakeChapter":

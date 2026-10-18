@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 // v3 (zikzak) — LEAD: Assets/Scenes/Chapters/Flood/FloodEvening.unity'yi baştan kurar (Additive yeni sahne → kaydet → kapat).
 // Kullanıcının açık sahnelerine dokunmaz; aktif sahneyi geri verir. Build Settings: FloodEvening eklenir (enabled),
-// eski sabah sel sahneleri (Bedroom, Bathroom, FloodChapter) enabled:0 yapılır (silinmez).
+// diğer sahnelerin durumuna dokunulmaz.
 internal class CommandScript : IRunCommand
 {
     const string ScenePath = "Assets/Scenes/Chapters/Flood/FloodEvening.unity";
@@ -224,27 +224,7 @@ internal class CommandScript : IRunCommand
             if (branch != null) branch.position = W(51.05f, 15.5f);
             result.Log("dal: " + br.transform.position + " blockers=" + bl.arraySize);
         }
-        // ---- Rüzgârlı geçit (J sokağı → korunaklı avlu) ----
-        var windPf = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/FloodEvening/FE_WindCorridor.prefab");
-        if (windPf != null)
-        {
-            var w = (GameObject)PrefabUtility.InstantiatePrefab(windPf, scene);
-            var wc = w.GetComponent<AfetUyanisi.Chapters.FloodEvening.WindCorridor>();
-            var so = new SerializedObject(wc);
-            var playerC = scene.GetRootGameObjects().Select(g => g.GetComponentInChildren<AfetUyanisi.Chapters.IsoPlayerController>(true)).FirstOrDefault(p => p != null);
-            so.FindProperty("player").objectReferenceValue = playerC;
-            var intro = FindDeep(world, "WindIntro"); var safe = FindDeep(world, "SafeZone");
-            so.FindProperty("introArea").objectReferenceValue = intro != null ? intro.GetComponent<Collider2D>() : null;
-            so.FindProperty("shelterArea").objectReferenceValue = safe != null ? safe.GetComponent<Collider2D>() : null;
-            so.FindProperty("entry").objectReferenceValue = FindDeep(world, "WindEntry");
-            so.FindProperty("exit").objectReferenceValue = FindDeep(world, "WindExit");
-            so.FindProperty("shelterSpot").objectReferenceValue = FindDeep(world, "SafeSpot");
-            so.ApplyModifiedPropertiesWithoutUndo();
-            var fx = w.GetComponentInChildren<AfetUyanisi.Chapters.FloodEvening.WindFx>(true);
-            if (fx != null && playerC != null) { var fso = new SerializedObject(fx); fso.FindProperty("follow").objectReferenceValue = playerC.transform; fso.ApplyModifiedPropertiesWithoutUndo(); }
-            result.Log("rüzgâr: intro=" + (intro != null && intro.GetComponent<Collider2D>() != null) + " shelter=" + (safe != null) + " player=" + (playerC != null));
-        }
-        else result.Log("UYARI: FE_WindCorridor.prefab yok");
+        // (18 Eki, FLOOD-MECH) rüzgâr koridoru (FE_WindCorridor) kaldırıldı: J sokağı normal sokak.
         // ===== APARTMAN FİNALİ (final-world agent) =====
         // Avlunun arkasındaki apartman girişi: FE_ApartmentFinal (kapı, posta kutusu, kilit, sinematik; kök = AptFacade çapası) +
         // FE_ApartmentLockUi (UI ajanı: mektup + kilit yakın planları). Controller finali (IFloodEveningFinale) ve [E] modüllerini Awake'te bulur.
@@ -268,6 +248,7 @@ internal class CommandScript : IRunCommand
         }
         // ===== /APARTMAN FİNALİ =====
         PlaceFlood(scene, world, result); // 120 sn sel: harita suyu, yol kapanmaları, SEL DURUMU göstergesi
+        PlaceEnvironment(scene, world, result); // ağaç salınımı, şimşek, yüzen enkaz, elektrikli su bölgeleri (FLOOD-MECH)
         var tree =AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/FloodEvening/FE_TreeFall.prefab");
         var stop = FindDeep(world, "TreeStopSpot");
         if (tree != null && stop != null) { var t = (GameObject)PrefabUtility.InstantiatePrefab(tree, scene); t.transform.position = stop.position; result.Log("FE_TreeFall yerleşti"); }
@@ -294,14 +275,9 @@ internal class CommandScript : IRunCommand
         }
         Sprites("rippleFrames", "FX_FE_Ripple_0", "FX_FE_Ripple_1", "FX_FE_Ripple_2", "FX_FE_Ripple_3");
         Sprites("splashFrames", "FX_FE_Splash_0", "FX_FE_Splash_1", "FX_FE_Splash_2");
-        Sprites("debrisSprites", "FX_FE_Debris_Plank", "FX_FE_Debris_Bottle", "FX_FE_Debris_Twig", "FX_FE_Debris_Foam");
+        // arka plan süsü: köpük + yapraklar (çarpışan tahta/kasa/şişe/dal ayrı: FloodDebrisField, PlaceEnvironment)
+        Sprites("debrisSprites", "FX_FE_Debris_Foam", "FX_FE_Debris_Leaf1", "FX_FE_Debris_Leaf2", "FX_FE_Debris_Leaf3", "FX_FE_Debris_Leaf4");
         var deb = so.FindProperty("debrisSprites");
-        for (int i = 1; i <= 4; i++)
-        {
-            var leaf = Load<Sprite>("Assets/Art/FloodEvening/Wind/FX/FX_FE_Wind_Leaf" + i + ".png");
-            if (leaf == null) continue;
-            deb.arraySize++; deb.GetArrayElementAtIndex(deb.arraySize - 1).objectReferenceValue = leaf;
-        }
         so.FindProperty("feetWater").objectReferenceValue = Load<Sprite>(Dir + "FX_FE_FeetWater.png");
         so.FindProperty("barrierSprite").objectReferenceValue = Load<Sprite>(Dir + "PROP_FE_FloodBarrier.png");
         // Kapanan yollar (ızgara): kısa yol girişi %42'de, geri dönüş sokağı (C → kavşak) %75'te. Oyuncu kapının arkasındaysa kapanmaz.
@@ -342,13 +318,131 @@ internal class CommandScript : IRunCommand
         result.Log("sel suyu: malzeme=" + (so.FindProperty("waterMaterial").objectReferenceValue != null) + " veri=" + (so.FindProperty("floodData").objectReferenceValue != null) +
                    " enkaz=" + deb.arraySize + " gösterge=" + (hud != null));
     }
+    // ===== ÇEVRE TEHLİKELERİ (FLOOD-MECH, 18 Eki) =====
+    // Sprite'lar: tools/sel_aksam_harita/hazards.js → Assets/Art/FloodEvening/ENV/Hazards + ENV/Trees. Çapalar: layout.js (World/Hazards/Zone_n,
+    // World/Debris/<Tür>_<n>). Hepsi FloodEveningHub.Progress01'i okur; Hub.RequestReset'te sıfırlanır, sayaç durunca durur.
+    static Sprite[] SheetSprites(string path)
+    {
+        return AssetDatabase.LoadAllAssetsAtPath(path).OfType<Sprite>()
+            .OrderBy(s => { int u = s.name.LastIndexOf('_'); int k; return u >= 0 && int.TryParse(s.name.Substring(u + 1), out k) ? k : 0; }).ToArray();
+    }
+
+    static void PlaceEnvironment(Scene scene, Transform world, ExecutionResult result)
+    {
+        const string Hz = "Assets/Art/FloodEvening/ENV/Hazards/", Tr = "Assets/Art/FloodEvening/ENV/Trees/";
+        var env = new GameObject("FloodEnvironment");
+        SceneManager.MoveGameObjectToScene(env, scene);
+        var playerC = scene.GetRootGameObjects().Select(g => g.GetComponentInChildren<AfetUyanisi.Chapters.IsoPlayerController>(true)).FirstOrDefault(p => p != null);
+        var field = scene.GetRootGameObjects().Select(g => g.GetComponentInChildren<AfetUyanisi.Chapters.FloodEvening.FloodWaterField>(true)).FirstOrDefault(f => f != null);
+
+        var reaction = env.AddComponent<AfetUyanisi.Chapters.FloodEvening.FloodPlayerReaction>();
+        { var so = new SerializedObject(reaction); so.FindProperty("player").objectReferenceValue = playerC; so.ApplyModifiedPropertiesWithoutUndo(); }
+
+        // ağaç salınımı
+        var sway = env.AddComponent<AfetUyanisi.Chapters.FloodEvening.FloodTreeSway>();
+        int nSets;
+        {
+            var so = new SerializedObject(sway);
+            so.FindProperty("mapRoot").objectReferenceValue = world;
+            var trees = new[] { ("Tree_Round", "Assets/Art/Props/Street/Surroundings/PROP_StreetBG_Tree_Round.png"), ("Tree_Small", "Assets/Art/Props/Street/Surroundings/PROP_StreetBG_Tree_Small.png"),
+                ("Tree_Pine", "Assets/Art/Props/Street/Surroundings/PROP_StreetBG_Tree_Pine.png"), ("Street_Tree", "Assets/Art/Props/Street/PROP_Street_Tree.png"), ("Bush", "Assets/Art/Props/Street/Surroundings/PROP_StreetBG_Bush.png") };
+            var sets = so.FindProperty("sets"); sets.arraySize = trees.Length; nSets = 0;
+            for (int i = 0; i < trees.Length; i++)
+            {
+                var e = sets.GetArrayElementAtIndex(i);
+                e.FindPropertyRelative("source").objectReferenceValue = AssetDatabase.LoadAllAssetsAtPath(trees[i].Item2).OfType<Sprite>().FirstOrDefault();
+                foreach (var (prop, tag) in new[] { ("calm", "Calm"), ("storm", "Storm") })
+                {
+                    var fr = SheetSprites(Tr + "FX_FE_Sway_" + trees[i].Item1 + "_" + tag + ".png");
+                    var arr = e.FindPropertyRelative(prop); arr.arraySize = fr.Length;
+                    for (int k = 0; k < fr.Length; k++) arr.GetArrayElementAtIndex(k).objectReferenceValue = fr[k];
+                    if (prop == "calm" && fr.Length == 8) nSets++;
+                }
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        // şimşek
+        var lightning = env.AddComponent<AfetUyanisi.Chapters.FloodEvening.FloodLightning>();
+        {
+            var so = new SerializedObject(lightning);
+            so.FindProperty("sky").objectReferenceValue = FindDeep(world, "Sky");
+            var bolts = SheetSprites(Hz + "FX_FE_SkyBolt.png");
+            var arr = so.FindProperty("boltSprites"); arr.arraySize = bolts.Length;
+            for (int k = 0; k < bolts.Length; k++) arr.GetArrayElementAtIndex(k).objectReferenceValue = bolts[k];
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        // yüzen enkaz
+        var debris = env.AddComponent<AfetUyanisi.Chapters.FloodEvening.FloodDebrisField>();
+        int nDebris = 0;
+        {
+            var so = new SerializedObject(debris);
+            so.FindProperty("water").objectReferenceValue = field;
+            so.FindProperty("reaction").objectReferenceValue = reaction;
+            var root = FindDeep(world, "Debris");
+            var items = so.FindProperty("items"); items.arraySize = 0;
+            var spr = new System.Collections.Generic.Dictionary<string, string> { { "Plank", "PROP_FE_Float_Plank" }, { "Crate", "PROP_FE_Float_Crate" }, { "Bottle", "PROP_FE_Float_Bottle" },
+                { "Branch", "PROP_FE_Float_Branch" }, { "Stone", "PROP_FE_Stone_A" }, { "Rubble", "PROP_FE_Rubble_S" } };
+            if (root != null)
+                foreach (Transform a in root)
+                {
+                    string kind = a.name.Split('_')[0];
+                    if (!spr.ContainsKey(kind)) continue;
+                    string file = spr[kind];
+                    if (kind == "Stone" && (nDebris % 2) == 1) file = "PROP_FE_Stone_B";
+                    items.arraySize++;
+                    var e = items.GetArrayElementAtIndex(items.arraySize - 1);
+                    e.FindPropertyRelative("kind").enumValueIndex = (int)System.Enum.Parse(typeof(AfetUyanisi.Chapters.FloodEvening.FloodDebrisField.DebrisKind), kind);
+                    e.FindPropertyRelative("anchor").objectReferenceValue = a;
+                    e.FindPropertyRelative("sprite").objectReferenceValue = Load<Sprite>(Hz + file + ".png");
+                    nDebris++;
+                }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        // elektrikli su bölgeleri
+        var power = env.AddComponent<AfetUyanisi.Chapters.FloodEvening.FloodElectricHazards>();
+        int nZones = 0;
+        {
+            var so = new SerializedObject(power);
+            so.FindProperty("water").objectReferenceValue = field;
+            so.FindProperty("reaction").objectReferenceValue = reaction;
+            void Arr(string prop, Sprite[] s) { var a = so.FindProperty(prop); a.arraySize = s.Length; for (int k = 0; k < s.Length; k++) a.GetArrayElementAtIndex(k).objectReferenceValue = s[k]; }
+            Arr("sparkFrames", SheetSprites(Hz + "FX_FE_Spark.png"));
+            Arr("arcFrames", SheetSprites(Hz + "FX_FE_Arc.png"));
+            so.FindProperty("warnIcon").objectReferenceValue = Load<Sprite>(Hz + "UI_FE_PowerWarn.png");
+            var root = FindDeep(world, "Hazards");
+            var zs = so.FindProperty("zones"); zs.arraySize = 0;
+            if (root != null)
+                foreach (Transform z in root)
+                {
+                    if (!z.name.StartsWith("Zone_")) continue;
+                    zs.arraySize++;
+                    var e = zs.GetArrayElementAtIndex(zs.arraySize - 1);
+                    e.FindPropertyRelative("id").stringValue = z.name;
+                    e.FindPropertyRelative("contact").objectReferenceValue = z;
+                    // hazards_def.js: core 0,4 / water 1,0 hücre → zemin birimi (1 hücre = 1/√2)
+                    e.FindPropertyRelative("coreRadius").floatValue = 0.3f;
+                    e.FindPropertyRelative("waterRadius").floatValue = 0.72f;
+                    var safe = z.Cast<Transform>().Where(c => c.name.StartsWith("Safe_")).ToArray();
+                    var sp = e.FindPropertyRelative("safePoints"); sp.arraySize = safe.Length;
+                    for (int k = 0; k < safe.Length; k++) sp.GetArrayElementAtIndex(k).objectReferenceValue = safe[k];
+                    nZones++;
+                }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+        result.Log("çevre: ağaç seti=" + nSets + " şimşek gök=" + (FindDeep(world, "Sky") != null) + " enkaz=" + nDebris + " elektrik bölgesi=" + nZones +
+                   " su=" + (field != null) + " oyuncu=" + (playerC != null));
+    }
+    // ===== /ÇEVRE TEHLİKELERİ =====
     // MODULES_END
 
     static void UpdateBuildSettings(ExecutionResult result)
     {
+        // (18 Eki) Sahne listesinin geri kalanı GameFlow/FLOW'un: burada yalnız FloodEvening'in listede ve açık olduğu sağlanır
+        // (eski sabah sel sahneleri artık kapatılmaz; okul + köprü başlangıcı FloodChapter'dan türetilen sahneyi kullanır).
         var list = EditorBuildSettings.scenes.ToList();
-        string[] legacy = { "Assets/Scenes/Rooms/Bedroom.unity", "Assets/Scenes/Rooms/Bathroom.unity", "Assets/Scenes/Chapters/Flood/FloodChapter.unity" };
-        foreach (var s in list) if (legacy.Contains(s.path)) s.enabled = false;
         var mine = list.FirstOrDefault(s => s.path == ScenePath);
         if (mine == null) list.Add(new EditorBuildSettingsScene(ScenePath, true));
         else mine.enabled = true;

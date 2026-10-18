@@ -12,7 +12,7 @@
 - Zikzak harita: başlangıç sokağı (eski sel sokağı görselleri) → köşe → ara sokak → köşe → kavşak meydanı (KISA YOL → / ← UZUN YOL tabelaları).
 - Kısa yol: aşağı inip köşeyi dönünce yıkıntı + bariyer + "YOL KAPALI"; ötesi derin sel (görsel). BarrierZone'a girince kayıt nötr (`short_road_tried`), oyuncu aynı yoldan yürüyerek kavşağa döner.
 - Uzun yol: 4 belirgin dönüş → I sokağında dal (BranchSpot) → dal açılınca son köşe → güvenli meydan (SafeZone) → sonuç ekranı.
-- Deprem raporundaki **[Devam: Sel Bölümü]** geçişi Unity'de uçtan uca oynanmadı (**UNTESTED**).
+- Bölümler arası geçiş artık `GameFlow`'da (Deprem ↔ Sel, ikisi bitince oyun sonu ekranı; bkz. [`OYUN_AKISI.md` §2](OYUN_AKISI.md#2-genel-akış)).
 
 **Çapalar (EveningNeighborhood.prefab, dünya koordinatı):**
 
@@ -37,8 +37,10 @@
 ## 1. Akış (zikzak)
 
 ```text
-DEPREM (EarthquakeHome) ── rapor [Devam: Sel Bölümü] ──► GameSceneRouter.ContinueToNextChapter(Earthquake)  (yalnız bir kez)
-MENÜ "Sel" ──► GameSceneRouter.LoadChapter(Flood) ──► FloodEvening.unity
+İki bölümlü akış (GameFlow, 18 Eki): menüde seçilen afet önce oynanır, sonra diğeri, ikisi bitince oyun sonu (GameEnd.unity).
+MENÜ "Sel"  ──► GameFlow.BeginNewGame(Flood) ──► Sel'in ilk sahnesi (GameSceneRouter.FirstSceneOf: FloodSchool, yoksa FloodEvening)
+DEPREM bitti ── rapor [Devam: Sel Bölümü] ──► GameFlow.ContinueAfter(Earthquake) ──► Sel (yükleme kilidi: yalnız bir kez)
+Sel bitti (eve girildi = home_entered) ──► GameFlow.CompleteChapter(Flood) ──► sonuç [Devam: Deprem Bölümü] ya da [Oyunu Bitir] ──► GameFlow.ContinueAfter(Flood)
 FloodEveningController (tek akış/sonuç sorumlusu)
   Intro ─► Warning ─► RouteChoice ─┬─ kısa yol: köşe → BarrierZone (bir kez FE_SHORT_CLOSED, nötr kayıt) → yürüyerek kavşağa dönüş
    kart    uyarı (1 kez)  sokaklar  └─ uzun yol (HighRoad) ─► LongRoad ─► Obstacle (tree_fell) ─► FinalApproach (branch_cleared, FE_FINAL)
@@ -46,18 +48,18 @@ FloodEveningController (tek akış/sonuç sorumlusu)
 ```
 * **120 sn sel sayacı (lider kararı 18 Eki 01:45):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç durur → apartman finali → bitiş. Süre dolarsa başarısız ekranı ([R] Tekrar Dene).
 * Durum geri gitmez. Dal itilir itilmez bölüm bitmez; oyuncu devam noktasına yürüyünce biter.
-* Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), rüzgâr (`WindGustZone`, FE_WindPass), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
+* Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
 
 ## 1b. 120 sn sel sistemi (Mahmut)
 
 - **Tek başlangıç:** telefon bildirimi kapanınca `FloodEveningController.StartFloodSequence()` bir kez çalışır (tekrar çağrılırsa hiçbir şey olmaz). Bildirim sırasında süre akmaz.
 - **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / 120`. Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur.
 - **Süre ne zaman akar:**
-  - Akar: serbest yürüyüş, dal itme, rüzgâr koridoru.
+  - Akar: serbest yürüyüş, dal itme, çevre tehlikesi tepkileri (enkaz çarpması, elektrik çarpması).
   - Durur: diyalog, okuma panelleri (`info*`, `read*`, `warning*`…), zorunlu sinematik (`treefall*`, `cine*`), pause (timeScale 0), başarı/başarısızlık.
 - **Ölçülen süreler (bot, kusursuz yürüyüş):**
   - En kısa rota: güvenli bölgeye sayaç 58 sn'de (%48).
-  - Kısa yolu deneyip dönme + rüzgârda karışık tepki: 77 sn (%64).
+  - Kısa yolu deneyip dönme + rüzgârda karışık tepki: 77 sn (%64) (rüzgâr koridoru 18 Eki'de kaldırıldı; yeni ölçüm §1c).
   - İnsan oyuncu için ~90–100 sn bekleniyor.
 - **Aşamalar:**
   - %25: YAĞIŞ ARTIYOR.
@@ -71,7 +73,7 @@ FloodEveningController (tek akış/sonuç sorumlusu)
   - Ölçek (0–1,5 m) temsilîdir.
 - **Harita suyu:** `Flow/FloodWaterField.cs` + `Assets/Art/FloodEvening/ENV/Flood/FE_FloodWater.shader` (haritayı kaplayan tek sprite, 2D ışıklı).
   - Veri dosyası: `FE_FloodData.png`, `tools/sel_aksam_harita/flood.js` üretir.
-  - Dolma sırası: kısa yol ve kanal kıyısı ilk dolar, uzun yol giderek, rüzgâr koridoru en son; avlu kuru kalır.
+  - Dolma sırası: kısa yol ve kanal kıyısı ilk dolar, uzun yol giderek, son sokak (J) en son; avlu (apartmanın ön bahçesi) kuru kalır.
   - Görünüm: ıslak zemin → birikinti → sığ → derin su, kenar köpüğü, akış yönünde dalga ve yağmur halkaları.
   - Oyuncu: ayak halkaları ve suya gömülen ayak çizgisi; derin suda hafif yavaşlama (0,85 / 0,72).
 - **Yol kapanmaları (tasarlanmış):**
@@ -92,6 +94,16 @@ FloodEveningController (tek akış/sonuç sorumlusu)
   - `toast_critical_*`, `toast_hurry_*`, `toast_home_*`
   - `end_title`, `end_subtitle`
 - **Apartman finali:** `IFloodEveningFinale` (`Begin()`, `IsComplete`). Avluya varınca sayaç durur, ardından `Begin()` çağrılır. `home_entered` gelince kararma ve bitiş ekranı ("GÜVENLİ BÖLGEYE ULAŞTIN!" / "AFET UYANIŞI — BÖLÜM TAMAMLANDI").
+
+## 1c. Çevre tehlikeleri (FLOOD-MECH, 18 Eki)
+
+Rüzgâr sistemi (WindCorridor/WindFx/WindHud/WindGustZone, FE_WindCorridor/FE_WindPass prefabları, rüzgâr sesleri, görev ve diyalog) tamamen kaldırıldı. Avlu artık toplanma alanı değil, apartmanın ön bahçesi (tabela, yardım tentesi ve su kolisi yığını kaldırıldı). Hepsi sahnede `FloodEnvironment` objesinde, `tools/sel_aksam_harita/cs/build_scene.cs` (PlaceEnvironment) kurar; yerleşim `tools/sel_aksam_harita/hazards_def.js`, sprite'lar `hazards.js`.
+
+- **Ağaç salınımı** (`Environment/FloodTreeSway.cs`): yalnız görsel, 1 px'lik satır kaydırmalı kareler; sel ilerledikçe biraz hızlanır, %60'tan sonra en çok 2 px. Oyuncuyu etkilemez.
+- **Şimşek** (`FloodLightning.cs`): 10–25 sn'de bir; ekrana tam beyaz yok (en çok +0,3 ışık, ~0,5 sn sönüş, çakma başına en çok 2 parıltı), gökyüzünde ince çizgi, 0,7–2,4 sn sonra gök gürültüsü. **[L]** parlamayı kapatır/açar (`FloodEveningSettings.LightningEnabled`, PlayerPrefs); ilk şimşekte bir kez hatırlatılır. Menü ayar paneline satır eklemek Berk'e kaldı.
+- **Yüzen enkaz** (`FloodDebrisField.cs`): 22 cisim (tahta, kasa, şişe, dal yüzer; taş/moloz yüzmez, derin hızlı suda en çok 3 px yuvarlanır). Sel %30'u geçince, su olan yerdeki hafifler yüzeye çıkar, akışla farklı hızlarda sürüklenir, 1 px yüzer. Çarpma: ~1 adım geri itme + kısa sendeleme, 1,4 sn bekleme; duvardan geçmez; başarısızlık değil, süre akar. Görev: "Yüzen engellerden uzak dur" (debris_bump uyarısı).
+- **Elektrik direkleri** (`FloodElectricHazards.cs`): 17 direk, tel açıklıkları; 3 kopuk tel (Zone_1 A sokağı, Zone_2 G sokağı, Zone_3 H sokağı). Kıvılcım + mavi parıltı her zaman, su varken su yüzeyinde ark, yakında yanıp sönen ⚡, yaklaştıkça çıtırtı. Bölgeye girilirse 0,4 sn kontrol kaybı + bölge dışındaki güvenli noktaya geri itme, 1,6 sn (art arda 3,2 sn) bekleme; sokağın yarısından fazlası açık kalır, ilerlemeyi kesmez. Sonuç ekranına "power_shock" düzeltilen yanlış olarak gider.
+- Ortak tepki: `FloodPlayerReaction.cs` (tek seferde tek tepki, sayaç durunca / Hub.RequestReset'te iptal).
 
 ## 2. Hub (modüller ↔ controller), `Assets/Scripts/Chapters/FloodEvening/FloodEveningHub.cs`
 
@@ -121,7 +133,7 @@ Arayüzler (`FloodEveningContracts.cs`): `IFloodEveningInteraction` (`Point`, `C
 | `…/UI/FloodEveningResultView.cs` + `FE_ResultView.prefab` | Sonuç ve öğrenme ekranı | **Berk** |
 | `…/UI/FeUi.cs`, `FeButton.cs` | Geçici kodla-çizim yardımcıları (koyu panel, turkuaz) | Berk |
 | `…/Puzzle/*` + kapı/şifre prefabları | Bahçe kapısı kolu, şifre paneli, ipucu levhaları | Mahmut (mantık) · **Berk** (panel görünümü) |
-| `…/Events/*` + `FE_WarningPhone`, `FE_RumorCheck`, `FE_LowRoadBarrier`, `FE_WindPass`, `FE_BranchObstacle` | Uyarı, söylenti, bariyer, rüzgâr, geçit | Mahmut (mantık) · **Eren** (uyarı/söylenti içeriği) |
+| `…/Events/*` + `FE_WarningPhone`, `FE_RumorCheck`, `FE_LowRoadBarrier`, `FE_BranchObstacle` | Uyarı, söylenti, bariyer, geçit (rüzgâr modülleri 18 Eki'de silindi) | Mahmut (mantık) · **Eren** (uyarı/söylenti içeriği) |
 | `Assets/Data/Story/flood_evening.json` | Bütün replikler + `result{}` + `ui[]` | **Arda** |
 | `Assets/Data/FloodEvening/flood_evening_alert.json`, `flood_evening_rumor.json` | Telefon uyarısı ve söylenti kartları (Eren'in formatları) | **Eren** |
 | `Assets/Resources/Objectives/objectives_flood_evening.json` | Görev paneli | Mahmut |
@@ -133,7 +145,7 @@ Arayüzler (`FloodEveningContracts.cs`): `IFloodEveningInteraction` (`Point`, `C
 **Berk (UI)**
 - `FE_Hud.prefab`: su seviyesi göstergesi (sağ kenar, dikey) ve uyarı şeridi (ikon + başlık + açıklama) şu an kodla çiziliyor (`FloodEveningHud.Build`). Gerçek sprite'larla yeniden çiz; genel API'yi (`SetGaugeVisible`, `SetLevel`, `SetStage`, `SetGaugeTexts`, `ShowToast`, `HideAll`) koru. Göstergede **sayı/süre gösterme**; altındaki "Suya hiç girme!" notu kalsın.
 - `FE_TitleCard.prefab`: `Play(title, subtitle, footnote)`; siyah üstünde kart, en az ~1 sn sonra geçilebilir.
-- `FE_ResultView.prefab`: `SetLabels(...)`, `Show(FloodEveningResult)` (seçim `Retry`/`Menu`). Butonlar: **Sel Bölümünü Tekrar Dene** / **Menüye Dön**; klavye ←/→ + Enter, 1/2, fare.
+- `FE_ResultView.prefab`: `SetLabels(...)`, `SetPrimaryAction(choice, label)`, `Show(FloodEveningResult)` (seçim `Next`/`Retry`/`Menu`). Başarı ekranı: **Devam: Deprem Bölümü** ya da **Oyunu Bitir** (`GameFlow.ContinueAfter`, kısa kararma) / **Menüye Dön**; başarısız ekranı: **[R] Tekrar Dene** / **Menüye Dön** (Tekrar Dene tamamlanma bilgisini değiştirmez). Klavye ←/→ + Enter, 1/2, fare.
 - Kapı kolu ve şifre paneli görünümü (`Puzzle/`): mantık hazır, panel çizimi geçici.
 - Deprem raporundaki üç buton (`ResultReportView`): [Devam: Sel Bölümü] [Tekrar Dene] [Menüye Dön] — görünüm geçici fallback renkleri kullanıyor.
 

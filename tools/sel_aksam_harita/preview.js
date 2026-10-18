@@ -22,7 +22,12 @@ const world = (gx, gy, h) => [(gx - gy) / 2, (gx + gy) / 4 + h / 64];
 const items = [];
 for (const c of T.chunks) items.push({ im: decodePng(fs.readFileSync(C.OUT + '/terrain/' + c.name + '.png')), px: 0, py: 0, x: c.x / 64, y: c.y / 64, order: -100 });
 if (stage > 0) for (const w of T.water) if (w.stage <= stage) items.push({ im: decodePng(fs.readFileSync(C.OUT + '/water/' + w.name + '.png')), px: 0, py: 0, x: w.x / 64, y: w.y / 64, order: -99 + w.stage * 0, alpha: 0.85 });
-for (const o of L.objs) { const s = spr(o.s); const [x, y] = world(o.gx, o.gy, o.h); items.push({ ...s, x, y, order: o.order, flip: o.flip, light: o.light }); }
+// çoklu sprite dosyasında adı verilen dilim (tel dilimleri: o.sn, o.wx/o.wy)
+function named(s, sn) { const key = s + '#' + sn; if (cache[key]) return cache[key]; const f = C.ART + '/' + s.slice(2) + '.png'; const big = decodePng(fs.readFileSync(f)); const meta = fs.readFileSync(f + '.meta', 'utf8');
+  const i = meta.indexOf('name: ' + sn + '\n'); const m = meta.slice(i).match(/x: (\d+)\s*\n\s*y: (\d+)\s*\n\s*width: (\d+)\s*\n\s*height: (\d+)[\s\S]*?pivot: \{x: ([-\d.e]+), y: ([-\d.e]+)\}/);
+  const [x, y, w, h] = [+m[1], +m[2], +m[3], +m[4]]; const im = { w, h, rgba: new Uint8Array(w * h * 4) }; for (let j = 0; j < h; j++) im.rgba.set(big.rgba.subarray(((big.h - y - h + j) * big.w + x) * 4, ((big.h - y - h + j) * big.w + x + w) * 4), j * w * 4);
+  return cache[key] = { im, px: +m[5] * w, py: +m[6] * h }; }
+for (const o of L.objs) { const s = o.sn ? named(o.s, o.sn) : spr(o.s); const [x, y] = o.wx !== undefined ? [o.wx, o.wy] : world(o.gx, o.gy, o.h); items.push({ ...s, x, y, order: o.order, flip: o.flip, light: o.light }); }
 for (const n in PR) { const m = PR[n]; if (!m.line) continue; const [ox, oy] = world(m.line.origin[0], m.line.origin[1], m.line.h0);
   m.line.strips.forEach((st, i) => { const sp = m.sprites.find(q => q.name === st.sprite); const s = subSprite(m.file, sp); items.push({ ...s, x: ox + st.dx / 64, y: oy + st.dy / 64, order: 0 }); }); }
 const open = process.env.OPEN === '1';

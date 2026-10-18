@@ -73,6 +73,9 @@ namespace AfetUyanisi.Core
         /// <summary>Tekrar dene: R (sonuç / başarısız ekranları).</summary>
         public static bool RetryPressed => Pressed(Key.R);
 
+        /// <summary>Şimşek parlamasını aç/kapat (ışığa duyarlılık ayarı, akşam sel bölümü): L.</summary>
+        public static bool LightningTogglePressed => Pressed(Key.L);
+
         /// <summary>Yalnız geliştirici kısayolları (F5..F12 vb.): Editor ve Development build dışında her zaman false.</summary>
         public static bool DevKeyPressed(Key key)
         {

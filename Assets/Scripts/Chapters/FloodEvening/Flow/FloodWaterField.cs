@@ -8,11 +8,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// <summary>
     /// Haritadaki gerçek zamanlı su (120 sn sel sayacı, LEAD). Tek kaynak FloodEveningHub.Progress01'dir; bu bileşen yalnız okur.
     /// - Su katmanı: haritayı kaplayan tek sprite + FE_FloodWater.shader. FE_FloodData (tools/sel_aksam_harita/flood.js) her noktanın
-    ///   dolma eşiğini, akış yönünü/hızını ve maskesini taşır: kısa yol ve kanal kıyısı önce, uzun yol giderek, rüzgâr koridoru en son
+    ///   dolma eşiğini, akış yönünü/hızını ve maskesini taşır: kısa yol ve kanal kıyısı önce, uzun yol giderek, son sokak (J) en son
     ///   dolar; avlu kuru kalır. Katman zemin (order -100) ile süs/duvar/karakter arasındadır (order -88), izometrik sıralama bozulmaz.
     /// - Oyuncu: ayağının altındaki derinliğe göre halka/sıçrama, suya gömülen ayak çizgisi ve derin suda hafif yavaşlama (yalnız serbest
-    ///   yürüyüşte; rüzgâr koridoru gibi dış hız verilirken dokunmaz).
-    /// - Sürüklenen enkaz (yaprak, tahta, şişe, köpük) derin ve akan suda, kamera çevresinde havuzlanmış sprite'larla.
+    ///   yürüyüşte; dış hız (geri itme, apartman finali) verilirken dokunmaz).
+    /// - Sürüklenen arka plan süsü (yaprak, köpük) derin ve akan suda, kamera çevresinde havuzlanmış sprite'larla; çarpışan yüzen enkaz
+    ///   (tahta, kasa, şişe, dal) ayrı bileşende: Environment/FloodDebrisField.
     /// - Yol kapanmaları: önceden tasarlanmış kapılar (kısa yol girişi, geri dönüş sokağı) eşikte bariyer + collider ile kapanır;
     ///   eşikten biraz önce bariyer yanıp söner. Oyuncu kapının arkasında (o bölgede) kalacaksa kapı KAPANMAZ — sel sistemi hedefe
     ///   giden yolu asla kesmez. Kapanmada oyuncu yakınsa üst şeritte uyarı.
@@ -226,7 +227,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             return progress - t;
         }
 
-        private Vector2 FlowAt(Vector2 world, out float speed)
+        /// <summary>Dünya noktasındaki akış yönü (dünya uzayında birim vektör) ve hızı (0..1). Yüzen enkaz bunu izler.</summary>
+        public Vector2 FlowAt(Vector2 world, out float speed)
         {
             speed = 0f;
             if (data == null) return Vector2.zero;
