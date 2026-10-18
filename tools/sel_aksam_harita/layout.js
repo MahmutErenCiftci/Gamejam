@@ -19,7 +19,8 @@ const lamp = (n, gx, gy) => P('Props', 'Lamp_' + n, ST + 'PROP_Street_Lamp', gx,
 const tree = (n, s, gx, gy) => P('Yard', n, SU + 'PROP_StreetBG_' + s, gx, gy, { order: -60 });
 // (18 Eki, P-FLOOD, lider) alçak duvarın ÖNÜNDEKİ ağaç/çalılar Cenk ve duvarla y'ye göre sıralanır (0): -60'ta duvarın arkasına
 // çizilip gövdesi duvarın altından, tacı üstünden görünüyordu (iç içe).
-const FRONT_OF_WALL = new Set(['Yard_Tree2', 'Yard_Bush1','I_Bush1','I_Bush2','F_Bush1','F_Bush2','F_Tree1']);
+const FRONT_OF_WALL = new Set(['Yard_Tree2', 'Yard_Bush1','I_Bush1','I_Bush2','F_Bush1','F_Bush2','F_Tree1',
+  'B_Tree1','C_Tree1','D_Tree1']);   // (18 Eki, Eren) duvar boşlukları kapanınca tepeleri duvarın arkasında kalıyordu
 const treeF = (n, s, gx, gy) => P('Yard', n, SU + 'PROP_StreetBG_' + s, gx, gy, { order: FRONT_OF_WALL.has(n) ? 0 : -60 });
 const decal = (n, s, gx, gy) => P('Decals', n, ST + 'PROP_Street_' + s, gx, gy, { order: -90 });
 const fenceX = (gx, gy) => P('Buildings', 'Fence_' + gx + '_' + gy, ST + 'PROP_Street_Fence', gx, gy, { order: -50, h: 0 });
@@ -27,7 +28,7 @@ const fenceY = (gx, gy) => P('Buildings', 'FenceY_' + gx + '_' + gy, ST + 'PROP_
 
 // ================================================================ A: başlangıç sokağı (eski selin sokağı görselleri)
 for (const gx of [-22, -17, -12, -7, -2]) houseX(gx, 5);
-for (const gx of [2.5, 4, 5.5, 7]) fenceX(gx, 5); tree('A_Tree1', 'Tree_Round', 6, 7.5);
+for (const gx of [2.5, 4, 5.5, 7]) fenceX(gx, 5); // (18 Eki, Eren) A_Tree1 kaldırıldı: B_Tree1'in tam önünde duruyordu, çevrede çakışmasız yer yok
 [[3, -25], [1, -19], [2, -13], [3, -7], [1, -1]].forEach(([k, gx], i) => P('Buildings', 'Apt_A' + i, SU + 'PROP_StreetBG_Apt_' + k, gx, 12, { order: -70, h: 0 }));
 for (const gx of [-14, -5, 4]) P('Props', 'VergeTree_' + gx, ST + 'PROP_Street_Tree', gx + 0.5, -1.1);
 lamp('A1', -6, 4.6); lamp('A2', 2, 4.6); lamp('A3', 10.6, 4.6);       // A3: köşeden ara sokağı gösteren lamba
@@ -45,14 +46,14 @@ lamp('A0', -14, 4.6);
 for (const [n, s, gx, gy] of [['Drain_0', 'Drain', -14, 2.6], ['Puddle_0', 'Puddle_S', -11.5, 1.3], ['Puddle_00', 'Puddle_M', -20, 3.3]]) decal(n, s, gx, gy);
 
 // ================================================================ B: ara sokak (+gy)
-for (const gy of [5, 6.2, 7.4, 8.6, 9.8]) fenceY(16, gy); tree('B_Yard1', 'Tree_Round', 19, 8); tree('B_Yard2', 'Bush', 17.5, 6.5);
+for (const gy of [5, 6.2, 7.4, 8.6, 9.8]) fenceY(16, gy); tree('B_Yard2', 'Bush', 17.5, 6.5);   // (18 Eki, Eren) B_Yard1 kaldırıldı: C_Tree1'in tam önünde duruyordu
 lamp('B1', 15.6, 11.5);
-tree('B_Bush1', 'Bush', 9.5, 7); tree('B_Tree1', 'Tree_Small', 9.0, 10.5); tree('B_Bush2', 'Bush', 9.8, 14);
+tree('B_Bush1', 'Bush', 9.5, 7); treeF('B_Tree1', 'Tree_Small', 9.0, 10.5); tree('B_Bush2', 'Bush', 9.8, 14);
 for (const [n, s, gx, gy] of [['BPuddle_1', 'Puddle_M', 13.5, 8], ['BDrain_1', 'Drain', 12, 12], ['BPuddle_2', 'Puddle_S', 14.5, 15]]) decal(n, s, gx, gy);
 
 // ================================================================ C: (+gx) kavşağa
 houseX(11, 17); houseX(15.4, 17); fenceX(19.8, 17); tree('C_BackTree', 'Tree_Pine', 22, 19.5);
-tree('C_Bush1', 'Bush', 18, 10.6); tree('C_Tree1', 'Tree_Round', 20.5, 9.5); tree('C_Swing', 'Swing', 22.5, 7.5);
+tree('C_Bush1', 'Bush', 18, 10.6); treeF('C_Tree1', 'Tree_Round', 20.5, 9.5); tree('C_Swing', 'Swing', 22.5, 7.5);
 lamp('C1', 22.6, 16.6);
 for (const [n, s, gx, gy] of [['CPuddle_1', 'Puddle_L', 18.5, 14.5], ['CDrain_1', 'Drain', 21, 13.3]]) decal(n, s, gx, gy);
 
@@ -66,7 +67,7 @@ for (const [n, s, gx, gy] of [['FPuddle_1', 'Puddle_M', 27, 12.5], ['FPuddle_2',
 
 // ================================================================ KISA YOL: D (-gy) → köşe → E (+gx) → yıkıntı, ötesi derin sel
 for (const gx of [30, 31.4, 32.8, 34.2]) fenceX(gx, 7); tree('E_Back1', 'Tree_Small', 32, 8.6); P('Props', 'Shed_E', SR + 'PROP_Route_GatePillar', 35.5, 7.2, {});
-tree('D_Bush1', 'Bush', 23.6, 4.5); tree('D_Tree1', 'Tree_Small', 23.2, 8);
+tree('D_Bush1', 'Bush', 23.6, 4.5); treeF('D_Tree1', 'Tree_Small', 24, 6.3);
 lamp('D1', 29.6, 6.6);                                                             // köşeden E'yi gösteren lamba
 for (const [n, s, gx, gy] of [['DPuddle_1', 'Puddle_Deep', 27.5, 6], ['DPuddle_2', 'Puddle_M', 31, 4], ['DPuddle_3', 'Puddle_Deep', 33, 5.5]]) decal(n, s, gx, gy);
 for (const [k, gy] of [['A', 2.1], ['B', 3.8], ['C', 5.4]]) P('LowRoad/Rubble', 'Rubble_' + k, 'N:PROP_FE_Rubble_' + k, 34.0, gy, { col: rectC(0.5, 0.8), h: 0 });
