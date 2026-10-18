@@ -2,7 +2,7 @@
   "id": "flood_evening_alert",
   "appName": "SEL UYARISI",
   "time": "19:40",
-  "title": "Su baskını riski",
-  "body": "Şiddetli yağış nedeniyle su baskını riski var. Suyla kaplı ve kapatılmış yollara girmeyin. Belirlenmiş güvenli yüksek bölgeye yönelin.",
+  "title": "Mahallede su baskını riski",
+  "body": "Akşam boyunca şiddetli yağış sürecek. Sokaklarda su birikebilir, bazı yollar kapanabilir. Suyla kaplı ve kapalı yollara girmeyin, işaretli güvenli güzergâhı izleyin.",
   "fictionNotice": "Kurgusal bildirim · Oyun içi örnektir"
 }
