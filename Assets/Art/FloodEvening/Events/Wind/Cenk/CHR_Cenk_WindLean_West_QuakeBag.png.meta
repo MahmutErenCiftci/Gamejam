@@ -1,0 +1,2004 @@
+fileFormatVersion: 2
+guid: ad7deff3f715315479da184d3d303471
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -171525208528263268
+    second: CHR_Cenk_WindLean_West_QuakeBag_0
+  - first:
+      213: 3031891769160792271
+    second: CHR_Cenk_WindLean_West_QuakeBag_1
+  - first:
+      213: -1665337146460954412
+    second: CHR_Cenk_WindLean_West_QuakeBag_2
+  - first:
+      213: -4151184285786827896
+    second: CHR_Cenk_WindLean_West_QuakeBag_3
+  - first:
+      213: -3172940047123588937
+    second: CHR_Cenk_WindLean_West_QuakeBag_4
+  - first:
+      213: 1148317543054018995
+    second: CHR_Cenk_WindLean_West_QuakeBag_5
+  - first:
+      213: 199980301886679216
+    second: CHR_Cenk_WindLean_West_QuakeBag_6
+  - first:
+      213: 3665464164759924554
+    second: CHR_Cenk_WindLean_West_QuakeBag_7
+  - first:
+      213: 7469390419908699275
+    second: CHR_Cenk_WindLean_West_QuakeBag_8
+  - first:
+      213: -1545099373823850017
+    second: CHR_Cenk_WindLean_West_QuakeBag_9
+  - first:
+      213: 4775105138407329041
+    second: CHR_Cenk_WindLean_West_QuakeBag_10
+  - first:
+      213: 2420492941289543789
+    second: CHR_Cenk_WindLean_West_QuakeBag_11
+  - first:
+      213: 8023233008547986702
+    second: CHR_Cenk_WindLean_West_QuakeBag_12
+  - first:
+      213: -7332751497121965061
+    second: CHR_Cenk_WindLean_West_QuakeBag_13
+  - first:
+      213: 4855869673574408979
+    second: CHR_Cenk_WindLean_West_QuakeBag_14
+  - first:
+      213: -6483575909475023250
+    second: CHR_Cenk_WindLean_West_QuakeBag_15
+  - first:
+      213: -574070690972282892
+    second: CHR_Cenk_WindLean_West_QuakeBag_16
+  - first:
+      213: -4073175838232520958
+    second: CHR_Cenk_WindLean_West_QuakeBag_17
+  - first:
+      213: 102506266503086866
+    second: CHR_Cenk_WindLean_West_QuakeBag_18
+  - first:
+      213: -2564926580946169464
+    second: CHR_Cenk_WindLean_West_QuakeBag_19
+  - first:
+      213: -3542904690508118845
+    second: CHR_Cenk_WindLean_West_QuakeBag_20
+  - first:
+      213: 9074164617635501582
+    second: CHR_Cenk_WindLean_West_QuakeBag_21
+  - first:
+      213: -3700479917403176778
+    second: CHR_Cenk_WindLean_West_QuakeBag_22
+  - first:
+      213: 4518673516637301190
+    second: CHR_Cenk_WindLean_West_QuakeBag_23
+  - first:
+      213: -2520688792393830243
+    second: CHR_Cenk_WindLean_West_QuakeBag_24
+  - first:
+      213: 6643531671581364305
+    second: CHR_Cenk_WindLean_West_QuakeBag_25
+  - first:
+      213: 5870016290938344548
+    second: CHR_Cenk_WindLean_West_QuakeBag_26
+  - first:
+      213: 3857565768682669566
+    second: CHR_Cenk_WindLean_West_QuakeBag_27
+  - first:
+      213: 1110818204340203428
+    second: CHR_Cenk_WindLean_West_QuakeBag_28
+  - first:
+      213: -893090942457824869
+    second: CHR_Cenk_WindLean_West_QuakeBag_29
+  - first:
+      213: -1858945330805772354
+    second: CHR_Cenk_WindLean_West_QuakeBag_30
+  - first:
+      213: 8409657345364906019
+    second: CHR_Cenk_WindLean_West_QuakeBag_31
+  - first:
+      213: -160555643760387153
+    second: CHR_Cenk_WindLean_West_QuakeBag_32
+  - first:
+      213: 2483728199415198403
+    second: CHR_Cenk_WindLean_West_QuakeBag_33
+  - first:
+      213: -4136061053658179840
+    second: CHR_Cenk_WindLean_West_QuakeBag_34
+  - first:
+      213: 4313886545210424058
+    second: CHR_Cenk_WindLean_West_QuakeBag_35
+  - first:
+      213: -625892638747123648
+    second: CHR_Cenk_WindLean_West_QuakeBag_36
+  - first:
+      213: -1099989054720885530
+    second: CHR_Cenk_WindLean_West_QuakeBag_37
+  - first:
+      213: 2953236339038437894
+    second: CHR_Cenk_WindLean_West_QuakeBag_38
+  - first:
+      213: -7256679678578716655
+    second: CHR_Cenk_WindLean_West_QuakeBag_39
+  - first:
+      213: -7864590067495996360
+    second: CHR_Cenk_WindLean_West_QuakeBag_40
+  - first:
+      213: 1646233932104925108
+    second: CHR_Cenk_WindLean_West_QuakeBag_41
+  - first:
+      213: 233858932708047675
+    second: CHR_Cenk_WindLean_West_QuakeBag_42
+  - first:
+      213: 1514660606172278141
+    second: CHR_Cenk_WindLean_West_QuakeBag_43
+  - first:
+      213: 2577542972762702629
+    second: CHR_Cenk_WindLean_West_QuakeBag_44
+  - first:
+      213: -6969537184601989185
+    second: CHR_Cenk_WindLean_West_QuakeBag_45
+  - first:
+      213: -8794718921354144817
+    second: CHR_Cenk_WindLean_West_QuakeBag_46
+  - first:
+      213: 1924745270998523755
+    second: CHR_Cenk_WindLean_West_QuakeBag_47
+  - first:
+      213: -7353706528495964827
+    second: CHR_Cenk_WindLean_West_QuakeBag_48
+  - first:
+      213: 4887298058948431731
+    second: CHR_Cenk_WindLean_West_QuakeBag_49
+  - first:
+      213: 5463681309035043016
+    second: CHR_Cenk_WindLean_West_QuakeBag_50
+  - first:
+      213: 9185185637635408583
+    second: CHR_Cenk_WindLean_West_QuakeBag_51
+  - first:
+      213: -4777807841942047780
+    second: CHR_Cenk_WindLean_West_QuakeBag_52
+  - first:
+      213: -5183603024547906320
+    second: CHR_Cenk_WindLean_West_QuakeBag_53
+  - first:
+      213: 321200911100462971
+    second: CHR_Cenk_WindLean_West_QuakeBag_54
+  - first:
+      213: -1989058744750706514
+    second: CHR_Cenk_WindLean_West_QuakeBag_55
+  - first:
+      213: -5235602404291647715
+    second: CHR_Cenk_WindLean_West_QuakeBag_56
+  - first:
+      213: 6953691618234105286
+    second: CHR_Cenk_WindLean_West_QuakeBag_57
+  - first:
+      213: 8827825479818607566
+    second: CHR_Cenk_WindLean_West_QuakeBag_58
+  - first:
+      213: 7544676827650841270
+    second: CHR_Cenk_WindLean_West_QuakeBag_59
+  - first:
+      213: -6601120588117440213
+    second: CHR_Cenk_WindLean_West_QuakeBag_60
+  - first:
+      213: -2038021307937724064
+    second: CHR_Cenk_WindLean_West_QuakeBag_61
+  - first:
+      213: 2779119071467308061
+    second: CHR_Cenk_WindLean_West_QuakeBag_62
+  - first:
+      213: 4892100801936389755
+    second: CHR_Cenk_WindLean_West_QuakeBag_63
+  - first:
+      213: -2869768035025125167
+    second: CHR_Cenk_WindLean_West_QuakeBag_64
+  - first:
+      213: 6575430473969597046
+    second: CHR_Cenk_WindLean_West_QuakeBag_65
+  - first:
+      213: -5766674622085829699
+    second: CHR_Cenk_WindLean_West_QuakeBag_66
+  - first:
+      213: 8898617571245125946
+    second: CHR_Cenk_WindLean_West_QuakeBag_67
+  - first:
+      213: 3704448181753792718
+    second: CHR_Cenk_WindLean_West_QuakeBag_68
+  - first:
+      213: 6594680278324480388
+    second: CHR_Cenk_WindLean_West_QuakeBag_69
+  - first:
+      213: 342109557499189253
+    second: CHR_Cenk_WindLean_West_QuakeBag_70
+  - first:
+      213: 9085626908380575884
+    second: CHR_Cenk_WindLean_West_QuakeBag_71
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21db23cedf2c4d4428ee66d1ed5c71d8
+      internalID: -166000821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d26cae02b791a043b45d1bfe24a20b5
+      internalID: 814320199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 666ba395379df0e4d9aac1b948e49bb8
+      internalID: -274435120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40d9a40eeb504ef4380667573c9a1b82
+      internalID: 1910159822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2288e6cd7961b78478603555c736daab
+      internalID: -43997558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_m1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a66b535ccfbc04d9013f8ef893a60f
+      internalID: 778742902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e092e9e536acac2479343719e1dcbe9b
+      internalID: 304989456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f043bb72985c6e4ca2574d7ea68ff16
+      internalID: -1674835455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db3edc760c555414a814e0fb401dbdaa
+      internalID: 554691143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5b5a6380d0b70644b4e922dd3431b8d
+      internalID: -150172251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e36263b331031b46b0382cddb95fe6b
+      internalID: -106272261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_0_p6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74bf6fb4db9970d4db54dadbcef2fdcc
+      internalID: 1136363739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2785aee668bd65747ae800e5225ee07a
+      internalID: -1441170019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48ad928e94a75e94ca1b8b773a39b864
+      internalID: 786175826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 820e2ed892191f8438e5c42355bf28dc
+      internalID: -910627197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b0039a536e25414fa68a593752534e0
+      internalID: 2065471938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837e76c464bd922429dbc99ca00cef40
+      internalID: 1758832526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_m1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c21cde1bde12e94ca20d5b814c18d65
+      internalID: 1630976962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 972298052775f3b49a26bae0a342507d
+      internalID: 899475936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd7b08ca5555f1445b3ba97a5b903103
+      internalID: 364700288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3792fcaa503f434386e83c7f9d85d5f
+      internalID: -366651354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0101fb4f3f0952f47a633b433ee7a553
+      internalID: 2073562499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edb7ad433fc12254ab6ef61384e83029
+      internalID: -1426599865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_1_p6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0462ea914734ab47abd1fd215cd407f
+      internalID: -1888310569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 793ae40b10f4c5c4aafb9c3f2ea08e78
+      internalID: 1428717578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a729d0e81864079489686338b5771dbe
+      internalID: -1534706664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98012acb181fd5b4f829b13ab02b1e13
+      internalID: 2114995044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5961b08488eac6a4a9f32a5b34f6cb43
+      internalID: -373436528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb70aa0156557df459e5034214078572
+      internalID: 304464651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_m1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4389799c98231914ba2e1d35cf4271cd
+      internalID: 1165544454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caa46625a7acb5a4ba68852e7cf4ee39
+      internalID: 1198626086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13b78de99582f5846abab23a1289613f
+      internalID: 1105884779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f2e2bdf5f348d24caf08ca9c83ffc7a
+      internalID: 1942159213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2fb99c21684db64995800c81be3c40b
+      internalID: 1868098028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3cb8b0a0970b984e8260a0ef09bac2a
+      internalID: 832491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_2_p6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ea793ae9e6c0e439a47a7329736afc
+      internalID: -1649360283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1563f0623c19634e9fc6672dc0173cd
+      internalID: -92303691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 203b790cbbd8ac14f85645706360195c
+      internalID: 560236428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a29b5e7d1d97ef94cbf31b1e630fbe9c
+      internalID: 350353881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e322164762190e428416762a87746ff
+      internalID: 1650710415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53d7e4a175cd84f4c97df55cd5aa68e6
+      internalID: 510840919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_m1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f581cb6f37c11f64ebd5f98f13aecc5d
+      internalID: 232362423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 391d286c62a6b0744985309b5ed68da5
+      internalID: 473225104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e8ee1d2a492b79459643c792363ef2d
+      internalID: -1471544301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1c79c5172a4779459e99a0af34edbd8
+      internalID: -21793016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 901b7fb896656bf40bf73377f10371f3
+      internalID: -1933461325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88bd795c6b115c4419f016be225c1fad
+      internalID: -1577047607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_3_p6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e223d324ed798af48b30b754a2c0a21b
+      internalID: -1007153350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97a5c467672e30e4d9b89d21eadaa82a
+      internalID: -1616340724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e15615d6177564ab7842813a57f7b1
+      internalID: -1005716916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3cf14debdb1a624bbda40ae85936150
+      internalID: -1416473349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f859645dfe4fb744c8e4e591f6dc706c
+      internalID: -875051617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 452abc4c4875ed84ead74d157d754844
+      internalID: 1203805249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_m1
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9a8266af1d51de43a63b07181283279
+      internalID: -2042755530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p1
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36e0839c839308b448da0fc9f68870cb
+      internalID: 242819748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d95dc74911ad0d499447bd11a112292
+      internalID: 472071237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae9c8f830b756c243a0e57c04f40ebb5
+      internalID: -1250595967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5272f560a30599e4bb7e79b59b5523bd
+      internalID: 116218349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad52c8428fd885349abb18e506fc9f80
+      internalID: -1172771793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_4_p6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409229bff4291c64b99eaf5b15b3ecd4
+      internalID: 764015237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e16cf467c28e749bf7d7aef4d21603
+      internalID: 2035991329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b48024cebc2921e439e1cf3782bcd789
+      internalID: -1166040237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m4
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b944e9cc5954ef34e9f82950ca6eafb0
+      internalID: -487043968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53fc7dbbf87b5d549876f9fa6a367aca
+      internalID: 1597276229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bfa78411cda5ef46bb4f011bdfa8224
+      internalID: -1214296301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_m1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 617358134c983f947b16f2b967b162a3
+      internalID: 908607895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b0bde94fd58a64b9c3d875d74ebf61
+      internalID: -1928121859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44f83e2f2acedda48b818b108b4cf277
+      internalID: 1882378646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcb5da4e88dbb2e4694d3736114e21ad
+      internalID: 1057526830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p4
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c52365dfcac39f4390099e1294ffaf8
+      internalID: -219865523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18eaf6c577a0c40419194d040abc9fe8
+      internalID: -859093145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_West_QuakeBag_5_p6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fc34f2f1caae546a1c01c84dd9e277
+      internalID: -243533085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 06691b42f4686c04780d955bea518b44
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CHR_Cenk_WindLean_West_QuakeBag_0_m1: 778742902
+      CHR_Cenk_WindLean_West_QuakeBag_0_m2: -43997558
+      CHR_Cenk_WindLean_West_QuakeBag_0_m3: 1910159822
+      CHR_Cenk_WindLean_West_QuakeBag_0_m4: -274435120
+      CHR_Cenk_WindLean_West_QuakeBag_0_m5: 814320199
+      CHR_Cenk_WindLean_West_QuakeBag_0_m6: -166000821
+      CHR_Cenk_WindLean_West_QuakeBag_0_p1: 304989456
+      CHR_Cenk_WindLean_West_QuakeBag_0_p2: -1674835455
+      CHR_Cenk_WindLean_West_QuakeBag_0_p3: 554691143
+      CHR_Cenk_WindLean_West_QuakeBag_0_p4: -150172251
+      CHR_Cenk_WindLean_West_QuakeBag_0_p5: -106272261
+      CHR_Cenk_WindLean_West_QuakeBag_0_p6: 1136363739
+      CHR_Cenk_WindLean_West_QuakeBag_1_m1: 1630976962
+      CHR_Cenk_WindLean_West_QuakeBag_1_m2: 1758832526
+      CHR_Cenk_WindLean_West_QuakeBag_1_m3: 2065471938
+      CHR_Cenk_WindLean_West_QuakeBag_1_m4: -910627197
+      CHR_Cenk_WindLean_West_QuakeBag_1_m5: 786175826
+      CHR_Cenk_WindLean_West_QuakeBag_1_m6: -1441170019
+      CHR_Cenk_WindLean_West_QuakeBag_1_p1: 899475936
+      CHR_Cenk_WindLean_West_QuakeBag_1_p2: 364700288
+      CHR_Cenk_WindLean_West_QuakeBag_1_p3: -366651354
+      CHR_Cenk_WindLean_West_QuakeBag_1_p4: 2073562499
+      CHR_Cenk_WindLean_West_QuakeBag_1_p5: -1426599865
+      CHR_Cenk_WindLean_West_QuakeBag_1_p6: -1888310569
+      CHR_Cenk_WindLean_West_QuakeBag_2_m1: 1165544454
+      CHR_Cenk_WindLean_West_QuakeBag_2_m2: 304464651
+      CHR_Cenk_WindLean_West_QuakeBag_2_m3: -373436528
+      CHR_Cenk_WindLean_West_QuakeBag_2_m4: 2114995044
+      CHR_Cenk_WindLean_West_QuakeBag_2_m5: -1534706664
+      CHR_Cenk_WindLean_West_QuakeBag_2_m6: 1428717578
+      CHR_Cenk_WindLean_West_QuakeBag_2_p1: 1198626086
+      CHR_Cenk_WindLean_West_QuakeBag_2_p2: 1105884779
+      CHR_Cenk_WindLean_West_QuakeBag_2_p3: 1942159213
+      CHR_Cenk_WindLean_West_QuakeBag_2_p4: 1868098028
+      CHR_Cenk_WindLean_West_QuakeBag_2_p5: 832491
+      CHR_Cenk_WindLean_West_QuakeBag_2_p6: -1649360283
+      CHR_Cenk_WindLean_West_QuakeBag_3_m1: 232362423
+      CHR_Cenk_WindLean_West_QuakeBag_3_m2: 510840919
+      CHR_Cenk_WindLean_West_QuakeBag_3_m3: 1650710415
+      CHR_Cenk_WindLean_West_QuakeBag_3_m4: 350353881
+      CHR_Cenk_WindLean_West_QuakeBag_3_m5: 560236428
+      CHR_Cenk_WindLean_West_QuakeBag_3_m6: -92303691
+      CHR_Cenk_WindLean_West_QuakeBag_3_p1: 473225104
+      CHR_Cenk_WindLean_West_QuakeBag_3_p2: -1471544301
+      CHR_Cenk_WindLean_West_QuakeBag_3_p3: -21793016
+      CHR_Cenk_WindLean_West_QuakeBag_3_p4: -1933461325
+      CHR_Cenk_WindLean_West_QuakeBag_3_p5: -1577047607
+      CHR_Cenk_WindLean_West_QuakeBag_3_p6: -1007153350
+      CHR_Cenk_WindLean_West_QuakeBag_4_m1: -2042755530
+      CHR_Cenk_WindLean_West_QuakeBag_4_m2: 1203805249
+      CHR_Cenk_WindLean_West_QuakeBag_4_m3: -875051617
+      CHR_Cenk_WindLean_West_QuakeBag_4_m4: -1416473349
+      CHR_Cenk_WindLean_West_QuakeBag_4_m5: -1005716916
+      CHR_Cenk_WindLean_West_QuakeBag_4_m6: -1616340724
+      CHR_Cenk_WindLean_West_QuakeBag_4_p1: 242819748
+      CHR_Cenk_WindLean_West_QuakeBag_4_p2: 472071237
+      CHR_Cenk_WindLean_West_QuakeBag_4_p3: -1250595967
+      CHR_Cenk_WindLean_West_QuakeBag_4_p4: 116218349
+      CHR_Cenk_WindLean_West_QuakeBag_4_p5: -1172771793
+      CHR_Cenk_WindLean_West_QuakeBag_4_p6: 764015237
+      CHR_Cenk_WindLean_West_QuakeBag_5_m1: 908607895
+      CHR_Cenk_WindLean_West_QuakeBag_5_m2: -1214296301
+      CHR_Cenk_WindLean_West_QuakeBag_5_m3: 1597276229
+      CHR_Cenk_WindLean_West_QuakeBag_5_m4: -487043968
+      CHR_Cenk_WindLean_West_QuakeBag_5_m5: -1166040237
+      CHR_Cenk_WindLean_West_QuakeBag_5_m6: 2035991329
+      CHR_Cenk_WindLean_West_QuakeBag_5_p1: -1928121859
+      CHR_Cenk_WindLean_West_QuakeBag_5_p2: 1882378646
+      CHR_Cenk_WindLean_West_QuakeBag_5_p3: 1057526830
+      CHR_Cenk_WindLean_West_QuakeBag_5_p4: -219865523
+      CHR_Cenk_WindLean_West_QuakeBag_5_p5: -859093145
+      CHR_Cenk_WindLean_West_QuakeBag_5_p6: -243533085
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

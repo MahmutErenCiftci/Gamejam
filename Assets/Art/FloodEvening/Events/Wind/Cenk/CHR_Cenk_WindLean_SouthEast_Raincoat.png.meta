@@ -1,0 +1,2004 @@
+fileFormatVersion: 2
+guid: 6dfd18ce47e831c4986dda9f4e31a743
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6008880624997427529
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_0
+  - first:
+      213: -2996331863431204772
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_1
+  - first:
+      213: 2749227561140298916
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_2
+  - first:
+      213: -6183374203017949292
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_3
+  - first:
+      213: -1471081916096516174
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_4
+  - first:
+      213: 1457060996645950416
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_5
+  - first:
+      213: 8443022174970769253
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_6
+  - first:
+      213: 4286171173304272286
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_7
+  - first:
+      213: -6424912231897666287
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_8
+  - first:
+      213: -1465938290679896347
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_9
+  - first:
+      213: 4003239128269046884
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_10
+  - first:
+      213: -6132316537427122159
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_11
+  - first:
+      213: -934409612895776913
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_12
+  - first:
+      213: -5847062176029133544
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_13
+  - first:
+      213: 2436994485861708515
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_14
+  - first:
+      213: 2285062573560498735
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_15
+  - first:
+      213: -1325184479125486266
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_16
+  - first:
+      213: 5894690822385462773
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_17
+  - first:
+      213: 3425608143399433574
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_18
+  - first:
+      213: -7366735481502429484
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_19
+  - first:
+      213: -5821299592551499099
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_20
+  - first:
+      213: -2861325938583168670
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_21
+  - first:
+      213: -2703365976634062334
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_22
+  - first:
+      213: 6701117135026366020
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_23
+  - first:
+      213: 4213699874241080880
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_24
+  - first:
+      213: 3172335292837604441
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_25
+  - first:
+      213: 3103459587230285293
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_26
+  - first:
+      213: 9148106401817035819
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_27
+  - first:
+      213: 5408368874659728019
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_28
+  - first:
+      213: -7689159056501816656
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_29
+  - first:
+      213: -147608759391258714
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_30
+  - first:
+      213: 2600636167352300423
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_31
+  - first:
+      213: 5726899499348644684
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_32
+  - first:
+      213: 3368182538032431337
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_33
+  - first:
+      213: -8296879837037324432
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_34
+  - first:
+      213: -8383974283364823492
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_35
+  - first:
+      213: 691736548811668671
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_36
+  - first:
+      213: 7830065458743570055
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_37
+  - first:
+      213: 7209285727405135904
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_38
+  - first:
+      213: 6907991619434283196
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_39
+  - first:
+      213: -679854107795115686
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_40
+  - first:
+      213: -2896574152914147666
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_41
+  - first:
+      213: 5970767630643410856
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_42
+  - first:
+      213: -5153255488415150994
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_43
+  - first:
+      213: 6392553706031850828
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_44
+  - first:
+      213: -4104437503444545995
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_45
+  - first:
+      213: -6850787527131866322
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_46
+  - first:
+      213: 347897198925579230
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_47
+  - first:
+      213: -5371478101994817491
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_48
+  - first:
+      213: -8094801322294857718
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_49
+  - first:
+      213: 5735736712099797350
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_50
+  - first:
+      213: 516479821844223401
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_51
+  - first:
+      213: -640044906878399023
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_52
+  - first:
+      213: 6108673488622511499
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_53
+  - first:
+      213: 6483728453511267478
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_54
+  - first:
+      213: 6593907357641905304
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_55
+  - first:
+      213: 6339822261387411198
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_56
+  - first:
+      213: 765779800803613246
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_57
+  - first:
+      213: 8680967642439650693
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_58
+  - first:
+      213: -6851529856513439611
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_59
+  - first:
+      213: -9184622326578360142
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_60
+  - first:
+      213: 4099965431032576077
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_61
+  - first:
+      213: -7581231655307472555
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_62
+  - first:
+      213: 4917617155485219126
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_63
+  - first:
+      213: -6023918718939475546
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_64
+  - first:
+      213: -7297497113432909253
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_65
+  - first:
+      213: -7262460549746853620
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_66
+  - first:
+      213: 1090624276894996134
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_67
+  - first:
+      213: 2528495676521000563
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_68
+  - first:
+      213: 62343428398419668
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_69
+  - first:
+      213: 6077239117363158696
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_70
+  - first:
+      213: -6449685404792728741
+    second: CHR_Cenk_WindLean_SouthEast_Raincoat_71
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07d6ce099a7a38a44a69b6009a04f448
+      internalID: -1461229628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a05d8c2ba4f6fba4cbd5037da462f13c
+      internalID: -584409138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a22bcc6b0224ebf4cafb35256f9c77d2
+      internalID: -1836516152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fd26cf3edd3d664b8c173e56d36de54
+      internalID: 916315466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 941b827f984f79247a293cc73c708a3a
+      internalID: -496272788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_m1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73ad676adf8ffef48a5e660596087214
+      internalID: 225120503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95aa0e4480d0ee34aba1823db304512f
+      internalID: -1237957940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b682cddbfe6610d418b859b272dc5630
+      internalID: -1483476694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa55d22455119ea4fbb3763296fc3bb0
+      internalID: -315064348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e655c577285f1704b91ca5faa9a438fc
+      internalID: 1044262921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bfbc802a73b26444a26660e71c75e0d
+      internalID: -1658095737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_0_p6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7cbaff09aa51b549998d3cc3906545c
+      internalID: -1806572085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa44bb7fc54eee7419343b3fb1e4c4c4
+      internalID: 2088225185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07e5ae5b596d51f43948ec52b3b3a8d9
+      internalID: 1899447921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e90b2586c44aac6408fca663c786b97b
+      internalID: -192414170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98124188d209793419e92d22a160fd8e
+      internalID: -1325683121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7cb64e5d8adaea43b0d3de554f79b57
+      internalID: -702307308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_m1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72fc3078e826c5a41947e72f5a2bec7c
+      internalID: -851974587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fa5b5eea1415014aa9f8da5f8dc2cef
+      internalID: -2017099735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3bab0663ee949f4d948d119c29778f1
+      internalID: -1258260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 104de0e37c189b44cb8ef9c5232c6aa5
+      internalID: 1632877396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971db50a4eecd8e44945b0cd0946a6a2
+      internalID: 1393101973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ead0c3b996a1b144a7407924f2edbd9
+      internalID: 382534905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_1_p6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e9e48f9c8eb6034687b5bf95a2b974a
+      internalID: 1613213898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 470003e42ecb50647a945b6b2b9dee14
+      internalID: 1313666023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d068e129259bc145b6875f7967785e0
+      internalID: -322200881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e779c4a35c6530c47a59ebcfc45613be
+      internalID: 225019052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24e20d5e2fa8a6a40b50857f602ced77
+      internalID: -876923938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 790729af3a197ae4d97a35b661a4800b
+      internalID: 1343228263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_m1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1248fb081429db46874b650ff582f56
+      internalID: 1628270986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0bfbe84b4aad64408b2dd3775bc2247
+      internalID: 581925222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c157c16bd27ce40b55e847dcf32dc9
+      internalID: -1671024559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a17f24092aa8284d925b9648d02589e
+      internalID: -1917427707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa117d373d4d0b2498be9e4255607414
+      internalID: 1759903089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p5
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d64103e8bd95be249b43928893e0f327
+      internalID: -1705076658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_2_p6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7e6dac0b0fb7b14caa1b3851225fc57
+      internalID: 568190575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be7b0a03901ad0b4485e631579f7e931
+      internalID: -487918795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c14e8bd4f8e5c6478216e690c761634
+      internalID: -857001360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61ae1d36cf40ccd4786bd00226f85a7c
+      internalID: -568008901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 324d2183826c7e743bf88514f1068d08
+      internalID: -1911797169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b488a5b291a1174fbdfde11d38b2c92
+      internalID: 1808931814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_m1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf8118bd06c4b9240af3506557af904f
+      internalID: -244391911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a946ee68f31a1143ba270b1771a4004
+      internalID: -1330187123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p2
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5aba1de2801d474f9e86b6bdeff5b71
+      internalID: -1493231753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef3d75ab3f30b94588c0bafb0818f5f
+      internalID: -436835970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 747f19f23e5d84446a7c696d03048d7f
+      internalID: -410263786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3ba4863f1400b45ba64a095e6dd388
+      internalID: -668887717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_3_p6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caf7d25f3ce7ddd47b86c179d56d078a
+      internalID: 1637959209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 486b0f67efe45204a884230f5ebcc167
+      internalID: 1307283021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da7a2019f6d7024b9a6743524aabf57
+      internalID: -1302922916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1de3996aca79c9b4aae266e140fc84b5
+      internalID: 86868335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b93eca19d8abb4aa1476471daf0667
+      internalID: 200842200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb12ab3ffc578e6499410b7840514f53
+      internalID: -1364117679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_m1
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 656314ecc63ae174b9d9f88bc663ff21
+      internalID: -1045906383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p1
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848b71e0d9e901343bdeb52f03b5a623
+      internalID: 1305239722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f8adcc929ed9844e9de0a081313c4eb
+      internalID: -1843393249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e852215eefff22d43b47464e7a128fb4
+      internalID: -1607719432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2b010b7596d5c4da2c581f93d084aa
+      internalID: 1340093549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p5
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b34711825aa6354c9664ac8eb101b1d
+      internalID: 1301891370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_4_p6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c92ce4ed9fa9704dbf96eac4393bcf3
+      internalID: -205410432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 1056
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b651dc4860947a4981b919e648f9842
+      internalID: 457433389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 960
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c00d7a2c469b20440948ba94af3fdde1
+      internalID: -166111086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m4
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 864
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69caec6bfa6dc7441a7d4a37c2b02c57
+      internalID: 46228352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 768
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f1f60cd540f114ea335d23fad8a1b1
+      internalID: -1540035992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 672
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5379ceee37a837c4085486aad7adbea4
+      internalID: -1207817105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_m1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 576
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a002e2d627b27c742b7e098778b518d6
+      internalID: -322529507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 480
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27abb90b9d6a816458e4240fc19563aa
+      internalID: 1966101334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 384
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aebf92037e1b4a48a9ad727ef8df0a6
+      internalID: 1495530185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p3
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 288
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85f7e9fa17da63149843169626690afc
+      internalID: 1652229422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p4
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 192
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3aeeaded992c5947991332aa31be081
+      internalID: -823743881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 96
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e995d7fe8434ef842a86d3e392ef0465
+      internalID: 1903381869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CHR_Cenk_WindLean_SouthEast_Raincoat_5_p6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19791667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f97247fe746184db4b288d3acde61a
+      internalID: 762976157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 73286948b14b57042afa14a311318ede
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m1: 225120503
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m2: -496272788
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m3: 916315466
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m4: -1836516152
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m5: -584409138
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_m6: -1461229628
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p1: -1237957940
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p2: -1483476694
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p3: -315064348
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p4: 1044262921
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p5: -1658095737
+      CHR_Cenk_WindLean_SouthEast_Raincoat_0_p6: -1806572085
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m1: -851974587
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m2: -702307308
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m3: -1325683121
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m4: -192414170
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m5: 1899447921
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_m6: 2088225185
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p1: -2017099735
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p2: -1258260
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p3: 1632877396
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p4: 1393101973
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p5: 382534905
+      CHR_Cenk_WindLean_SouthEast_Raincoat_1_p6: 1613213898
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m1: 1628270986
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m2: 1343228263
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m3: -876923938
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m4: 225019052
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m5: -322200881
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_m6: 1313666023
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p1: 581925222
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p2: -1671024559
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p3: -1917427707
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p4: 1759903089
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p5: -1705076658
+      CHR_Cenk_WindLean_SouthEast_Raincoat_2_p6: 568190575
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m1: -244391911
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m2: 1808931814
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m3: -1911797169
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m4: -568008901
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m5: -857001360
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_m6: -487918795
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p1: -1330187123
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p2: -1493231753
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p3: -436835970
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p4: -410263786
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p5: -668887717
+      CHR_Cenk_WindLean_SouthEast_Raincoat_3_p6: 1637959209
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m1: -1045906383
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m2: -1364117679
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m3: 200842200
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m4: 86868335
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m5: -1302922916
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_m6: 1307283021
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p1: 1305239722
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p2: -1843393249
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p3: -1607719432
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p4: 1340093549
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p5: 1301891370
+      CHR_Cenk_WindLean_SouthEast_Raincoat_4_p6: -205410432
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m1: -322529507
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m2: -1207817105
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m3: -1540035992
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m4: 46228352
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m5: -166111086
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_m6: 457433389
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p1: 1966101334
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p2: 1495530185
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p3: 1652229422
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p4: -823743881
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p5: 1903381869
+      CHR_Cenk_WindLean_SouthEast_Raincoat_5_p6: 762976157
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
