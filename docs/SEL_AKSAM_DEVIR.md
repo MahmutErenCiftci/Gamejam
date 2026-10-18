@@ -1,24 +1,38 @@
 # Akşam Sel Bölümü — Devir Belgesi (FloodEvening)
 
-> Durum: **temel kuruldu, zikzak rota ekipte**. Görseller ve arayüzler geçici/sade. Bu belge ekibin (Berk, Arda, Eren) nereden devam edeceğini anlatır.
+> Durum: **zikzak harita kuruldu ve uçtan uca oynandı; ağaç düşüşü (Eren), art arda basma + metinler (Arda), arayüz (Berk) ekipte**. Görseller ve arayüzler geçici/sade. Bu belge ekibin (Berk, Arda, Eren) nereden devam edeceğini anlatır.
 > Tasarım ve metin kuralları: [`docs/OYUN_AKISI.md` §6.0](OYUN_AKISI.md). Sahiplik: [`planning/EKIP_ROLLERI.md`](../planning/EKIP_ROLLERI.md).
 
-> **GÜNCEL DURUM (17 Eki 23:55, LEAD):** Lider kararıyla rota **zikzak** olarak yeniden tasarlandı (`S\newflood\PROMPT_ZIGZAG.md`, repo: `docs/SEL_ZIGZAG_*`). Controller bu yeni akışa çevrildi ve derleniyor; **harita (ENV v3 zikzak), ağaç düşüşü (FE_TreeFall) ve E'ye art arda basma işleri ekibe devredildi.** Sahnedeki dünya hâlâ ENV v2 (eski sel sokağı tabanlı, düz rota + bahçe kapısı/şifre).
+> **GÜNCEL DURUM (18 Eki 01:00, Mahmut — SEL3-01/02):** Zikzak harita (ENV v3) kuruldu ve FloodEvening.unity bununla yeniden kuruldu. **Uyarı → başlangıç sokağı → 2 dönüş → kavşak → kısa yol (köşeden sonra yıkıntıyla kapalı, yürüyerek dönüş) → uzun yol (4 dönüş) → dal → son köşe → güvenli meydan → sonuç** zinciri Unity'de gerçek girdiyle baştan sona oynandı (kısa yol denemesiyle birlikte 69,8 sn, Console hatası yok). Ağaç düşüşü (Eren) ve E'ye art arda basma (Arda) hâlâ ekipte; şu an dal geçici olarak "basılı tut" (SmallBranch) kipinde.
 
 ## 0. Gerçek durum
 
-**Çalışan (Unity'de gerçek girdiyle denendi):**
-- Menü/Deprem → Sel yönlendirmesi kodda: `GameSceneRouter.LoadChapter(Flood)` → `FloodEvening`; deprem raporunda **[Devam: Sel Bölümü]** butonu (kod derleniyor; **deprem raporundan geçiş Unity'de uçtan uca oynanmadı — UNTESTED**).
-- FloodEvening.unity açılıyor: "SEL BÖLÜMÜ" kartı → kararma açılır → FE_INTRO balonu → Eren'in uyarı bildirimi ([E] Devam ile kapanır, tek sefer) → serbest yürüyüş. Console hatası yok (err=0).
-- Kavşak (Fork) → kısa yol kapalı noktası (BarrierZone): Cenk suya girmeden durur, itme/ışınlama yok, kayıt nötr ("kısa yol denendi"); yürüyerek geri dönüp uzun yola (HighRoad) girince durum LongRoad oluyor.
-- Daha önceki sürümde (120 sn'li) süre dolması → sonuç ekranı → fareyle **Menüye Dön** → MainMenu çalıştı; sonuç ekranı ve butonları okunur.
+**Çalışan (Unity'de gerçek girdiyle denendi, 18 Eki):**
+- FloodEvening.unity: "SEL BÖLÜMÜ" kartı → FE_INTRO → uyarı bildirimi (tek sefer) → serbest yürüyüş.
+- Zikzak harita: başlangıç sokağı (eski sel sokağı görselleri) → köşe → ara sokak → köşe → kavşak meydanı (KISA YOL → / ← UZUN YOL tabelaları).
+- Kısa yol: aşağı inip köşeyi dönünce yıkıntı + bariyer + "YOL KAPALI"; ötesi derin sel (görsel). BarrierZone'a girince kayıt nötr (`short_road_tried`), oyuncu aynı yoldan yürüyerek kavşağa döner.
+- Uzun yol: 4 belirgin dönüş → I sokağında dal (BranchSpot) → dal açılınca son köşe → güvenli meydan (SafeZone) → sonuç ekranı.
+- Deprem raporundaki **[Devam: Sel Bölümü]** geçişi Unity'de uçtan uca oynanmadı (**UNTESTED**).
 
-**Yarım / devredilen:**
-- ENV v3 zikzak harita (≥2 dönüş kavşağa kadar, uzun yolda ≥3 dönüş, TreeStopSpot/TreeFallSpot/SafeSpot çapaları) — **yok**, ENV'e devredildi.
-- FE_TreeFall (tek seferlik ağaç düşüşü + kırık dalı E'ye art arda basarak itme, Hub adımları `tree_fell` / `branch_cleared`, "Yol açıldı.") — **yok**, EVENTS'e devredildi. Şu anki sahnede yerine eski `FE_BranchObstacle` (alternatif geçit, E basılı tut) duruyor.
-- `flood_evening.json`'da eksik: `FE_SHORT_CLOSED` sahnesi ("Yol kapanmış. Kavşağa dönüp diğer yolu kullanmalıyım.") ve `FE_RESULT_MISTAKES` içinde `short_road_tried` satırı ("Kısa yolu denedin, kapalıydı — zaman kaybettin."). Controller bunları arıyor; yoksa Console'a uyarı yazıp geçiyor. FE_FORK metni KISA YOL / UZUN YOL'a göre güncellenmeli (Arda).
-- v2 sahnesinde rota hâlâ bahçe kapısı + şifre kapısından geçiyor (ikisi sahnede ve çalışır durumda); zikzak haritada bunlar kaldırılacak.
-- Uçtan uca (uyarı → kısa yol → uzun yol → dal → devam noktası → sonuç → Tekrar Dene) yeni akışla **tek parça oynanmadı — UNTESTED**.
+**Çapalar (EveningNeighborhood.prefab, dünya koordinatı):**
+
+| Çapa | Konum | Ne için |
+|---|---|---|
+| `Spawn` | (-5.05, -1.23) | Cenk'in başladığı yer |
+| `Fork` | (6.25, 10.38) | Kavşak; FE_FORK repliği 1,6 birim yarıçapta bir kez |
+| `HighRoad` (+ trigger) | (3.25, 12.13) | Uzun yolun başı → `high_road` adımı |
+| `LowRoad/BarrierZone` (trigger) | (14.05, 9.28) | Kısa yolun kapalı ucu → `short_road_tried` |
+| `TreeStopSpot` (+ trigger) | (15.85, 15.68) | **Eren:** ağaç olayını başlatan güvenli durma noktası (I sokağına dönünce) |
+| `TreeFallSpot` | (17.75, 16.63) | **Eren:** ağacın düşeceği yol bölümü (I sokağı gy 13..18 boyunca) |
+| `BranchSpot` | (17.75, 16.63) | **Arda:** FE_BranchObstacle burada; I sokağını kesen `BranchBlock` collider'ı açılınca kapanır |
+| `SafeZone` (+ trigger) / `SafeSpot` | (27.75, 14.13) | Devam noktası (güvenli meydan) → bölüm sonu |
+
+**Yarım / ekipte:**
+- FE_TreeFall (Eren, SEL3-10): yok. Gelince sahne kurulum betiği onu `TreeStopSpot`'a koyar.
+- Art arda basma (Arda, SEL3-20): yok; dal şimdilik "basılı tut" kipinde (SmallBranch).
+- `flood_evening.json` (Arda, SEL3-21): `FE_SHORT_CLOSED` ve `FE_RESULT_MISTAKES/short_road_tried` hâlâ eksik (Console uyarısı veriyor).
+
+**Harita aracı (Mahmut'ta):** harita bir ızgara tanımından üretiliyor (zemin parçaları, su, duvar/korkuluk hatları, yıkıntı ve tabela sprite'ları, collider'lar) ve prefab + sahne MCP betiğiyle baştan kuruluyor. Haritada değişiklik gerekirse Mahmut'a söyleyin; prefab'ı elle düzenlemeyin (bir sonraki kurulumda üzerine yazılır).
 
 ## 1. Akış (zikzak)
 
