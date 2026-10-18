@@ -1,16 +1,20 @@
 # EŞİK
 
+> ## ⚠️ Önemli bilgilendirme
+>
+> **Bu oyun tamamen vibe coding yöntemiyle, yapay zekâ araçlarıyla yapılmıştır.** Oyunun kodu, görselleri, sesleri ve metinleri ile bu depoda belirtilen **tüm referans ve kaynakların araştırılması ve hazırlanması dahil her şey Claude (Anthropic, Claude Code) ve ChatGPT (OpenAI, Codex dahil) ile yaptırılmıştır.** İstisna olarak hazır kaynaklar (açık lisanslı fontlar, Kenney ve Pixabay sesleri) ve PixelLab ile üretilen karakter animasyonları da kullanıldı; bunlar kaynakçada ayrıca listelenmiştir. Ekip; fikirleri, görevleri ve promptları verdi, çıktıları seçti, test etti ve birleştirdi. Ayrıntılı AI ve kaynak beyanı: [docs/teslim/KAYNAKLAR.md](docs/teslim/KAYNAKLAR.md).
+
 **Küçük kararlar, büyük fark yaratır.**
 
 EŞİK, deprem ve sel sırasında verilen kararları konu alan Türkçe, izometrik 2D pixel art farkındalık oyunudur. Cenk'in ev içindeki hazırlıklarından yağmurlu mahalledeki rota seçimine uzanan iki bölüm; etkileşimler, kısa mini oyunlar ve açıklayıcı sonuç ekranlarıyla ilerler.
 
 CIVIL GAME JAM 2026 için Unity 2D ve C# ile geliştirilmiştir. Eski sürümler ve bazı geliştirme belgelerinde **AFET UYANIŞI** adı kullanılır.
 
-**[Windows v0.8 indir](https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.8/ESIK_v0.8_Windows.zip)** · **[Tüm sürümler](https://github.com/MahmutErenCiftci/Gamejam/releases)** · **[Kaynaklar ve AI beyanı](docs/teslim/KAYNAKLAR.md)**
+**[Windows v0.9.1 indir](https://github.com/MahmutErenCiftci/Gamejam/releases/download/v0.9.1/ESIK_v0.9.1_Windows.zip)** · **[Tüm sürümler](https://github.com/MahmutErenCiftci/Gamejam/releases)** · **[Kaynaklar ve AI beyanı](docs/teslim/KAYNAKLAR.md)**
 
 ## İndir ve çalıştır
 
-1. [v0.8 release sayfasındaki](https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.8) `ESIK_v0.8_Windows.zip` dosyasını indir.
+1. [v0.9.1 release sayfasındaki](https://github.com/MahmutErenCiftci/Gamejam/releases/tag/v0.9.1) `ESIK_v0.9.1_Windows.zip` dosyasını indir.
 2. ZIP'in **tamamını** bir klasöre çıkar. Oyunu ZIP'in içinden başlatma.
 3. Çıkardığın klasörde **`ESIK.exe`** dosyasını çalıştır.
 4. Menüden **Deprem** veya **Sel** bölümünü seçerek başla. İlk bölümün sonuç ekranından diğer bölüme devam edebilirsin.
