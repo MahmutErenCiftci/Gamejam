@@ -1,0 +1,1449 @@
+{
+  "archive": "Berk_Gorseller.zip",
+  "archiveSha256": "bbfce76371abc1d6227f1a0bb3eccbf1c77edc3e84c439ab0d254ddd6458a78d",
+  "source": "User-provided Berk visual/source appendix",
+  "files": [
+    {
+      "id": "BERK-001",
+      "entry": "Berk_Gorseller_Kaynakca/KAYNAKCA.txt",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/KAYNAKCA.txt",
+      "bytes": 3665,
+      "sha256": "463b850c2d4932cea926bc4fbd204ba535e3e93bbc811b1e823fffb1fb59b6cf",
+      "repoExactMatches": [],
+      "category": "KAYNAKCA.txt"
+    },
+    {
+      "id": "BERK-002",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/bubble_flood_128.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/bubble_flood_128.png",
+      "bytes": 11070,
+      "sha256": "a61959161a3a0697a7a126f692a77cfcf45f2779b1a9771d793d91d506a38e1d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/bubble_flood_128.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-003",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/bubble_quake_128.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/bubble_quake_128.png",
+      "bytes": 13749,
+      "sha256": "ddde5b99e814752ef9c142e10875ec94ba0276f2a5bab390b286ac69ad474bb2",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/bubble_quake_128.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-004",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/ui_kit.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/ui_kit.png",
+      "bytes": 75401,
+      "sha256": "8ac2b2f48708cbab2cbafafdcc9db477014441fe06225a5e12bae35f55915b1e",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/ui_kit.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-005",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/boy_front_frames.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/boy_front_frames.png",
+      "bytes": 159562,
+      "sha256": "23c5a4fa524a4e58b4631c261b598e4f439523a96140b782411deddb6f67fd43",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/boy_front_frames.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-006",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/furniture.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/furniture.png",
+      "bytes": 122483,
+      "sha256": "45130f0e6f04edd534c583399e976b74857f8e95bcaefde5c5049d5b2e97466b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/furniture.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-007",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/logo.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/logo.png",
+      "bytes": 122593,
+      "sha256": "0f90a1b8f399ca9cf7ef3d242a0a4beb645cf29e73698c9ef8bd9dbee55d672b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/logo.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-008",
+      "entry": "Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/room_decor.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/1_Hazir_Kaynak_Gorseller/kullanilmayan/room_decor.png",
+      "bytes": 176943,
+      "sha256": "afdae46b62d0c120a9115bbe38c1e5f3f75ca4062fca96c23053e207b76596af",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/room_decor.png"
+      ],
+      "category": "1_Hazir_Kaynak_Gorseller"
+    },
+    {
+      "id": "BERK-009",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleFlood.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleFlood.png",
+      "bytes": 11469,
+      "sha256": "8c347d4443a34e31041454fbff5cee01b9a04775c1b375360365917902139267",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Bubbles/BubbleFlood.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-010",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleFloodGlow.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleFloodGlow.png",
+      "bytes": 1989,
+      "sha256": "042a241782f770db8046ebd3ceddeca9e58db12801899d9fead9d506fd1433f7",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Bubbles/BubbleFloodGlow.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-011",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleQuake.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleQuake.png",
+      "bytes": 13454,
+      "sha256": "95179823c5d4983bac1cf3918b53cb960d67704ebd1a265e37ca14602cdf4041",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Bubbles/BubbleQuake.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-012",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleQuakeGlow.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/BubbleQuakeGlow.png",
+      "bytes": 2010,
+      "sha256": "47e6dc3e665044373d6dff02a95a0d1b16edd50ad5676e8916beaee344a9c060",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Bubbles/BubbleQuakeGlow.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-013",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/ThoughtPathFlood.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/ThoughtPathFlood.png",
+      "bytes": 1112,
+      "sha256": "ca69be7c5a22f40adeb9afb7e158644726a8d12b75004987167d9e2574746b99",
+      "repoExactMatches": [
+        "Assets/Art/Menu/UI/ThoughtPathFlood.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-014",
+      "entry": "Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/ThoughtPathQuake.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/2_Oyundaki_Halleri/ThoughtPathQuake.png",
+      "bytes": 1125,
+      "sha256": "dd10f4e70121e4806c355caeb8d839d30cfe95feaa544be394e7e55febf176b6",
+      "repoExactMatches": [
+        "Assets/Art/Menu/UI/ThoughtPathQuake.png"
+      ],
+      "category": "2_Oyundaki_Halleri"
+    },
+    {
+      "id": "BERK-015",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Apartment.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Apartment.png",
+      "bytes": 57162,
+      "sha256": "fa63b4fb52d0c7f17388f6c19697e97e8ffe08083f1348ecb56596625ac93c99",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Apartment.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-016",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Bird0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Bird0.png",
+      "bytes": 82,
+      "sha256": "a3a8dbdfab2f8f92535f1972a2636247fa47728246f984db0520fd2da6937065",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Bird0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-017",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Bird1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Bird1.png",
+      "bytes": 87,
+      "sha256": "a1bc88646c9ef01573e43776c02a74378d869c146ccbc171727bb8aaef15ebd6",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Bird1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-018",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/City.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/City.png",
+      "bytes": 243753,
+      "sha256": "6c9fd6dee84728cc740ef227fb1c2c3d29640f288476d3823b8e031bd465c6de",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/City.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-019",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityCracks.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityCracks.png",
+      "bytes": 48361,
+      "sha256": "652e8222fbd2609fc2ba789ed868f83a655c29e44533686c4432e0aaba562906",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityCracks.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-020",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights0.png",
+      "bytes": 10866,
+      "sha256": "58430041b5f616ddfc93be6f3d3a5b398f177b83a4d07248e70f80753d080606",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityLights0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-021",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights1.png",
+      "bytes": 10942,
+      "sha256": "4e66870c35892fed6c1caff9777819bb19f14f9feffd9fc52a1330a9e2d84dfa",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityLights1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-022",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights2.png",
+      "bytes": 11477,
+      "sha256": "c0db1363405a51f1e4dc9e9ed96048d7106576352b5c3413b34742a69715178c",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityLights2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-023",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityLights3.png",
+      "bytes": 11180,
+      "sha256": "118ba64e7901c129eb7b59445d1efa55036b328a72067292afbcc2df5a898446",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityLights3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-024",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityRuins.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/CityRuins.png",
+      "bytes": 138951,
+      "sha256": "04c1fac64d0a7545c55e4d6dffc5fefc29655d3ea996fb6f55e2f1b26c140f7d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/CityRuins.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-025",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ClockGlow.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ClockGlow.png",
+      "bytes": 409,
+      "sha256": "761b396b257823b9b37f8446affb16804504f01ab6eba26c3e3a0f8590575258",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/ClockGlow.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-026",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Dust.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Dust.png",
+      "bytes": 147,
+      "sha256": "e2b9ff992b46db6dbbb51ed05650ac0494d67f48d0aba4ab7a6b4f5d49117285",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Dust.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-027",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood0.png",
+      "bytes": 20471,
+      "sha256": "9d2569d4b7e43346e4c7a2f84df51494acb267c87025d488fd2cbc52984914ef",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-028",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood1.png",
+      "bytes": 42876,
+      "sha256": "919345bff723eff2f29ce8499b02ccd402549b8a256cd57e579a9893a8b96e32",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-029",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood2.png",
+      "bytes": 58812,
+      "sha256": "e5c4aedcf13d6837708e26ce7a31537e86f951c03c40fc6159917674e65b74d3",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-030",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood3.png",
+      "bytes": 41109,
+      "sha256": "59c91c433b04d03bf2de31d0a2e1e764b37177d9197739f01d553a47d4189fb4",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-031",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood4.png",
+      "bytes": 41574,
+      "sha256": "66fa971c4fb86a353a5db3fb0c92149ae751df529ffd785b1eec32f5bfb1ea04",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-032",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood5.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood5.png",
+      "bytes": 42570,
+      "sha256": "434fa987934481eedff94e4837f1c62f8c37a36fbe054cc089292c28e55267a5",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood5.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-033",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood6.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood6.png",
+      "bytes": 45442,
+      "sha256": "74085ee5dab255de831ad108a25ef56d287dfc23b21a303cfb282dbf06d3d12f",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood6.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-034",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood7.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood7.png",
+      "bytes": 47713,
+      "sha256": "54788fd343b61be9b3071a3ab7abc25cf42d9ec5aff226f3c20ad74475f4367b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood7.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-035",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood8.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood8.png",
+      "bytes": 50252,
+      "sha256": "2b535694b9017e8ac1534c2e6f3ba29b938f83cba119d5894e6ec8925c6220c1",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood8.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-036",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood9.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Flood9.png",
+      "bytes": 54203,
+      "sha256": "19fce87555e7d868d1c5a2186994f7cff43b8176aeaea934a6fb7b3207a1da13",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Flood9.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-037",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave0.png",
+      "bytes": 54846,
+      "sha256": "a4bf7be6d6b741f0bb4f7400238f5ec14542b4d8ff39562b983c530c627257aa",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/FloodWave0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-038",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave1.png",
+      "bytes": 54884,
+      "sha256": "03c11b3d755842c2845afa782d628e7debf4c0142aac489b6210350700b04eeb",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/FloodWave1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-039",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/FloodWave2.png",
+      "bytes": 54983,
+      "sha256": "ba152397450debcc2b25ed58f6b0c308b7f325337e10a66c1eb97f3864a1c748",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/FloodWave2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-040",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Pixel.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Pixel.png",
+      "bytes": 68,
+      "sha256": "2c5aaf41bb79b35d23604986f34bcac5674f30be3d718990fa8b02e8f8935b19",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Pixel.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-041",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/RainDrop.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/RainDrop.png",
+      "bytes": 77,
+      "sha256": "12c113bb538f465def1114b1808243dc2428d4fcdd9b7d1ed4490d43ef2acc6d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/RainDrop.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-042",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Rubble.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Rubble.png",
+      "bytes": 87,
+      "sha256": "509fccdbf59dc9dc48ecdec5b2cbb979686088d1e38130616063e515361e7dfa",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Rubble.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-043",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ShadeLeft.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ShadeLeft.png",
+      "bytes": 114,
+      "sha256": "d9b18dbc0472b4e8af830fb4be32c21d000879c6699e6db2ee466d35584e03f8",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/ShadeLeft.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-044",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/WindowGlass.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/WindowGlass.png",
+      "bytes": 539,
+      "sha256": "dff460cc80474bb760f40a50f1a1c29b52758d1ebe8bcf0e83b7c742a1d9e4e0",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/WindowGlass.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-045",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/WindowStorm.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/WindowStorm.png",
+      "bytes": 816,
+      "sha256": "6e6f827b73f2f957b5ec336973cd8ab2aaea95fcb97bab2451c31f9a7e28ae61",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/WindowStorm.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-046",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ZBig.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ZBig.png",
+      "bytes": 113,
+      "sha256": "ba0e100e93f7da68dc78cdd23ae07463cfe1956f38888c65e8cedb3c15520833",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/ZBig.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-047",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ZSmall.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/ZSmall.png",
+      "bytes": 111,
+      "sha256": "f876886daf6022f7133d3104ac0500bf8d2218b4f81307f00f25dead39873d5b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/ZSmall.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-048",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom0.png",
+      "bytes": 10020,
+      "sha256": "15fae9a54c4888d6f963b2abe16de4efe12082219701493cef803f309570e603",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-049",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom1.png",
+      "bytes": 5284,
+      "sha256": "776facce2fd2d7fd16badc6fe0408ecb3720666585ff67da576d56502ccff420",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-050",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom10.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom10.png",
+      "bytes": 1939,
+      "sha256": "054d3a9749bc82684d0f22d6074607b95ddd8e0b8799ea3313bee57cba84d7b8",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom10.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-051",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom11.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom11.png",
+      "bytes": 2754,
+      "sha256": "0b69b0262dbcda024d5931db52bebd16a8d6b21414b8ff2fe0ac6004a94a426e",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom11.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-052",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom2.png",
+      "bytes": 6642,
+      "sha256": "57b2992302ba9419efa2f54898b87a26a21f34511c0e3ddd023a6530e3d18a46",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-053",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom3.png",
+      "bytes": 5723,
+      "sha256": "83d6a6137ff76336e16d1ab9e34f67f50ee780a6a765138a6d84ed86f68565af",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-054",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom4.png",
+      "bytes": 3489,
+      "sha256": "3e53b0b9d5bfbdc7ffff3f472fbc1b2f8a9a8b361d5d401eae3c588a5159de5a",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-055",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom5.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom5.png",
+      "bytes": 1737,
+      "sha256": "44bf17e7e04262646fdb8a4ec8068cbe4299344d8e6fcfbb4a598fa5523b71f1",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom5.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-056",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom6.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom6.png",
+      "bytes": 4434,
+      "sha256": "ad0fab1c6b1114843d59eed4da2f55b1442fb8ab8d8ed86150fe522a47dd5cc1",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom6.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-057",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom7.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom7.png",
+      "bytes": 1601,
+      "sha256": "09d434b662d31723a872d50f87c86edab75fb2d9057d6429aecfd289932fff4d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom7.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-058",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom8.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom8.png",
+      "bytes": 2420,
+      "sha256": "bf42bfd2b9b1c1c94ca4af78b3b17d06725a7bc8e69da8db0b7a3dd45ec9f5b6",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom8.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-059",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom9.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseBottom9.png",
+      "bytes": 4467,
+      "sha256": "2fa450c3b67d15d7c4bdf36d26ee02536f02f562989252a076551e61cdc45d3f",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseBottom9.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-060",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask0.png",
+      "bytes": 2019,
+      "sha256": "924f5b1029976bde8d0dac731621a504140e437938889eee14386243da05163a",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-061",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask1.png",
+      "bytes": 1754,
+      "sha256": "b0f2fb57ebbd6ba7497e41e8ce084d1436c490505aec688e07d1557231170f3b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-062",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask10.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask10.png",
+      "bytes": 419,
+      "sha256": "b559fc253c528f81b05c75139d9af9e370876761cf6f30821bbd14fc041d3d8c",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask10.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-063",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask11.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask11.png",
+      "bytes": 631,
+      "sha256": "e728d86d1a64ca8de4eb8e33fded9a28af1870fd2dda636f3625fd9541c1b86e",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask11.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-064",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask2.png",
+      "bytes": 1372,
+      "sha256": "9799a68e1aef6a35c50b87f7b909346ea42e0cb8894e0298fea444d53f0f36d8",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-065",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask3.png",
+      "bytes": 1062,
+      "sha256": "da3a4f939ca5ee720e137d5609e78df8f28778f75007869dcb59cefa28e1fdff",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-066",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask4.png",
+      "bytes": 965,
+      "sha256": "0a08fdfdaca7ecdfa87dd4084539c00ac834cca4f9097ed956f199beab7db075",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-067",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask5.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask5.png",
+      "bytes": 731,
+      "sha256": "3a7ac65a9b317eb5d80e74784123c6952193689f6c4202563a911711acd8de5e",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask5.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-068",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask6.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask6.png",
+      "bytes": 931,
+      "sha256": "931dbc214c7416c4f5453d34ea4748c0d58d978be1b7a623f120374dfe741823",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask6.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-069",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask7.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask7.png",
+      "bytes": 438,
+      "sha256": "48e52d2ea5986a80e6e4c41d4af511e1be0c0678cd7f5449b0b168776f47ee22",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask7.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-070",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask8.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask8.png",
+      "bytes": 933,
+      "sha256": "117a570a0b145d58c708e02728418f1a609c2e4e29167b1660abccb720ba4793",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask8.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-071",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask9.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseMask9.png",
+      "bytes": 756,
+      "sha256": "994dbd02cb1fc475813fa9763a35927200945be3c4041c4137b2e98815d7aeb4",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseMask9.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-072",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop0.png",
+      "bytes": 11249,
+      "sha256": "50f930ec146b5e6c542436e56b302f245c62c68fe5b9df670582257f2974d02a",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-073",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop1.png",
+      "bytes": 5538,
+      "sha256": "ba458759156032ea975979f7e090708c11fa02fca8953ce7105fd201264e1947",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-074",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop10.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop10.png",
+      "bytes": 2061,
+      "sha256": "f6aaff021b8ee54053bd58a9af1582ab0887724ab7618bbf2c6f6451a168ad5d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop10.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-075",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop11.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop11.png",
+      "bytes": 2815,
+      "sha256": "e354fb8ccc9c142adbfdeac53d916ac4bb5ca1f54263b34fa1fd0bfa15f2bd22",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop11.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-076",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop2.png",
+      "bytes": 6740,
+      "sha256": "905e27b4499c909da73c1f9f249fb726c372fe24189d7db80023d1155f5f2369",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-077",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop3.png",
+      "bytes": 4725,
+      "sha256": "cb4ccdaf7531b80bedf917ce8a3e0c4fee6879323812d2741568e5503b6ad86f",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-078",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop4.png",
+      "bytes": 3936,
+      "sha256": "2560cd7ca1ecac04cf9036415575f8cb62b74ae5548f79aa535154fa7b4d0bae",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-079",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop5.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop5.png",
+      "bytes": 2346,
+      "sha256": "f125f338bd32afe17adf79bb8e316ecedf0bd411fd9d9b956f46cc3ce0f0185f",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop5.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-080",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop6.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop6.png",
+      "bytes": 3956,
+      "sha256": "0036514f76d022796cdfcaff80f6b8e184caa3837cc65713230233d127c5b4e5",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop6.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-081",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop7.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop7.png",
+      "bytes": 1416,
+      "sha256": "f7396ed317355e153de4f5676dde6790f897a00e64c1d9e71e8a8e56c159a329",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop7.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-082",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop8.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop8.png",
+      "bytes": 2905,
+      "sha256": "1713ec58fd9385b426da2fe0afea7f01309a731d7d563dc26c366fab4de27338",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop8.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-083",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop9.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Collapse/CollapseTop9.png",
+      "bytes": 4435,
+      "sha256": "9000cb29a583e79ae6eea6d8992fd956f6d2e033469893e466150788427cfd32",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Collapse/CollapseTop9.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-084",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX0.png",
+      "bytes": 250,
+      "sha256": "0d6f4bda9148848965c342114ef6e5e9c5e3f757ce11d9a439fb22c6a35bd2bf",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarX0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-085",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX1.png",
+      "bytes": 244,
+      "sha256": "a6dce7944c04f89535816b3085e5ebd897fbef8db4459976e2d75c39bd450873",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarX1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-086",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX2.png",
+      "bytes": 253,
+      "sha256": "03b21304e979d83300e12f1b20adcf73d963869afe71941dc3022786c9780076",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarX2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-087",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarX3.png",
+      "bytes": 243,
+      "sha256": "73539568b8472b3afe93d73ad708ae3bf5177e499ccfb78592b15590b0ac28ef",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarX3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-088",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY0.png",
+      "bytes": 249,
+      "sha256": "bb0a64c072fd1ab3dc980b51885935311c6e46f860fb5a8547f6ff340e925ffe",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarY0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-089",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY1.png",
+      "bytes": 246,
+      "sha256": "37127faf4e2edf9c4b5fab7befc8240fe902f0c0936feb3b6c0c8a5a792c9f0f",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarY1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-090",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY2.png",
+      "bytes": 241,
+      "sha256": "c6a2822e4d200669334ddb08023cf2fe4635e0ffc821f5b873ca7541dbb84c2d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarY2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-091",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY3.png",
+      "bytes": 245,
+      "sha256": "a740a9c90fce1003cff82075d7608dc3dae759d92ebd97b3a78204c670f90db2",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarY3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-092",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/CarY4.png",
+      "bytes": 242,
+      "sha256": "8c952f927910935aed8ddc1300647c6c9f426e940cb370102f5f5d3db9d2ecd7",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/CarY4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-093",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person0_0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person0_0.png",
+      "bytes": 106,
+      "sha256": "12952f72d2bcd31fafa8fb2bca580101899764005d986362f5f0d8d30fa1fe8d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person0_0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-094",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person0_1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person0_1.png",
+      "bytes": 104,
+      "sha256": "e7c4154f7b195c95ab817e22020768b7c0af72b6c00c8a2d3617bfa0e759ef3b",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person0_1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-095",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person1_0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person1_0.png",
+      "bytes": 106,
+      "sha256": "b0534dceb3a96ff5cee2c93b21dc551eee26af18e9a63ba9979f4975c068d7e7",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person1_0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-096",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person1_1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person1_1.png",
+      "bytes": 104,
+      "sha256": "f1a629dc9e1fa87b790de7a5a7b233591f4bdfdb8f54d69476c7e8132488c1ef",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person1_1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-097",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person2_0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person2_0.png",
+      "bytes": 106,
+      "sha256": "3b531c95e5218ec0b30098299b7c20326376950dce080c7b6eb444c725f5a63d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person2_0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-098",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person2_1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person2_1.png",
+      "bytes": 104,
+      "sha256": "c4121ac5937bc29e0757f8884b69a83c1d82a18bfa88d07b4a9e39788d2ade4d",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person2_1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-099",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person3_0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person3_0.png",
+      "bytes": 106,
+      "sha256": "1344928790bb8bfef06a58c185a2b32b7da31d7889ccf31e37c5a737d1fdfcde",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person3_0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-100",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person3_1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Fx/Street/Person3_1.png",
+      "bytes": 104,
+      "sha256": "1cd8a48edca43da9f15190997850826376238073c4f3c0291f1259ada0f138df",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Fx/Street/Person3_1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-101",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileBaseboard.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileBaseboard.png",
+      "bytes": 110,
+      "sha256": "a4453d02367717bbd9cc1b1ecc3033dd78c514a9c9bd99a79b7343f1f9697beb",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Tiles/TileBaseboard.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-102",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileFloor.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileFloor.png",
+      "bytes": 285,
+      "sha256": "81206ed58d235f2c4ed1b62cddbeadfc389bcecdcc824ddbc3662554789420db",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Tiles/TileFloor.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-103",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileWall.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileWall.png",
+      "bytes": 172,
+      "sha256": "7a0d747c4e80a94be512202a8f7e414e12ee28341b7665847393c9029878ffac",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Tiles/TileWall.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-104",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileWallTop.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/Tiles/TileWallTop.png",
+      "bytes": 110,
+      "sha256": "e82aec5f21f07618199a1438407a2f3b63fd1c523ba95595f523692423620628",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Tiles/TileWallTop.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-105",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/UI/Panel.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/UI/Panel.png",
+      "bytes": 147,
+      "sha256": "068b43af8090c5a3c5024f896b9bad59ca638dd1b08fafd22ed521ed27ff6361",
+      "repoExactMatches": [
+        "Assets/Art/Menu/UI/Panel.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-106",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/UI/PanelLit.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Menu_Sehir_ve_Efektler/UI/PanelLit.png",
+      "bytes": 147,
+      "sha256": "4167924b549268d74b15a20acc63d661facdd16f77ae9215c6dceca88e368ba3",
+      "repoExactMatches": [
+        "Assets/Art/Menu/UI/PanelLit.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-107",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Background.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Background.png",
+      "bytes": 5681,
+      "sha256": "016348a9e82d13b1b8a610615eff15bf766b3c6674fcc5134d14dc0c182c656e",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Background.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-108",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Child.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Child.png",
+      "bytes": 482,
+      "sha256": "bb3b5eea516758df7139a2f58da8ab6121d62d65a168cd7ca7a8bb3e0cba1824",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Child.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-109",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Flash.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Flash.png",
+      "bytes": 761,
+      "sha256": "3470eaba637bcb2c55489cbc9698b1fc373429b0218b4937c5d2e2f7a05d5e84",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Flash.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-110",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_0.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_0.png",
+      "bytes": 613,
+      "sha256": "1cc55c35b7f5ed6aed6e4d2db1039e4597562cc43b9ae13d347cd9048b8bdeae",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_0.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-111",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_1.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_1.png",
+      "bytes": 625,
+      "sha256": "1ffd69d51eb513be87ee6a89523e800f72f7fc387b35a0e5dcdeed83e68a1e47",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_1.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-112",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_2.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_2.png",
+      "bytes": 646,
+      "sha256": "f195c3ee965b8f188e7b1ced5bf49f3fa2167b61be46e8f33f2ca91b2800347e",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_2.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-113",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_3.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_3.png",
+      "bytes": 673,
+      "sha256": "aa9d545a876917aea5135f78263658576fbfe9145fd6ae47638d0297f3768710",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_3.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-114",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_4.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_4.png",
+      "bytes": 713,
+      "sha256": "3cd53255aff0acab04d2c7cf54eeb5d2bec27de616f23de4c558e0cb0e474952",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_4.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-115",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_5.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_5.png",
+      "bytes": 703,
+      "sha256": "bc37164ecfe8e815638000d19803ba94c759972a30c092acce631c1b87d866f6",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_5.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-116",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_6.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_6.png",
+      "bytes": 732,
+      "sha256": "d5673323d4d6d537c34adfcb9f0424879e0fd09b01a85f8fd7928cf6be70f818",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_6.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-117",
+      "entry": "Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_7.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/3_Kodla_Cizilen/Sel_Kapak_EveDonus/FT_Puddles_7.png",
+      "bytes": 733,
+      "sha256": "fdbc18816205fb8770be9670e7e44d125212eb22367c9b54553f9dbf7b142887",
+      "repoExactMatches": [
+        "Assets/Art/UI/FloodTitle/FT_Puddles_7.png"
+      ],
+      "category": "3_Kodla_Cizilen"
+    },
+    {
+      "id": "BERK-118",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/LogoStacked.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/LogoStacked.png",
+      "bytes": 5426,
+      "sha256": "212b81cfa8c36732f6c65ef21d6954afd2134142ae29a5f786306ab2dc2c6233",
+      "repoExactMatches": [
+        "Assets/Art/Menu/UI/LogoStacked.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-119",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/logo_esik.jpg",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/logo_esik.jpg",
+      "bytes": 96828,
+      "sha256": "d6b2433296529db9a6b0299464220b09df1157af21c940d8116d6678a3bf8865",
+      "repoExactMatches": [
+        "Assets/Art/Menu/Source~/logo_esik.jpg"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-120",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_HoldBar_Back.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_HoldBar_Back.png",
+      "bytes": 106,
+      "sha256": "99c6e7feec13b87a6830ffd8e2fc6bad61bcc157c2519d2a4c55c6fd7c4dcf82",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_HoldBar_Back.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-121",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_HoldBar_Fill.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_HoldBar_Fill.png",
+      "bytes": 97,
+      "sha256": "80a91142a7796f565758f975ece09b978d74d37e1bcd34f72c81ca7dd46ca625",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_HoldBar_Fill.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-122",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_NamePlate.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_NamePlate.png",
+      "bytes": 144,
+      "sha256": "8281ab1d431c4cea5181b4b7c2d535324f713eaaebe352a2ec920edc83e67913",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_NamePlate.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-123",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_PhoneNotifCard.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_PhoneNotifCard.png",
+      "bytes": 272,
+      "sha256": "3662fcf82fc059edd5acf34fa1bd0aa7216794f9438be17487ef2474976efc3d",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_PhoneNotifCard.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-124",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestBanner.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestBanner.png",
+      "bytes": 114,
+      "sha256": "a551e695668e500a760ef6b221a21e4e017c7e2c1ec621ee5c99207a40a689e3",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/QuestHUD/UI_EQ_QuestBanner.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-125",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestPanel.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestPanel.png",
+      "bytes": 128,
+      "sha256": "8524ec273f86218a7881b6357304e60a6c35813dde6887416e1a65e409ee5c6c",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/QuestHUD/UI_EQ_QuestPanel.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-126",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestToast.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_QuestToast.png",
+      "bytes": 111,
+      "sha256": "76ac01f690116734fe49c9d9c3a89ccf9e99117587055da3e4426c35c31584bb",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/QuestHUD/UI_EQ_QuestToast.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-127",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_StepDot_Done.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_StepDot_Done.png",
+      "bytes": 196,
+      "sha256": "1f4431c3c6b5f8d1692be75f76eac7082e68f995f27bb945e191233f4b5003e4",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_StepDot_Done.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-128",
+      "entry": "Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_Toast.png",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/4_Ekip_Gorselleri_Mahmut/UI_EQ_Toast.png",
+      "bytes": 199,
+      "sha256": "501e4fbc705d7496afca7f8331dbc69f418048e757561c53a7935e32c6c91115",
+      "repoExactMatches": [
+        "Assets/Art/UI/Earthquake/UI_EQ_Toast.png"
+      ],
+      "category": "4_Ekip_Gorselleri_Mahmut"
+    },
+    {
+      "id": "BERK-129",
+      "entry": "Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelifySans_OFL.txt",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelifySans_OFL.txt",
+      "bytes": 4488,
+      "sha256": "b66ba46f511a851ab09998b5a5a9fdbb102545a3864cb993095e1745996873a7",
+      "repoExactMatches": [],
+      "category": "5_Yazi_Tipleri"
+    },
+    {
+      "id": "BERK-130",
+      "entry": "Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelOperator_CC0.txt",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelOperator_CC0.txt",
+      "bytes": 7169,
+      "sha256": "f4e7f373b9b996950337e8d41a4a2939c2d90b7725e9baf3d5084a22717ad328",
+      "repoExactMatches": [],
+      "category": "5_Yazi_Tipleri"
+    },
+    {
+      "id": "BERK-131",
+      "entry": "Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelOperator_README.txt",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PixelOperator_README.txt",
+      "bytes": 2104,
+      "sha256": "7b0202e683cf5abb6a13d08d45ea2f9e3e6ec2e16871251421021652a12e1e59",
+      "repoExactMatches": [],
+      "category": "5_Yazi_Tipleri"
+    },
+    {
+      "id": "BERK-132",
+      "entry": "Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PressStart2P_OFL.txt",
+      "file": "docs/teslim/berk_gorseller/Berk_Gorseller_Kaynakca/5_Yazi_Tipleri/PressStart2P_OFL.txt",
+      "bytes": 4505,
+      "sha256": "004fc993a3bdaaf0fd443cb58d7e5c2fd09fc3a93b23309d0005421f7b8b7123",
+      "repoExactMatches": [],
+      "category": "5_Yazi_Tipleri"
+    }
+  ]
+}

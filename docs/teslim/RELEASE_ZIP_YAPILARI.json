@@ -1,0 +1,108 @@
+[
+  {
+    "tag": "v0.8",
+    "asset": "ESIK_v0.8_Windows.zip",
+    "entries": 228,
+    "uncompressedBytes": 296419808.0,
+    "exe": [
+      "ESIK.exe",
+      "UnityCrashHandler64.exe"
+    ],
+    "roots": [
+      "D3D12",
+      "DirectML.dll",
+      "dstorage.dll",
+      "dstoragecore.dll",
+      "ESIK_Data",
+      "ESIK.exe",
+      "MonoBleedingEdge",
+      "UnityCrashHandler64.exe",
+      "UnityPlayer.dll"
+    ],
+    "documents": [],
+    "hasUnityPlayer": true,
+    "hasGameAssembly": false,
+    "hasMono": true,
+    "hasAssemblyCSharp": true
+  },
+  {
+    "tag": "v0.7-onizleme",
+    "asset": "ESIK_v0.7_Windows.zip",
+    "entries": 228,
+    "uncompressedBytes": 293855072.0,
+    "exe": [
+      "ESIK.exe",
+      "UnityCrashHandler64.exe"
+    ],
+    "roots": [
+      "D3D12",
+      "DirectML.dll",
+      "dstorage.dll",
+      "dstoragecore.dll",
+      "ESIK_Data",
+      "ESIK.exe",
+      "MonoBleedingEdge",
+      "UnityCrashHandler64.exe",
+      "UnityPlayer.dll"
+    ],
+    "documents": [],
+    "hasUnityPlayer": true,
+    "hasGameAssembly": false,
+    "hasMono": true,
+    "hasAssemblyCSharp": true
+  },
+  {
+    "tag": "v0.4.1-onizleme",
+    "asset": "AfetUyanisi_v0.4.1_Windows.zip",
+    "entries": 229,
+    "uncompressedBytes": 222655018.0,
+    "exe": [
+      "AfetUyanisi_v0.4.1/AfetUyanisi.exe",
+      "AfetUyanisi_v0.4.1/UnityCrashHandler64.exe"
+    ],
+    "roots": [
+      "AfetUyanisi_v0.4.1"
+    ],
+    "documents": [],
+    "hasUnityPlayer": true,
+    "hasGameAssembly": false,
+    "hasMono": true,
+    "hasAssemblyCSharp": true
+  },
+  {
+    "tag": "v0.4-onizleme",
+    "asset": "AfetUyanisi_v0.4_Windows.zip",
+    "entries": 229,
+    "uncompressedBytes": 218070474.0,
+    "exe": [
+      "AfetUyanisi_v0.4/AfetUyanisi.exe",
+      "AfetUyanisi_v0.4/UnityCrashHandler64.exe"
+    ],
+    "roots": [
+      "AfetUyanisi_v0.4"
+    ],
+    "documents": [],
+    "hasUnityPlayer": true,
+    "hasGameAssembly": false,
+    "hasMono": true,
+    "hasAssemblyCSharp": true
+  },
+  {
+    "tag": "v0.3.1-onizleme",
+    "asset": "AfetUyanisi_v0.3.1_Windows.zip",
+    "entries": 227,
+    "uncompressedBytes": 212148030.0,
+    "exe": [
+      "AfetUyanisi_v0.3.1/AfetUyanisi.exe",
+      "AfetUyanisi_v0.3.1/UnityCrashHandler64.exe"
+    ],
+    "roots": [
+      "AfetUyanisi_v0.3.1"
+    ],
+    "documents": [],
+    "hasUnityPlayer": true,
+    "hasGameAssembly": false,
+    "hasMono": true,
+    "hasAssemblyCSharp": true
+  }
+]

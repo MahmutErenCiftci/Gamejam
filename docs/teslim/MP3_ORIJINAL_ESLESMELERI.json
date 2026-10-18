@@ -1,0 +1,68 @@
+[
+  {
+    "file": "Assets/Resources/Audio/Ambience/AMB_EQ_Assembly_Outdoor_Loop.mp3",
+    "sha256": "31527599b585e468e1413b0319be2a17106458c93a1a3b205060b4307787b7ef",
+    "originals": [
+      "freesound_community-crowd-of-people-talking-29054.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_Ball_Kick.mp3",
+    "sha256": "3b5bf005e77004c80e785ad396a4d110f631dd35638117af6e356cfd9e1ad020",
+    "originals": [
+      "freesound_community-soccer-ball-kick-37625.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_Cenk_Hurt.mp3",
+    "sha256": "71d5a3d9c290f3e76973bc5ddf9b15109f118d929db382b8cf35d4f9e39e850e",
+    "originals": [
+      "freesound_community-male_hurt7-48124.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_FE_Shock.mp3",
+    "sha256": "f38a4565a25b90932cab316aee4b5e618ef0458e6f762d956fbf7e553c79c60b",
+    "originals": [
+      "freesound_community-electric-shock-97989.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_FE_Sweep_Dream.mp3",
+    "sha256": "3cbe823a33610c36e73dba30327c365cd635bc8aebbb80d1ccead3715037412f",
+    "originals": [
+      "freesound_community-dream-sound-effect-downscale-7134.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_FE_Sweep_Scream.mp3",
+    "sha256": "8142e3e48245031542b437c58dd2d4d2aa42f2a3aa5ef8910ca20fabd7400c5c",
+    "originals": []
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_FE_Tree_Fall.mp3",
+    "sha256": "cb0e317ae88722b289f8965c017ed81e9611cb8995755dbe7a93ea780b61cee8",
+    "originals": [
+      "mollyroselee-falling-tree-ai-generated-431321.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_FE_Wade_Loop.mp3",
+    "sha256": "db8f99b36e1fa9bb89862e3ad42f38ab04e84572e5ad37eabcbe05fe98d0aa01",
+    "originals": []
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_Footstep_Outdoor_Loop.mp3",
+    "sha256": "2b07bc29a9ca9e30df92c2f422beea09a94cd45e20b07ee61f254dbd31794908",
+    "originals": [
+      "flutie8211-walking-on-sidewalk-432109.mp3"
+    ]
+  },
+  {
+    "file": "Assets/Resources/Audio/SFX/SFX_Footstep_Wood_Loop.mp3",
+    "sha256": "352d15f3fdc68d5e74ad4a0345f3233ae4d4268213212ac16511e01987590cbc",
+    "originals": [
+      "soumages-walking-on-wood-363349.mp3"
+    ]
+  }
+]
