@@ -32,6 +32,14 @@
       ]
     },
     {
+      "id": "EQH_MOTHER_PLAN",
+      "title": "Toplanma Alanı Hatırlatması",
+      "lines": [
+        { "speaker": "Anne", "text": "Bir de unutma: <color=#18A957>toplanma alanımız</color> binanın önündeki parktaki tabelanın yanı. Ayrı düşersek orada buluşuruz." },
+        { "speaker": "Çocuk", "text": "Tamam anne, unutmam!" }
+      ]
+    },
+    {
       "id": "EQH_READY",
       "title": "Hazırlık Tamam",
       "lines": [

@@ -102,6 +102,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         public ProtectionViewBase View { get => view; set => view = value; }
         public IsoPlayerController Player { get => player; set { player = value; characterAnimator = null; } }
         public float HoldSeconds => balanceSettings.Duration;
+        /// <summary>Çökme pozu (deprem modu çantayı sırta takarken kısa eğilme pozu olarak da kullanır; boş olabilir).</summary>
+        public Sprite DropPose => dropPose;
         public EarthquakeBalanceSettings BalanceSettings => balanceSettings;
         public EarthquakeBalanceModel Balance { get; private set; }
 

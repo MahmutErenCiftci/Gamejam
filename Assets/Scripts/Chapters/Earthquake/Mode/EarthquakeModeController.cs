@@ -13,12 +13,16 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// DEPREM MODU — 120 sn farkındalık simülasyonu, EarthquakeHome sahnesinin baştan sona akışı (EQ_SPEC A–E):
     ///  A. Siyahtan açılış, Cenk uyuyor → telefon titrer/çalar → kısa kararma, Cenk yatağın yanında uyanır → kamera telefona
     ///     kayar → telefon bildirimi [BAŞLA] → 120 sn sayaç.
-    ///  B. Serbest keşif: E ile inceleme (kart açıkken sayaç durur), tehlike bölgeleri (ayna: uyarı + bir kerelik ceza),
-    ///     annenin süreli soruları (Q1 anneye ilk E'de ya da sayaç 95'te, Q2 65'te, Q3 35'te; kart/geçiş açıksa hemen sonra),
-    ///     hepsi soruldu + en az 4 inceleme → "[Space] Simülasyonu hızlandır" (kalan süre 5 sn).
+    ///  B. Serbest keşif: E ile TEK SEFERLİK inceleme (kart açıkken sayaç durur; incelenen nesnenin E ipucu kalkar),
+    ///     tehlike bölgeleri (ayna: uyarı + bir kerelik ceza). Afet çantası mini oyunu başarıyla bitince çanta kendiliğinden
+    ///     Cenk'in sırtına geçer (WearBag). Başlangıç odasının (yatak odası) kapısı startRoomRequiredTasks bitene kadar kilitli
+    ///     ("Önce odadaki hazırlıklarını tamamlamalısın."). Anne tek sorusunu (Q1) KENDİLİĞİNDEN ve bir kez sorar: hazırlığın ilk
+    ///     motherMinSeconds sn'sinde değil, mini oyun/kart/diyalog açıkken değil; bir görev bittikten birkaç sn sonra (ya da sayaç
+    ///     q1At'e inince), en geç oyuncu odadan çıkmaya kalkınca. Annede E ile konuşma yok. Q2/Q3 süreli soruları
+    ///     timedFollowUpQuestions ile açılır (varsayılan kapalı). Görevler bitti → "[Space] Simülasyonu hızlandır" (kalan süre 5 sn).
     ///  C. Sayaç 0 → SARSINTI: kamera/eşya/toz/ışık, Çök–Kapan–Tutun (masaya yakınsa masa altında, değilse yerinde),
     ///     tehlike bölgesindeyse maruziyet.
-    ///  D. Sonrası: ortam değişir, anne "İyi misin?" → Q4, cam kırıkları uyarısı (ceza yok, kayıt), çanta (şimdi alınır),
+    ///  D. Sonrası: ortam değişir, anne "İyi misin?" → Q4, cam kırıkları uyarısı (ceza yok, kayıt), çanta (hazırlanmadıysa ders kartı),
     ///     daire kapısı → koridor (asansör = yanlış karar kaydı, merdiven) → toplanma alanı.
     ///  E. AFET FARKINDALIK RAPORU → Tekrar Dene / Menüye Dön.
     /// Oda geçişleri: kapı Interactable'ı (EarthquakeDoor) → sayaç durur → kararma → spawn + kamera noktası → açılma.
@@ -103,7 +107,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private float ringSeconds = 2f;
         [SerializeField] private float wakeFadeSeconds = 0.25f;
         [SerializeField] private float transitionFadeSeconds = 0.3f;
-        [Tooltip("Q1: sayaç bu değere inince (anneye daha önce gidilmediyse) anne seslenir")]
+        [Tooltip("Anne sorusu yedeği: oyuncu hiçbir görevi bitirmese de sayaç bu değere inince anne kendiliğinden sorar")]
         [SerializeField] private float q1At = 95f;
         [SerializeField] private float q2At = 65f;
         [SerializeField] private float q3At = 35f;
@@ -126,11 +130,46 @@ namespace AfetUyanisi.Chapters.Earthquake
         [Tooltip("Toast süresi (sn)")]
         [SerializeField] private float toastSeconds = 3.5f;
 
+        [Header("Başlangıç odası kapısı")]
+        [Tooltip("Başlangıç odasından (yatak odası) çıkmadan önce bitmesi gereken görevler (PreparationQuestManager id'leri; " +
+                 "listede olmayan id yok sayılır). Sayaç bitince (sarsıntı) kapı her durumda açılır.")]
+        [SerializeField] private string[] startRoomRequiredTasks = { "emergency_bag", "secure_bookshelf", "check_windows", "safe_spot" };
+        [SerializeField] private string startRoomLockedTitle = "ODADAN ÇIKMADAN ÖNCE";
+        [SerializeField] private string startRoomLockedText = "Önce odadaki hazırlıklarını tamamlamalısın.";
+        [Tooltip("Kilitli kapıya yaklaşınca çıkan uyarının en kısa tekrar aralığı (sn)")]
+        [SerializeField] private float lockedToastCooldown = 4f;
+
+        [Header("Annenin otomatik sorusu (tek sefer)")]
+        [Tooltip("Annenin hazırlıkta kendiliğinden sorduğu soru (earthquake_mode.json questions[].id)")]
+        [SerializeField] private string motherQuestionId = "Q1";
+        [Tooltip("Hazırlık başladıktan sonra anne en erken kaç sn sonra sorabilir")]
+        [SerializeField] private float motherMinSeconds = 5f;
+        [Tooltip("Bir görev bittikten sonra anne sormadan önce oyuncunun serbest dolaştığı süre (sn)")]
+        [SerializeField] private float motherAfterTaskDelay = 2.5f;
+        [Tooltip("Sorudan sonra annenin toplanma alanını hatırlattığı balon (earthquake_home.json)")]
+        [SerializeField] private string motherPlanLine = "EQH_MOTHER_PLAN";
+        [Tooltip("Eski süreli sorular Q2 (sayaç q2At) ve Q3 (q3At). Kapalıyken anne hazırlıkta yalnızca bir soru sorar.")]
+        [SerializeField] private bool timedFollowUpQuestions;
+
+        [Header("Afet çantası sırta")]
+        [Tooltip("Çantayı sırta takarken kısa eğilme pozu (boşsa korunmanın çökme pozu)")]
+        [SerializeField] private Sprite bagWearPose;
+        [Tooltip("Çantanın sırta kayma süresi (sn)")]
+        [SerializeField] private float bagWearSeconds = 0.35f;
+
+        [Header("Anne: sarsıntıda Çök–Kapan–Tutun")]
+        [Tooltip("Annenin korunma pozu kareleri (güneye bakar; 2 kare = sarsıntıda hafif titreme). Boşsa anne ayakta kalır.")]
+        [SerializeField] private Sprite[] motherCoverPoses;
+        [Tooltip("Sarsıntı sürerken titreme karelerinin değişme aralığı (sn)")]
+        [SerializeField] private float motherCoverFrameSeconds = 0.12f;
+        [Tooltip("Annenin yanında sağlam masa varsa (bu mesafe içinde) masanın yanına geçer: masanın saklanma noktası + motherCoverOffset. Cenk masanın altına girer, anne yanında; pencere/vitrinden uzak taraf.")]
+        [SerializeField] private float motherTableRadius = 1.5f;
+        [SerializeField] private Vector2 motherCoverOffset = new Vector2(0.5f, -0.3f);
+
         [Header("Balon replikleri (earthquake_home.json)")]
         [SerializeField] private string wakeLine = "EQH_WAKE";
         [SerializeField] private string phoneAfterLine = "EQH_PHONE_AFTER";
         [SerializeField] private string motherCallLine = "EQH_MOTHER_CALL";
-        [SerializeField] private string motherGreetLine = "EQH_MOTHER_GREET";
         [SerializeField] private string readyLine = "EQH_READY";
         [SerializeField] private string quakeLine = "EQH_QUAKE";
         [SerializeField] private string afterMotherLine = "EQH_AFTER_MOTHER";
@@ -185,6 +224,19 @@ namespace AfetUyanisi.Chapters.Earthquake
         private float freeSinceQuestion = 999f;
         private string pendingQuestionLogged;
         private EmergencyBagInteractable emergencyBag;
+        private PreparationQuestManager quests;
+        private EarthquakeRoom startRoom;
+        private readonly HashSet<Interactable> startExitPoints = new HashSet<Interactable>();
+        private bool motherAsked;
+        private bool motherProgress;      // hazırlıkta en az bir görev bitti / çanta sırta takıldı
+        private float motherFreeTime;     // son görevden (ya da engelden) beri kesintisiz serbest dolaşma süresi
+        private float prepStartedAt = -1f;
+        private bool bagWearing;
+        private Interactable lockPromptPoint;
+        private Coroutine motherCoverRoutine;
+        private bool motherShaking;
+        private Sprite motherStandSprite;
+        private float nextLockedToastAt;
 
         // --- Testler için okunur durum ---
         public EarthquakePhase Phase => phase;
@@ -195,6 +247,11 @@ namespace AfetUyanisi.Chapters.Earthquake
         public EarthquakeModeData Data => data;
         public bool AutoPlay => debugAutoPlay;
         public DebugScenario Scenario => debugScenario;
+        /// <summary>Anne hazırlıktaki tek sorusunu sordu mu (test).</summary>
+        public bool MotherAsked => motherAsked;
+        /// <summary>Başlangıç odası kapısı hâlâ kilitli mi (eksik görev var ve sarsıntı olmadı).</summary>
+        public bool StartRoomLocked => (phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep) && !countdown.HasExpired
+                                       && MissingStartRoomTasks().Count > 0;
 
         private bool Bypass => debugAutoPlay && !autoPlayUseViews;
 
@@ -215,6 +272,10 @@ namespace AfetUyanisi.Chapters.Earthquake
 
             ResolveComponents();
             ResolveViews();
+            quests = FindAnyObjectByType<PreparationQuestManager>(FindObjectsInactive.Include);
+            if (quests != null) quests.TaskCompleted += OnQuestCompleted;
+            startRoom = RoomOf(EarthquakeRoom.RoomId.Bedroom) ?? (rooms.Length > 0 ? rooms[0] : null);
+            ConfigureQuestions();
 
             if (hint == null) hint = new GameObject("TempInteractionHint").AddComponent<TempInteractionHint>();
             if (fader == null) fader = new GameObject("TempScreenFader").AddComponent<TempScreenFader>();
@@ -252,7 +313,30 @@ namespace AfetUyanisi.Chapters.Earthquake
         private void OnDestroy()
         {
             if (interactor != null) interactor.Used -= OnPointUsed;
+            if (quests != null) quests.TaskCompleted -= OnQuestCompleted;
             if (timeScaleChanged) Time.timeScale = previousTimeScale;
+        }
+
+        /// <summary>
+        /// Hazırlık soruları: anne yalnızca motherQuestionId'yi kendiliğinden sorar. timedFollowUpQuestions kapalıysa Q2/Q3
+        /// baştan "düşmüş" sayılır (sorulmaz, puandan düşmez) ve görev listesindeki anne görevi tek soruya iner.
+        /// </summary>
+        private void ConfigureQuestions()
+        {
+            if (timedFollowUpQuestions) return;
+            foreach (var id in new[] { "Q2", "Q3" })
+            {
+                if (id == motherQuestionId || data.FindQuestion(id) == null) continue;
+                askedQuestions.Add(id);
+                stats.droppedQuestions.Add(id);
+            }
+            if (quests != null) quests.RestrictQuestions(new[] { motherQuestionId });
+        }
+
+        private void OnQuestCompleted(string id)
+        {
+            motherProgress = true;
+            motherFreeTime = 0f;
         }
 
         private void ResolveComponents()
@@ -338,6 +422,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 interactor.Register(d.Point, before: () => UseDoor(d));
                 registered.Add(d.Point);
                 if (d.Kind == EarthquakeDoor.DoorKind.ApartmentExit) { apartmentDoor = d; apartmentDoorPoint = d.Point; }
+                if (d.Kind == EarthquakeDoor.DoorKind.Room && startRoom != null && startRoom.Owns(d)) startExitPoints.Add(d.Point);
             }
             // Bileşensiz kapılar için ad yedeği
             RegisterFallbackDoor("BedroomDoor", EarthquakeDoor.DoorKind.Room, EarthquakeRoom.RoomId.Living, "Salona geç", registered);
@@ -345,11 +430,10 @@ namespace AfetUyanisi.Chapters.Earthquake
             RegisterFallbackDoor("ApartmentDoor", EarthquakeDoor.DoorKind.ApartmentExit, EarthquakeRoom.RoomId.Stairwell, "Kapıya bak", registered);
             RegisterFallbackDoor("Stairs", EarthquakeDoor.DoorKind.StairsDown, EarthquakeRoom.RoomId.Assembly, "Merdivenden in", registered);
 
-            // Anne
+            // Anne: E ile konuşma yok (soruyu kendiliğinden sorar, bkz. MotherDue/MotherEvent)
             if (mother != null && !registered.Contains(mother))
             {
-                mother.Setup("Anneyle konuş", "", false, false);
-                interactor.Register(mother, before: TalkToMother);
+                mother.SetAvailable(false);
                 registered.Add(mother);
             }
             // Asansör
@@ -368,6 +452,14 @@ namespace AfetUyanisi.Chapters.Earthquake
             {
                 insp.ApplyData(data.FindInspectable(insp.Id));
                 if (insp.Point == null) continue;
+                // Kaldırılan incelemeler (telefon, gardırop, buzdolabı, TV, vitrin, salon penceresi): eşya dekor kalır, E yok.
+                if (Array.IndexOf(PreparationQuestManager.RetiredInspectionIds, insp.Id) >= 0)
+                {
+                    insp.Point.SetAvailable(false);
+                    registered.Add(insp.Point);
+                    Log($"'{insp.Id}' incelemesi kaldırıldı (dekor)");
+                    continue;
+                }
                 inspectables.Add(insp);
                 if (registered.Contains(insp.Point)) continue;
                 var i = insp;
@@ -436,6 +528,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             interactor.Register(point, before: use);
             registered.Add(point);
             if (kind == EarthquakeDoor.DoorKind.ApartmentExit) apartmentDoorPoint = point;
+            if (kind == EarthquakeDoor.DoorKind.Room && startRoom != null && startRoom.Owns(point)) startExitPoints.Add(point);
             Log($"kapı yedeği: '{objectName}' → {target} (EarthquakeDoor bileşeni yok)");
         }
 
@@ -549,6 +642,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         {
             phase = EarthquakePhase.Prep;
             countdown.StartTimer(data.countdownSeconds);
+            prepStartedAt = Time.time;
             Log($"B: {data.countdownSeconds:0} sn sayaç başladı, serbest keşif");
             SetFreeRoam(true);
             if (debugAutoPlay) StartCoroutine(AutoPilotPrep());
@@ -557,7 +651,12 @@ namespace AfetUyanisi.Chapters.Earthquake
             {
                 if (CanStartEvent())
                 {
-                    string due = NextDueQuestion();
+                    if (MotherDue())
+                    {
+                        yield return MotherEvent(true);
+                        continue;
+                    }
+                    string due = timedFollowUpQuestions ? NextDueQuestion() : null;
                     if (due != null)
                     {
                         yield return ScheduledQuestion(due);
@@ -581,16 +680,16 @@ namespace AfetUyanisi.Chapters.Earthquake
             Mode.EarthquakeMinigameHub.RequestInterruptAll();
             SetFreeRoam(false);
             DropUnaskedQuestions();
-            while (interactor.IsBusy || decisions.IsAsking || transitioning) yield return null;
+            while (interactor.IsBusy || decisions.IsAsking || transitioning || bagWearing) yield return null;
             for (float t = 0f; Mode.EarthquakeMinigameHub.AnyOpen && t < 2f; t += Time.unscaledDeltaTime) yield return null;
         }
 
         private string NextDueQuestion()
         {
+            // Q1 (annenin kendiliğinden sorusu) MotherDue/MotherEvent ile gelir; burada yalnızca isteğe bağlı Q2/Q3.
             float r = countdown.GetRemainingTime();
             string due = null;
-            if (!askedQuestions.Contains("Q1") && r <= q1At) due = "Q1";
-            else if (askedQuestions.Contains("Q1") && !askedQuestions.Contains("Q2") && r <= q2At) due = "Q2";
+            if (askedQuestions.Contains("Q1") && !askedQuestions.Contains("Q2") && r <= q2At) due = "Q2";
             else if (askedQuestions.Contains("Q2") && !askedQuestions.Contains("Q3") && r <= q3At) due = "Q3";
             if (due == null) return null;
             // Art arda soru yok: önceki sorudan sonra oyuncu en az minQuestionGap sn serbest dolaşmış olmalı
@@ -634,11 +733,89 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
         }
 
-        /// <summary>Q1–Q3 soruldu, en az minInspectedForReady inceleme yapıldı ve henüz hızlandırılmadı.</summary>
+        /// <summary>
+        /// Hazırlık tamam: anne sorusunu sordu (açıksa Q2/Q3 de), görev listesi bitti (sorusu sorulmuş ama süresi dolan anne
+        /// görevi de bitmiş sayılır; görev yöneticisi yoksa en az minInspectedForReady inceleme) ve henüz hızlandırılmadı.
+        /// </summary>
         private bool IsReady() =>
-            askedQuestions.Contains("Q1") && askedQuestions.Contains("Q2") && askedQuestions.Contains("Q3")
-            && stats.InspectedCount >= minInspectedForReady && !stats.acceleratedReady
+            (motherAsked || data.FindQuestion(motherQuestionId) == null)
+            && (!timedFollowUpQuestions || (askedQuestions.Contains("Q2") && askedQuestions.Contains("Q3")))
+            && QuestsSettled() && !stats.acceleratedReady
             && countdown.GetRemainingTime() > accelerateTo + 0.5f; // son saniyelerde hızlandırma ipucu anlamsız
+
+        private bool QuestsSettled()
+        {
+            if (quests == null) return stats.InspectedCount >= minInspectedForReady;
+            foreach (var t in quests.Tasks)
+            {
+                if (t == null || quests.IsDone(t.id)) continue;
+                bool asked = t.source == PrepTaskSource.AnswerAll && t.keys != null && Array.TrueForAll(t.keys, k => askedQuestions.Contains(k));
+                if (!asked) return false;
+            }
+            return true;
+        }
+
+        // ---------------- Annenin otomatik sorusu + başlangıç odası kapısı ----------------
+
+        /// <summary>
+        /// Anne şimdi sorabilir mi: henüz sormadı, hazırlık sürüyor, ilk motherMinSeconds geçti, mini oyun/diyalog/çanta takma yok
+        /// (kart/soru/geçiş CanStartEvent'te). Oyuncu gerekli görevleri bitirip kapıya geldiyse hemen (çıkıştan önce garanti);
+        /// değilse bir görev bittikten (ya da sayaç q1At'e indikten) sonra motherAfterTaskDelay sn serbest dolaşınca.
+        /// </summary>
+        private bool MotherDue()
+        {
+            if (motherAsked || phase != EarthquakePhase.Prep || countdown.HasExpired || bagWearing) return false;
+            if (data.FindQuestion(motherQuestionId) == null) return false;
+            if (Mode.EarthquakeMinigameHub.AnyOpen || interactor.IsSaying) return false;
+            if (prepStartedAt < 0f || Time.time - prepStartedAt < motherMinSeconds || Time.timeSinceLevelLoad < motherMinSeconds) return false;
+            if (AtStartRoomExit() && MissingStartRoomTasks().Count == 0) return true;
+            if (motherFreeTime < motherAfterTaskDelay) return false;
+            return motherProgress || countdown.GetRemainingTime() <= q1At;
+        }
+
+        /// <summary>
+        /// Annenin tek seferlik sorusu: seslenir (EQH_MOTHER_CALL) → soru (mevcut süreli soru arayüzü, ceza/geri bildirim aynı) →
+        /// toplanma alanı hatırlatması (EQH_MOTHER_PLAN). Sayaç bu sırada durur. manageFreeRoam: kapı etkileşiminin içinden
+        /// çağrılınca false (hareketi RoomInteractor yönetir).
+        /// </summary>
+        private IEnumerator MotherEvent(bool manageFreeRoam)
+        {
+            if (motherAsked) yield break;
+            motherAsked = true;
+            Log($"B: anne kendiliğinden soruyor ({motherQuestionId}, tek sefer, hazırlığın {Time.time - prepStartedAt:0.0}. sn'si)");
+            if (manageFreeRoam) SetFreeRoam(false);
+            countdown.PushPause(eventToken);
+            yield return Say(motherCallLine);
+            FacePlayerToMother();
+            yield return AskQuestion(motherQuestionId);
+            yield return Say(motherPlanLine);
+            countdown.PopPause(eventToken);
+            motherFreeTime = 0f;
+            if (manageFreeRoam && phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+        }
+
+        private bool AtStartRoomExit() => interactor.Current != null && startExitPoints.Contains(interactor.Current);
+
+        /// <summary>Başlangıç odasından çıkmak için henüz bitmemiş görevler (görev yöneticisinde tanımlı olanlar).</summary>
+        private List<PrepTaskDefinition> MissingStartRoomTasks()
+        {
+            var missing = new List<PrepTaskDefinition>();
+            if (quests == null || startRoomRequiredTasks == null) return missing;
+            foreach (var id in startRoomRequiredTasks)
+            {
+                var t = quests.Find(id);
+                if (t != null && !quests.IsDone(id)) missing.Add(t);
+            }
+            return missing;
+        }
+
+        private void ShowStartRoomLocked(List<PrepTaskDefinition> missing)
+        {
+            nextLockedToastAt = Time.time + lockedToastCooldown;
+            var labels = missing.ConvertAll(t => t.label);
+            Log($"B: başlangıç odası kapısı kilitli — eksik: {string.Join(", ", labels)}");
+            Toast(startRoomLockedTitle, startRoomLockedText + "\nEksik: " + string.Join(", ", labels), toastSeconds);
+        }
 
         private IEnumerator ShowReady()
         {
@@ -685,6 +862,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             foreach (var z in exposedZones) Log($"C: oyuncu tehlike bölgesinde: {z.Id} ({z.ExposureKind})");
 
             quakeEvents.BeginShake();
+            MotherTakeCover();
             float shakeStart = Time.time;
             yield return Startled();
             // Balon engellemesin ve tuş istemesin: kendi kendine kapanır, E yalnızca korunmaya gider.
@@ -705,6 +883,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             while (Time.time - shakeStart < minShakeSeconds && !stats.hitByBookshelf) yield return null;
             if (stats.hitByBookshelf) { yield return InjuredByBookshelf(shakeStart); yield break; }
             quakeEvents.EndShake();
+            motherShaking = false; // sarsıntı bitti: anne tutunmaya devam eder, D evresinde kalkar
             countdown.SetStatusText("SARSINTI BİTTİ");
             yield return new WaitForSeconds(settleSeconds);
 
@@ -760,6 +939,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             float until = Mathf.Min(minShakeSeconds, (Time.time - shakeStart) + 1.2f);
             while (Time.time - shakeStart < until) yield return null;
             quakeEvents.EndShake();
+            MotherStandUp(); // annen hemen yanına koşar
             countdown.SetStatusText("SARSINTI BİTTİ");
             yield return new WaitForSeconds(settleSeconds);
 
@@ -780,6 +960,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             countdown.SetStatusText(null);
             countdown.SetVisible(false);
             Log("D: sarsıntı sonrası — anne: İyi misin?");
+            MotherStandUp();
 
             FacePlayerToMother();
             yield return Say(afterMotherLine);
@@ -847,6 +1028,9 @@ namespace AfetUyanisi.Chapters.Earthquake
             stats.penaltySeconds = penalties.TotalSeconds();
             if (!stats.bagTaken)
                 stats.AddMistake(emergencyBag != null && !stats.emergencyBagPrepared ? "Afet çantasını depremden önce hazırlamadın." : "Deprem çantasını almadın.");
+            // FLOW: toplanma alanına varıldı (kitaplık altında kalınmadı) → deprem tamamlandı; rapordaki birincil buton
+            // "Devam: Sel Bölümü" (sel oynanmadıysa) ya da "Oyunu Bitir" olur (GameFlow, EarthquakeResultManager.ApplyChoice).
+            if (reachedAssembly && !stats.hitByBookshelf) GameFlow.CompleteChapter(ChapterId.Earthquake);
             var report = results.Build(stats, data);
             LastReport = report;
             Log($"E: rapor (puan {report.score}, {report.label})");
@@ -862,35 +1046,22 @@ namespace AfetUyanisi.Chapters.Earthquake
         // Nokta kullanımları
         // =====================================================================
 
+        /// <summary>
+        /// Tek seferlik inceleme (InspectableObject.BeginInspection): ilk E'de işaretlenir, görev ilerler (stats → PreparationQuestManager),
+        /// E ipucu kalkar ve kart gösterilir; zaten incelendiyse hiçbir şey olmaz.
+        /// </summary>
         private IEnumerator Inspect(InspectableObject insp)
         {
-            bool first = insp.MarkInspected();
+            if (!insp.BeginInspection())
+            {
+                Log($"inceleme: {insp.Id} zaten incelendi (tek seferlik), yok sayıldı");
+                yield break;
+            }
             // "Bulunan tehlikeler" yalnızca sarsıntıdan ÖNCE fark edilen tehlikeleri sayar.
             bool preQuake = phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep;
             stats.AddInspected(insp.Id, insp.IsHazard && preQuake);
-            Log($"inceleme: {insp.Id} ({insp.Kind}){(first ? "" : " tekrar")} — toplam {stats.InspectedCount}, tehlike {stats.HazardsFound}/{stats.hazardsTotal}");
+            Log($"inceleme: {insp.Id} ({insp.Kind}) — toplam {stats.InspectedCount}, tehlike {stats.HazardsFound}/{stats.hazardsTotal}");
             yield return ShowCard(insp.Title, insp.TextFor(phase), insp.Kind);
-        }
-
-        private IEnumerator TalkToMother()
-        {
-            FacePlayerToMother();
-            if (phase == EarthquakePhase.Prep && !askedQuestions.Contains("Q1"))
-            {
-                Log("B: anneye ilk kez gidildi → Q1");
-                yield return Say(motherGreetLine);
-                yield return AskQuestion("Q1");
-                yield break;
-            }
-            if (phase == EarthquakePhase.After)
-            {
-                if (!askedQuestions.Contains("Q4")) { yield return AskQuestion("Q4"); yield break; }
-                yield return ShowCard("ANNE", data.after.checkHazards, HazardClass.Safety);
-                yield break;
-            }
-            var info = data.FindInspectable("mother");
-            stats.AddInspected("mother", false);
-            yield return ShowCard(info != null ? info.title : "Anne", info != null ? info.text : "Deprem planınızı birlikte konuşun.", HazardClass.Info);
         }
 
         private IEnumerator AskQuestion(string id)
@@ -968,13 +1139,15 @@ namespace AfetUyanisi.Chapters.Earthquake
                 SetFreeRoam(false);
                 bool opened = bag.OpenMinigame(completedBag =>
                 {
+                    bag.ApplyLabel(phase);
                     if (completedBag)
                     {
                         stats.emergencyBagPrepared = true;
                         stats.AddInspected("emergency_bag", false);
-                        Log("B: afet çantası hazırlandı (mini oyun tamamlandı)");
+                        Log("B: afet çantası hazırlandı (mini oyun tamamlandı) → sırta takılıyor");
+                        StartCoroutine(WearBag(bag)); // serbest dolaşmayı sonunda kendisi açar
+                        return;
                     }
-                    bag.ApplyLabel(phase);
                     if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
                 });
                 Log(opened ? "B: afet çantası mini oyunu açıldı (sayaç akmaya devam ediyor)" : "B: afet çantası mini oyunu açılamadı");
@@ -1000,6 +1173,40 @@ namespace AfetUyanisi.Chapters.Earthquake
                 yield break;
             }
             yield return ShowCard(bag.Title, bag.IsPrepared ? bag.ReadyText : "Afet çantası boş. Sarsıntıdan önce hazırlamalısın.", HazardClass.Safety);
+        }
+
+        /// <summary>
+        /// Mini oyun başarısından sonra (arayüz kapanmış, kamera dönmüş): kısa "sırta takma" anı — Cenk çantaya döner, kısa eğilme
+        /// pozu, çanta küçülerek sırtına kayar (EmergencyBagInteractable.PutOn) → GameSession.MarkQuakeBagTaken + CenkOutfit.RefreshAll
+        /// (deprem çantalı yürüyüş/poz sprite'ları) → bagTaken. Sarsıntı başlamışsa animasyonsuz hemen takılır.
+        /// </summary>
+        private IEnumerator WearBag(EmergencyBagInteractable bag)
+        {
+            if (bag == null || bag.IsTaken) yield break;
+            bool animate = phase == EarthquakePhase.Prep && !countdown.HasExpired && player != null && player.gameObject.activeInHierarchy;
+            bagWearing = true;
+            if (animate)
+            {
+                SetFreeRoam(false);
+                var anim = player.GetComponent<IsoCharacterAnimator>();
+                Sprite pose = bagWearPose != null ? bagWearPose : (protection != null ? protection.DropPose : null);
+                if (anim != null) anim.Face(bag.transform.position - player.transform.position);
+                yield return new WaitForSeconds(0.1f);
+                if (anim != null && pose != null) anim.ShowPose(pose);
+                yield return new WaitForSeconds(0.15f);
+                yield return bag.PutOn(player.transform, bagWearSeconds);
+                yield return new WaitForSeconds(0.25f);
+                if (anim != null && pose != null) anim.ClearPose();
+            }
+            else bag.MarkTaken();
+            stats.bagTaken = true;
+            bagWearing = false;
+            motherProgress = true;
+            motherFreeTime = 0f;
+            Log("B: afet çantası Cenk'in sırtında (görev tamam)");
+            if (phase == EarthquakePhase.Prep && !countdown.HasExpired) SetFreeRoam(true);
+            // Olumlu geri bildirim: kırmızı uyarı toast'ı değil, kendiliğinden kapanan kısa balon (görev tiki HUD'da).
+            if (animate && HasStory(bagLine)) StartCoroutine(SayTimed(bagLine, 1.6f));
         }
 
         private IEnumerator UseElevator()
@@ -1065,6 +1272,24 @@ namespace AfetUyanisi.Chapters.Earthquake
                     break;
 
                 default:
+                    // Başlangıç odası kapısı: hazırlıkta gerekli görevler bitmeden açılmaz; bittiyse ve anne henüz sormadıysa
+                    // önce annenin sorusu (çıkıştan önce garanti), sonra geçiş. Sarsıntıdan sonra kapı her zaman açık.
+                    if (startExitPoints.Contains(point) && (phase == EarthquakePhase.Intro || phase == EarthquakePhase.Prep)
+                        && !countdown.HasExpired)
+                    {
+                        var missing = MissingStartRoomTasks();
+                        if (missing.Count > 0 && !debugAutoPlay)
+                        {
+                            ShowStartRoomLocked(missing);
+                            yield break;
+                        }
+                        if (!motherAsked && data.FindQuestion(motherQuestionId) != null)
+                        {
+                            Log("B: odadan çıkmadan önce anne sorusu (garanti)");
+                            yield return MotherEvent(false);
+                            if (countdown.HasExpired) yield break; // ceza sayacı bitirdiyse sarsıntı başlar
+                        }
+                    }
                     Log($"kapı → {(room != null ? room.Id.ToString() : "?")}");
                     yield return Transition(room, spawn, facing);
                     break;
@@ -1169,6 +1394,64 @@ namespace AfetUyanisi.Chapters.Earthquake
             anim.ClearPose();
         }
 
+        /// <summary>
+        /// Sarsıntı başlayınca anne de Çök–Kapan–Tutun yapar: olduğu yerde (yemek masasının yanında; pencere/kitaplık yanında
+        /// durmaz) çömelir, kollarıyla başını ve ensesini korur; sarsıntı sürerken iki kare arasında hafifçe titrer. D evresinde
+        /// ("İyi misin?") MotherStandUp ile kalkar; başka odadaysa Cenk onu ancak kalktıktan sonra görür.
+        /// </summary>
+        private void MotherTakeCover()
+        {
+            if (mother == null || !mother.gameObject.activeInHierarchy || motherCoverPoses == null || motherCoverPoses.Length == 0 || motherCoverPoses[0] == null) return;
+            var sr = mother.GetComponent<SpriteRenderer>();
+            if (sr != null && motherCoverRoutine == null) motherStandSprite = sr.sprite;
+            if (motherCoverRoutine != null) StopCoroutine(motherCoverRoutine);
+            motherShaking = true;
+            motherCoverRoutine = StartCoroutine(MotherCoverLoop(mother.GetComponent<IsoCharacterAnimator>(), sr));
+            Log("C: anne de Çök–Kapan–Tutun yapıyor");
+        }
+
+        private IEnumerator MotherCoverLoop(IsoCharacterAnimator anim, SpriteRenderer sr)
+        {
+            // Yakında sağlam masa varsa kısa bir atılışla masanın yanına geçer (0,25 sn), sonra çömelir.
+            SturdyTable table = null; float best = motherTableRadius;
+            foreach (var t in FindObjectsByType<SturdyTable>(FindObjectsInactive.Exclude))
+            {
+                float d = Vector2.Distance(t.HidePosition, mother.transform.position);
+                if (d <= best) { best = d; table = t; }
+            }
+            if (table != null)
+            {
+                Vector3 from = mother.transform.position, to = table.HidePosition + (Vector3)motherCoverOffset;
+                to.z = from.z;
+                if (anim != null) anim.Face(to - from);
+                for (float t = 0f; t < 0.25f; t += Time.deltaTime) { mother.transform.position = Vector3.Lerp(from, to, t / 0.25f); yield return null; }
+                mother.transform.position = to;
+                Log($"C: anne masanın yanına geçti ({table.name})");
+            }
+            for (int i = 0; ; i++)
+            {
+                var pose = motherShaking ? motherCoverPoses[i % motherCoverPoses.Length] : motherCoverPoses[0];
+                if (pose == null) pose = motherCoverPoses[0];
+                if (anim != null) anim.ShowPose(pose);
+                else if (sr != null) sr.sprite = pose;
+                yield return new WaitForSeconds(Mathf.Max(0.05f, motherCoverFrameSeconds));
+            }
+        }
+
+        /// <summary>Annenin korunma pozunu bitirir (yürüme/durma animasyonuna döner). Korunmada değilse bir şey yapmaz.</summary>
+        private void MotherStandUp()
+        {
+            motherShaking = false;
+            if (motherCoverRoutine == null) return;
+            StopCoroutine(motherCoverRoutine);
+            motherCoverRoutine = null;
+            if (mother == null) return;
+            var anim = mother.GetComponent<IsoCharacterAnimator>();
+            if (anim != null) anim.ClearPose();
+            else { var sr = mother.GetComponent<SpriteRenderer>(); if (sr != null && motherStandSprite != null) sr.sprite = motherStandSprite; }
+            Log("D: anne kalktı");
+        }
+
         private void FacePlayerToMother()
         {
             if (player == null || mother == null || !mother.gameObject.activeInHierarchy) return;
@@ -1213,6 +1496,22 @@ namespace AfetUyanisi.Chapters.Earthquake
             // Soru arası serbest dolaşma süresi: yalnızca sayaç gerçekten akarken (kart/soru/geçiş/balon sırasında değil).
             if (phase == EarthquakePhase.Prep && freeRoam && countdown.IsRunning && !countdown.IsPaused)
                 freeSinceQuestion += Time.deltaTime;
+
+            // Annenin sorusu için "doğal an": görevden sonra kesintisiz serbest dolaşma süresi (mini oyun/kart/diyalog sıfırlar).
+            bool calm = phase == EarthquakePhase.Prep && CanStartEvent() && !bagWearing && !Mode.EarthquakeMinigameHub.AnyOpen && !interactor.IsSaying;
+            motherFreeTime = calm ? motherFreeTime + Time.deltaTime : 0f;
+
+            // Kilitli başlangıç odası kapısına yaklaşınca uyarı (her yaklaşmada bir kez, en sık lockedToastCooldown sn'de bir).
+            var at = phase == EarthquakePhase.Prep && interactor.Current != null && startExitPoints.Contains(interactor.Current) ? interactor.Current : null;
+            if (at != lockPromptPoint)
+            {
+                lockPromptPoint = at;
+                if (at != null && !debugAutoPlay && !countdown.HasExpired && Time.time >= nextLockedToastAt)
+                {
+                    var missing = MissingStartRoomTasks();
+                    if (missing.Count > 0) ShowStartRoomLocked(missing);
+                }
+            }
         }
 
         private void OnZonePenalized(HazardZone zone)
@@ -1344,8 +1643,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             if (debugScenario == DebugScenario.MirrorPenalty || debugScenario == DebugScenario.AllWrong)
                 yield return AutoMirrorDwell();
 
-            // 4) Anne (Q1)
-            if (!askedQuestions.Contains("Q1") && mother != null) yield return AutoUse(mother);
+            // 4) Anne sorusunu kendiliğinden sorar (MotherDue); E ile konuşma yok.
 
             // 5) Salondakileri incele
             limit = thorough ? 99 : 3;
@@ -1362,6 +1660,8 @@ namespace AfetUyanisi.Chapters.Earthquake
                 emergencyBag.MarkPrepared();
                 stats.emergencyBagPrepared = true;
                 emergencyBag.ApplyLabel(phase);
+                emergencyBag.MarkTaken(); // başarıda çanta sırta geçer
+                stats.bagTaken = true;
             }
 
             // 6) Sarsıntıyı bekleyeceği yer

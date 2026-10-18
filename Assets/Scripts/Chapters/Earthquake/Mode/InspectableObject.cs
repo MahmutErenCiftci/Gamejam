@@ -10,6 +10,9 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// RoomInteractor.Register ile bağlar. Başlık/metin/tehlike sınıfı earthquake_mode.json'daki inspectables[id]'den gelir;
     /// JSON'da yoksa buradaki yedek alanlar kullanılır. Oyuncu kontrolcüsüne gömülü değildir.
     /// id boşsa obje adından türetilir: "BedroomWindow" → "bedroom_window".
+    /// Tek seferlik inceleme (singleUse, varsayılan açık): BeginInspection() bir kez başarılı olur → IsInspected = true,
+    /// Inspected olayı (görev ilerlemesi), Interactable kapanır (E ipucu bir daha çıkmaz). Yalnızca İNCELEME noktaları için;
+    /// aynı objeyi mini oyun/mekanizma kullanıyorsa (kitaplık, ocak) onlar MarkInspected'i çağırır ve nokta açık kalır.
     /// </summary>
     [RequireComponent(typeof(Interactable))]
     public class InspectableObject : MonoBehaviour
@@ -26,6 +29,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField, TextArea] private string fallbackText = "";
         [Tooltip("İsteğe bağlı: incelendikten sonra açılan küçük işaret (ör. yeşil tik)")]
         [SerializeField] private GameObject inspectedMarker;
+        [Tooltip("İşaretliyse bir kez incelenir: kart gösterilir, görev ilerler, E ipucu kalkar ve tekrar incelenemez")]
+        [SerializeField] private bool singleUse = true;
         [Tooltip("İnceleme kartı açılırken çağrılır (ses/animasyon kancası)")]
         [SerializeField] private UnityEvent onInspected = new UnityEvent();
 
@@ -42,6 +47,11 @@ namespace AfetUyanisi.Chapters.Earthquake
         public HazardClass Kind => hazardClass;
         public bool IsHazard => hazardClass == HazardClass.Hazard;
         public bool WasInspected { get; private set; }
+        /// <summary>İncelendi mi (tek seferlik incelemenin durumu; WasInspected ile aynı).</summary>
+        public bool IsInspected => WasInspected;
+        public bool SingleUse => singleUse;
+        /// <summary>Şu an incelenebilir mi (tek seferlikse ve incelendiyse false).</summary>
+        public bool CanInspect => !(singleUse && WasInspected);
         public string ActionLabel => string.IsNullOrEmpty(actionLabel) ? "İncele" : actionLabel;
 
         public Interactable Point
@@ -88,6 +98,18 @@ namespace AfetUyanisi.Chapters.Earthquake
             WasInspected = true;
             if (inspectedMarker != null) inspectedMarker.SetActive(true);
             Inspected?.Invoke(this);
+            return true;
+        }
+
+        /// <summary>
+        /// Ortak tek seferlik inceleme girişi (EarthquakeModeController.Inspect çağırır). İncelenebilirse işaretler,
+        /// tek seferlikse E noktasını kapatır ve true döner; zaten incelendiyse hiçbir şey yapmaz, false döner.
+        /// </summary>
+        public bool BeginInspection()
+        {
+            if (!CanInspect) return false;
+            MarkInspected();
+            if (singleUse && Point != null) Point.SetAvailable(false);
             return true;
         }
 
