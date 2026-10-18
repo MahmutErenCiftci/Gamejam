@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,9 +8,35 @@ namespace AfetUyanisi.Core
     /// Oyunun bütün tuşları tek yerde (tuş haritası: docs/OYUN_AKISI.md §3).
     /// Proje sadece yeni Input System'i kullanır: Input.GetKeyDown gibi eski çağrılar bu projede HATA verir,
     /// tuş okumak için hep bu sınıfı kullan. "Pressed" = bu karede basıldı, "Held" = basılı tutuluyor.
+    /// GameplayLocked açıkken (duraklatma menüsü) bütün okumalar boş döner; menü kendi tuşlarını ReadUnlocked ile okur.
     /// </summary>
     public static class GameInput
     {
+        /// <summary>
+        /// Duraklatma menüsü (AfetUyanisi.UI.PauseMenu) açıkken true: oyun hiçbir tuş/tık görmez (basılı tutulanlar da
+        /// bırakılmış sayılır), menüde basılan Enter/Space/tık arkadaki diyaloğa veya etkileşime gitmez.
+        /// </summary>
+        public static bool GameplayLocked { get; set; }
+
+        private static int unlockDepth;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            GameplayLocked = false;
+            unlockDepth = 0;
+        }
+
+        /// <summary>Kilit açıkken bile okur (yalnızca duraklatma menüsü): GameInput.ReadUnlocked(() => GameInput.BackPressed).</summary>
+        public static T ReadUnlocked<T>(Func<T> read)
+        {
+            unlockDepth++;
+            try { return read(); }
+            finally { unlockDepth--; }
+        }
+
+        private static bool Locked => GameplayLocked && unlockDepth == 0;
+
         /// <summary>
         /// İzometrik yürüme: W/A/S/D veya ok tuşları, ekran yönünde 8 yön. Uzunluğu en fazla 1 (çaprazda normalize).
         /// </summary>
@@ -75,7 +102,7 @@ namespace AfetUyanisi.Core
             get
             {
                 var mouse = Mouse.current;
-                return mouse != null && mouse.leftButton.wasPressedThisFrame;
+                return !Locked && mouse != null && mouse.leftButton.wasPressedThisFrame;
             }
         }
 
@@ -121,7 +148,7 @@ namespace AfetUyanisi.Core
             get
             {
                 var mouse = Mouse.current;
-                return mouse != null && mouse.leftButton.isPressed;
+                return !Locked && mouse != null && mouse.leftButton.isPressed;
             }
         }
 
@@ -145,13 +172,13 @@ namespace AfetUyanisi.Core
         private static bool Pressed(Key key)
         {
             var keyboard = Keyboard.current;
-            return keyboard != null && keyboard[key].wasPressedThisFrame;
+            return !Locked && keyboard != null && keyboard[key].wasPressedThisFrame;
         }
 
         private static bool Held(Key key)
         {
             var keyboard = Keyboard.current;
-            return keyboard != null && keyboard[key].isPressed;
+            return !Locked && keyboard != null && keyboard[key].isPressed;
         }
     }
 }
