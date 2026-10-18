@@ -74,6 +74,18 @@ const LINES = [
   { id: 'HiWall_Avlu_Right', kind: 'hiwall', axis: 'y', at: 63, from: -8, to: -1 },
   { id: 'Rail_Avlu_Front', kind: 'rail', axis: 'x', at: -8, from: 53, to: 63 },
   { id: 'Rail_Avlu_Left', kind: 'rail', axis: 'y', at: 53, from: -8, to: -1 },
+  // (18 Eki, Eren) duvar boşlukları: koridor kenarında duvar/çit/ev olmayan, çimene açılan aralıklar kapatıldı
+  { id: 'Wall_A_Top', kind: 'wall', axis: 'x', at: 5, from: 9, to: 11 },          // A çitleri (gx 9'da biter) → Wall_B_Left köşesi
+  { id: 'Wall_C_Back', kind: 'wall', axis: 'x', at: 17, from: 21.5, to: 23 },     // C arka çiti (gx 21.8) → kavşak köşesi
+  { id: 'Wall_Fork_BackLeft', kind: 'wall', axis: 'y', at: 23, from: 17, to: 19 },
+  { id: 'Wall_Fork_Back', kind: 'wall', axis: 'x', at: 19, from: 23, to: 25 },    // → Wall_F_Left başı
+  { id: 'Wall_Fork_FrontLeft', kind: 'wall', axis: 'y', at: 23, from: 10, to: 12 }, // Wall_C_Front sonu → kavşağın alt köşesi
+  { id: 'Wall_Fork_Front', kind: 'wall', axis: 'x', at: 10, from: 23, to: 25 },   // → Wall_D_Left başı
+  { id: 'Wall_D_Right', kind: 'wall', axis: 'y', at: 30, from: 7, to: 10 },       // E çitleri (gy 7) → kavşak evi (31, 10)
+  { id: 'Wall_Fork_FrontRight', kind: 'wall', axis: 'x', at: 10, from: 30, to: 31 },
+  { id: 'Wall_F_Right', kind: 'wall', axis: 'y', at: 30, from: 24.5, to: 26 },    // F çitleri (gy 24.6'da biter) → G köşesi
+  { id: 'Wall_G_Front', kind: 'wall', axis: 'x', at: 26, from: 30, to: 41 },      // G'nin bahçe tarafı → Wall_H_Left başı
+  { id: 'Wall_H_Front', kind: 'wall', axis: 'x', at: 13, from: 41, to: 46 },      // Wall_H_Left sonu → Wall_I_Front başı
 ];
 
 module.exports = { G, H, WALK, VOID, SURF, FACE, WATER, WATER_LEVELS, LINES, RUBBLE_GX, BARRIER_GX: RUBBLE_GX, inR, R, corridorOf };

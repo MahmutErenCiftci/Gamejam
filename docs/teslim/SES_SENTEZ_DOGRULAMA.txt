@@ -1,0 +1,37 @@
+node tools/audio/generate_audio.js --check
+Durum: PASS
+SFX_Alarm_Clock: 2.000s peak=-1.000dBFS RMS=-11.4dBFS DC=-0.000003 sha256=c5051b0aa48c5c58
+SFX_Phone_Ring: 3.000s peak=-1.000dBFS RMS=-12.1dBFS DC=-0.000000 sha256=723e5f3f92bb196f
+SFX_Phone_Notify: 0.700s peak=-1.000dBFS RMS=-11.3dBFS DC=0.000000 sha256=155664c85cae0de2
+SFX_TV_NewsJingle: 3.500s peak=-1.000dBFS RMS=-10.7dBFS DC=0.000000 sha256=a6b53048b8c0ca99
+SFX_Water_Splash: 0.650s peak=-1.000dBFS RMS=-22.8dBFS DC=0.000000 sha256=fdec7e0150321444
+SFX_Bus_Arrive: 4.000s peak=-1.000dBFS RMS=-9.2dBFS DC=-0.000000 sha256=7ece3aa87fd1f3c8
+SFX_Bus_Door: 1.250s peak=-1.000dBFS RMS=-15.2dBFS DC=-0.000000 sha256=bc936f2edb7cc478
+SFX_Bus_Depart: 4.000s peak=-1.000dBFS RMS=-9.4dBFS DC=0.000000 sha256=634192efafe15ec3
+SFX_Quake_Rumble: 8.000s peak=-1.000dBFS RMS=-14.6dBFS DC=-0.000000 sha256=3a8d479db6c062a1
+SFX_Quake_ObjectsRattle: 2.400s peak=-1.000dBFS RMS=-20.8dBFS DC=-0.000000 sha256=d6475f09203476c4
+SFX_Books_Fall: 1.200s peak=-1.000dBFS RMS=-22.2dBFS DC=-0.000001 sha256=187fa98269da4bd0
+SFX_Glass_Crack: 0.800s peak=-1.000dBFS RMS=-13.0dBFS DC=-0.000001 sha256=6535d45250514cda
+SFX_Countdown_Tick: 0.085s peak=-1.000dBFS RMS=-8.9dBFS DC=0.000000 sha256=4a670d47bbfe915c
+SFX_Penalty: 0.600s peak=-1.000dBFS RMS=-9.6dBFS DC=0.000000 sha256=325cc40c3fd06d15
+SFX_Correct: 0.650s peak=-1.000dBFS RMS=-10.1dBFS DC=0.000000 sha256=df4ef32c1296bc86
+SFX_Wrong: 0.650s peak=-1.000dBFS RMS=-10.3dBFS DC=-0.000000 sha256=b58dadbdc3f8c4e6
+SFX_Objective_Complete: 0.800s peak=-1.000dBFS RMS=-10.9dBFS DC=-0.000000 sha256=83450bd3208b522f
+SFX_Objective_Bonus: 0.900s peak=-1.000dBFS RMS=-11.1dBFS DC=0.000000 sha256=0e130f7f5ae949d0
+SFX_Badge: 1.600s peak=-1.000dBFS RMS=-11.4dBFS DC=0.000000 sha256=c07cfd2eb1153b65
+SFX_UI_Hover: 0.075s peak=-1.000dBFS RMS=-9.0dBFS DC=-0.000000 sha256=e13e41761c3df9a7
+SFX_UI_Click: 0.120s peak=-1.000dBFS RMS=-8.9dBFS DC=-0.000000 sha256=59641a43c3089751
+SFX_UI_Back: 0.250s peak=-1.000dBFS RMS=-8.7dBFS DC=0.000000 sha256=26c343166d14c85a
+SFX_Footstep_Indoor_01: 0.270s peak=-1.000dBFS RMS=-20.8dBFS DC=-0.000000 sha256=1248b8a9fa1f9e65
+SFX_Footstep_Wet_01: 0.320s peak=-1.000dBFS RMS=-20.9dBFS DC=0.000000 sha256=074e081cde6d3e24
+SFX_Footstep_Indoor_02: 0.270s peak=-1.000dBFS RMS=-19.4dBFS DC=0.000000 sha256=3c41f449a1d448cc
+SFX_Footstep_Wet_02: 0.320s peak=-1.000dBFS RMS=-19.1dBFS DC=-0.000000 sha256=6775709de5b8617a
+SFX_Footstep_Indoor_03: 0.270s peak=-1.000dBFS RMS=-19.0dBFS DC=-0.000000 sha256=8a6665f9d8b30e70
+SFX_Footstep_Wet_03: 0.320s peak=-1.000dBFS RMS=-19.8dBFS DC=-0.000000 sha256=24afdcdd43aed18c
+AMB_Rain_Light_Loop: 20.000s peak=-1.000dBFS RMS=-13.2dBFS DC=-0.000000 sha256=ffab96aa5b3cee30
+AMB_Rain_Heavy_Loop: 20.000s peak=-1.000dBFS RMS=-13.2dBFS DC=-0.000000 sha256=8e1b4659938aed7e
+AMB_Room_Morning_Loop: 20.000s peak=-1.000dBFS RMS=-18.3dBFS DC=-0.000000 sha256=0fd613f05b7ce518
+MUS_Menu_Loop: 38.400s peak=-1.000dBFS RMS=-14.6dBFS DC=-0.000000 sha256=f2de26cf7f6a9ee3
+MUS_Calm_Loop: 38.400s peak=-1.000dBFS RMS=-17.0dBFS DC=-0.000000 sha256=fb0fbf17d1cf8872
+MUS_Tension_Loop: 38.400s peak=-1.000dBFS RMS=-16.0dBFS DC=0.000000 sha256=b974894c8113d01d
+PASS: 34 files, 18893938 bytes, no clipping, zero endpoints, deterministic content.

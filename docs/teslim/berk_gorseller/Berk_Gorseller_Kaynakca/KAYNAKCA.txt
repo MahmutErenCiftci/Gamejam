@@ -1,0 +1,65 @@
+BERK'IN ISLERINDE KULLANILAN GORSELLER VE YAZI TIPLERI (KAYNAKCA ICIN)
+Hazirlanma: 18.10.2026, kaynak: dev dali + feature/berk-sel-kapak
+Yalnizca oyunda su an gercekten kullanilan dosyalar kopyalandi; sahne, prefab ve atlas referanslarina bakilarak secildi.
+
+----------------------------------------------------------------------
+1_Hazir_Kaynak_Gorseller  ->  KAYNAKCAYA YAZILMASI GEREKENLER
+----------------------------------------------------------------------
+Bunlar bizim kodla cizmedigimiz, hazir gelen gorseller. Oyuna dogrudan girmiyorlar, oyundaki parcalar bunlardan kesiliyor (2. klasor).
+
+- ui_kit.png
+    Commit notuna gore Codex ile uretilmis piksel sanat sayfasi.
+    Oyunda: dusunce baloncuklari (ThoughtPathFlood / ThoughtPathQuake buradan kesilip dizildi).
+- bubble_quake_128.png, bubble_flood_128.png
+    128x128 hazir piksel sanat. Kaynagi commitlerde YAZMIYOR.
+    Nereden alindigini/hangi aracla uretildigini sen doldur.
+    Oyunda: ana menudeki DEPREM ve SEL ruya bulutlari.
+
+kullanilmayan/ alt klasoru (furniture, room_decor, boy_front_frames, logo):
+    Codex sayfalari ve onden cocuk sayfasi. Eski menude kullanilmislardi.
+    Simdiki oyunda kullanilmiyorlar ama repoda (Assets/Art/Menu/Source~) duruyorlar.
+    Repo da teslim edilecekse kaynakcaya bunlari da eklemek daha guvenli.
+
+----------------------------------------------------------------------
+2_Oyundaki_Halleri
+----------------------------------------------------------------------
+1. klasordeki gorsellerin oyuna giren halleri.
+- BubbleFlood/Quake: kenarlari temizlendi.
+- *Glow: parlayan hale kodla eklendi.
+- ThoughtPath*: baloncuklar dizildi.
+Kaynak olarak 1. klasordeki dosyalar gosterilir.
+
+----------------------------------------------------------------------
+3_Kodla_Cizilen  ->  OZGUN, DIS KAYNAK YOK
+----------------------------------------------------------------------
+Hazir gorsel kullanilmadi, hepsi piksel piksel kodla uretildi.
+- Sel_Kapak_EveDonus/ : "Eve Donus" sel acilis kapagi.
+    Uretim: Assets/Art/UI/FloodTitle/Tools~/make_flood_title.py
+- Menu_Sehir_ve_Efektler/ : ana menunun kodla cizilen parcalari.
+    Izometrik sehir, apartman, deprem cokme kareleri, sel sulari, kuslar, insan ve araba kareleri, yagmur, toz, pencere katmanlari, panel, duvar/zemin tile'lari.
+    Uretim: Assets/Scripts/Menu/Editor/MenuArtBuilder*.cs
+
+Kaynakcada "ozgun calisma (kodla uretildi)" diye gecilebilir.
+
+----------------------------------------------------------------------
+4_Ekip_Gorselleri_Mahmut  ->  BIZIM DEGIL, BILGI ICIN
+----------------------------------------------------------------------
+Benim islerimde kullandigim ama Mahmut'un ekledigi gorseller. Kaynaklarini Mahmut bilir.
+- logo_esik.jpg, LogoStacked.png : EŞİK logosu.
+- UI_EQ_*.png : deprem arayuzu sprite'lari, sel arayuzunde de kullanildi.
+- Ayrica ana menu arka planindaki izometrik oda Mahmut'un Bedroom sanati (Assets/Art/Props/Bedroom).
+  Buradan da Assets/Art/Menu/Iso/MENU_*. Bunlar kopyalanmadi.
+
+----------------------------------------------------------------------
+5_Yazi_Tipleri  ->  KAYNAKCAYA YAZILMASI GEREKENLER
+----------------------------------------------------------------------
+- Press Start 2P
+    Lisans: SIL Open Font License 1.1.
+    Kaynak: Google Fonts, (c) 2012 The Press Start 2P Project Authors (CodeMan38).
+- Pixel Operator
+    Yazar: Jayvee Enaguas (HarvettFox96).
+    Lisans: CC0 1.0.
+    Oyundaki "Pixel Operator TR Bold/Heavy" bundan turetildi. Turkce harfler (Ğ ğ İ Ş ş) fontun kendi parcalariyla eklendi.
+- Pixelify Sans
+    Lisans: SIL Open Font License 1.1.
+    (c) 2021 The Pixelify Sans Project Authors (github.com/eifetx/Pixelify-Sans), Google Fonts.
