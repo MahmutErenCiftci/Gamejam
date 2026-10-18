@@ -207,12 +207,13 @@ namespace AfetUyanisi.Menu.EditorTools
             var back = MenuButton(selection.transform, "BackButton", "Geri", V(252, 20), new Vector2(104, 22));
             var startChapter = MenuButton(selection.transform, "StartChapterButton", "Bölümü Başlat", V(388, 20), new Vector2(150, 22));
 
-            var settingsPanel = UiImage(root, "SettingsPanel", S("UI/Panel"), V(320, 180), new Vector2(260, 120));
-            settingsPanel.type = UnityEngine.UI.Image.Type.Sliced;
-            Label(settingsPanel.transform, "Title", "Ayarlar", bold, 16, Warm, new Vector2(0, 36), new Vector2(240, 20), TextAnchor.MiddleCenter);
-            Label(settingsPanel.transform, "Info", "Ses ve tam ekran ayarları yakında.\nEsc: geri", regular, 11, Ink, new Vector2(0, 4), new Vector2(240, 30), TextAnchor.MiddleCenter);
-            var settingsBack = MenuButton(settingsPanel.transform, "BackButton", "Geri", new Vector2(0, -36), new Vector2(104, 22));
-            settingsPanel.gameObject.SetActive(false);
+            // Ayarlar ekranı arayüzünü çalışırken kendisi kurar (MenuSettingsScreen); burada yalnızca font ve paneller verilir.
+            var settingsGo = new GameObject("SettingsScreen", typeof(RectTransform));
+            settingsGo.transform.SetParent(root, false);
+            var settingsScreen = settingsGo.AddComponent<MenuSettingsScreen>();
+            SetRef(settingsScreen, "font", regular);
+            SetRef(settingsScreen, "panelSprite", S("UI/Panel"));
+            SetRef(settingsScreen, "panelLitSprite", S("UI/PanelLit"));
 
             var tooltip = UiImage(root, "Tooltip", S("UI/Panel"), V(320, 86), new Vector2(320, 22));
             tooltip.type = UnityEngine.UI.Image.Type.Sliced;
@@ -244,8 +245,7 @@ namespace AfetUyanisi.Menu.EditorTools
             SetRef(menu, "selectionInfo", info);
             SetRef(menu, "sleepZzz", zzz);
             SetStrings(menu, "bubbleInfo", "Sabah evde, yer birden sarsılmaya başlıyor.", "Yağmur dinmiyor, sokaklar suyla doluyor.");
-            SetRef(menu, "settingsPanel", settingsPanel.gameObject);
-            SetRef(menu, "settingsBackButton", settingsBack);
+            SetRef(menu, "settingsScreen", settingsScreen);
             SetRef(menu, "tooltip", tooltip.gameObject);
             SetRef(menu, "tooltipText", tooltipText);
             SetRef(menu, "fadePanel", fadeGroup);

@@ -90,7 +90,7 @@ namespace AfetUyanisi.News
 
         void Update()
         {
-            if (!choosing) return;
+            if (!choosing || AfetUyanisi.Core.GameInput.GameplayLocked) return; // duraklatma menüsü açıkken seçim yok
             var kb = Keyboard.current;
             if (kb == null) return;
             for (int i = 0; i < Mathf.Min(data.cards.Length, cardViews.Length, 9); i++)
