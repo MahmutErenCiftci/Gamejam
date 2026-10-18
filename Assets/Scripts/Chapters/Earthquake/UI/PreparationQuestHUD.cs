@@ -12,6 +12,9 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// son 10 sn tik kancası buradadır; kendi sayacı yoktur.
     /// Akış: sayaç başlayınca (telefon bildirimi BAŞLA) → A) kısa "DEPREM HAZIRLIK SİMÜLASYONU" uyarısı + alarm sesi
     /// → B) panel sağdan kayarak gelir, satırlar sırayla belirir → C) oyun boyunca görünür.
+    /// Liste KISALIR: tamamlanan görev kısa tik + üstü çizilme animasyonundan (removeHoldSeconds ≈ 0,4 sn) sonra söner ve
+    /// satırı kapanır; alttaki satırlar piksel adımlarıyla yukarı kayar, panel aynı karede kısalır (üst üste binme yok).
+    /// Hepsi bitince yalnızca son satır ("Tüm hazırlıklar tamam!") kalır; son görevin satırı kapanırken o açılır (yükseklik sabit).
     /// Görev durumu PreparationQuestManager'dadır (HUD yalnızca gösterir). Mini oyun açıkken (EarthquakeMinigameHub.Opened)
     /// kompakt moda (süre + sayaç + küçük çubuk) geçer, kapanınca geri açılır. Süre 0'a inince / sarsıntı durum yazısı
     /// gelince görev paneli bir kez kapanır, yerine küçük durum etiketi ("SARSINTI!") gösterilir.
@@ -61,6 +64,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private string alarmText = "HAZIRLIK BAŞLADI!";
         [SerializeField] private string completeText = "GÖREV TAMAMLANDI!";
         [SerializeField] private string allDoneText = "HAZIRLIK TAMAM!";
+        [Tooltip("Bütün görevler bitip listeden çıkınca kalan tek satır")]
+        [SerializeField] private string finalLineText = "Tüm hazırlıklar tamam!";
         [SerializeField] private string penaltyFormat = "-{0} SANİYE";
 
         [Header("Zamanlama (sn, ölçeksiz)")]
@@ -76,6 +81,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private float completionGap = 0.3f;
         [SerializeField] private float dropTweenSeconds = 0.5f;
         [SerializeField] private float penaltyFloatSeconds = 1.4f;
+        [Tooltip("Tamamlanan satır: tik + üstü çizilme süresi, ardından sönme ve satırın kapanması (liste kısalır)")]
+        [SerializeField] private float removeHoldSeconds = 0.4f;
+        [SerializeField] private float removeFadeSeconds = 0.15f;
+        [SerializeField] private float removeCollapseSeconds = 0.25f;
 
         [Header("Süre uyarıları")]
         [SerializeField] private float amberAt = 30f;
@@ -130,6 +139,10 @@ namespace AfetUyanisi.Chapters.Earthquake
         private AudioSource audioSource;
 
         private readonly List<PreparationQuestRow> rows = new List<PreparationQuestRow>();
+        // Tamamlandı ama çıkış animasyonu liste görünür olunca (kompakt mod / bilgi kartı bitince) başlayacak satırlar.
+        private readonly List<PreparationQuestRow> pendingRemoval = new List<PreparationQuestRow>();
+        private PreparationQuestRow finalRow;
+        private float listWeight;
         private readonly Queue<string> pendingFx = new Queue<string>();
         private readonly HashSet<string> animated = new HashSet<string>();
         private readonly HashSet<string> openMinigames = new HashSet<string>();
@@ -142,7 +155,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         private string status;
         private float statusAlpha, statusTarget;
 
-        private float target = 120f, shown = 120f, tweenFrom, tweenT = -1f;
+        private float target = 60f, shown = 60f, tweenFrom, tweenT = -1f;
         private int dropFrame = -10;
         private float dropFromValue;
         private float shakeT = -1f, flashT = -1f;
@@ -162,6 +175,12 @@ namespace AfetUyanisi.Chapters.Earthquake
         public bool IsCompact => compactTarget > 0.5f;
         public bool PreparationOver => prepOver;
         public int RowCount => rows.Count;
+        /// <summary>Listede hâlâ görünen (çıkmamış) görev satırı sayısı.</summary>
+        public int VisibleRowCount => rows.FindAll(r => !r.Removed).Count;
+        /// <summary>Son satır ("Tüm hazırlıklar tamam!") görünüyor mu.</summary>
+        public bool FinalLineShown => finalRow != null && finalRow.Weight >= 0.999f;
+        /// <summary>Panelin tam (kompakt olmayan) yüksekliği, referans pikseli.</summary>
+        public float PanelHeight => panelH;
         public PreparationQuestManager Quests => quests;
 
         private void Awake() => EnsureBuilt();
@@ -367,14 +386,62 @@ namespace AfetUyanisi.Chapters.Earthquake
             return true;
         }
 
-        /// <summary>Görev listesi ŞİMDİ satırının altından başlar; panel yüksekliği buna göre.</summary>
+        /// <summary>
+        /// Görev listesi ŞİMDİ satırının altından başlar; panel yüksekliği görünen satırların toplam payına (listWeight) göre,
+        /// tam piksele yuvarlanır (kapanan satırın altındakiler ile panelin alt kenarı aynı adımla kayar).
+        /// </summary>
         private void ApplyListLayout()
         {
             if (listRoot == null) return;
             float top = ListTop + nowH;
-            listRoot.offsetMin = new Vector2(4f, -top - Mathf.Max(rows.Count, 1) * rowHeight);
+            listRoot.offsetMin = new Vector2(4f, -top - (rows.Count + 1) * rowHeight);
             listRoot.offsetMax = new Vector2(-4f, -top);
-            panelH = top + rows.Count * rowHeight + ListPad;
+            panelH = top + Mathf.Round(listWeight * rowHeight) + ListPad;
+        }
+
+        /// <summary>
+        /// Satırları üst üste dizer: her satırın üstü = önceki satırların Weight toplamı × rowHeight (yuvarlanmış). Son satır
+        /// (hepsi tamam) yalnızca bütün görevlerin tamamlanma animasyonu oynayınca, kalan satır payını tamamlayacak kadar açılır.
+        /// </summary>
+        private void LayoutRows()
+        {
+            if (rows.Count == 0 && finalRow == null) return;
+            float acc = 0f;
+            foreach (var r in rows)
+            {
+                if (!r.Removed) PlaceRow(r, acc);
+                acc += r.Weight;
+            }
+            if (finalRow != null)
+            {
+                bool all = quests != null && quests.TotalCount > 0 && AnimatedDone() >= quests.TotalCount;
+                float w = all ? Mathf.Clamp01(1f - acc) : 0f;
+                finalRow.SetPresence(w, Mathf.Clamp01((w - 0.5f) / 0.5f));
+                if (w > 0f) PlaceRow(finalRow, acc);
+                acc += finalRow.Weight;
+            }
+            if (!Mathf.Approximately(acc, listWeight))
+            {
+                listWeight = acc;
+                ApplyListLayout();
+            }
+        }
+
+        private void PlaceRow(PreparationQuestRow r, float slot)
+        {
+            float y = Mathf.Round(slot * rowHeight);
+            if (Mathf.Approximately(r.LayoutY, y)) return;
+            r.LayoutY = y;
+            EqUi.TopBand(r.Rect, 0f, 0f, y, rowHeight - 1f);
+        }
+
+        /// <summary>Bekleyen çıkışlar yalnızca liste tam görünürken başlar (kompakt modda / kart açıkken oyuncu animasyonu görmez).</summary>
+        private void UpdatePendingRemoval()
+        {
+            if (pendingRemoval.Count == 0) return;
+            if (mode != Mode.Shown || compactTarget > 0.5f || compactK > 0.001f || InfoCardOpen()) return;
+            foreach (var r in pendingRemoval) r.BeginRemove(true);
+            pendingRemoval.Clear();
         }
 
         private void BuildNowPill()
@@ -493,11 +560,25 @@ namespace AfetUyanisi.Chapters.Earthquake
                 var d = defs[i];
                 var row = PreparationQuestRow.Create(listRoot, d.id, font, taskSize, dotEmpty, dotActive, dotDone, rowGlowSprite, skin);
                 row.SetTimings(checkPopSeconds, rowHighlightSeconds);
+                row.SetRemoveTimings(removeHoldSeconds, removeFadeSeconds, removeCollapseSeconds);
                 EqUi.TopBand(row.Rect, 0f, 0f, i * rowHeight, rowHeight - 1f);
                 row.SetLabel(d.label, null);
                 rows.Add(row);
-                // Daha önce tamamlanmış görev animasyonsuz gösterilir.
-                if (quests.IsDone(d.id)) { row.SetState(PreparationQuestRow.State.Completed, false); animated.Add(d.id); }
+                // Daha önce tamamlanmış görev listeye hiç girmez (animasyonsuz çıkar).
+                if (quests.IsDone(d.id))
+                {
+                    row.SetState(PreparationQuestRow.State.Completed, false);
+                    row.BeginRemove(false);
+                    animated.Add(d.id);
+                }
+            }
+            if (defs.Count > 0)
+            {
+                finalRow = PreparationQuestRow.Create(listRoot, "all_done", font, taskSize, dotEmpty, dotActive, dotDone, rowGlowSprite, skin);
+                EqUi.TopBand(finalRow.Rect, 0f, 0f, 0f, rowHeight - 1f);
+                finalRow.SetLabel(finalLineText, null);
+                finalRow.SetState(PreparationQuestRow.State.Completed, false);
+                finalRow.SetPresence(0f, 0f);
             }
             // Piksel bölmeler: her görev için bir hücre
             for (int i = 1; i < defs.Count; i++)
@@ -510,9 +591,12 @@ namespace AfetUyanisi.Chapters.Earthquake
                 drt.offsetMin = new Vector2(-0.5f, 2f);
                 drt.offsetMax = new Vector2(0.5f, -2f);
             }
-            ApplyListLayout();
+            listWeight = -1f;
+            LayoutRows();
             Canvas.ForceUpdateCanvases();
-            foreach (var r in rows)
+            var fit = new List<PreparationQuestRow>(rows);
+            if (finalRow != null) fit.Add(finalRow);
+            foreach (var r in fit)
             {
                 r.FitLabel(Mathf.Max(6, taskSize - 2));
                 if (r.LabelPreferredWidth > r.LabelWidth + 0.5f)
@@ -541,7 +625,12 @@ namespace AfetUyanisi.Chapters.Earthquake
                 // Görünmüyorken tamamlanan görev: animasyonsuz uygula.
                 animated.Add(id);
                 var r = rows.Find(x => x.TaskId == id);
-                if (r != null) r.SetState(PreparationQuestRow.State.Completed, false);
+                if (r != null)
+                {
+                    r.SetState(PreparationQuestRow.State.Completed, false);
+                    r.BeginRemove(false);
+                    pendingRemoval.Remove(r);
+                }
                 barShown = barTarget = Fraction();
                 ApplyBar();
                 return;
@@ -679,6 +768,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             modeT = 0f;
             panelRoot.gameObject.SetActive(true);
             foreach (var r in rows) r.SetAlpha(0f);
+            if (finalRow != null) finalRow.SetAlpha(0f);
         }
 
         /// <summary>Görev paneli bir kez kapanır (süre 0, sarsıntı ya da gizle çağrısı).</summary>
@@ -734,6 +824,11 @@ namespace AfetUyanisi.Chapters.Earthquake
             clock += dt;
             modeT += dt;
 
+            // Satırlar önce: panel yüksekliği (LayoutRows → panelH) aynı karede SetPanelVisual'a girer, satır ile alt kenar birlikte kayar.
+            UpdatePendingRemoval();
+            foreach (var r in rows) r.Tick(dt, clock);
+            if (finalRow != null) finalRow.Tick(dt, clock);
+            LayoutRows();
             UpdateMode(dt);
             UpdateCompact(dt);
             UpdateTimer(dt);
@@ -741,7 +836,6 @@ namespace AfetUyanisi.Chapters.Earthquake
             UpdateFx(dt);
             UpdateStatus(dt);
             UpdateNowPill(dt);
-            foreach (var r in rows) r.Tick(dt, clock);
         }
 
         private void UpdateMode(float dt)
@@ -771,12 +865,19 @@ namespace AfetUyanisi.Chapters.Earthquake
                     // başlık ve çubuk, ardından satırlar sırayla
                     titleGroup.alpha = Mathf.Clamp01((modeT - r * 0.2f) / (r * 0.5f)) * (1f - compactK);
                     float rowsStart = r * 0.6f;
-                    for (int i = 0; i < rows.Count; i++)
-                        rows[i].SetAlpha(Mathf.Clamp01((modeT - rowsStart - i * rowStagger) / 0.12f));
+                    int vi = 0; // kademe yalnızca listede görünen satırlar arasında
+                    foreach (var row in rows)
+                    {
+                        if (row.Removed) continue;
+                        row.SetAlpha(Mathf.Clamp01((modeT - rowsStart - vi * rowStagger) / 0.12f));
+                        vi++;
+                    }
+                    if (finalRow != null) finalRow.SetAlpha(Mathf.Clamp01((modeT - rowsStart - vi * rowStagger) / 0.12f));
                     if (modeT >= rowsStart + rows.Count * rowStagger + 0.12f && modeT >= r)
                     {
                         mode = Mode.Shown;
                         foreach (var row in rows) row.SetAlpha(1f);
+                        if (finalRow != null) finalRow.SetAlpha(1f);
                         SetPanelVisual(1f, 0f);
                     }
                     break;
@@ -960,7 +1061,11 @@ namespace AfetUyanisi.Chapters.Earthquake
         {
             if (!animated.Add(id)) return;
             var row = rows.Find(r => r.TaskId == id);
-            if (row != null) row.SetState(PreparationQuestRow.State.Completed, true);
+            if (row != null)
+            {
+                row.SetState(PreparationQuestRow.State.Completed, true);
+                if (!pendingRemoval.Contains(row)) pendingRemoval.Add(row); // tik + çizgi + kapanma, liste görünür olunca
+            }
             barFrom = barShown;
             barTarget = Fraction();
             barT = 0f;

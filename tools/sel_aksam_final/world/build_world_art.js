@@ -126,11 +126,11 @@ const fac = newL();
     top: (s, t) => (t < 0.12 ? CONC_F : (hash(s * 40, t * 20) > 0.93 ? STONE_L : CONC_T)),
     front: (s, t) => t < 0.25 ? CONC_T : (t > 0.8 ? CONC_S : CONC_F), left: CONC_S,
   });
-  // --- apartman adı levhası (saçağın üstünde): "GÜNEŞ APT."
+  // --- apartman adı levhası (saçağın üstünde): "KALTEV APT." (eski adı GÜNEŞ APT.)
   // Harfler tek tek, bütün olarak yerleştirilir (sütun sütun kaydırma 3x5 harfleri bozuyordu: N→H, Ü/Ş noktaları kayboluyordu).
   // Her harf, levhanın kendi sütun merkezindeki eğime oturur; levha 12 px: alt kenar 1 + çengel (Ş) 1 + harf 5 + boşluk 1 + nokta 1 + üst pay 2 + kenar 1.
   {
-    const txt = 'GÜNEŞ APT.'; const tw = C.textW(txt, 1); const PH = 12;
+    const txt = 'KALTEV APT.'; const tw = C.textW(txt, 1); const PH = 12;
     const pu0 = (G.uL + G.uR) / 2 - (tw + 6) / 64; const ph0 = cn.h1 + 2;
     const pw = (tw + 6) / 32; // u genişliği (yatay piksel = tw + 6)
     fac.quad([pu0, -0.02, ph0], [pw, 0, 0], [0, 0, PH], (s, t) => (s * (tw + 6) < 1 || s * (tw + 6) >= tw + 5 || t * PH < 1 || t * PH >= PH - 1) ? [40, 44, 52] : [28, 58, 96]);

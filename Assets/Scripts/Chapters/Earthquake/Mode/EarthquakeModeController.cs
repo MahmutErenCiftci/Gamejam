@@ -10,9 +10,9 @@ using UnityEngine;
 namespace AfetUyanisi.Chapters.Earthquake
 {
     /// <summary>
-    /// DEPREM MODU — 120 sn farkındalık simülasyonu, EarthquakeHome sahnesinin baştan sona akışı (EQ_SPEC A–E):
+    /// DEPREM MODU — 60 sn farkındalık simülasyonu, EarthquakeHome sahnesinin baştan sona akışı (EQ_SPEC A–E):
     ///  A. Siyahtan açılış, Cenk uyuyor → telefon titrer/çalar → kısa kararma, Cenk yatağın yanında uyanır → kamera telefona
-    ///     kayar → telefon bildirimi [BAŞLA] → 120 sn sayaç.
+    ///     kayar → telefon bildirimi [BAŞLA] → 60 sn sayaç.
     ///  B. Serbest keşif: E ile TEK SEFERLİK inceleme (kart açıkken sayaç durur; incelenen nesnenin E ipucu kalkar),
     ///     tehlike bölgeleri (ayna: uyarı + bir kerelik ceza). Afet çantası mini oyunu başarıyla bitince çanta kendiliğinden
     ///     Cenk'in sırtına geçer (WearBag). Başlangıç odasının (yatak odası) kapısı startRoomRequiredTasks bitene kadar kilitli
@@ -108,9 +108,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         [SerializeField] private float wakeFadeSeconds = 0.25f;
         [SerializeField] private float transitionFadeSeconds = 0.3f;
         [Tooltip("Anne sorusu yedeği: oyuncu hiçbir görevi bitirmese de sayaç bu değere inince anne kendiliğinden sorar")]
-        [SerializeField] private float q1At = 95f;
-        [SerializeField] private float q2At = 65f;
-        [SerializeField] private float q3At = 35f;
+        [SerializeField] private float q1At = 45f;
+        [SerializeField] private float q2At = 32f;
+        [SerializeField] private float q3At = 17f;
         [Tooltip("İki soru arasında oyuncunun serbestçe dolaştığı en az süre (sayacın gerçekten aktığı sn). " +
                  "Ceza sayacı bir sonraki sorunun eşiğinin altına atlatsa bile sorular art arda açılmaz; " +
                  "sayaç bu arada biterse bekleyen hazırlık sorusu düşer (ceza ve puan kaybı yok).")]
@@ -663,7 +663,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             yield return Say(phoneAfterLine);
         }
 
-        // ---------------- B. 120 sn hazırlık ----------------
+        // ---------------- B. 60 sn hazırlık ----------------
         private IEnumerator PrepPhase()
         {
             phase = EarthquakePhase.Prep;
@@ -750,7 +750,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             countdown.PushPause(eventToken);
             if (id == "Q1")
             {
-                Log("B: sayaç 95 → anne seslenir (Q1)");
+                Log($"B: sayaç {q1At:0} → anne seslenir (Q1)");
                 yield return Say(motherCallLine);
             }
             FacePlayerToMother();

@@ -486,9 +486,12 @@ internal class CommandScript : IRunCommand
         if (tree == null) { tree = (GameObject)PrefabUtility.InstantiatePrefab(treePf, scene); tree.name = "FE_TreeFall"; }
         var ev = tree.GetComponent<FloodTreeFallEvent>();
         Vector2 brokenEnd = PfW(51f, 12.75f);
-        tree.transform.position = brokenEnd - new Vector2(-0.3f, 0.314375f); // Fallen yerel (0.3, 0.314), aynalı
+        // (lider, 18 Eki 14:50) kök sokağın ön kenarına, kırık duvar boşluğuna çekildi (önce duvarın ötesinde, gy 11.8): kütük gy 12.7.
+        // Yatan gövde (Fallen) dünyada aynı yerde kalır (gövde ucu = brokenEnd), yalnız köke göre yerel konumu değişir.
+        tree.transform.position = PfW(50.67f, 12.7f);
         tree.transform.localScale = new Vector3(-1f, 1f, 1f);
         var fallen = FindDeep(tree.transform, "Fallen");
+        fallen.position = new Vector3(brokenEnd.x, brokenEnd.y, 0f);
         fallen.localRotation = Quaternion.Euler(0f, 0f, 12.6f); // aynalı: dünyada saat yönünde 12.6° → gövde 153.4° (= +gy ekseni)
         var sg = tree.GetComponent<SortingGroup>();
         if (sg != null) sg.sortingOrder = -45; // binaların (-50) önünde, Cenk/sokak eşyalarının (0) arkasında
@@ -557,7 +560,7 @@ internal class CommandScript : IRunCommand
         result.Log($"ağaç kök={tree.transform.position} gövde ucu={brokenEnd} dur={(stop != null ? stop.name : "YOK")} dal={br.transform.position} " +
                    $"sel={ctrl.FloodSeconds} parlama={(react != null)}");
     }
-    // ---- (P-FLOOD 18 Eki) ağacın kırdığı duvar: Wall_I_Front dilim 7..12 (gx ~49.6..52.6) düşüşte kırık hale geçer.
+    // ---- (P-FLOOD 18 Eki) ağacın kırdığı duvar: Wall_I_Front dilim 6..14 (gx ~48.9..53.1; kökün ekrandaki genişliği kadar) düşüşte kırık hale geçer.
     // FE_WallBreak (sahne kökü) kırık dilimleri orijinallerle aynı yer/sıralama/malzemeyle taşır; ağaç olayı yere değince
     // bunları gösterir, sağlamları gizler (showOnImpact / hideOnImpact). Yürüme maskesi (duvarın collider'ı) aynen kalır.
     static void PFloodWallBreak(Scene scene, FloodTreeFallEvent ev, ExecutionResult result)
@@ -571,7 +574,7 @@ internal class CommandScript : IRunCommand
         var root = new GameObject("FE_WallBreak");
         SceneManager.MoveGameObjectToScene(root, scene);
         var show = new System.Collections.Generic.List<GameObject>(); var hide = new System.Collections.Generic.List<GameObject>();
-        for (int k = 7; k <= 12; k++)
+        for (int k = 6; k <= 14; k++)
         {
             var o = all.FirstOrDefault(t => t.name == "Wall_I_Front_" + k && t.parent != null && t.parent.name == "Wall_I_Front");
             if (o == null || !sprites.TryGetValue("LINE_FE_Wall_I_Front_Broken_" + k, out var sp)) { result.LogError("duvar dilimi yok: " + k); continue; }
@@ -580,11 +583,48 @@ internal class CommandScript : IRunCommand
             go.transform.SetParent(root.transform, false);
             go.transform.position = o.position;
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = sp; sr.sharedMaterial = osr.sharedMaterial; sr.sortingLayerID = osr.sortingLayerID; sr.sortingOrder = osr.sortingOrder;
+            sr.sprite = sp; sr.sharedMaterial = osr.sharedMaterial; sr.sortingLayerID = osr.sortingLayerID; sr.sortingOrder = -46;
             sr.spriteSortPoint = osr.spriteSortPoint; sr.flipX = osr.flipX;
             go.SetActive(false);
             show.Add(go); hide.Add(o.gameObject);
         }
+        // (lider 15:10) ağaç dokuları duvarın ÖNÜNDE: ağacın arkasındaki duvar dilimleri (sağlam + kırık) ağaç grubunun (-45) arkasına
+        // (-46) alınır; Cenk (0) ağacın önünde kalır. Kök (Stump) ve kırık kütük (StumpBreak) sahne kopyası olarak y'ye göre sıralanır
+        // (0 / 1): Cenk kökün arkasından geçerken kök onun önünde çizilir; kökün sokak tarafında küçük bir engel (StumpBlock_FE).
+        const int WallBehindTree = -46;
+        foreach (var t in hide) { var r = t.GetComponent<SpriteRenderer>(); if (r != null) { r.sortingOrder = WallBehindTree; EditorUtility.SetDirty(r); } }
+        foreach (var t in show) t.GetComponent<SpriteRenderer>().sortingOrder = WallBehindTree;
+        var treeRoot = ev.transform;
+        var stumpT = FindDeep(treeRoot, "Stump"); var sbT = FindDeep(treeRoot, "StumpBreak");
+        var sg = treeRoot.GetComponent<SortingGroup>();
+        var oldFront = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "FE_TreeStumpFront");
+        if (oldFront != null) Object.DestroyImmediate(oldFront);
+        var front = new GameObject("FE_TreeStumpFront");
+        SceneManager.MoveGameObjectToScene(front, scene);
+        SpriteRenderer Copy(Transform src, string name, int order)
+        {
+            var ssr = src.GetComponent<SpriteRenderer>();
+            var g = new GameObject(name); g.transform.SetParent(front.transform, false); g.transform.position = src.position;
+            var r = g.AddComponent<SpriteRenderer>();
+            r.sprite = ssr.sprite; r.sharedMaterial = ssr.sharedMaterial; r.color = ssr.color;
+            r.sortingLayerID = sg != null ? sg.sortingLayerID : ssr.sortingLayerID; r.sortingOrder = order;
+            r.spriteSortPoint = SpriteSortPoint.Pivot; r.flipX = src.lossyScale.x < 0f ? !ssr.flipX : ssr.flipX;
+            return r;
+        }
+        if (stumpT != null)
+        {
+            var c = Copy(stumpT, "Stump", 0);
+            c.gameObject.SetActive(false);                 // yere değince görünür; o ana dek gruptaki asıl kök
+            show.Add(c.gameObject); hide.Add(stumpT.gameObject);
+        }
+        if (sbT != null)
+        {
+            var c = Copy(sbT, "StumpBreak", 1);
+            c.gameObject.SetActive(sbT.gameObject.activeSelf);
+            var osb = sbT.GetComponent<SpriteRenderer>(); osb.enabled = false; EditorUtility.SetDirty(osb);
+            var eso = new SerializedObject(ev); eso.FindProperty("stumpBreak").objectReferenceValue = c; eso.ApplyModifiedPropertiesWithoutUndo();
+        }
+        PfPoly(front.transform, "StumpBlock_FE", PfW(50.2f, 12.95f), PfW(51.2f, 12.95f), PfW(51.2f, 13.45f), PfW(50.2f, 13.45f));
         var so = new SerializedObject(ev);
         var sh = so.FindProperty("showOnImpact"); sh.arraySize = show.Count; for (int i = 0; i < show.Count; i++) sh.GetArrayElementAtIndex(i).objectReferenceValue = show[i];
         var hd = so.FindProperty("hideOnImpact"); hd.arraySize = hide.Count; for (int i = 0; i < hide.Count; i++) hd.GetArrayElementAtIndex(i).objectReferenceValue = hide[i];

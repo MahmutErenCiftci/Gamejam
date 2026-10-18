@@ -1,6 +1,6 @@
-// (18 Eki, P-FLOOD) Devrilen ağacın I sokağı ön duvarını (Wall_I_Front) kırdığı yer: dilim 7..12 (gx ~49.6..52.6) için
+// (18 Eki, P-FLOOD) Devrilen ağacın I sokağı ön duvarını (Wall_I_Front) kırdığı yer: dilim 6..14 (gx ~48.9..53.1) için
 // kırık duvar dilimleri. Orijinal dilimlerin piksellerinden türetilir (aynı renk, aynı pivot): ortada gövdenin geçtiği
-// yer neredeyse tabana kadar yıkık, kenarlar tırtıklı, kırık yüzeyde kaba beton, önde/üstte moloz parçaları.
+// yer (kökün ekrandaki genişliği, ~2,5 hücre) neredeyse tabana kadar yıkık, kenarlar tırtıklı, kırık yüzeyde kaba beton, önde/üstte moloz parçaları.
 // node wall_break.js [--preview]  → Assets/Art/FloodEvening/ENV/Lines/LINE_FE_Wall_I_Front_Broken.png (+ .meta)
 // Sahnede: FE_WallBreak (build_scene.cs / patch_scene.cs) — ağaç düşünce bu dilimler görünür, sağlam dilimler gizlenir.
 const C = require('./common.js');
@@ -9,8 +9,8 @@ const { fs, Cv, hash, OL } = C;
 const SRC = C.DST + '/Lines/LINE_FE_Wall_I_Front.png';
 const NAME = 'LINE_FE_Wall_I_Front_Broken';
 const OUTF = C.DST + '/Lines/' + NAME + '.png';
-const K0 = 7, K1 = 12, SW = 16, PADB = 10;       // dilim aralığı, dilim genişliği, alta moloz payı
-const CROSS = 52;                                // gövdenin duvarı kestiği sütun (yerel, dilim 7'nin solundan; gx ~51)
+const K0 = 6, K1 = 14, SW = 16, PADB = 10;       // dilim aralığı, dilim genişliği, alta moloz payı
+const CROSS = 70, LOW = 40, TRANS = 22;          // kökün ortası (yerel sütun, dilim 6'nın solundan; gx ~50.8), düz yıkık yarı genişlik, tırtıklı geçiş
 
 const meta = fs.readFileSync(SRC + '.meta', 'utf8');
 const rects = {};
@@ -33,8 +33,8 @@ for (let x = 0; x < W; x++) {
   const d = Math.abs(x - CROSS);
   const n = hash(Math.floor(x / 3), 17, 5), n2 = hash(Math.floor(x / 2), 29, 9);
   let v;
-  if (d < 13) v = 2 + Math.round(n * 3);
-  else if (d < 36) { const t = (d - 13) / 23; v = Math.round(5 + t * t * 22 + (n - 0.5) * 7 + (n2 - 0.5) * 3); }
+  if (d < LOW) v = 2 + Math.round(n * 3);
+  else if (d < LOW + TRANS) { const t = (d - LOW) / TRANS; v = Math.round(5 + t * t * 22 + (n - 0.5) * 7 + (n2 - 0.5) * 3); }
   else v = 99;
   hk.push(Math.max(1, v));
 }
@@ -50,7 +50,7 @@ for (let x = 0; x < W; x++) {
   if (hash(x, 3, 11) < 0.35) cv.set(x, top + 1, '#8C887E');
 }
 // kırık kenarlarda çatlaklar (sağlam kısmın ön yüzünde, kırığa doğru inen koyu çizgiler)
-for (const [sx, dir] of [[CROSS - 37, -1], [CROSS + 36, 1], [CROSS - 30, -1], [CROSS + 31, 1]]) {
+for (const [sx, dir] of [[CROSS - LOW - TRANS - 1, -1], [CROSS + LOW + TRANS, 1], [CROSS - LOW - TRANS + 6, -1], [CROSS + LOW + TRANS - 5, 1]]) {
   let x = sx, y = baseRow(sx) - FULL + 9 + Math.round(hash(sx, 1, 2) * 4);
   for (let i = 0; i < 9; i++) { if (cv.a(x, y)) cv.set(x, y, '#706C63'); y += 1; if (hash(sx, i, 7) < 0.5) x += dir; }
 }
@@ -73,10 +73,8 @@ function chunk(x0, y0, w, h, seed) {
   for (const [x, y] of pts) for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) if (!has.has((x + dx) + ',' + (y + dy))) cv.set(x + dx, y + dy, OL);
   for (const [x, y, c] of pts) cv.set(x, y, c);
 }
-const RUB = [ // [yerel x, tabana göre satır (+ = önde/aşağı), w, h]
-  [24, 3, 4, 3], [31, 6, 3, 2], [37, 2, 5, 3], [42, 7, 3, 2], [46, 4, 4, 3], [55, 6, 4, 2], [60, 3, 5, 3], [66, 7, 3, 2],
-  [71, 2, 4, 3], [78, 5, 3, 2], [50, -1, 3, 2], [58, -2, 4, 2], [34, 8, 2, 2], [64, 9, 2, 2], [44, 10, 2, 1], [75, 9, 2, 1],
-];
+const RUB = []; // [yerel x, tabana göre satır (+ = önde/aşağı), w, h] — kırığın boyunca, çoğu önde (çimde)
+for (let i = 0; i < 26; i++) { const x = Math.round(CROSS - LOW - 12 + hash(i, 1, 3) * (2 * LOW + 24)); const dy = Math.round(-2 + hash(i, 2, 5) * 12); const w = 2 + Math.round(hash(i, 3, 7) * 3); RUB.push([x, dy, w, w > 3 && hash(i, 4, 9) < 0.6 ? 3 : 2]); }
 RUB.forEach(([x, dy, w, h], i) => chunk(x, baseRow(x) + dy - h + 1, w, h, 40 + i));
 
 // dilimlere böl (orijinal dilimlerle aynı x ve pivot noktası; alta PADB satır eklenir)

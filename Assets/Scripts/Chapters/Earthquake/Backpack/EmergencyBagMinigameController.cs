@@ -11,7 +11,7 @@ namespace AfetUyanisi.Chapters.Earthquake
 {
     /// <summary>
     /// AFET ÇANTASI mini oyunu (deprem modu, yatak odası). Yakın plan arayüzünü Awake'te değil ilk açılışta kodla kurar
-    /// (640x360 referans, Canvas sırası 84: 120 sn sayacı (86) her zaman üstte görünür).
+    /// (640x360 referans, Canvas sırası 84: 60 sn sayacı (86) her zaman üstte görünür).
     /// Durumlar: Idle → CameraZoom → BackpackOpening → Packing ⇄ ReadyToClose → ZipperClosing → Success → CameraReturn → Idle.
     /// Esc: güvenle çıkar (içerik korunur, görev tamamlanmaz). Sayaç biterse (EarthquakeMinigameHub.InterruptRequested ya da
     /// sayaç HasExpired) her şey anında kesilir: sürükleme/fermuar iptal, arayüz kapanır, kamera eski hâline döner.

@@ -85,6 +85,9 @@ for (const gx of [25, 29.3, 33.6, 37.9, 42.2]) houseX(gx, 31);
 P('Props', 'ParkedCar_G', SU + 'PROP_StreetBG_Car_B', 35.5, 26.9, { col: rectC(0.9, 0.35) });   // park etmiş araba: geçidi daraltır
 lamp('G1', 39.6, 30.6);
 // G-H-F-kavşak arasındaki bahçe (küçük meydancık görünümü, yürünmez)
+// (18 Eki, P-FLOOD, lider) H'nin alçak duvarının arkasındaki boş arsa (FIRIN'ın karşısı) bir evle dolduruldu: FORK/F cephe sırasının
+// devamı (31,10 ve 31,14.3 ile aynı hizada). Daha öne (duvara) alınırsa çatı ön tarafta kalıp duvarın arkasına çizilirdi (iç içe görünür).
+houseY(31, 18.6, 'Facade_Home');
 tree('Yard_Tree2', 'Tree_Small', 39.8, 20.0); tree('Yard_Bench', 'Bench', 37, 24.6); tree('Yard_Bush1', 'Bush', 39.5, 24.3); tree('Yard_Swing', 'Swing', 35.5, 23.5);
 for (const [n, s, gx, gy] of [['GPuddle_1', 'Puddle_L', 32, 28.2], ['GDrain_1', 'Drain', 38, 27.4], ['GPuddle_2', 'Puddle_S', 44, 28.5]]) decal(n, s, gx, gy);
 // H

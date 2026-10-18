@@ -45,7 +45,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     }
 
     /// <summary>
-    /// DEPREM HAZIRLIK GÖREVLERİ — yetkili görev durumu (HUD yalnızca gösterir). 120 sn hazırlık evresinde (Intro/Prep)
+    /// DEPREM HAZIRLIK GÖREVLERİ — yetkili görev durumu (HUD yalnızca gösterir). 60 sn hazırlık evresinde (Intro/Prep)
     /// gerçek oyun olaylarından tamamlanır:
     ///  • mini oyunlar: EarthquakeMinigameHub.TaskCompleted (emergency_bag, secure_bookshelf),
     ///  • incelemeler ve anne soruları: EarthquakeModeController.Stats (inspectedIds / answers) değiştikçe okunur.

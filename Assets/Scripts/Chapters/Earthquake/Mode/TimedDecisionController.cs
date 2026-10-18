@@ -7,7 +7,7 @@ using UnityEngine.Events;
 namespace AfetUyanisi.Chapters.Earthquake
 {
     /// <summary>
-    /// Annenin süreli soruları (Q1–Q4). Ask(q): 120 sn sayacı durur (PushPause), TimedQuestionViewBase açılır,
+    /// Annenin süreli soruları (Q1–Q4). Ask(q): 60 sn sayacı durur (PushPause), TimedQuestionViewBase açılır,
     /// soru sayacı (varsayılan 5 sn) akar. Doğru: ceza yok + olumlu geri bildirim. Yanlış: ceza (vars. 30 sn) + açıklama.
     /// Süre dolu: "SÜRE DOLDU!" + ceza (vars. 30 sn) + doğru cevabın açıklaması. Ceza TimePenaltySystem'den, anahtar "q:id"
     /// (aynı soru iki kez ceza vermez). Sonuç LastResult'ta ve onDone geri çağrısında.

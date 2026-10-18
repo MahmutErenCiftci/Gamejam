@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace AfetUyanisi.Chapters.Earthquake
 {
     /// <summary>
-    /// 120 sn eğitim sayacı (sağ üst). Sinema, oda geçişi, bilgi kartı ve soru sırasında durur:
+    /// 60 sn eğitim sayacı (sağ üst). Sinema, oda geçişi, bilgi kartı ve soru sırasında durur:
     /// iç içe duraklatma için PushPause(token)/PopPause(token) kullanılır (aynı token bir kez sayılır),
     /// PauseTimer/ResumeTimer elle duraklatmadır. Süre asla negatife düşmez; 0'a inince (duraklatılmamışsa)
     /// OnTimerExpired bir kez tetiklenir. Ceza ApplyTimePenalty ile düşülür, görünüm CountdownViewBase'e yazılır.
@@ -18,7 +18,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         [Serializable] public class IntEvent : UnityEvent<int> { }
 
         [Tooltip("Varsayılan başlangıç süresi (sn). StartTimer'a değer verilirse o kullanılır (JSON countdownSeconds).")]
-        [SerializeField] private float startSeconds = 120f;
+        [SerializeField] private float startSeconds = 60f;
         [Tooltip("Sağ üst sayaç görünümü (UI agent'ının CountdownView'ı). Boşsa sayaç sadece Console'a yazar.")]
         [SerializeField] private CountdownViewBase view;
         [Tooltip("Son kaç saniyede tik sesi çalsın")]
