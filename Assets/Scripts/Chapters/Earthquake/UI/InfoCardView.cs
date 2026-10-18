@@ -214,6 +214,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             float bodyH = string.IsNullOrEmpty(body) ? 0f : Mathf.Ceil(EqUi.PreferredHeight(toastBody, toastBody.text, ToastW - 31f)) + 1f;
             EqUi.TopBand(toastBody.rectTransform, 25f, 6f, 15f, Mathf.Max(10f, bodyH));
             toastRoot.sizeDelta = new Vector2(ToastW, Mathf.Max(ToastMinH, 15f + bodyH + 8f));
+            CenterToastIcon();
 
             if (toastRoutine != null) StopCoroutine(toastRoutine);
             toastRoutine = null;
@@ -225,6 +226,15 @@ namespace AfetUyanisi.Chapters.Earthquake
                 return;
             }
             toastRoutine = StartCoroutine(ToastRoutine(Mathf.Max(0.8f, seconds)));
+        }
+
+        // UI_EQ_Toast'taki krem kutu 9-slice ile şeritle birlikte uzar: iç alanı (16 px genişlik) üstten 4, alttan 6 piksel
+        // içeride. İkon üste yapışık kalmasın; kutunun içinde dikeyde ortalanır (piksele oturtulmuş).
+        private void CenterToastIcon()
+        {
+            if (toastRoot.GetComponent<Image>().sprite == null || toastIcon.sprite == null) return;
+            float inner = toastRoot.sizeDelta.y - 4f - 6f;
+            EqUi.TL(toastIcon.rectTransform, 4f, 4f + Mathf.Floor((inner - 16f) * 0.5f), 16f, 16f);
         }
 
         private IEnumerator ToastRoutine(float seconds)
