@@ -10,7 +10,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// <summary>
     /// SEL YÖNLENDİRMESİ (P-GUIDE, 18 Eki) — deprem yönlendirmesinin (EarthquakeGuidance) sel karşılığı: oyuncuya NEREYE
     /// gideceğini gösterir, kararı asla vermez.
-    ///  • FloodSchool: okul kapısı → köprü başı (karar anında HİÇBİR ipucu yok) → seçimden sonra köprünün ucu → çıkış.
+    ///  • FloodSchool: okul kapısı → köprü başı (karar anında HİÇBİR ipucu yok) → seçimden sonra köprünün ucu → kaldırım
+    ///    (su kenarını sıyırmadan) → çıkış.
     ///  • FloodEvening: Cenk'in çevresinde, rota çapalarına (başlangıç → köşeler → kavşak) doğru dönen piksel ok. Kavşakta
     ///    (KISA YOL / UZUN YOL) ok YOK ve hiçbir tercih gösterilmez: oyuncu bir yola girince o yolun sıradaki çapasını gösterir.
     ///    Kısa yolda kapalı bariyerden sonra kavşağa geri, sonra uzun yol. Ağaç düşünce dalın [E] noktası, sonra avlu, sonra
@@ -43,7 +44,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
         // ---------------- Rota (ızgara: dünya x = (gx-gy)/2, y = (gx+gy)/4; tools/sel_aksam_harita/layout.js, map.js v3) ----------------
         // Başlangıç → A (Zone_1'in arka şeridinden) → köşe → B → köşe → C → kavşak merkezi.
-        private static readonly Vector2[] LegStart = { V(-16f, 2.5f), V(-7.5f, 2.6f), V(1.0f, 2.8f), V(3.6f, 4.0f), V(8.9f, 4.0f), V(11.8f, 3.2f), V(13.5f, 4.6f), V(13.5f, 13.0f), V(15.0f, 14.5f), V(27f, 14.5f) };
+        // A→B köşesi (14,3.4): direk sırasının (gy 4.55, Pole_A4 gx 12.6) altından döner, oku izleyen direğe çarpmaz.
+        private static readonly Vector2[] LegStart = { V(-16f, 2.5f), V(-7.5f, 2.6f), V(1.0f, 2.8f), V(3.6f, 4.0f), V(8.9f, 4.0f), V(11.8f, 3.2f), V(14.0f, 3.4f), V(13.5f, 13.0f), V(15.0f, 14.5f), V(27f, 14.5f) };
         // Kısa yol: kavşak → D → köşe → E → bariyer (BarrierZone gx 31.6..33.6).
         private static readonly Vector2[] LegShort = { V(27f, 14.5f), V(27.5f, 10.5f), V(27.5f, 5.5f), V(28.6f, 4.5f), V(32.2f, 4.5f) };
         // Kısa yoldan dönüş: bariyer → köşe → D → kavşak merkezi.
@@ -52,6 +54,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private static readonly Vector2[] LegLong = { V(27f, 14.5f), V(27.5f, 19.0f), V(27.5f, 27.2f), V(28.8f, 28.5f), V(37.6f, 28.5f), V(38.9f, 27.1f), V(41.6f, 27.1f), V(43.4f, 26.0f), V(43.5f, 24.4f), V(42.3f, 23.4f), V(42.3f, 20.2f), V(43.5f, 19.2f), V(43.5f, 16.8f), V(44.8f, 15.5f), V(47.6f, 15.5f) };
         // Ağaç açıldıktan sonra: ön kenardaki geçit → I'nin sonu → köşe → J → avlu (SafeSpot).
         private static readonly Vector2[] LegFinal = { V(47.6f, 15.5f), V(49.6f, 13.7f), V(53.0f, 13.6f), V(56.2f, 13.7f), V(57.5f, 12.4f), V(57.5f, 1.0f), V(58f, -4.6f) };
+
+        // Çalışma anında sahne çapalarıyla (Fork, TreeStopSpot, SafeSpot) düzeltilmiş kopyalar: harita değişirse uçlar kaymaz.
+        private Vector2[] legStart, legShort, legBack, legLong, legFinal;
 
         private static Vector2 V(float gx, float gy) => new Vector2(gx, gy);
         private static Vector2 GridToWorld(Vector2 g) => new Vector2((g.x - g.y) * 0.5f, (g.x + g.y) * 0.25f);
@@ -183,6 +188,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
                     if (mb is IFloodEveningInteraction fi && fi.Point != null) modules.Add(fi);
                 FloodEveningHub.MinigameOpened += OnOpened;
                 FloodEveningHub.MinigameClosed += OnClosed;
+                ResolveLegs(sc);
             }
             else
             {
@@ -223,6 +229,61 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 foreach (var t in root.GetComponentsInChildren<Transform>(true))
                     if (t.name == objectName) return t.gameObject;
             return null;
+        }
+
+        /// <summary>
+        /// Rota uçlarını sahnedeki çapalara bağlar (Unused altındakiler hariç): kavşak = "Fork", ağaç durağı = "TreeStopSpot",
+        /// avlu = "SafeSpot". Çapa yoksa çizimdeki değer kalır. Ara köşeler haritanın sokak şeritlerinden gelir.
+        /// </summary>
+        private void ResolveLegs(Scene sc)
+        {
+            legStart = (Vector2[])LegStart.Clone(); legShort = (Vector2[])LegShort.Clone(); legBack = (Vector2[])LegBack.Clone();
+            legLong = (Vector2[])LegLong.Clone(); legFinal = (Vector2[])LegFinal.Clone();
+            string log = "";
+            if (AnchorGrid(sc, "Fork", out var fork))
+            {
+                legStart[legStart.Length - 1] = legShort[0] = legBack[legBack.Length - 1] = legLong[0] = fork;
+                log += $" Fork={fork:F1}";
+            }
+            if (AnchorGrid(sc, "TreeStopSpot", out var tree))
+            {
+                legLong[legLong.Length - 1] = legFinal[0] = tree;
+                log += $" TreeStopSpot={tree:F1}";
+            }
+            if (AnchorGrid(sc, "SafeSpot", out var safe))
+            {
+                legFinal[legFinal.Length - 1] = safe;
+                log += $" SafeSpot={safe:F1}";
+            }
+            Debug.Log("[FE-GUIDE] rota çapaları (ızgara):" + (log.Length > 0 ? log : " yok, çizimdeki değerler"), this);
+        }
+
+        private static bool AnchorGrid(Scene scene, string objectName, out Vector2 grid)
+        {
+            grid = default;
+            foreach (var root in scene.GetRootGameObjects())
+                foreach (var t in root.GetComponentsInChildren<Transform>(true))
+                {
+                    if (t.name != objectName || IsUnused(t)) continue;
+                    Vector2 w = t.position;
+                    var col = t.GetComponent<Collider2D>();
+                    if (col != null && col.bounds.size.sqrMagnitude > 0.0001f) w = col.bounds.center;
+                    else if (col is PolygonCollider2D poly && poly.points.Length > 0)
+                    {
+                        Vector2 sum = Vector2.zero;
+                        foreach (var p in poly.points) sum += p;
+                        w = t.TransformPoint(sum / poly.points.Length + poly.offset);
+                    }
+                    grid = WorldToGrid(w);
+                    return true;
+                }
+            return false;
+        }
+
+        private static bool IsUnused(Transform t)
+        {
+            for (var p = t; p != null; p = p.parent) if (p.name == "Unused") return true;
+            return false;
         }
 
         private static Collider2D ZoneOf(Scene scene, string objectName)
@@ -416,8 +477,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
             }
             if (s == FloodEveningState.FinalApproach)
             {
-                Follow(LegFinal, "Avlu", g);
-                if (InRect(g, 53f, 63f, -8f, 2f)) SetGoalWorld(GridToWorld(LegFinal[LegFinal.Length - 1]));
+                var fin = legFinal ?? LegFinal;
+                Follow(fin, "Avlu", g);
+                if (InRect(g, 53f, 63f, -8f, 2f)) SetGoalWorld(GridToWorld(fin[fin.Length - 1]));
                 return "Rota/Avlu";
             }
             if (s == FloodEveningState.Obstacle)
@@ -427,12 +489,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
                     SetGoalPoint(branch.Point);
                     return "Engel/Dal";
                 }
-                Follow(LegFinal, "Avlu", g);
+                Follow(legFinal ?? LegFinal, "Avlu", g);
                 return "Rota/Avlu";
             }
             if (s == FloodEveningState.LongRoad)
             {
-                Follow(LegLong, "UzunYol", g);
+                Follow(legLong ?? LegLong, "UzunYol", g);
                 return "Rota/UzunYol";
             }
             // RouteChoice: kavşağa kadar rota; kavşakta tercih yok.
@@ -442,17 +504,17 @@ namespace AfetUyanisi.Chapters.FloodEvening
             bool inF = InRect(g, 24.5f, 30.5f, 19f, 32f);
             if (inShort)
             {
-                if (shortClosed) { Follow(LegBack, "Kavşak", g); return "Rota/KavşağaDönüş"; }
-                Follow(LegShort, "KısaYol", g);
+                if (shortClosed) { Follow(legBack ?? LegBack, "Kavşak", g); return "Rota/KavşağaDönüş"; }
+                Follow(legShort ?? LegShort, "KısaYol", g);
                 return "Rota/KısaYol";
             }
-            if (inF) { Follow(LegLong, "UzunYol", g); return "Rota/UzunYol"; }
+            if (inF) { Follow(legLong ?? LegLong, "UzunYol", g); return "Rota/UzunYol"; }
             if (inFork)
             {
-                if (shortClosed) { Follow(LegLong, "UzunYol", g); return "Rota/UzunYol(kısa kapalı)"; }
+                if (shortClosed) { Follow(legLong ?? LegLong, "UzunYol", g); return "Rota/UzunYol(kısa kapalı)"; }
                 return "Kavşak/Tercih"; // ok yok: karar oyuncunun
             }
-            Follow(LegStart, "Kavşak", g);
+            Follow(legStart ?? LegStart, "Kavşak", g);
             return "Rota/Kavşak";
         }
 
@@ -474,8 +536,16 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (d <= best + 0.05f) { best = d; bestS = acc + t * len; } // eşitlikte ileriki parça
                 acc += len;
             }
-            float ahead = best > 1.6f ? 0.6f : lookAhead;
+            // Çizgiden saptıkça ileri bakış kısalır (önce rotaya döner); ok bir sonraki köşeyi en fazla 0.5 geçer, yani
+            // köşenin iç tarafını (direk, duvar, elektrik şeridi) kesip geçmez.
+            float ahead = best > 1.6f ? 0.6f : Mathf.Clamp(lookAhead - 3.5f * best, 0.5f, lookAhead);
             float sAim = Mathf.Min(total, bestS + ahead);
+            float vertexS = 0f;
+            for (int i = 0; i + 1 < pts.Length; i++)
+            {
+                vertexS += Vector2.Distance(pts[i], pts[i + 1]);
+                if (vertexS > bestS + 0.05f) { sAim = Mathf.Min(sAim, vertexS + 0.5f); break; }
+            }
             Vector2 aim = PointAt(pts, sAim);
             float remain = total - bestS;
             if (remain < bestRemain - 0.75f) { bestRemain = remain; idleT = 0f; }
@@ -516,12 +586,22 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             string step = stepField != null ? stepField.GetValue(school) as string : null;
             Vector2 pos = player.transform.position;
-            // Aşamalar yalnız ileri gider: 0 kapı, 1 köprü başı, 2 karar (ipucu yok), 3 köprü ucu, 4 çıkış.
+            // Aşamalar yalnız ileri gider: 0 kapı, 1 köprü başı, 2 karar (ipucu yok), 3 köprü ucu, 4 köprüden kaldırıma iniş, 5 çıkış.
             if (schoolStage == 0 && gateZone != null && !gateZone.OverlapPoint(pos)) schoolStage = 1;
             if (schoolStage == 0 && gateZone == null) schoolStage = 1;
             if (schoolStage <= 1 && bridgeHead != null && bridgeHead.OverlapPoint(pos)) schoolStage = 2;
             if (schoolStage == 2 && (step == "FS_BRIDGE" || step == "FS_HOME")) schoolStage = 3;
             if (schoolStage == 3 && (step == "FS_HOME" || (bridgeEnd != null && bridgeEnd.OverlapPoint(pos)))) schoolStage = 4;
+            // Köprü ucundan çıkışa düz çizgi karşı kaldırımın su kenarını (WaterEdge_East) sıyırır: önce köprü ekseninde
+            // biraz daha ilerideki kaldırım noktası (bankPoint), oraya varınca/geçince çıkış.
+            Vector2 bankPoint = Vector2.zero, bridgeDir = Vector2.zero;
+            bool hasBank = bridgeHead != null && bridgeEnd != null;
+            if (hasBank)
+            {
+                bridgeDir = ((Vector2)bridgeEnd.bounds.center - (Vector2)bridgeHead.bounds.center).normalized;
+                bankPoint = (Vector2)bridgeEnd.bounds.center + bridgeDir * 0.3f;
+            }
+            if (schoolStage == 4 && (!hasBank || Vector2.Distance(pos, bankPoint) < 0.3f || Vector2.Dot(pos - bankPoint, bridgeDir) > 0f)) schoolStage = 5;
 
             switch (schoolStage)
             {
@@ -544,6 +624,15 @@ namespace AfetUyanisi.Chapters.FloodEvening
                     SchoolAim(bridgeEnd.bounds.center, "Okul/KöprüUcu");
                     return "Okul/KöprüUcu";
                 case 4:
+                    // Yalnız halka oku (sıçrayan ok çıkışın üstünde dursa oyuncu kestirip suya yürürdü).
+                    aimWorld = bankPoint;
+                    hasAim = true;
+                    {
+                        float d = Vector2.Distance(pos, bankPoint);
+                        if (d < bestRemain - 0.5f) { bestRemain = d; idleT = 0f; }
+                    }
+                    return "Okul/KöprüİnişKaldırım";
+                case 5:
                     if (exitZone == null) return "";
                     SchoolAim(exitZone.bounds.center, "Okul/Çıkış");
                     return "Okul/Çıkış";

@@ -121,8 +121,7 @@ for (const [gx, gy] of [[53.8, -2.6], [62.4, -7.4], [56.4, -7.4]]) P('Shelter', 
 P('Shelter', 'Bench_1', AS + 'PROP_Assembly_Bench', 55.6, -5.6, { col: rectC(0.5, 0.25) });
 P('Shelter', 'Bench_2', AS + 'PROP_Assembly_Bench', 61.6, -5.4, { col: rectC(0.5, 0.25) });
 // ===== APARTMAN FİNALİ (final-world agent): avlu düzeni =====
-P('Shelter', 'Neighbor_A', AS + 'PROP_Assembly_Neighbor_A', 61.3, -7.4, { col: dia(0.15) });
-P('Shelter', 'Neighbor_B', AS + 'PROP_Assembly_Neighbor_B', 62.3, -7.6, { col: dia(0.15) });
+// (18 Eki, P-FLOOD, lider kararı) apartmanın önündeki yaşlı çift (Neighbor_A/B) kaldırıldı: avluda Cenk yalnız.
 // (18 Eki, FLOOD-MECH) toplanma alanı süsü (su kolisi yığını) kaldırıldı.
 // ===== /APARTMAN FİNALİ =====
 

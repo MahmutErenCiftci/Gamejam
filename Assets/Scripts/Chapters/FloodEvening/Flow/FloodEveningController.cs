@@ -22,7 +22,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         FinalApproach,  // "Yol açıldı." → son sokak (J) → apartmanın ön bahçesi (avlu)
         Finale,         // avluya (SafeZone) varıldı: apartman finali (posta kutusu, PIN, kapı kolu); sel YAVAŞLAYARAK sürer, avlu da dolar
         Success,        // Cenk eve girdi (final yoksa: avluya varıldı) → bitiş ekranı
-        Failed          // sel sayacı (80 sn) doldu, eve girilemedi → başarısız ekranı
+        Failed          // sel sayacı (85 sn) doldu, eve girilemedi → başarısız ekranı
     }
 
     /// <summary>
@@ -30,12 +30,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// Intro → Warning → RouteChoice → (kısa yol: köşeden sonra kapalı, bir kez "Yol kapanmış..." repliği, oyuncu YÜRÜYEREK döner;
     /// hata sayılmaz, raporda nötr bilgi) → LongRoad → Obstacle (EVENTS'in ağaç düşüşü + dal itme) → FinalApproach → Success.
     /// Durum geri gitmez; modüllerin Hub adımlarından ve oyuncunun konumundan (HighRoad, BarrierZone, SafeZone) türetilir.
-    /// SEL SAYACI (lider kararı 18 Eki; 80 sn, P-FLOOD): telefon uyarısı kapandığı an TEK bir sayaç başlar (StartFloodSequence; tekrar
+    /// SEL SAYACI (lider kararı 18 Eki; 85 sn, P-FLOOD): telefon uyarısı kapandığı an TEK bir sayaç başlar (StartFloodSequence; tekrar
     /// çağrılsa da ikinci sayaç olmaz). FloodEveningHub.Progress01 = geçen / floodSeconds bütün sistemlerin tek kaynağıdır: sağdaki gösterge,
     /// yağmur, haritadaki su (FloodWaterField), yol kapanmaları, sesler. Süre yalnız oynanışta akar: diyalog, okuma panelleri ve
     /// zorunlu sinematiklerde (ağaç düşüşü) durur; mini oyunlarda (dal itme) ve çevre tehlikelerinde (yüzen enkaz, elektrik çarpması tepkisi) akar; Time.timeScale = 0 (pause) durdurur.
     /// Avluya (SafeZone) varınca sayaç DURMAZ (lider kararı 18 Eki öğlen): apartman finali (IFloodEveningFinale) oynanırken sel
-    /// finaleRate hızıyla (ör. 0,35x) sürer, avlu da su alır; sayaç ancak Cenk eve girince (home_entered) durur → bitiş ekranı.
+    /// finaleRate hızıyla (ör. 0,15x) sürer, avlu da su alır; sayaç ancak Cenk eve girince (home_entered) durur → bitiş ekranı.
     /// Süre dolarsa (eve girilmediyse; finalde de) Failed: kritik uyarı + başarısız ekranı; Tekrar Dene sahneyi baştan kurar.
     /// Rotadan çıkan modüller (şifre, bahçe kapısı, ipuçları, söylenti) sahnede yoksa akış sorunsuz çalışır;
     /// sahneye konursa IFloodEveningInteraction olarak yine kaydedilir.
@@ -44,7 +44,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
     {
         [Header("Sel sayacı (tek zaman kaynağı)")]
         [Tooltip("Uyarıdan sonra selin kritik seviyeye (%100) varma süresi (oynanışta geçen sn)")]
-        [SerializeField] private float floodSeconds = 80f;
+        [SerializeField] private float floodSeconds = 85f;
         [Tooltip("Apartman finalinde (avludan eve girene kadar) sel sayacının hız çarpanı: sel sürer ama adil kalır")]
         [SerializeField, Range(0.05f, 1f)] private float finaleRate = 0.15f;
         [Tooltip("Süre dolunca bölüm başarısız olur (kapalıysa su %100'de kalır, oyun sürer)")]

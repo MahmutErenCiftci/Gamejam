@@ -92,6 +92,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private GameObject[] armOnFallen = Array.Empty<GameObject>();
         [Tooltip("Yere değince görünür (yerdeki yaprak/dal döküntüsü).")]
         [SerializeField] private GameObject[] showOnImpact = Array.Empty<GameObject>();
+        [Tooltip("Yere değince gizlenir (P-FLOOD: gövdenin altında kalan sağlam duvar dilimleri; yerine kırık duvar showOnImpact ile gelir).")]
+        [SerializeField] private GameObject[] hideOnImpact = Array.Empty<GameObject>();
 
         [Header("Cenk")]
         [Tooltip("Cenk'in döneceği nokta (genelde ağacın yere düşeceği yer).")]
@@ -566,6 +568,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (fallZoneBlock != null) fallZoneBlock.enabled = !fallen;
             foreach (var c in closeOnImpact) if (c != null) c.enabled = fallen;
             foreach (var go in showOnImpact) if (go != null) go.SetActive(fallen);
+            foreach (var go in hideOnImpact) if (go != null) go.SetActive(!fallen);
         }
 
         private void ArmBranches()

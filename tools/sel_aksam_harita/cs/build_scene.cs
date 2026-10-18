@@ -252,7 +252,7 @@ internal class CommandScript : IRunCommand
         PlaceFlood(scene, world, result); // 120 sn sel: harita suyu, yol kapanmaları, SEL DURUMU göstergesi
         PlaceEnvironment(scene, world, result); // ağaç salınımı, şimşek, yüzen enkaz, elektrikli su bölgeleri (FLOOD-MECH)
         // (P-FLOOD 18 Eki) ağaç düşüşü (Eren'in FE_TreeFall'ı, I sokağını tamamen kesen yatık gövde) + ritimle it/çek (dal engeli Rhythm kipi),
-        // 80 sn sel / final hızı, isabet parlaması malzemesi — ayrıntılar PFloodTreeAndRhythm'de (scratch patch_scene.cs ile aynı).
+        // 85 sn sel / final hızı, isabet parlaması malzemesi — ayrıntılar PFloodTreeAndRhythm'de (scratch patch_scene.cs ile aynı).
         PFloodTreeAndRhythm(scene, AssetDatabase.LoadAssetAtPath<Material>("Assets/Art/FloodEvening/ENV/Hazards/FE_SpriteFlash.mat"), result);
     }
 
@@ -471,9 +471,9 @@ internal class CommandScript : IRunCommand
         var world = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "World")?.transform;
         if (world == null) { result.LogError("World yok"); return; }
 
-        // ---- 80 sn sel + final hızı
+        // ---- 85 sn sel + final hızı
         var ctrl = PfFind<FloodEveningController>(scene);
-        { var so = new SerializedObject(ctrl); so.FindProperty("floodSeconds").floatValue = 80f; so.FindProperty("finaleRate").floatValue = 0.15f; so.ApplyModifiedPropertiesWithoutUndo(); }
+        { var so = new SerializedObject(ctrl); so.FindProperty("floodSeconds").floatValue = 85f; so.FindProperty("finaleRate").floatValue = 0.15f; so.ApplyModifiedPropertiesWithoutUndo(); }
 
         // ---- isabet parlaması
         var react = PfFind<FloodPlayerReaction>(scene);
@@ -553,8 +553,43 @@ internal class CommandScript : IRunCommand
             so.FindProperty("impactSfx2").stringValue = "";
             so.ApplyModifiedPropertiesWithoutUndo();
         }
+        PFloodWallBreak(scene, ev, result);
         result.Log($"ağaç kök={tree.transform.position} gövde ucu={brokenEnd} dur={(stop != null ? stop.name : "YOK")} dal={br.transform.position} " +
                    $"sel={ctrl.FloodSeconds} parlama={(react != null)}");
+    }
+    // ---- (P-FLOOD 18 Eki) ağacın kırdığı duvar: Wall_I_Front dilim 7..12 (gx ~49.6..52.6) düşüşte kırık hale geçer.
+    // FE_WallBreak (sahne kökü) kırık dilimleri orijinallerle aynı yer/sıralama/malzemeyle taşır; ağaç olayı yere değince
+    // bunları gösterir, sağlamları gizler (showOnImpact / hideOnImpact). Yürüme maskesi (duvarın collider'ı) aynen kalır.
+    static void PFloodWallBreak(Scene scene, FloodTreeFallEvent ev, ExecutionResult result)
+    {
+        const string Sheet = "Assets/Art/FloodEvening/ENV/Lines/LINE_FE_Wall_I_Front_Broken.png";
+        var sprites = AssetDatabase.LoadAllAssetsAtPath(Sheet).OfType<Sprite>().ToDictionary(s => s.name);
+        if (sprites.Count == 0) { result.LogError("kırık duvar sprite'ları yok: " + Sheet); return; }
+        var all = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true)).ToList();
+        var old = scene.GetRootGameObjects().FirstOrDefault(g => g.name == "FE_WallBreak");
+        if (old != null) Object.DestroyImmediate(old);
+        var root = new GameObject("FE_WallBreak");
+        SceneManager.MoveGameObjectToScene(root, scene);
+        var show = new System.Collections.Generic.List<GameObject>(); var hide = new System.Collections.Generic.List<GameObject>();
+        for (int k = 7; k <= 12; k++)
+        {
+            var o = all.FirstOrDefault(t => t.name == "Wall_I_Front_" + k && t.parent != null && t.parent.name == "Wall_I_Front");
+            if (o == null || !sprites.TryGetValue("LINE_FE_Wall_I_Front_Broken_" + k, out var sp)) { result.LogError("duvar dilimi yok: " + k); continue; }
+            var osr = o.GetComponent<SpriteRenderer>();
+            var go = new GameObject("WallBroken_" + k);
+            go.transform.SetParent(root.transform, false);
+            go.transform.position = o.position;
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = sp; sr.sharedMaterial = osr.sharedMaterial; sr.sortingLayerID = osr.sortingLayerID; sr.sortingOrder = osr.sortingOrder;
+            sr.spriteSortPoint = osr.spriteSortPoint; sr.flipX = osr.flipX;
+            go.SetActive(false);
+            show.Add(go); hide.Add(o.gameObject);
+        }
+        var so = new SerializedObject(ev);
+        var sh = so.FindProperty("showOnImpact"); sh.arraySize = show.Count; for (int i = 0; i < show.Count; i++) sh.GetArrayElementAtIndex(i).objectReferenceValue = show[i];
+        var hd = so.FindProperty("hideOnImpact"); hd.arraySize = hide.Count; for (int i = 0; i < hide.Count; i++) hd.GetArrayElementAtIndex(i).objectReferenceValue = hide[i];
+        so.ApplyModifiedPropertiesWithoutUndo();
+        result.Log($"kırık duvar: {show.Count} dilim");
     }
     // ===== /P-FLOOD =====
 

@@ -46,19 +46,19 @@ FloodEveningController (tek akış/sonuç sorumlusu)
    kart    uyarı (1 kez)  sokaklar  └─ uzun yol (HighRoad) ─► LongRoad ─► Obstacle (tree_fell) ─► FinalApproach (branch_cleared, FE_FINAL)
                                                                                                     └─► SafeZone/devam noktası ─► Success ─► sonuç
 ```
-* **80 sn sel sayacı (lider kararı 18 Eki öğlen; önce 120 sn):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç DURMAZ: apartman finali sırasında sel yavaşlayarak (x0,15) sürer, avlu da su alır; sayaç Cenk eve girince durur → bitiş. Süre dolarsa (finalde de) başarısız ekranı ([R] Tekrar Dene).
+* **85 sn sel sayacı (lider kararı 18 Eki öğlen; önce 120, sonra 80 sn):** ayrıntılar §1b. Avluya (SafeZone) varınca sayaç DURMAZ: apartman finali sırasında sel yavaşlayarak (x0,15) sürer, avlu da su alır; sayaç Cenk eve girince durur → bitiş. Süre dolarsa (finalde de) başarısız ekranı ([R] Tekrar Dene).
 * Durum geri gitmez. Dal itilir itilmez bölüm bitmez; oyuncu devam noktasına yürüyünce biter.
 * Rotadan çıkan modüller (ekip isterse sonra açılabilir; kod/prefab projede): şifre paneli (`CodePanelMinigame`, FE_CodePanelView), bahçe kapısı (`GateHandleMinigame`, FE_GateHandleView), ipucu levhaları (`CodeClueSign`, FE_ClueSign_1..3), söylenti (`RumorCheckPoint`, FE_RumorCheck), itmeli bariyer (`BarrierStop`, FE_LowRoadBarrier). Sahneye konurlarsa controller onları yine kaydeder.
 
-## 1b. 80 sn sel sistemi (Mahmut; P-FLOOD 18 Eki: 120 → 80 sn, finalde yavaşlayan sel)
+## 1b. 85 sn sel sistemi (Mahmut; P-FLOOD 18 Eki: 120 → 80 → 85 sn, finalde yavaşlayan sel)
 
 - **Tek başlangıç:** telefon bildirimi kapanınca `FloodEveningController.StartFloodSequence()` bir kez çalışır (tekrar çağrılırsa hiçbir şey olmaz). Bildirim sırasında süre akmaz.
-- **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / floodSeconds` (80 sn; `FloodEveningController.floodSeconds`). Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur. Aşama eşikleri yüzde olarak aynı kaldı.
+- **Tek zaman kaynağı:** `FloodEveningHub.Progress01 = geçen / floodSeconds` (85 sn; `FloodEveningController.floodSeconds`). Gösterge, yağmur, harita suyu, yol kapanmaları ve sesler yalnız bunu okur. Aşama eşikleri yüzde olarak aynı kaldı.
 - **Süre ne zaman akar:**
   - Akar: serbest yürüyüş, ağacı ritimle itme (mini oyun), çevre tehlikesi tepkileri (enkaz çarpması, elektrik çarpması).
   - Apartman finali (avlu → eve giriş): **x0,15 hızla akar** (`finaleRate`, Inspector'dan ayarlanır); posta kutusu, kilit ve PIN de bu hızla.
   - Durur: diyalog, okuma panelleri (`info*`, `read*` — mektup dahil, `warning*`…), zorunlu sinematik (`treefall*` ağaç düşüşü, `cine*` kapı sinematiği), pause (timeScale 0), eve girildi / süre doldu.
-- **Ölçülen süreler (bot, 80 sn, P-FLOOD 18 Eki):** bkz. §1d.
+- **Hedef denge (85 sn, lider kararı):** en iyi oyuncu eve ~%65'te, 1,4 kat yavaş oyuncu ~%91'de girer; çok yavaş oyuncu başarısız olur. Ölçüm (bot, optimal rota, 18 Eki 13:57): avlu %62 (52,8 sn), eve giriş %65 (55,3 sn); finalde bekleyen oyuncu %100'de başarısız ekranı görür.
 - **Aşamalar:**
   - %25: YAĞIŞ ARTIYOR.
   - %50: SU YÜKSELİYOR.
@@ -110,13 +110,14 @@ Rüzgâr sistemi (WindCorridor/WindFx/WindHud/WindGustZone, FE_WindCorridor/FE_W
 - **Yol tamamen kapalı:** düşmeden önce `FallZoneBlock_FE`, düştükten sonra gövdeyle birlikte kayan `TreeBlock_FE` (gx 50.55..51.45, gy 12.4..18.7) — sokak (gy 13..18) boşluksuz kesilir. Prefabın kendi kutu collider'ları (TrunkBlock, FallZoneBlock, TreeStopSpot) sahnede kapalı.
 - **Ritimle it/çek** (`BranchObstacle` Rhythm kipi + `UI/FloodRhythmView`, perçinli amber pervazlı ahşap levha): gövdenin solunda [E] → panel: işaretçi çubukta 0,75 sn'de bir uçtan öbürüne gider; yeşil pencerede E = iyi vuruş (gövde ve Cenk 2-3 px it/çek sarsılır, yaprak/dal parçacıkları, `SFX_FE_Branch_Push`), komut sırayla İT! / ÇEK!; pencere dışında E = yarım vuruş geri + amber "!" "Ritmi bekle" (başarısızlık yok). Her basıştan sonra pencere çubukta rastgele yeni yere geçer (işaretçinin altına değil); iyi vuruşlarla biraz daralır (sonda ~%70). 6 iyi vuruşta gövde 2 hücre sokağın arka kenarına kayar (collider'ı da), ön kenarda geçit açılır (`SFX_FE_Passage_Open`, `branch_cleared`). Esc = bırak (ilerleme korunur). Süre akar.
 - Kurulum: `tools/sel_aksam_harita/cs/build_scene.cs` → `PFloodTreeAndRhythm` (yeniden kurulumda aynı yerleşim). Sinematikte kamera Cenk ile ağacın arasına kayar; üst şeritler (tehlike uyarıları) sinematik bitene kadar bekletilir.
-- Harita: G → H köşesindeki boş arsa bir evle kapatıldı (`layout.js` houseY(46, 26.8)).
+- **Kırık duvar:** ağaç yere değdiği an I sokağının ön alçak duvarı (`Wall_I_Front` dilim 7..12, gx ~49.6..52.6) kırık hale geçer: ortası tabana kadar yıkık, tırtıklı kenar, kaba beton, moloz (`tools/sel_aksam_harita/wall_break.js` → `LINE_FE_Wall_I_Front_Broken.png`; sahnede `FE_WallBreak`, `FloodTreeFallEvent.showOnImpact/hideOnImpact`). Duvarın yürüme collider'ı aynen kalır: gövdenin yanından duvar boşluğuna geçilemez.
+- Harita: G → H köşesindeki boş arsa bir evle kapatıldı (`layout.js` houseY(46, 26.8)). Apartman önündeki yaşlı çift (Neighbor_A/B) kaldırıldı.
 
 ## 2. Hub (modüller ↔ controller), `Assets/Scripts/Chapters/FloodEvening/FloodEveningHub.cs`
 
 | Olay / alan | Kim yazar | Değerler |
 |---|---|---|
-| `Progress01`, `Paused`, `FreeRoam`, `FloodStarted`, `FloodStopped`, `FloodSeconds`, `OutdoorAudio01` | Controller | sel ilerlemesi 0..1 (120 sn); sayaç duruyor mu; oyuncu serbest mi; sayaç başladı / durdu; toplam süre; dış ses çarpanı |
+| `Progress01`, `Paused`, `FreeRoam`, `FloodStarted`, `FloodStopped`, `FloodSeconds`, `OutdoorAudio01` | Controller | sel ilerlemesi 0..1 (85 sn); sayaç duruyor mu; oyuncu serbest mi; sayaç başladı / durdu; toplam süre; dış ses çarpanı |
 | `NotifyOpened(id)` / `NotifyClosed(id)` | Modül | ör. `treefall`, `branch`; açıkken hareket kilitli |
 | `Complete(id)` | Modül | `warning_read`, `high_road`, `tree_fell`, `branch_cleared`, `safe_zone` (+ eski: `rumor_checked`, `gate_opened`, `code_opened`) |
 | `ReportMistake(id)` | Modül | `low_road` artık hata sayılmaz (nötr "kısa yol denendi"); diğerleri sonuçta listelenir |

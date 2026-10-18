@@ -1,4 +1,4 @@
-// Akşam sel — 80 sn dinamik su verisi (FloodWaterField + FE_FloodWater.shader).
+// Akşam sel — 85 sn dinamik su verisi (FloodWaterField + FE_FloodWater.shader).
 // Çalıştır: node flood.js   → Assets/Art/FloodEvening/ENV/Flood/FE_FloodData.png (+ küçük efekt sprite'ları)
 //
 // FE_FloodData: ızgara hücresi başına K×K texel (G sınırları, map.js). Kanallar:

@@ -7,8 +7,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// <summary>
     /// Sel suyunun Cenk'in bacaklarına gerçekten çıkması (P-WADE, 18 Eki). FloodWaterField'ın yalnız okunan durumunu kullanır
     /// (PlayerDepth, WaterVisible); sel mantığına, yavaşlamaya ve başarısızlığa dokunmaz.
-    /// - Su çizgisi: derinlik → piksel yüksekliği (ayak noktasından yukarı): birikinti ayak bileği (~6 px), orta su baldır (~11 px),
-    ///   derin su / yüksek sel dizlerin üstü (~18–20 px). Değişim yumuşatılır ve tam piksele oturtulur (titreme yok: küçük salınımlar yok sayılır).
+    /// - Su çizgisi: derinlik → piksel yüksekliği (ayak noktasından yukarı): birikinti ayak bileği (~5 px), orta su baldır (~8 px),
+    ///   derin su / yüksek sel dizler (~11–13 px; şortun altı). Değişim yumuşatılır ve tam piksele oturtulur (titreme yok: küçük salınımlar yok sayılır).
     /// - Çizginin altı: SpriteMask ile gizlenir (Cenk'in bütün sprite'ları, şok siluetı dahil, VisibleOutsideMask); aynı karenin
     ///   koyu, yarı saydam bir kopyası suyun altında soluk görünür (bulanık su).
     /// - Çizgide: önde 1 px açık yüzey çizgisi + koyu yarı saydam su gövdesi ve köpük pikselleri olan halkanın ön yayı,
@@ -26,8 +26,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [Header("Derinlik → su çizgisi (px, ayak noktasından yukarı)")]
         [Tooltip("PlayerDepth eşikleri (FloodWaterField: 0 kuru, ~0.32 derin)")]
         [SerializeField] private float[] depthKeys = { 0.015f, 0.06f, 0.16f, 0.30f, 0.45f };
-        [Tooltip("Eşiklerdeki su çizgisi yüksekliği (px). Cenk ~60 px; ayak bileği ~6, baldır ~11, diz üstü ~18")]
-        [SerializeField] private float[] pixelKeys = { 2f, 6f, 11f, 17f, 20f };
+        [Tooltip("Eşiklerdeki su çizgisi yüksekliği (px). Cenk karesi: ayakkabı 0–8, baldır 9–11, şort 11–19 px; ayak bileği ~5, baldır ~8, diz ~11–13")]
+        [SerializeField] private float[] pixelKeys = { 2f, 5f, 8f, 11f, 13f };
         [SerializeField] private float riseSpeed = 16f;
         [SerializeField] private float fallSpeed = 28f;
 
@@ -44,6 +44,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private Transform root;
         private SpriteMask mask;
         private SpriteRenderer front, back, ghost;
+        private SpriteRenderer feetFx; // FloodWaterField'ın eski ayak bandı (halka varken gizlenir, yoksa suyun altında açık çizgi kalır)
         private Texture2D frontTex, backTex;
         private Color32[] frontPx, backPx;
         private float smoothPx, depthLp;
@@ -93,6 +94,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (player != null) body = player.GetComponentInChildren<SpriteRenderer>(true);
             if (water == null || player == null || body == null) { enabled = false; return; }
             root = transform;
+            var feetT = water.transform.Find("FeetWater");
+            if (feetT != null) feetFx = feetT.GetComponent<SpriteRenderer>();
 
             var maskGo = new GameObject("WaterlineMask");
             maskGo.transform.SetParent(root, false);
@@ -174,6 +177,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
             if (shownPx <= 0) { Deactivate(); return; }
             Activate();
+            if (feetFx != null) feetFx.enabled = false; // FloodWaterField her Update'te açar; çizimden önce burada kapanır
 
             refreshTimer -= dt;
             if (refreshTimer <= 0f) { refreshTimer = 0.25f; ApplyMaskInteraction(); }

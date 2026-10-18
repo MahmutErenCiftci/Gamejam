@@ -6,7 +6,7 @@ using UnityEngine;
 namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
-    /// Haritadaki gerçek zamanlı su (80 sn sel sayacı, LEAD). Tek kaynak FloodEveningHub.Progress01'dir; bu bileşen yalnız okur.
+    /// Haritadaki gerçek zamanlı su (85 sn sel sayacı, LEAD). Tek kaynak FloodEveningHub.Progress01'dir; bu bileşen yalnız okur.
     /// - Su katmanı: haritayı kaplayan tek sprite + FE_FloodWater.shader. FE_FloodData (tools/sel_aksam_harita/flood.js) her noktanın
     ///   dolma eşiğini, akış yönünü/hızını ve maskesini taşır: kısa yol ve kanal kıyısı önce, uzun yol giderek, son sokak (J) sonra,
     ///   apartmanın avlusu en son dolar (apartman finalinde, sel yavaşlamış sürerken; kapı önü en son). Katman zemin (order -100) ile süs/duvar/karakter arasındadır (order -88), izometrik sıralama bozulmaz.

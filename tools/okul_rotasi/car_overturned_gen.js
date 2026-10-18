@@ -14,11 +14,12 @@ const YAW = 28 * Math.PI / 180;     // akıntıyla açılı durmuş
 const PITCH = 5 * Math.PI / 180;    // burnu suya gömülmüş (ön = +u yerel)
 const ROLL = 7 * Math.PI / 180;     // bir yana yatık
 const ZC = 14;
+const SINK = +(process.env.CAR_SINK || 8);  // araba su çizgisine göre ne kadar aşağıda (lider: "biraz daha derine batır")
 
 // dünya noktası -> araba yerel noktası (önce yaw, sonra pitch/roll ZC etrafında)
 function toLocal(p) {
   const c = Math.cos(YAW), s = Math.sin(YAW);
-  let u = c * p.u + s * p.v, v = -s * p.u + c * p.v, z = p.z - ZC;
+  let u = c * p.u + s * p.v, v = -s * p.u + c * p.v, z = p.z + SINK - ZC;
   const cp = Math.cos(PITCH), sp = Math.sin(PITCH);
   [u, z] = [cp * u - sp * z, sp * u + cp * z];
   const cr = Math.cos(ROLL), sr = Math.sin(ROLL);
@@ -82,7 +83,8 @@ for (let f = 0; f < 3; f++) {
       if (hullAbove(x, y)) { r.rgba.set(RGBA(mod(fl(x / 2) + f, 3) ? W.foam : W.hi, 245), o); continue; }
       const col = depth > 7 ? (red ? '#4C4034' : '#423F34') : (red ? '#584034' : '#4A473A');
       const ripple = mod(fl(u * 0.35 + v * 0.2 + f * 2), 9) === 0 && hash(x, y, 31) < 0.6;
-      r.rgba.set(RGBA(ripple ? W.d1 : col, 235), o); continue;
+      if (depth > 13) { if (ripple) r.rgba.set(RGBA(W.d1, 120), o); continue; }   // çok derin: yalnız su
+      r.rgba.set(RGBA(ripple ? W.d1 : col, depth > 7 ? 120 : 190), o); continue;     // derinleştikçe suya karışır
     }
     const d = footD(u, v);
     const up = u > 0; // akıntı +u'dan (ekran sağ üst) gelir, -u'ya (sol alt) gider
