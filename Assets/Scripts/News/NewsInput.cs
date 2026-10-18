@@ -7,6 +7,7 @@ namespace AfetUyanisi.News
     {
         public static bool ContinuePressed()
         {
+            if (AfetUyanisi.Core.GameInput.GameplayLocked) return false; // duraklatma menüsü açık
             var kb = Keyboard.current;
             if (kb != null && (kb.eKey.wasPressedThisFrame || kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame))
                 return true;

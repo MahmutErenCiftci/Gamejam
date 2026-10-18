@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.UI.InteractionPromptUI
   font: {fileID: 11400000, guid: 5cb2d8cfc69faa442b0a200e27f42d5a, type: 2}
-  fontSize: 12
+  fontSize: 16
   padding: 5
   keySize: 18
   gap: 5

@@ -66,8 +66,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
-    m_FontSize: 9
+    m_Font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 9
@@ -286,15 +286,15 @@ MonoBehaviour:
   canvas: {fileID: 4730690188507550030}
   group: {fileID: 6850844487727175458}
   panel: {fileID: 4417640453985600850}
-  font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   titleText: {fileID: 5630864654221661124}
   clueText: {fileID: 1633259721391640204}
   footerText: {fileID: 529509238587528366}
   okButton: {fileID: 1124567110775426429}
   titleFormat: "\u015E\u0130FRE \u0130PUCU {0}/{1}"
   okLabel: Tamam (E)
-  clueFontSize: 20
-  clueFontSizeMultiLine: 17
+  clueFontSize: 22
+  clueFontSizeMultiLine: 19
 --- !u!223 &4730690188507550030
 Canvas:
   m_ObjectHideFlags: 0
@@ -437,8 +437,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
-    m_FontSize: 13
+    m_Font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -672,8 +672,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
-    m_FontSize: 9
+    m_Font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
+    m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 9
@@ -948,8 +948,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10

@@ -8,8 +8,19 @@ using UnityEngine.UI;
 
 namespace AfetUyanisi.Chapters.FloodEvening
 {
+    /// <summary>Berk'in Inspector'dan bağlanan UI bileşeni uygular; input yalnız RoomInteractor'dan gelir.</summary>
+    public interface IBranchProgressView
+    {
+        void Show(string hint);
+        void SetProgress(float progress);
+        void Press();
+        void Hide();
+    }
+
     /// <summary>
-    /// Düşen dal engeli, güvenli uyarlama (PROMPT §E). BranchSpot'a eklenir. Varsayılan kip AlternativePassage:
+    /// Düşen dal engeli. Varsayılan Mash: RoomInteractor'ın her E basışında Play çağrısı +1 ilerletir.
+    /// Arm ağaç düşüşünden sonra açar; ilerleme uzaklaşınca korunur, dal ve collider birlikte kayar.
+    /// Eski AlternativePassage kipi:
     /// yolu kesen dala dokunulmaz ("Engeli aşmaya çalışma"), yanındaki işaretli alternatif geçidin mandalı açılır:
     /// [E] → panel + kısa ilerleme çubuğu (E ya da fareyle "Basılı tut"; bırakınca yavaşça geri iner, Esc/Vazgeç ile
     /// iptal edilir, nokta açık kalır) → AltPassage'ın yolu kesen collider'ları kapanır, açık görsel gelir → bir kez,
@@ -19,15 +30,34 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// </summary>
     public class BranchObstacle : MonoBehaviour, IFloodEveningInteraction, IFloodEveningResettable
     {
-        public enum Mode { AlternativePassage, SmallBranch }
+        public enum Mode { AlternativePassage = 0, SmallBranch = 1, Mash = 2 }
 
         public const string MinigameId = "branch";
         public const string StepId = "branch_cleared";
 
-        [SerializeField] private Mode mode = Mode.AlternativePassage;
+        [SerializeField] private Mode mode = Mode.Mash;
         [SerializeField] private Interactable point;
         [SerializeField] private string alternativeLabel = "Alternatif geçidi aç";
         [SerializeField] private string smallBranchLabel = "Küçük dalı kenara çek";
+
+        [Header("Art arda bas (SEL3-20)")]
+        [SerializeField] private bool startArmed = false;
+        [SerializeField, Min(1)] private int requiredPresses = 12;
+        [SerializeField] private IsoPlayerController player;
+        [Tooltip("Dal görseli ve collider'ının ortak kökü. Etkileşim noktası bu kökün dışında kalmalı.")]
+        [SerializeField] private Transform branchRoot;
+        [SerializeField] private Vector3 clearOffset = new Vector3(0.9f, 0.3f, 0f);
+        [SerializeField, Min(0.01f)] private float slideSeconds = 0.35f;
+        [Tooltip("Berk'in IBranchProgressView uygulayan bileşeni: prefab veya sahne örneği.")]
+        [SerializeField] private MonoBehaviour progressView;
+        [SerializeField] private TextAsset storyJson;
+
+        private IBranchProgressView mashView;
+        private FloodEveningTexts texts;
+        private bool armed, panelNotified;
+        private int pressCount, lastPressFrame = -1, resetVersion;
+        private Vector3 branchStart;
+        private float pressFeedbackUntil;
 
         [Header("Açılınca")]
         [Tooltip("Kapanacak yol kesen collider'lar: AltPassage'ın kapalı collider'ı (Alternatif) ya da küçük dalın collider'ı (Küçük dal).")]
@@ -64,7 +94,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private bool cancelClicked, playing;
 
         public Interactable Point => point;
-        public bool CanUse => !IsCleared && !playing;
+        public bool CanUse => isActiveAndEnabled && armed && !IsCleared && !playing && !FloodEveningHub.Paused;
         public bool IsCleared { get; private set; }
         public bool IsOpen => playing;
         /// <summary>0..1 ilerleme (panel açıkken).</summary>
@@ -73,21 +103,135 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private void Awake()
         {
             if (point == null) point = GetComponentInChildren<Interactable>(true);
-            if (point != null) point.Setup(mode == Mode.SmallBranch ? smallBranchLabel : alternativeLabel, "", false, false);
+            if (player == null)
+                foreach (var root in gameObject.scene.GetRootGameObjects())
+                {
+                    player = root.GetComponentInChildren<IsoPlayerController>(true);
+                    if (player != null) break;
+                }
+            texts = storyJson != null ? FloodEveningTexts.Load(storyJson) : null;
+            if (branchRoot != null) branchStart = branchRoot.localPosition;
+            if (point != null) point.Setup(mode == Mode.Mash ? MashLabel : mode == Mode.SmallBranch ? smallBranchLabel : alternativeLabel, "", false, false);
+            if (progressView != null)
+            {
+                if (!progressView.gameObject.scene.IsValid()) progressView = Instantiate(progressView, transform);
+                mashView = progressView as IBranchProgressView;
+                if (mashView == null) Debug.LogWarning("[BranchObstacle] progressView, IBranchProgressView uygulamalı.", this);
+                else mashView.Hide();
+            }
+            armed = startArmed;
             Apply(false);
         }
 
-        private void OnEnable() => FloodEveningHub.ResetRequested += ResetModule;
+        private void OnEnable()
+        {
+            FloodEveningHub.ResetRequested += ResetModule;
+            if (point != null) point.SetAvailable(CanUse);
+        }
         private void OnDisable()
         {
             FloodEveningHub.ResetRequested -= ResetModule;
             SetPanel(false);
+            mashView?.Hide();
+            playing = false;
+            resetVersion++;
+            CloseNotification();
+            if (point != null) point.SetAvailable(false);
+        }
+
+        /// <summary>Eren ağaç düşüşünü bitirince çağırır. Tekrar çağırmak ilerlemeyi sıfırlamaz.</summary>
+        [ContextMenu("Test: Arm (Play Mode)")]
+        public void Arm()
+        {
+            armed = true;
+            if (mode == Mode.Mash) SetBranchVisible(true);
+            if (point != null) point.SetAvailable(CanUse);
+        }
+
+        private string MashLabel => texts != null ? texts.Ui("branch_mash_action") : "Art arda bas — Engeli kenara it";
+        private string MashHint => texts != null ? texts.Ui("branch_mash_hint") : "[E] Art arda bas — Engeli kenara it";
+        private bool InRange => player != null && player.isActiveAndEnabled && point != null && point.IsPlayerInRange(player);
+
+        private void LateUpdate()
+        {
+            if (mode != Mode.Mash) return;
+            bool visible = CanUse && FloodEveningHub.FreeRoam && InRange;
+            if (mashView != null)
+            {
+                if (visible) { mashView.Show(MashHint); mashView.SetProgress(Progress); }
+                else mashView.Hide();
+            }
+            else
+            {
+                if (visible) { Build(); SetFill(Progress); }
+                SetPanel(visible);
+                if (fill != null) fill.localScale = Time.unscaledTime < pressFeedbackUntil ? new Vector3(1f, 1.15f, 1f) : Vector3.one;
+            }
+        }
+
+        private IEnumerator MashOnce()
+        {
+            // RoomInteractor menzili ve tek hedefi seçer; doğrudan çağrılar da aynı güvenlik kapısından geçer.
+            // E'nin Pressed kontrolü RoomInteractor'da yapılır; coroutine içinde tekrar tuş okumayız.
+            if (!CanUse || !InRange || lastPressFrame == Time.frameCount) yield break;
+            lastPressFrame = Time.frameCount;
+            pressCount++;
+            var animator = player.GetComponent<IsoCharacterAnimator>();
+            if (animator != null) animator.Face(point.transform.position - player.transform.position);
+            Progress = Mathf.Clamp01((float)pressCount / Mathf.Max(1, requiredPresses));
+            mashView?.SetProgress(Progress);
+            mashView?.Press();
+            pressFeedbackUntil = Time.unscaledTime + 0.1f;
+            if (pressCount < Mathf.Max(1, requiredPresses)) yield break;
+
+            playing = true;
+            int version = resetVersion;
+            panelNotified = true;
+            FloodEveningHub.NotifyOpened(MinigameId);
+            SetPanel(false);
+            mashView?.Hide();
+            try
+            {
+                Vector3 from = branchRoot != null ? branchRoot.localPosition : Vector3.zero;
+                Vector3 to = branchStart + clearOffset;
+                float elapsed = 0f;
+                while (elapsed < slideSeconds)
+                {
+                    if (version != resetVersion || !isActiveAndEnabled) yield break;
+                    if (!FloodEveningHub.Paused)
+                    {
+                        elapsed += Time.deltaTime;
+                        if (branchRoot != null) branchRoot.localPosition = Vector3.Lerp(from, to, Mathf.SmoothStep(0f, 1f, elapsed / slideSeconds));
+                    }
+                    yield return null;
+                }
+                if (version != resetVersion || !isActiveAndEnabled) yield break;
+                if (branchRoot != null) branchRoot.localPosition = to;
+                IsCleared = true;
+                if (point != null) point.SetAvailable(false);
+                FloodEveningHub.Say("FE_PATH_OPEN", "Yol açıldı.");
+                FloodEveningHub.Complete(StepId);
+            }
+            finally
+            {
+                playing = false;
+                CloseNotification();
+            }
+        }
+
+        private void CloseNotification()
+        {
+            if (!panelNotified) return;
+            panelNotified = false;
+            FloodEveningHub.NotifyClosed(MinigameId);
         }
 
         public IEnumerator Play()
         {
             if (!CanUse) yield break;
+            if (mode == Mode.Mash) { yield return MashOnce(); yield break; }
             playing = true;
+            panelNotified = true;
             FloodEveningHub.NotifyOpened(MinigameId);
             bool done = false;
             try
@@ -138,25 +282,44 @@ namespace AfetUyanisi.Chapters.FloodEvening
             {
                 SetPanel(false);
                 playing = false;
-                FloodEveningHub.NotifyClosed(MinigameId);
+                CloseNotification();
             }
         }
 
         public void ResetModule()
         {
             SetPanel(false);
+            mashView?.Hide();
+            resetVersion++;
+            CloseNotification();
             playing = false;
             IsCleared = false;
             Progress = 0f;
+            pressCount = 0;
+            lastPressFrame = -1;
+            armed = startArmed;
+            if (branchRoot != null) branchRoot.localPosition = branchStart;
             Apply(false);
         }
 
         private void Apply(bool open)
         {
+            if (mode == Mode.Mash)
+            {
+                SetBranchVisible(armed);
+                if (point != null) point.SetAvailable(CanUse);
+                return;
+            }
             foreach (var c in blockers) if (c != null) c.enabled = !open;
             foreach (var go in showWhenOpen) if (go != null) go.SetActive(open);
             foreach (var go in hideWhenOpen) if (go != null) go.SetActive(!open);
-            if (point != null) point.SetAvailable(!open);
+            if (point != null) point.SetAvailable(!open && armed);
+        }
+
+        private void SetBranchVisible(bool visible)
+        {
+            if (branchRoot != null && branchRoot != transform && (point == null || !point.transform.IsChildOf(branchRoot)))
+                branchRoot.gameObject.SetActive(visible);
         }
 
         private void SetPanel(bool visible)
@@ -181,6 +344,25 @@ namespace AfetUyanisi.Chapters.FloodEvening
             EventsUi.EnsureEventSystem();
             var f = EventsUi.ResolveFont(font);
             canvas = EventsUi.CreateCanvas(this, "FE_BranchCanvas", sortingOrder, out group);
+
+            if (mode == Mode.Mash)
+            {
+                // Berk'in prefab'ı gelene kadar tıklamaları engellemeyen sade yedek görünüm.
+                var panel = EventsUi.Panel("MashPanel", canvas.transform, EventsUi.TealDark, EventsUi.Teal);
+                var rect = EventsUi.Place(panel.rectTransform, 0.5f, 0f, new Vector2(0f, 24f), new Vector2(360f, 44f));
+                var label = EventsUi.Txt("Hint", rect, f, 11, EventsUi.Cream, TextAnchor.MiddleCenter);
+                EventsUi.TL(label.rectTransform, 8f, 5f, 344f, 18f);
+                label.text = MashHint;
+                var back = EventsUi.Img("Bar", rect, EventsUi.Ink);
+                EventsUi.TL(back.rectTransform, 8f, 27f, 296f, 10f);
+                fill = EventsUi.Img("Fill", back.transform, EventsUi.Teal).rectTransform;
+                EventsUi.Stretch(fill);
+                fill.anchorMax = new Vector2(0f, 1f);
+                percentText = EventsUi.Txt("Percent", rect, f, 9, EventsUi.Cream, TextAnchor.MiddleRight);
+                EventsUi.TL(percentText.rectTransform, 308f, 25f, 44f, 14f);
+                SetPanel(false);
+                return;
+            }
 
             var p = EventsUi.Panel("BranchPanel", canvas.transform, EventsUi.TealDark, EventsUi.Teal, true);
             var rt = EventsUi.Place(p.rectTransform, 0.5f, 0f, new Vector2(0f, 46f), new Vector2(280f, 104f));

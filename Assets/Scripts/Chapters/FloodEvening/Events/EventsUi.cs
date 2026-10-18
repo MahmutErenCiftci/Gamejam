@@ -27,7 +27,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             new Color(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, a);
 
         public static Font ResolveFont(Font assigned) =>
-            assigned != null ? assigned : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            assigned != null ? assigned : AfetUyanisi.UI.GameFonts.Story;
 
         /// <summary>owner'ın altında (owner bir Canvas altındaysa sahne kökünde) 640x360 referanslı overlay canvas kurar.</summary>
         public static Canvas CreateCanvas(Component owner, string name, int order, out CanvasGroup group)
@@ -102,7 +102,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         {
             var t = Rect(name, parent).gameObject.AddComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = align;
             t.raycastTarget = false;
@@ -110,8 +110,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             t.horizontalOverflow = HorizontalWrapMode.Wrap;
             t.verticalOverflow = VerticalWrapMode.Truncate;
             t.resizeTextForBestFit = true;
-            t.resizeTextMinSize = Mathf.Max(6, size - 3);
-            t.resizeTextMaxSize = size;
+            t.resizeTextMinSize = AfetUyanisi.UI.GameFonts.MinSizeFor(font, Mathf.Max(6, size - 3));
+            t.resizeTextMaxSize = t.fontSize;
             var sh = t.gameObject.AddComponent<Shadow>();
             sh.effectColor = new Color(0f, 0f, 0f, 0.6f);
             sh.effectDistance = new Vector2(1f, -1f);

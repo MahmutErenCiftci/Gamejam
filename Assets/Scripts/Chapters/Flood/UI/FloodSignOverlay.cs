@@ -24,7 +24,7 @@ namespace AfetUyanisi.Chapters.Flood
         {
             if (built) return;
             built = true;
-            if (font == null) font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (font == null) font = AfetUyanisi.UI.GameFonts.Story;
             if (!TryGetComponent<Canvas>(out var canvas)) canvas = gameObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = sortingOrder;
@@ -68,7 +68,7 @@ namespace AfetUyanisi.Chapters.Flood
             go.transform.SetParent(parent, false);
             var t = go.GetComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = TextAnchor.MiddleCenter;
             t.text = text;

@@ -45,8 +45,7 @@ namespace AfetUyanisi.Menu
         [SerializeField] SleepZzz sleepZzz;
 
         [Header("Ayarlar")]
-        [SerializeField] GameObject settingsPanel;
-        [SerializeField] Button settingsBackButton;
+        [SerializeField] MenuSettingsScreen settingsScreen;
 
         [Header("Bildirim")]
         [SerializeField] GameObject tooltip;
@@ -68,7 +67,7 @@ namespace AfetUyanisi.Menu
         // Intro (MENU-04) oynarken menü girdisi kapalı tutulur.
         public bool InputEnabled { get; set; } = true;
 
-        bool SettingsOpen => settingsPanel != null && settingsPanel.activeSelf;
+        bool SettingsOpen => settingsScreen != null && settingsScreen.IsOpen;
 
         void Awake()
         {
@@ -80,10 +79,9 @@ namespace AfetUyanisi.Menu
             exitButton.onClick.AddListener(ExitGame);
             startChapterButton.onClick.AddListener(StartSelectedChapter);
             backButton.onClick.AddListener(ExitSelection);
-            if (settingsBackButton != null)
-                settingsBackButton.onClick.AddListener(CloseSettings);
+            if (settingsScreen != null)
+                settingsScreen.Closed += OnSettingsClosed;
 
-            if (settingsPanel != null) settingsPanel.SetActive(false);
             if (tooltip != null) tooltip.SetActive(false);
             SetGroup(selectionPanel, 0f);
             if (fadePanel != null)
@@ -100,11 +98,9 @@ namespace AfetUyanisi.Menu
             if (!InputEnabled || state == State.Loading)
                 return;
 
+            // Ayarlar ekranı kendi girdisini okur (Esc dahil).
             if (SettingsOpen)
-            {
-                if (GameInput.BackPressed) CloseSettings();
                 return;
-            }
 
             if (state == State.Main)
             {
@@ -316,19 +312,21 @@ namespace AfetUyanisi.Menu
 
         void OpenSettings()
         {
-            if (!InputEnabled || state != State.Main || settingsPanel == null)
+            if (!InputEnabled || state != State.Main || settingsScreen == null || SettingsOpen)
                 return;
             HideTooltip();
-            settingsPanel.SetActive(true);
-            if (EventSystem.current != null && settingsBackButton != null)
-                EventSystem.current.SetSelectedGameObject(settingsBackButton.gameObject);
+            settingsScreen.Open();
         }
 
-        void CloseSettings()
+        // Odak bir kare sonra Ayarlar butonuna döner: ekranı kapatan Enter aynı karede butona "submit" olarak gidip
+        // ekranı yeniden açmasın.
+        void OnSettingsClosed() => StartCoroutine(SelectNextFrame(settingsButton));
+
+        static IEnumerator SelectNextFrame(Selectable target)
         {
-            if (settingsPanel != null)
-                settingsPanel.SetActive(false);
-            FocusMainButtons();
+            yield return null;
+            if (EventSystem.current != null && target != null)
+                EventSystem.current.SetSelectedGameObject(target.gameObject);
         }
 
         void ExitGame()
