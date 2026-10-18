@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEngine;
 
 namespace AfetUyanisi.Menu.EditorTools
@@ -26,7 +27,34 @@ namespace AfetUyanisi.Menu.EditorTools
             Debug.Log("[MenuArtBuilder] EŞİK logosu yazıldı: " + path);
         }
 
-        static Texture2D Logo()
+        // Oyunun .exe simgesi: aynı logo, 256x256 kare tuvalde ortalı, arkası şeffaf. Player Settings'teki
+        // varsayılan simge olarak atanır; Windows küçük boyutları bundan üretir.
+        const string IconRelative = "UI/AppIcon";
+        const int IconSize = 256, IconPad = 8;
+
+        [MenuItem("AfetUyanisi/Menü/Oyun Simgesini Kur (EŞİK)")]
+        public static void BuildAppIcon()
+        {
+            string path = Save(LogoOn(IconSize, IconSize, IconSize - IconPad * 2, IconSize - IconPad * 2), IconRelative);
+            AssetDatabase.Refresh();
+            var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+            importer.textureType = TextureImporterType.Default;
+            importer.npotScale = TextureImporterNPOTScale.None;
+            importer.filterMode = FilterMode.Point;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.mipmapEnabled = false;
+            importer.alphaIsTransparency = true;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.SaveAndReimport();
+            PlayerSettings.SetIcons(NamedBuildTarget.Unknown, new[] { AssetDatabase.LoadAssetAtPath<Texture2D>(path) }, IconKind.Any);
+            AssetDatabase.SaveAssets();
+            Debug.Log("[MenuArtBuilder] EŞİK oyun simgesi yazıldı ve atandı: " + path);
+        }
+
+        static Texture2D Logo() => LogoOn(LogoW, LogoH, LogoW, LogoH);
+
+        // Logoyu canvasW x canvasH tuvalin ortasına, en fazla maxW x maxH kaplayacak şekilde çizer.
+        static Texture2D LogoOn(int canvasW, int canvasH, int maxW, int maxH)
         {
             var src = new Texture2D(2, 2);
             src.LoadImage(File.ReadAllBytes(LogoSource));
@@ -45,8 +73,8 @@ namespace AfetUyanisi.Menu.EditorTools
                         by0 = Mathf.Min(by0, y); by1 = Mathf.Max(by1, y);
                     }
             int bw = bx1 - bx0 + 1, bh = by1 - by0 + 1;
-            float scale = Mathf.Min((float)LogoW / bw, (float)LogoH / bh);
-            int ow = Mathf.Min(LogoW, Mathf.RoundToInt(bw * scale)), oh = Mathf.Min(LogoH, Mathf.RoundToInt(bh * scale));
+            float scale = Mathf.Min((float)maxW / bw, (float)maxH / bh);
+            int ow = Mathf.Min(maxW, Mathf.RoundToInt(bw * scale)), oh = Mathf.Min(maxH, Mathf.RoundToInt(bh * scale));
 
             // Palet: kaynağın düz renkli bölgelerinden (komşularıyla aynı tondaki pikseller) k-ortalama.
             var flat = new List<Color32>();
@@ -92,8 +120,8 @@ namespace AfetUyanisi.Menu.EditorTools
                 stack.Push(p + Vector2Int.up); stack.Push(p + Vector2Int.down);
             }
 
-            var t = New(LogoW, LogoH);
-            int left = (LogoW - ow) / 2, top = (LogoH - oh) / 2;
+            var t = New(canvasW, canvasH);
+            int left = (canvasW - ow) / 2, top = (canvasH - oh) / 2;
             for (int r = 0; r < oh; r++)
                 for (int c = 0; c < ow; c++)
                     if (!clear[c, r]) Px(t, left + c, top + (oh - 1 - r), cells[c, r]);
