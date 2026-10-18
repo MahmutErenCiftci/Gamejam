@@ -8,7 +8,8 @@ namespace AfetUyanisi.Menu.EditorTools
     // Ana menünün kendi piksel sanatını üretir (oda, oyunun izometrik yatak odasıdır: Assets/Art/Props/Bedroom,
     // Mahmut). Tekrar çalıştırılabilir: aynı PNG'lerin üzerine yazar, .meta (GUID) korunduğu için sahnedeki
     // referanslar bozulmaz.
-    //  1) Source~ altındaki sayfalardan (beyaz arka plan, 4x4 piksel blok) logo ve düşünce baloncuklarını keser.
+    //  1) Source~ altındaki sayfalardan (beyaz arka plan, 4x4 piksel blok) düşünce baloncuklarını keser; "EŞİK" logosunu
+    //     kodla çizer (MenuArtBuilder.Logo.cs).
     //  2) Rüya bulutlarını, "z" harflerini, saat parıltısını, pencere cam maskesini, UI panellerini ve arka plandaki
     //     izometrik şehirle apartmanı (MenuArtBuilder.City.cs) kodla üretir.
     //  3) Hepsini Point filtre, PPU 64 (odanın sanatıyla aynı yoğunluk), sıkıştırmasız sprite olarak içe aktarır.
@@ -42,8 +43,7 @@ namespace AfetUyanisi.Menu.EditorTools
             // Düşünce baloncukları (ui_kit.png): düşünce yollarının kaynağı
             new Piece("ui_kit", "UI/ThoughtLarge", 150, 42, 60, 64, Center),
             new Piece("ui_kit", "UI/ThoughtSmall", 272, 63, 30, 38, Center),
-            // Logo (logo.png) — tam çözünürlük (menü 960x540 sanal ekranda)
-            new Piece("logo", "UI/LogoStacked", 10, 42, 294, 151, Center),
+            // Logo: oyunun adı "EŞİK" artık kodla çizilir (MenuArtBuilder.Logo.cs); logo.png kullanılmıyor.
         };
 
         [MenuItem("AfetUyanisi/Menü/Sanatı Kur (kes + üret + içe aktar)")]
@@ -60,6 +60,7 @@ namespace AfetUyanisi.Menu.EditorTools
                 }
                 written.Add(Save(sheet.Extract(piece.cells, piece.step), piece.output));
             }
+            written.Add(Save(Logo(), "UI/LogoStacked"));
             written.AddRange(BuildBubbles());
             written.AddRange(BuildThoughtPaths());
             written.AddRange(GenerateProcedural());

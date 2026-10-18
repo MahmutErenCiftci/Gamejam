@@ -7,7 +7,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
     /// Akşam sel bulmacalarının (bahçe kapısı, şifre paneli, ipucu levhası) kodla kurulan uGUI parçaları.
-    /// 640x360 referans Canvas (Screen Space Overlay), koyu panel + turkuaz vurgu, Türkçe karakterli Nunito.
+    /// 640x360 referans Canvas (Screen Space Overlay), koyu panel + turkuaz vurgu, Türkçe karakterli oyun içi font (GameFonts.Story).
     /// Koordinatlar: ebeveynin ortasına göre referans pikseli (y yukarı).
     /// </summary>
     internal static class FloodPuzzleUi
@@ -30,9 +30,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
         public static Font ResolveFont(Font assigned)
         {
-            if (assigned != null) return assigned;
-            var f = Resources.Load<Font>("Objectives/Nunito-Black");
-            return f != null ? f : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            return assigned != null ? assigned : AfetUyanisi.UI.GameFonts.Story;
         }
 
         /// <summary>Verilen objeyi overlay Canvas yapar (640x360 referans, eksik bileşenleri ekler).</summary>
@@ -135,7 +133,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Stretch(rt);
             var t = rt.gameObject.AddComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = align;
             t.raycastTarget = false;

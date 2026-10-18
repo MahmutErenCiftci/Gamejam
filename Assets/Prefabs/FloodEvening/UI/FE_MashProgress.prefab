@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a5ae6682c8475409569751946ced20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodMashProgressView
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   title: Art arda bas
   subtitle: Engeli kenara it
   panelSprite: {fileID: 21300000, guid: fe89b533c31a79b448be3fa6c81c7fa5, type: 3}

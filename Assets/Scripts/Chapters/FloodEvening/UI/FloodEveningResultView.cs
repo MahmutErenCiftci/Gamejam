@@ -90,7 +90,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             titleBadge = FeUi.Badge("TitleIcon", panel, font, FeUi.Green, "!");
             FeUi.TL(titleBadge.rectTransform, 18f, 30f, 22f, 22f);
             badgeGlyph = titleBadge.transform.Find("Glyph").GetComponent<Text>();
-            badgeGlyph.fontSize = 14;
+            badgeGlyph.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, 14);
             titleText = FeUi.Txt("Title", panel, font, 15, FeUi.Green, TextAnchor.MiddleLeft);
             FeUi.TL(titleText.rectTransform, 48f, 28f, PanelW - 64f, 26f);
             FeUi.BestFit(titleText, 10);

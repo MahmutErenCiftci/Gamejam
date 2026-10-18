@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d633722a4ac42c41a72dacc816f6f19, type: 3}
+  m_Name: GameFonts
+  m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.UI.GameFonts
+  menu: {fileID: 12800000, guid: c5ad4a92986c7ac468e775bb2306f439, type: 3}
+  story: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
+  objective: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}

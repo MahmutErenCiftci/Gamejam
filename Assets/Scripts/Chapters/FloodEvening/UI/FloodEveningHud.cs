@@ -99,7 +99,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             toastBadge = FeUi.Badge("Icon", toastRoot, font, FeUi.Amber);
             FeUi.TL(toastBadge.rectTransform, 8f, 13f, 18f, 18f);
             toastGlyph = toastBadge.transform.Find("Glyph").GetComponent<Text>();
-            toastGlyph.fontSize = 13;
+            toastGlyph.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, 13);
             toastTitle = FeUi.Txt("Title", toastRoot, font, 9, FeUi.Amber, TextAnchor.UpperLeft);
             FeUi.TL(toastTitle.rectTransform, 32f, 5f, 262f, 12f);
             FeUi.BestFit(toastTitle, 7);

@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919515e5c3e4fc749bb60a96096b6c77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Flood.FloodSignOverlay
-  font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   sortingOrder: 40
   streetName: "OKUL CADDES\u0130"
   line1: "SU B\u0130R\u0130K\u0130NT\u0130S\u0130"
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda82f09c5db7104baf50ff4c8740f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Flood.FloodResultView
-  font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   sortingOrder: 300
   header: "AFET FARKINDALIK RAPORU \xB7 SEL"
   dim: {fileID: 21300000, guid: 94e47c5d7f1230c4d9ee3778b38fc0ee, type: 3}

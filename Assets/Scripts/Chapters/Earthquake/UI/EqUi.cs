@@ -57,7 +57,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         public static Font ResolveFont(EarthquakeUISkin skin)
         {
             if (skin != null && skin.Font != null) return skin.Font;
-            return Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            return AfetUyanisi.UI.GameFonts.Story;
         }
 
         public static Sprite S(EarthquakeUISkin skin, System.Func<EarthquakeUISkin, Sprite> pick) =>
@@ -244,7 +244,7 @@ namespace AfetUyanisi.Chapters.Earthquake
             Stretch(rt);
             var t = rt.gameObject.AddComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = align;
             t.raycastTarget = false;
@@ -266,7 +266,7 @@ namespace AfetUyanisi.Chapters.Earthquake
         {
             t.verticalOverflow = VerticalWrapMode.Truncate;
             t.resizeTextForBestFit = true;
-            t.resizeTextMinSize = Mathf.Min(min, t.fontSize);
+            t.resizeTextMinSize = Mathf.Min(AfetUyanisi.UI.GameFonts.MinSizeFor(t.font, min), t.fontSize);
             t.resizeTextMaxSize = t.fontSize;
         }
 
