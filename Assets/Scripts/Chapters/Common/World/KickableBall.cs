@@ -151,6 +151,8 @@ namespace AfetUyanisi.Chapters
             body.linearVelocity = FromGround(dir * kickSpeed);
             body.WakeUp();
             lastKickTime = Time.time;
+            // Vuruş sesi: hızlı vuruş daha yüksek duyulur
+            AfetUyanisi.Core.GameAudio.PlaySfx("SFX_Ball_Kick", Mathf.Lerp(0.35f, 0.8f, Mathf.InverseLerp(minKickSpeed, maxKickSpeed, kickSpeed)));
             if (squashOnKick && isActiveAndEnabled)
             {
                 if (squashRoutine != null) StopCoroutine(squashRoutine);

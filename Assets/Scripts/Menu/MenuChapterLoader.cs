@@ -37,7 +37,8 @@ namespace AfetUyanisi.Menu
                 return false;
             }
 
-            GameSceneRouter.LoadChapter(ToChapterId(chapter));
+            // Yeni oyun: önce seçilen afet, bitince diğeri, ikisi de bitince oyun sonu (GameFlow).
+            GameFlow.BeginNewGame(ToChapterId(chapter));
             return true;
         }
 

@@ -24,8 +24,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Chapters/Earthquake/EarthquakeHome.unity
     guid: 4680c97e7746c934cbdba6b8bf042a5e
   - enabled: 1
+    path: Assets/Scenes/Chapters/Flood/FloodSchool.unity
+    guid: a24b35670c0f5e14f9553cefbd28a9f2
+  - enabled: 1
     path: Assets/Scenes/Chapters/Flood/FloodEvening.unity
     guid: 2e86d47df2948cb45801cddf1a7bcdc4
+  - enabled: 1
+    path: Assets/Scenes/GameEnd.unity
+    guid: 72b40582852216b429df85497ab45f6d
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

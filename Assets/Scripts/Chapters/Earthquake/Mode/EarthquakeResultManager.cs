@@ -246,18 +246,17 @@ namespace AfetUyanisi.Chapters.Earthquake
         }
 
         /// <summary>
-        /// Rapordaki seçimi uygular: Next → sıradaki bölüm (DEPREM → SEL, menüsüz, yalnız bir kez),
-        /// Retry → RestartCurrentChapter (depremi baştan), Menu → ReturnToMenu.
+        /// Rapordaki seçimi uygular: Next → GameFlow.ContinueAfter (Sel henüz oynanmadıysa Sel, oynandıysa oyun sonu;
+        /// menüsüz, yükleme kilidi sayesinde yalnız bir kez), Retry → RestartCurrentChapter (depremi baştan; GameFlow
+        /// durumu değişmez), Menu → ReturnToMenu (oyun sıfırlanır).
         /// </summary>
         public static void ApplyChoice(string choice)
         {
             if (choice == "Next")
             {
-                if (!GameSceneRouter.ContinueToNextChapter(ChapterId.Earthquake))
-                {
-                    Debug.LogWarning("[EQ] Sonraki bölüm (Sel) yüklenemedi; menüye dönülüyor.");
-                    GameSceneRouter.ReturnToMenu();
-                }
+                // "Devam" yalnız toplanma alanına varılan denemede görünür (EarthquakeModeController.ReportPhase → CompleteChapter).
+                if (!GameFlow.IsCompleted(ChapterId.Earthquake)) GameFlow.CompleteChapter(ChapterId.Earthquake);
+                GameFlow.ContinueAfter(ChapterId.Earthquake);
             }
             else if (choice == "Retry")
             {

@@ -497,6 +497,8 @@ namespace AfetUyanisi.Core
 
             // Menü: müzik alçak (~0.35); oda/yağmur ortamını menünün kendi efektleri çalıyor, burada ortam yok.
             if (scene == "MainMenu") { wantedMusic = "MUS_Menu_Loop"; music = 0.7f; }
+            // Oyun sonu (iki afet de bitti): sakin müzik, ortam sesi yok (yağmur/oda sesi sızmaz).
+            else if (scene == GameSceneRouter.GameEndScene) { wantedMusic = "MUS_Calm_Loop"; music = 0.6f; }
             else if (scene == "Bedroom" || scene == "Bathroom" || scene == "FloodChapter" ||
                      scene == "EarthquakeHome" || scene == "EarthquakeChapter")
             {
@@ -516,6 +518,15 @@ namespace AfetUyanisi.Core
                 wantedAmbience = heavyRain ? "AMB_Rain_Heavy_Loop" : "AMB_Rain_Light_Loop";
                 ambience = heavyRain ? Mathf.Lerp(0.6f, 1f, (p - 0.55f) / 0.45f) : Mathf.Lerp(0.45f, 0.85f, p / 0.55f);
                 ambience = Mathf.Round(ambience * AfetUyanisi.Chapters.FloodEvening.FloodEveningHub.OutdoorAudio01 * 20f) / 20f;
+                floodScene = true;
+            }
+
+            // Sel okul çıkışı (FloodSchool): FloodEvening'in açılışıyla aynı ses (sakin müzik 0.5 + hafif yağmur 0.45);
+            // aynı parçalar istendiği için FloodEvening'e geçişte müzik ve yağmur kesilmeden sürer. Akan su sesi FloodCurrentFlow'da.
+            if (scene == AfetUyanisi.Core.GameSceneRouter.FloodSchoolScene)
+            {
+                wantedMusic = "MUS_Calm_Loop"; music = 0.5f;
+                wantedAmbience = "AMB_Rain_Light_Loop"; ambience = 0.45f;
                 floodScene = true;
             }
 
