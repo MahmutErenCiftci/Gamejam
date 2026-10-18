@@ -17,6 +17,10 @@ const houseX = (gx, gy, f) => { f = f || FAC[hi++ % 3]; P('Buildings', f + '_' +
 const houseY = (gx, gy, f) => { f = f || FAC[hi++ % 3]; P('Buildings', f + '_' + gx + '_' + gy, ST + 'PROP_Street_' + f, gx, gy, { order: -50, h: 0, flip: true }); P('Buildings', 'Body_' + gx + '_' + gy, SU + 'PROP_StreetBG_' + bodyOf[f], gx, gy, { order: -62, h: 0, flip: true }); };
 const lamp = (n, gx, gy) => P('Props', 'Lamp_' + n, ST + 'PROP_Street_Lamp', gx, gy, { col: dia(0.14), light: true });
 const tree = (n, s, gx, gy) => P('Yard', n, SU + 'PROP_StreetBG_' + s, gx, gy, { order: -60 });
+// (18 Eki, P-FLOOD, lider) alçak duvarın ÖNÜNDEKİ ağaç/çalılar Cenk ve duvarla y'ye göre sıralanır (0): -60'ta duvarın arkasına
+// çizilip gövdesi duvarın altından, tacı üstünden görünüyordu (iç içe).
+const FRONT_OF_WALL = new Set(['Yard_Tree2', 'Yard_Bush1','I_Bush1','I_Bush2','F_Bush1','F_Bush2','F_Tree1']);
+const treeF = (n, s, gx, gy) => P('Yard', n, SU + 'PROP_StreetBG_' + s, gx, gy, { order: FRONT_OF_WALL.has(n) ? 0 : -60 });
 const decal = (n, s, gx, gy) => P('Decals', n, ST + 'PROP_Street_' + s, gx, gy, { order: -90 });
 const fenceX = (gx, gy) => P('Buildings', 'Fence_' + gx + '_' + gy, ST + 'PROP_Street_Fence', gx, gy, { order: -50, h: 0 });
 const fenceY = (gx, gy) => P('Buildings', 'FenceY_' + gx + '_' + gy, ST + 'PROP_Street_Fence', gx, gy, { order: -50, h: 0, flip: true });
@@ -76,7 +80,7 @@ P('LowRoad/Rubble', 'DangerSign', SR + 'PROP_Route_DangerSign', 32.6, 6.7, { col
 // ================================================================ UZUN YOL: F (+gy) → G (+gx) → H (-gy) → I (+gx) → J (-gy)
 // F
 for (const gy of [19, 20.2, 21.4, 22.6]) fenceY(30, gy);
-tree('F_Bush1', 'Bush', 23.6, 21); tree('F_Tree1', 'Tree_Pine', 21.5, 27.5); tree('F_Bush2', 'Bush', 23.8, 28.5);
+treeF('F_Bush1', 'Bush', 23.6, 21); treeF('F_Tree1', 'Tree_Pine', 21.5, 27.5); treeF('F_Bush2', 'Bush', 23.8, 28.5);
 lamp('F1', 29.6, 25.4);                                                            // köşe lambası
 for (const [n, s, gx, gy] of [['FrPuddle_1', 'Puddle_S', 27, 21], ['FrDrain_1', 'Drain', 26.2, 24], ['FrPuddle_2', 'Puddle_M', 28, 28.5]]) decal(n, s, gx, gy);
 // G
@@ -85,10 +89,7 @@ for (const gx of [25, 29.3, 33.6, 37.9, 42.2]) houseX(gx, 31);
 P('Props', 'ParkedCar_G', SU + 'PROP_StreetBG_Car_B', 35.5, 26.9, { col: rectC(0.9, 0.35) });   // park etmiş araba: geçidi daraltır
 lamp('G1', 39.6, 30.6);
 // G-H-F-kavşak arasındaki bahçe (küçük meydancık görünümü, yürünmez)
-// (18 Eki, P-FLOOD, lider) H'nin alçak duvarının arkasındaki boş arsa (FIRIN'ın karşısı) bir evle dolduruldu: FORK/F cephe sırasının
-// devamı (31,10 ve 31,14.3 ile aynı hizada). Daha öne (duvara) alınırsa çatı ön tarafta kalıp duvarın arkasına çizilirdi (iç içe görünür).
-houseY(31, 18.6, 'Facade_Home');
-tree('Yard_Tree2', 'Tree_Small', 39.8, 20.0); tree('Yard_Bench', 'Bench', 37, 24.6); tree('Yard_Bush1', 'Bush', 39.5, 24.3); tree('Yard_Swing', 'Swing', 35.5, 23.5);
+treeF('Yard_Tree2', 'Tree_Small', 39.8, 20.0); tree('Yard_Bench', 'Bench', 37, 24.6); treeF('Yard_Bush1', 'Bush', 39.5, 24.3); tree('Yard_Swing', 'Swing', 35.5, 23.5);
 for (const [n, s, gx, gy] of [['GPuddle_1', 'Puddle_L', 32, 28.2], ['GDrain_1', 'Drain', 38, 27.4], ['GPuddle_2', 'Puddle_S', 44, 28.5]]) decal(n, s, gx, gy);
 // H
 houseY(46, 18.2, 'Facade_A'); houseY(46, 22.5, 'Facade_Home');
@@ -98,12 +99,14 @@ lamp('H1', 45.6, 17.6);                                                         
 for (const [n, s, gx, gy] of [['HPuddle_1', 'Puddle_M', 43, 23], ['HDrain_1', 'Drain', 44.5, 19.5], ['HPuddle_2', 'Puddle_S', 42.5, 15.5]]) decal(n, s, gx, gy);
 // I (ağaç olayı burada; ağaç + dal Eren/Arda prefabı, burada sadece boşluk ve çapalar)
 for (const gx of [47.5, 51.8]) houseX(gx, 18);
-tree('I_Bush1', 'Bush', 47, 11.4); tree('I_Bush2', 'Bush', 52, 11.5);
+treeF('I_Bush1', 'Bush', 47, 11.4); treeF('I_Bush2', 'Bush', 52, 11.5);
 lamp('I1', 54.4, 17.6);
 for (const [n, s, gx, gy] of [['IPuddle_1', 'Puddle_S', 48, 14.5], ['IPuddle_2', 'Puddle_M', 57, 16]]) decal(n, s, gx, gy);
 houseX(56.1, 18, 'Facade_A');                                                        // I'nin sonu: köşeyi kapatan ev
 // J: son sokak (gx 56..59, apartmanın ön bahçesine iner). Ön tarafta alçak duvar + saksı çalıları, arkada evler
 houseY(59, 4.6, 'Facade_B'); houseY(59, 8.9, 'Facade_Home');
+// (18 Eki, P-FLOOD, lider) I → J dönüşündeki boş köşe arsası (FIRIN sırası ile J'nin bej evi arası) aynı sıraya bir evle kapatıldı.
+houseY(59, 13.2, 'Facade_B');
 for (const gy of [1.5, 5.5, 9.5]) tree('J_Pot_' + gy, 'Bush', 55.2, gy);
 for (const gy of [11.6, 6.2, 1.0]) lamp('J_' + gy, 58.6, gy);
 for (const [n, s, gx, gy] of [['JPuddle_1', 'Puddle_M', 57.5, 10.2], ['JPuddle_2', 'Puddle_S', 57, 5.2], ['JPuddle_3', 'Puddle_M', 58, 1.6], ['JDrain_1', 'Drain', 56.6, 7.6], ['JDrain_2', 'Drain', 58.2, 3.4]]) decal(n, s, gx, gy);

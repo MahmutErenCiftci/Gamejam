@@ -4106,7 +4106,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce145d0de00ec60f2ad2b2725bd12d67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -16364,7 +16364,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce145d0de00ec60f2ad2b2725bd12d67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -33867,7 +33867,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce145d0de00ec60f2ad2b2725bd12d67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -39271,7 +39271,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: c16b58ad87162b03d38b00e0485ec977, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -59470,7 +59470,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce145d0de00ec60f2ad2b2725bd12d67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -61035,7 +61035,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: ce145d0de00ec60f2ad2b2725bd12d67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -66667,7 +66667,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -60
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 08751a388d2f33d47362983b32214afe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

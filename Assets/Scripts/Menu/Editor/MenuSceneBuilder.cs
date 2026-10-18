@@ -933,6 +933,12 @@ namespace AfetUyanisi.Menu.EditorTools
             return img;
         }
 
+        // Press Start 2P'nin harf gövdesi kutusuna göre simetrik değil: büyük harfler em kutusunun 1/8 üstünden
+        // başlar (taban 125/1000, tepe 1000/1000), her harfin sağında 1/8 boşluk kalır. Unity satır kutusunu
+        // ortaladığı için yazı (font boyutu/16) piksel yukarıda ve solda görünür. Her etiket bu kadar sağa-aşağı
+        // kaydırılır: 8 px yazıda (0,5; -0,5), 16 px'te (1; -1). Ölçüm: 1080p'de buton yazısı panelde tam ortada.
+        static Vector2 GlyphCentering(int size) => new Vector2(size / 16f, -size / 16f);
+
         static Text Label(Transform parent, string name, string text, Font font, int size, Color color, Vector2 pos, Vector2 box, TextAnchor anchor)
         {
             var go = new GameObject(name, typeof(RectTransform));
@@ -951,7 +957,7 @@ namespace AfetUyanisi.Menu.EditorTools
             shadow.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.9f);
             shadow.effectDistance = new Vector2(1f, -1f);
             var rt = (RectTransform)go.transform;
-            rt.anchoredPosition = pos;
+            rt.anchoredPosition = pos + GlyphCentering(size);
             rt.sizeDelta = box;
             return t;
         }
@@ -966,8 +972,9 @@ namespace AfetUyanisi.Menu.EditorTools
             var nav = button.navigation;
             nav.mode = Navigation.Mode.None;
             button.navigation = nav;
-            var text = Label(img.transform, "Text", label, regular, 8, Ink, new Vector2(0, 1), new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
-            var arrow = Label(img.transform, "Arrow", "▶", regular, 8, Warm, new Vector2(-size.x / 2f + 10f, 1), new Vector2(12, size.y), TextAnchor.MiddleCenter);
+            // Yazı panelin tam ortasında (eski +1 px yukarı kaydırma yazıyı yukarıda gösteriyordu; düzeltme Label'da).
+            var text = Label(img.transform, "Text", label, regular, 8, Ink, Vector2.zero, new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
+            var arrow = Label(img.transform, "Arrow", "▶", regular, 8, Warm, new Vector2(-size.x / 2f + 10f, 0), new Vector2(12, size.y), TextAnchor.MiddleCenter);
             arrow.enabled = false;
             var fx = img.gameObject.AddComponent<MenuButtonFx>();
             SetRef(fx, "background", img);
