@@ -38,7 +38,7 @@ namespace AfetUyanisi.Chapters.Flood
         }
 
         [Header("Görünüm")]
-        [Tooltip("Assets/Art/Dialogue/Fonts/Nunito-Black.ttf (boşsa LegacyRuntime)")]
+        [Tooltip("Assets/Fonts/PixelOperator/PixelOperatorTR-Bold.ttf (boşsa oyun içi yazı tipi: GameFonts.Story)")]
         [SerializeField] private Font font;
         [SerializeField] private int sortingOrder = 300;
         [SerializeField] private string header = "AFET FARKINDALIK RAPORU · SEL";
@@ -239,7 +239,7 @@ namespace AfetUyanisi.Chapters.Flood
         {
             if (built) return;
             built = true;
-            if (font == null) font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            if (font == null) font = AfetUyanisi.UI.GameFonts.Story;
 
             var cgo = new GameObject("FloodResultCanvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster), typeof(CanvasGroup));
             cgo.transform.SetParent(transform, false);
@@ -417,7 +417,7 @@ namespace AfetUyanisi.Chapters.Flood
             go.transform.SetParent(parent, false);
             var t = go.GetComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = align;
             t.text = text;

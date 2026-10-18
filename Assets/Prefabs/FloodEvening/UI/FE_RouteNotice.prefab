@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a19ae99bc3c3846b41978c3636935c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.FloodRouteNotice
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   sortingOrder: 63
   anchor: {x: 0.5, y: 0.5}
   offset: {x: 0, y: 36}

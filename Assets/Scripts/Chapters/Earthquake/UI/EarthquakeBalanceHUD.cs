@@ -258,7 +258,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                     : zone == 1 ? side
                     : texts.stable;
                 status.color = intro ? Gold : done ? (state.WentWell ? GreenText : Amber) : zone == 2 ? RedText : zone == 1 ? Amber : GreenText;
-                status.fontSize = status.resizeTextMaxSize = done || zone == 2 ? 11 : 10;
+                status.fontSize = status.resizeTextMaxSize = AfetUyanisi.UI.GameFonts.SizeFor(status.font, done || zone == 2 ? 11 : 10);
             }
             float statusPulse = !done && zone == 2 ? 1f + 0.06f * blink : 1f;
             status.rectTransform.localScale = new Vector3(statusPulse, statusPulse, 1f);

@@ -3865,7 +3865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43b1222fe32f9841857cfff89286015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.Earthquake.EarthquakeUISkin
-  font: {fileID: 12800000, guid: 8c430f17195792a4bb1b1464552b8221, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   pixelScale: 1
   dim: {fileID: 21300000, guid: 94e47c5d7f1230c4d9ee3778b38fc0ee, type: 3}
   button: {fileID: 21300000, guid: 4d3b9e624e99fb249911caf2918be3aa, type: 3}

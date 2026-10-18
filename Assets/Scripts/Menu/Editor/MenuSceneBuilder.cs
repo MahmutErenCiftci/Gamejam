@@ -71,8 +71,9 @@ namespace AfetUyanisi.Menu.EditorTools
                 return;
             }
             unlit = AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat");
-            regular = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PixelifySans/PixelifySans-Regular.ttf");
-            bold = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PixelifySans/PixelifySans-Bold.ttf");
+            // Ana menü yazı tipi Press Start 2P (tek ağırlık, 8 px ızgara): boyutlar 8'in katı, 640x360'ta tam piksel ölçeklenir.
+            regular = AssetDatabase.LoadAssetAtPath<Font>("Assets/Fonts/PressStart2P/PressStart2P-Regular.ttf");
+            bold = regular;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
             // ---------------- Kamera
@@ -185,10 +186,11 @@ namespace AfetUyanisi.Menu.EditorTools
             var canvas = BuildCanvas(out RectTransform root);
             var mainButtons = Panel(root, "MainButtons");
             // Slogan şehrin üstünde: koyu yarı saydam şerit ve dış çizgiyle okunur.
-            var sloganBack = UiImage(mainButtons.transform, "SloganBack", S("UI/Panel"), V(120, 232), new Vector2(150, 30));
+            // Press Start 2P'de "büyük fark yaratır." 152 px: panel yazıyı çerçeveye değdirmeden sarar.
+            var sloganBack = UiImage(mainButtons.transform, "SloganBack", S("UI/Panel"), V(120, 232), new Vector2(164, 30));
             sloganBack.type = UnityEngine.UI.Image.Type.Sliced;
             sloganBack.color = new Color(1f, 1f, 1f, 0.85f);
-            var slogan = Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 11, Ink, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
+            var slogan = Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 8, Ink, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
             var sloganOutline = slogan.gameObject.AddComponent<Outline>();
             sloganOutline.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.8f);
             sloganOutline.effectDistance = new Vector2(1f, -1f);
@@ -199,11 +201,12 @@ namespace AfetUyanisi.Menu.EditorTools
 
             var selection = Panel(root, "SelectionPanel");
             Label(selection.transform, "Header", "BİR RÜYA SEÇ", bold, 16, Warm, V(320, 340), new Vector2(300, 20), TextAnchor.MiddleCenter);
-            Label(selection.transform, "Hint", "A / D ya da fare ile seç  ·  Enter: başla  ·  Esc: geri", regular, 10, Muted, V(320, 324), new Vector2(400, 14), TextAnchor.MiddleCenter);
+            Label(selection.transform, "Hint", "A / D ya da fare ile seç  ·  Enter: başla  ·  Esc: geri", regular, 8, Muted, V(320, 324), new Vector2(456, 14), TextAnchor.MiddleCenter);
             var infoPanel = UiImage(selection.transform, "InfoPanel", S("UI/Panel"), V(320, 52), new Vector2(400, 24));
             infoPanel.type = UnityEngine.UI.Image.Type.Sliced;
-            var info = Label(infoPanel.transform, "Info", "", regular, 11, Ink, Vector2.zero, new Vector2(390, 20), TextAnchor.MiddleCenter);
+            var info = Label(infoPanel.transform, "Info", "", regular, 8, Ink, Vector2.zero, new Vector2(390, 20), TextAnchor.MiddleCenter);
             info.supportRichText = true;
+            info.horizontalOverflow = HorizontalWrapMode.Wrap; // uzun açıklama iki satıra iner (8 px satır, kutu 20 px)
             var back = MenuButton(selection.transform, "BackButton", "Geri", V(252, 20), new Vector2(104, 22));
             var startChapter = MenuButton(selection.transform, "StartChapterButton", "Bölümü Başlat", V(388, 20), new Vector2(150, 22));
 
@@ -217,7 +220,8 @@ namespace AfetUyanisi.Menu.EditorTools
 
             var tooltip = UiImage(root, "Tooltip", S("UI/Panel"), V(320, 86), new Vector2(320, 22));
             tooltip.type = UnityEngine.UI.Image.Type.Sliced;
-            var tooltipText = Label(tooltip.transform, "Text", "", regular, 11, Ink, Vector2.zero, new Vector2(310, 18), TextAnchor.MiddleCenter);
+            var tooltipText = Label(tooltip.transform, "Text", "", regular, 8, Ink, Vector2.zero, new Vector2(310, 18), TextAnchor.MiddleCenter);
+            tooltipText.horizontalOverflow = HorizontalWrapMode.Wrap;
             tooltip.gameObject.SetActive(false);
 
             var fade = UiImage(root, "FadePanel", null, Vector2.zero, Vector2.zero);
@@ -960,8 +964,8 @@ namespace AfetUyanisi.Menu.EditorTools
             var nav = button.navigation;
             nav.mode = Navigation.Mode.None;
             button.navigation = nav;
-            var text = Label(img.transform, "Text", label, regular, 16, Ink, new Vector2(0, 1), new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
-            var arrow = Label(img.transform, "Arrow", "▶", regular, 11, Warm, new Vector2(-size.x / 2f + 10f, 1), new Vector2(12, size.y), TextAnchor.MiddleCenter);
+            var text = Label(img.transform, "Text", label, regular, 8, Ink, new Vector2(0, 1), new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
+            var arrow = Label(img.transform, "Arrow", "▶", regular, 8, Warm, new Vector2(-size.x / 2f + 10f, 1), new Vector2(12, size.y), TextAnchor.MiddleCenter);
             arrow.enabled = false;
             var fx = img.gameObject.AddComponent<MenuButtonFx>();
             SetRef(fx, "background", img);

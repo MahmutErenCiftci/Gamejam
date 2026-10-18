@@ -44,6 +44,8 @@ namespace AfetUyanisi.Menu
         private const float ControlX = 168f, ControlW = 212f;
         private const float FadeSeconds = 0.14f, MessageSeconds = 2.2f;
         private const float RepeatDelay = 0.35f, RepeatRate = 0.06f;
+        // Press Start 2P 8 px ızgara (8 = 640x360'ta tam piksel); Pixel Operator 12 ile büyük harf boyu aynı (7 px).
+        private const int BodySize = 12;
 
         private static readonly string[] TabNames = { "Ses", "Ekran", "Kontroller", "Parlaklık" };
         private static readonly Color ShadowColor = new Color(0.02f, 0.02f, 0.06f, 0.9f);
@@ -381,9 +383,11 @@ namespace AfetUyanisi.Menu
 
             buttonBar = new ButtonBar(this, window);
 
-            hint = Txt("Hint", window, "", 10, mutedColor, TextAnchor.MiddleCenter);
-            TL(hint.rectTransform, 0f, HintY, WindowW, 14f);
+            hint = Txt("Hint", window, "", 8, mutedColor, TextAnchor.MiddleCenter);
+            TL(hint.rectTransform, 8f, HintY - 3f, WindowW - 16f, 20f);
             hint.supportRichText = true;
+            hint.horizontalOverflow = HorizontalWrapMode.Wrap; // 54 harften uzun ipucu iki satıra iner
+            hint.lineSpacing = 1.25f;
 
             focusables.Add(tabBar);
             focusables.Add(buttonBar);
@@ -395,7 +399,7 @@ namespace AfetUyanisi.Menu
                 () => GameSettings.MusicVolume, v => GameSettings.MusicVolume = v));
             rows.Add(new SliderRow(this, page, "Ses Efektleri", 40f, 0f, 1f, 0.05f,
                 () => GameSettings.SfxVolume, v => GameSettings.SfxVolume = v));
-            var note = Txt("Note", page, "Müzik: menü ve bölüm müzikleri.\nSes efektleri: ortam, arayüz ve olay sesleri.", 10, mutedColor, TextAnchor.UpperLeft);
+            var note = Txt("Note", page, "Müzik: menü ve bölüm müzikleri.\nSes efektleri: ortam, arayüz ve olay sesleri.", 8, mutedColor, TextAnchor.UpperLeft);
             TL(note.rectTransform, RowX + 4f, 76f, RowW - 8f, 30f);
         }
 
@@ -413,9 +417,10 @@ namespace AfetUyanisi.Menu
                     RefreshDisplayStatus();
                 }));
             rows.Add(new ActionRow(this, page, "Uygula", 70f, () => DisplayPending, () => ApplyDisplay(true)));
-            displayStatus = Txt("Status", page, "", 10, mutedColor, TextAnchor.UpperCenter);
+            displayStatus = Txt("Status", page, "", 8, mutedColor, TextAnchor.UpperCenter);
             TL(displayStatus.rectTransform, RowX, 104f, RowW, 28f);
             displayStatus.supportRichText = true;
+            displayStatus.horizontalOverflow = HorizontalWrapMode.Wrap;
         }
 
         private void BuildControlsPage(RectTransform page)
@@ -432,7 +437,7 @@ namespace AfetUyanisi.Menu
                 if (action == null)
                 {
                     if (y > top) y += 1f;
-                    var head = Txt("Header", page, keys, 10, titleColor, TextAnchor.MiddleLeft);
+                    var head = Txt("Header", page, keys, 8, titleColor, TextAnchor.MiddleLeft);
                     TL(head.rectTransform, RowX + 4f, y, 200f, lineH);
                     y += lineH;
                     stripe = false;
@@ -444,9 +449,9 @@ namespace AfetUyanisi.Menu
                     TL(band.rectTransform, RowX, y, RowW, lineH);
                 }
                 stripe = !stripe;
-                var k = Txt("Keys", page, keys, 10, focusColor, TextAnchor.MiddleLeft);
+                var k = BodyTxt("Keys", page, keys, focusColor, TextAnchor.MiddleLeft);
                 TL(k.rectTransform, RowX + 10f, y, 152f, lineH);
-                var a = Txt("Action", page, action, 10, textColor, TextAnchor.MiddleLeft);
+                var a = BodyTxt("Action", page, action, textColor, TextAnchor.MiddleLeft);
                 TL(a.rectTransform, RowX + 168f, y, RowW - 172f, lineH);
                 y += lineH;
             }
@@ -473,7 +478,7 @@ namespace AfetUyanisi.Menu
             Arrow(page, x0 + 3f * step, rowBottom + arrowSide, -90f, titleColor);                // D sağında →
 
             float orX = x0 + 3f * step + ArrowSize + 6f;
-            var or = Txt("Or", page, "ya da", 10, mutedColor, TextAnchor.MiddleCenter);
+            var or = Txt("Or", page, "ya da", 8, mutedColor, TextAnchor.MiddleCenter);
             TL(or.rectTransform, orX, rowTop, 30f, step + KeySize);
 
             float x1 = orX + 36f;
@@ -483,13 +488,13 @@ namespace AfetUyanisi.Menu
             Keycap(page, x1 + 2f * step, rowBottom, null, -90f);
 
             float tx = x1 + 3f * step + 10f, tw = RowX + RowW - tx;
-            var head = Txt("Header", page, "HAREKET", 10, titleColor, TextAnchor.MiddleLeft);
+            var head = Txt("Header", page, "HAREKET", 8, titleColor, TextAnchor.MiddleLeft);
             TL(head.rectTransform, tx, y0 + 1f, tw, 11f);
-            var walk = Txt("Walk", page, "W yukarı, A sola, S aşağı, D sağa.", 10, textColor, TextAnchor.MiddleLeft);
+            var walk = BodyTxt("Walk", page, "W yukarı, A sola, S aşağı, D sağa.", textColor, TextAnchor.MiddleLeft);
             TL(walk.rectTransform, tx, y0 + 13f, tw, 11f);
-            var diag = Txt("Diagonal", page, "İki tuş birlikte: çapraz yürü.", 10, textColor, TextAnchor.MiddleLeft);
+            var diag = BodyTxt("Diagonal", page, "İki tuş birlikte: çapraz yürü.", textColor, TextAnchor.MiddleLeft);
             TL(diag.rectTransform, tx, y0 + 25f, tw, 11f);
-            var note = Txt("Note", page, "Tuşlar sabittir, değiştirilemez.", 10, mutedColor, TextAnchor.MiddleLeft);
+            var note = BodyTxt("Note", page, "Tuşlar sabittir, değiştirilemez.", mutedColor, TextAnchor.MiddleLeft);
             TL(note.rectTransform, tx, y0 + 39f, tw, 11f);
         }
 
@@ -517,7 +522,7 @@ namespace AfetUyanisi.Menu
 
             if (!string.IsNullOrEmpty(letter))
             {
-                var t = Txt("Letter", face.rectTransform, letter, 12, textColor, TextAnchor.MiddleCenter);
+                var t = Txt("Letter", face.rectTransform, letter, 8, textColor, TextAnchor.MiddleCenter);
                 Stretch(t.rectTransform);
                 t.rectTransform.offsetMin = new Vector2(-2f, 0f);
                 t.rectTransform.offsetMax = new Vector2(2f, 1f);
@@ -588,7 +593,7 @@ namespace AfetUyanisi.Menu
                 var sq = Img("Step" + i, page, null, new Color(steps[i], steps[i], steps[i]));
                 TL(sq.rectTransform, x + i * (size + gap), 52f, size, size);
             }
-            var note = Txt("Note", page, "Soldaki kare zar zor seçilene kadar ayarla.\nSağdaki kare beyaza kaçmamalı.", 10, mutedColor, TextAnchor.UpperCenter);
+            var note = Txt("Note", page, "Soldaki kare zar zor seçilene kadar ayarla.\nSağdaki kare beyaza kaçmamalı.", 8, mutedColor, TextAnchor.UpperCenter);
             TL(note.rectTransform, RowX, 84f, RowW, 30f);
         }
 
@@ -615,7 +620,7 @@ namespace AfetUyanisi.Menu
         private Text Txt(string name, Transform parent, string text, int size, Color color, TextAnchor anchor)
         {
             var t = NewRect(name, parent).gameObject.AddComponent<Text>();
-            t.font = font != null ? font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            t.font = font != null ? font : GameFonts.Menu;
             t.text = text;
             t.fontSize = size;
             t.color = color;
@@ -628,6 +633,16 @@ namespace AfetUyanisi.Menu
             var shadow = t.gameObject.AddComponent<Shadow>();
             shadow.effectColor = ShadowColor;
             shadow.effectDistance = new Vector2(1f, -1f);
+            return t;
+        }
+
+        // Kontroller sayfasındaki tuş/açıklama listesi okuma metnidir: Press Start 2P her harfe 8 px verdiği için
+        // "tuş + açıklama" satırları 388 px'e sığmaz; bu satırlar oyunun okuma yazı tipiyle (Pixel Operator) yazılır.
+        private Text BodyTxt(string name, Transform parent, string text, Color color, TextAnchor anchor)
+        {
+            var t = Txt(name, parent, text, BodySize, color, anchor);
+            t.font = GameFonts.Story;
+            t.lineSpacing = 1f;
             return t;
         }
 
@@ -697,9 +712,9 @@ namespace AfetUyanisi.Menu
                 Frame.raycastTarget = true;
                 var rt = Frame.rectTransform;
                 TL(rt, RowX, y, RowW, RowH);
-                Marker = S.Txt("Marker", rt, "▶", 11, S.titleColor, TextAnchor.MiddleCenter);
+                Marker = S.Txt("Marker", rt, "▶", 8, S.titleColor, TextAnchor.MiddleCenter);
                 TL(Marker.rectTransform, 4f, 1f, 12f, RowH);
-                Label = S.Txt("Label", rt, label, 12, S.textColor, labelAnchor);
+                Label = S.Txt("Label", rt, label, 8, S.textColor, labelAnchor);
                 if (labelAnchor == TextAnchor.MiddleCenter) TL(Label.rectTransform, 0f, 1f, RowW, RowH);
                 else TL(Label.rectTransform, 18f, 1f, ControlX - 22f, RowH);
                 var pointer = rt.gameObject.AddComponent<SettingsPointer>();
@@ -752,7 +767,7 @@ namespace AfetUyanisi.Menu
                 knobImage.rectTransform.offsetMin = new Vector2(1f, 1f);
                 knobImage.rectTransform.offsetMax = new Vector2(-1f, -1f);
 
-                value = S.Txt("Value", row, "", 12, S.textColor, TextAnchor.MiddleRight);
+                value = S.Txt("Value", row, "", 8, S.textColor, TextAnchor.MiddleRight);
                 TL(value.rectTransform, ControlX + TrackW + 4f, 1f, RowW - ControlX - TrackW - 12f, RowH);
 
                 // Sürükleme alanı izden biraz geniş: küçük ize tutturmak kolay olsun.
@@ -818,11 +833,11 @@ namespace AfetUyanisi.Menu
                 this.text = text;
                 this.change = change;
                 var row = BuildRow(page, label, y);
-                left = S.Txt("Left", row, "◀", 11, S.mutedColor, TextAnchor.MiddleCenter);
+                left = S.Txt("Left", row, "◀", 8, S.mutedColor, TextAnchor.MiddleCenter);
                 TL(left.rectTransform, ControlX, 1f, 14f, RowH);
-                right = S.Txt("Right", row, "▶", 11, S.mutedColor, TextAnchor.MiddleCenter);
+                right = S.Txt("Right", row, "▶", 8, S.mutedColor, TextAnchor.MiddleCenter);
                 TL(right.rectTransform, ControlX + ControlW - 14f, 1f, 14f, RowH);
-                value = S.Txt("Value", row, "", 12, S.textColor, TextAnchor.MiddleCenter);
+                value = S.Txt("Value", row, "", 8, S.textColor, TextAnchor.MiddleCenter);
                 TL(value.rectTransform, ControlX + 14f, 1f, ControlW - 28f, RowH);
 
                 var hitLeft = S.HitArea("HitLeft", row, ControlX - 4f, 0f, ControlW / 2f + 4f, RowH);
@@ -917,7 +932,7 @@ namespace AfetUyanisi.Menu
                     tabs[i] = S.Img("Tab_" + TabNames[i], window, S.panelSprite, Color.white);
                     tabs[i].raycastTarget = true;
                     TL(tabs[i].rectTransform, x0 + i * (TabW + Gap), Y, TabW, TabH);
-                    labels[i] = S.Txt("Label", tabs[i].rectTransform, TabNames[i], 12, S.textColor, TextAnchor.MiddleCenter);
+                    labels[i] = S.Txt("Label", tabs[i].rectTransform, TabNames[i], 8, S.textColor, TextAnchor.MiddleCenter);
                     TL(labels[i].rectTransform, 0f, 1f, TabW, TabH);
                     var pointer = tabs[i].gameObject.AddComponent<SettingsPointer>();
                     pointer.Entered = e => S.FocusRow(this);
@@ -927,9 +942,9 @@ namespace AfetUyanisi.Menu
                         if (S.tab != index) S.SelectTab(index, true);
                     };
                 }
-                arrowLeft = S.Txt("ArrowLeft", window, "◀", 11, S.titleColor, TextAnchor.MiddleCenter);
+                arrowLeft = S.Txt("ArrowLeft", window, "◀", 8, S.titleColor, TextAnchor.MiddleCenter);
                 TL(arrowLeft.rectTransform, x0 - 13f, Y + 1f, 12f, TabH);
-                arrowRight = S.Txt("ArrowRight", window, "▶", 11, S.titleColor, TextAnchor.MiddleCenter);
+                arrowRight = S.Txt("ArrowRight", window, "▶", 8, S.titleColor, TextAnchor.MiddleCenter);
                 TL(arrowRight.rectTransform, WindowW - x0 + 1f, Y + 1f, 12f, TabH);
                 ApplyFocus();
             }
@@ -975,9 +990,9 @@ namespace AfetUyanisi.Menu
                     buttons[i] = S.Img(i == 0 ? "DefaultsButton" : "CloseButton", window, S.panelSprite, Color.white);
                     buttons[i].raycastTarget = true;
                     TL(buttons[i].rectTransform, x, Y, widths[i], H);
-                    labels[i] = S.Txt("Text", buttons[i].rectTransform, names[i], 14, S.textColor, TextAnchor.MiddleCenter);
+                    labels[i] = S.Txt("Text", buttons[i].rectTransform, names[i], 8, S.textColor, TextAnchor.MiddleCenter);
                     TL(labels[i].rectTransform, 0f, 1f, widths[i], H);
-                    markers[i] = S.Txt("Arrow", buttons[i].rectTransform, "▶", 11, S.titleColor, TextAnchor.MiddleCenter);
+                    markers[i] = S.Txt("Arrow", buttons[i].rectTransform, "▶", 8, S.titleColor, TextAnchor.MiddleCenter);
                     TL(markers[i].rectTransform, 4f, 1f, 12f, H);
                     var pointer = buttons[i].gameObject.AddComponent<SettingsPointer>();
                     pointer.Entered = e => Hover(sub);

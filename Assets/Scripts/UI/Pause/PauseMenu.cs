@@ -434,22 +434,25 @@ namespace AfetUyanisi.UI
                 MakeButton(pausePanel, "ResumeButton", "Devam Et", 28f, 36f, 184f, () => FocusPause(0), () => ActivatePause(0)),
                 MakeButton(pausePanel, "MenuButton", "Ana Menüye Dön", 28f, 64f, 184f, () => FocusPause(1), () => ActivatePause(1)),
             };
-            var hint = Txt("Hint", pausePanel, "W/S: seç   ·   Enter: onayla   ·   Esc: devam et", 10, mutedColor, TextAnchor.MiddleCenter);
-            TL(hint.rectTransform, 0f, 96f, 240f, 14f);
+            // Press Start 2P her harfe 8 px verir: ipucu iki satır (satır 8 px).
+            var hint = Txt("Hint", pausePanel, "W/S: seç · Enter: onayla\nEsc: devam et", 8, mutedColor, TextAnchor.MiddleCenter);
+            TL(hint.rectTransform, 0f, 93f, 240f, 20f);
+            hint.lineSpacing = 1.25f;
 
             // Onay: soru, açıklama, Evet / Vazgeç (varsayılan Vazgeç).
             confirmPanel = Window("ConfirmPanel", root, new Vector2(272f, 116f));
-            var question = Txt("Question", confirmPanel, "Ana menüye dönmek istiyor musun?", 12, textColor, TextAnchor.MiddleCenter);
+            var question = Txt("Question", confirmPanel, "Ana menüye dönmek istiyor musun?", 8, textColor, TextAnchor.MiddleCenter);
             TL(question.rectTransform, 0f, 12f, 272f, 18f);
-            var note = Txt("Note", confirmPanel, "Bu bölümdeki ilerlemen kaybolur.", 10, mutedColor, TextAnchor.MiddleCenter);
+            var note = Txt("Note", confirmPanel, "Bu bölümdeki ilerlemen kaybolur.", 8, mutedColor, TextAnchor.MiddleCenter);
             TL(note.rectTransform, 0f, 31f, 272f, 14f);
             confirmButtons = new[]
             {
                 MakeButton(confirmPanel, "YesButton", "Evet", 26f, 56f, 104f, () => FocusConfirm(0), () => ActivateConfirm(0), GreenAccent),
                 MakeButton(confirmPanel, "CancelButton", "Vazgeç", 142f, 56f, 104f, () => FocusConfirm(1), () => ActivateConfirm(1), RedAccent),
             };
-            var confirmHint = Txt("Hint", confirmPanel, "A/D: seç   ·   Enter: onayla   ·   Esc: vazgeç", 10, mutedColor, TextAnchor.MiddleCenter);
-            TL(confirmHint.rectTransform, 0f, 90f, 272f, 14f);
+            var confirmHint = Txt("Hint", confirmPanel, "A/D: seç · Enter: onayla\nEsc: vazgeç", 8, mutedColor, TextAnchor.MiddleCenter);
+            TL(confirmHint.rectTransform, 0f, 87f, 272f, 20f);
+            confirmHint.lineSpacing = 1.25f;
 
             blackout = Img("Blackout", root, null, new Color(0f, 0f, 0f, 0f));
             Stretch(blackout.rectTransform);
@@ -504,9 +507,9 @@ namespace AfetUyanisi.UI
                 dark.rectTransform.pivot = new Vector2(0.5f, 0f);
                 dark.rectTransform.sizeDelta = new Vector2(0f, 2f);
             }
-            var text = Txt("Text", frame.rectTransform, label, 14, textColor, TextAnchor.MiddleCenter);
+            var text = Txt("Text", frame.rectTransform, label, 8, textColor, TextAnchor.MiddleCenter);
             TL(text.rectTransform, 0f, 1f, w, h);
-            var marker = Txt("Arrow", frame.rectTransform, "▶", 11, titleColor, TextAnchor.MiddleCenter);
+            var marker = Txt("Arrow", frame.rectTransform, "▶", 8, titleColor, TextAnchor.MiddleCenter);
             TL(marker.rectTransform, 4f, 1f, 12f, h);
             var pointer = frame.gameObject.AddComponent<SettingsPointer>();
             pointer.Entered = e => { if (view == View.Pause || view == View.Confirm) hover(); };
@@ -531,7 +534,7 @@ namespace AfetUyanisi.UI
             var go = new GameObject(name, typeof(RectTransform));
             go.transform.SetParent(parent, false);
             var t = go.AddComponent<Text>();
-            t.font = font != null ? font : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            t.font = font != null ? font : GameFonts.Menu;
             t.text = text;
             t.fontSize = size;
             t.color = color;
