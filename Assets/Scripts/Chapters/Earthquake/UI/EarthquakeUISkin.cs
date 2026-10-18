@@ -12,7 +12,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     public class EarthquakeUISkin : MonoBehaviour
     {
         [Header("Yazı")]
-        [Tooltip("Türkçe karakterleri (ç ğ ı İ ö ş ü) içeren font: Assets/Art/Dialogue/Fonts/Nunito-Black.ttf. Boşsa LegacyRuntime.ttf.")]
+        [Tooltip("Türkçe karakterleri (ç ğ ı İ ö ş ü) içeren font: Assets/Fonts/PixelOperator/PixelOperatorTR-Bold.ttf. Boşsa oyun içi yazı tipi (GameFonts.Story).")]
         [SerializeField] private Font font;
         [Tooltip("1 sprite pikseli = kaç referans (640x360) birimi. Piksel sanatı için 1.")]
         [SerializeField] private float pixelScale = 1f;

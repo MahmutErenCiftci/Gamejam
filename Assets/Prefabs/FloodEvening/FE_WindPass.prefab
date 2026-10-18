@@ -109,7 +109,7 @@ MonoBehaviour:
   minAcross: 0.9
   strengthAtStart: 0.75
   response: 6
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   arrowIcon: {fileID: 21300000, guid: 04b6385493cc3f542953ef491cad5003, type: 3}
   title: "SERT R\xDCZG\xC2R"
   body: "R\xFCzg\xE2r seni yava\u015Flatabilir. Dikkatli y\xFCr\xFC, i\u015Faretli g\xFCvenli rotada kal."

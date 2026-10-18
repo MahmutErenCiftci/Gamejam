@@ -9,9 +9,9 @@ namespace AfetUyanisi.UI
     [DefaultExecutionOrder(100)]
     public class InteractionPromptUI : InteractionHintBase
     {
-        [Header("Yazı tipi (Minecraft sağlanmadıysa OFL Pixelify Sans)")]
+        [Header("Yazı tipi: Pixel Operator TR Bold (em 16 piksel; 16'nın katları en net)")]
         [SerializeField] private TMP_FontAsset font;
-        [SerializeField, Min(8)] private float fontSize = 12f;
+        [SerializeField, Min(8)] private float fontSize = 16f;
         [Header("640 x 360 referans piksel")]
         [SerializeField, Min(1)] private float padding = 5f;
         [SerializeField, Min(1)] private float keySize = 18f;

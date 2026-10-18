@@ -7,7 +7,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
 {
     /// <summary>
     /// Akşam sel bölümünün kodla kurulan arayüz parçaları için küçük yardımcı (LEAD): koyu paneller, turkuaz vurgu,
-    /// okunur Türkçe metin (Nunito, Resources/Objectives/Nunito-Black). Referans 640x360, match 0.5 (deprem arayüzüyle aynı).
+    /// okunur Türkçe metin (oyun içi yazı tipi: AfetUyanisi.UI.GameFonts.Story). Referans 640x360, match 0.5 (deprem arayüzüyle aynı).
     /// </summary>
     public static class FeUi
     {
@@ -28,11 +28,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public static Color Hex(int rgb) => new Color(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1f);
         public static Color A(Color c, float a) { c.a = a; return c; }
 
-        public static Font DefaultFont()
-        {
-            var f = Resources.Load<Font>("Objectives/Nunito-Black");
-            return f != null ? f : Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        }
+        public static Font DefaultFont() => AfetUyanisi.UI.GameFonts.Story;
 
         public static Canvas CreateCanvas(Transform owner, string name, int order, out CanvasGroup group)
         {
@@ -98,7 +94,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             Stretch(rt);
             var t = rt.gameObject.AddComponent<Text>();
             t.font = font;
-            t.fontSize = size;
+            t.fontSize = AfetUyanisi.UI.GameFonts.SizeFor(font, size);
             t.color = color;
             t.alignment = align;
             t.raycastTarget = false;
@@ -119,7 +115,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public static void BestFit(Text t, int min)
         {
             t.resizeTextForBestFit = true;
-            t.resizeTextMinSize = min;
+            t.resizeTextMinSize = Mathf.Min(AfetUyanisi.UI.GameFonts.MinSizeFor(t.font, min), t.fontSize);
             t.resizeTextMaxSize = t.fontSize;
         }
 

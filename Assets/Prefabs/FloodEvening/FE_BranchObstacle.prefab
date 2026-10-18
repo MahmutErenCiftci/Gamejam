@@ -267,7 +267,7 @@ MonoBehaviour:
   decayPerSecond: 0.6
   dialogue: {fileID: 0}
   doneSceneId: FE_BRANCH_DONE
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   sortingOrder: 70
   altTitle: "Yol dalla kapanm\u0131\u015F"
   altBody: "Dala dokunma, \xFCst\xFCnden a\u015Fmaya \xE7al\u0131\u015Fma. Yandaki i\u015Faretli alternatif ge\xE7idin mandal\u0131n\u0131 a\xE7."

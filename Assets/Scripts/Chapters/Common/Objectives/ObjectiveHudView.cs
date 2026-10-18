@@ -217,12 +217,7 @@ namespace AfetUyanisi.Chapters.Objectives
         private void Build()
         {
             if (canvasRoot != null) return;
-            if (font == null) font = Resources.Load<Font>("Objectives/Nunito-Black");
-            if (font == null)
-            {
-                font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-                Debug.LogWarning("[OBJ] Nunito bulunamadı; ObjectiveHudView Font alanını bağlayın.", this);
-            }
+            if (font == null) font = AfetUyanisi.UI.GameFonts.Objective; // görev paneli: Pixelify Sans
             BuildSprites();
 
             canvasRoot = new GameObject("ObjectiveHudCanvas", typeof(RectTransform)).GetComponent<RectTransform>();

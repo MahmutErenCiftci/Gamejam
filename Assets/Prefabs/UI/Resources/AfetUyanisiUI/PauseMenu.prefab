@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bfd2949fc79f64191fc0da2fc9d72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.UI.PauseMenu
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: c5ad4a92986c7ac468e775bb2306f439, type: 3}
   panelSprite: {fileID: 21300000, guid: 97dfb996acfbec94b842dbfdd5d08c32, type: 3}
   panelLitSprite: {fileID: 21300000, guid: a8e579931732983429429fe9e3c5103b, type: 3}
   textColor: {r: 0.95, g: 0.92, b: 0.85, a: 1}

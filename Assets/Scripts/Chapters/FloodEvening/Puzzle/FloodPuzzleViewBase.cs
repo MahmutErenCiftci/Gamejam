@@ -16,7 +16,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected CanvasGroup group;
         [SerializeField] protected RectTransform panel;
-        [Tooltip("Türkçe karakterli font. Boşsa Resources/Objectives/Nunito-Black.")]
+        [Tooltip("Türkçe karakterli font. Boşsa oyun içi yazı tipi (AfetUyanisi.UI.GameFonts.Story).")]
         [SerializeField] protected Font font;
 
         private float appear;

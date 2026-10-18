@@ -307,7 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257b21308e033a24c92ccdf97e146365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AfetUyanisi.Chapters.FloodEvening.DangerToast
-  font: {fileID: 12800000, guid: 53d76e384daa67845bfad75b724cd53c, type: 3}
+  font: {fileID: 12800000, guid: b5ce24ed64cac3141a50e83389690b23, type: 3}
   icon: {fileID: 21300000, guid: afa8c0ee1114a954f977aa82482f7771, type: 3}
   sortingOrder: 45
   topMargin: 30
