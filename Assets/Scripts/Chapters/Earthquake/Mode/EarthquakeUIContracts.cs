@@ -10,7 +10,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// <summary>Sarsıntı sırasındaki korunma sonucu.</summary>
     public enum ProtectionOutcome { None, TableDropCoverHold, InPlaceDropCover, Exposed }
 
-    /// <summary>Sağ üst 120 sn sayaç + ceza animasyonu. 120–61 beyaz, 60–31 amber, 30–11 kırmızı, ≤10 hafif nabız.</summary>
+    /// <summary>Sağ üst 60 sn sayaç + ceza animasyonu (renk eşikleri görünümde: PreparationQuestHUD 60–31 krem, 30–11 amber, ≤10 kırmızı + nabız).</summary>
     public abstract class CountdownViewBase : MonoBehaviour
     {
         /// <summary>Sayacı göster/gizle.</summary>

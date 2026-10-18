@@ -170,7 +170,8 @@ namespace AfetUyanisi.Menu.EditorTools
             var flood = Bubble(dreams, "Bubble_Sel", MenuChapterLoader.Chapter.Flood, "Bubbles/BubbleFlood", "Bubbles/BubbleFloodGlow", Px(headTop).x + FloodBubbleFromHead.x, Px(headTop).y + FloodBubbleFromHead.y, 105, true, 0.5f);
 
             // ---------------- Logo, karanlık, açılış saati
-            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 180, 446, 120);
+            // Logo 294x151 px, merkezi (180, 426): alt kenarı dünyada y 350,5 = arayüzde y ≈ 233,7.
+            var titleRenderer = Place(null, "Title", "UI/LogoStacked", 180, 426, 120);
             var title = titleRenderer.gameObject.AddComponent<SpriteFader>();
             var darkness = Fill(null, "Darkness", -16, -16, WorldW + 32, WorldH + 32, new Color(0.01f, 0.01f, 0.03f, 1f), 900);
             var darkFader = darkness.gameObject.AddComponent<SpriteFader>();
@@ -187,16 +188,17 @@ namespace AfetUyanisi.Menu.EditorTools
             var mainButtons = Panel(root, "MainButtons");
             // Slogan şehrin üstünde: koyu yarı saydam şerit ve dış çizgiyle okunur.
             // Press Start 2P'de "büyük fark yaratır." 152 px: panel yazıyı çerçeveye değdirmeden sarar.
-            var sloganBack = UiImage(mainButtons.transform, "SloganBack", S("UI/Panel"), V(120, 232), new Vector2(164, 30));
+            // Logonun altında boşluk bırakır (kutu y 195-225, logonun alt kenarı ≈ 233,7), Yeni Oyun'a 15 px kalır.
+            var sloganBack = UiImage(mainButtons.transform, "SloganBack", S("UI/Panel"), V(120, 210), new Vector2(164, 30));
             sloganBack.type = UnityEngine.UI.Image.Type.Sliced;
             sloganBack.color = new Color(1f, 1f, 1f, 0.85f);
-            var slogan = Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 8, Ink, V(120, 232), new Vector2(200, 28), TextAnchor.MiddleCenter);
+            var slogan = Label(mainButtons.transform, "Slogan", "Küçük kararlar,\nbüyük fark yaratır.", regular, 8, Ink, V(120, 210), new Vector2(200, 28), TextAnchor.MiddleCenter);
             var sloganOutline = slogan.gameObject.AddComponent<Outline>();
             sloganOutline.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.8f);
             sloganOutline.effectDistance = new Vector2(1f, -1f);
-            var newGame = MenuButton(mainButtons.transform, "NewGameButton", "Yeni Oyun", V(120, 186), new Vector2(128, 22));
-            var settings = MenuButton(mainButtons.transform, "SettingsButton", "Ayarlar", V(120, 158), new Vector2(128, 22));
-            var exit = MenuButton(mainButtons.transform, "ExitButton", "Çıkış", V(120, 130), new Vector2(128, 22));
+            var newGame = MenuButton(mainButtons.transform, "NewGameButton", "Yeni Oyun", V(120, 168), new Vector2(150, 24));
+            var settings = MenuButton(mainButtons.transform, "SettingsButton", "Ayarlar", V(120, 138), new Vector2(150, 24));
+            var exit = MenuButton(mainButtons.transform, "ExitButton", "Çıkış", V(120, 108), new Vector2(150, 24));
             ChainNavigation(newGame, settings, exit);
 
             var selection = Panel(root, "SelectionPanel");
@@ -931,6 +933,12 @@ namespace AfetUyanisi.Menu.EditorTools
             return img;
         }
 
+        // Press Start 2P'nin harf gövdesi kutusuna göre simetrik değil: büyük harfler em kutusunun 1/8 üstünden
+        // başlar (taban 125/1000, tepe 1000/1000), her harfin sağında 1/8 boşluk kalır. Unity satır kutusunu
+        // ortaladığı için yazı (font boyutu/16) piksel yukarıda ve solda görünür. Her etiket bu kadar sağa-aşağı
+        // kaydırılır: 8 px yazıda (0,5; -0,5), 16 px'te (1; -1). Ölçüm: 1080p'de buton yazısı panelde tam ortada.
+        static Vector2 GlyphCentering(int size) => new Vector2(size / 16f, -size / 16f);
+
         static Text Label(Transform parent, string name, string text, Font font, int size, Color color, Vector2 pos, Vector2 box, TextAnchor anchor)
         {
             var go = new GameObject(name, typeof(RectTransform));
@@ -949,7 +957,7 @@ namespace AfetUyanisi.Menu.EditorTools
             shadow.effectColor = new Color(0.02f, 0.02f, 0.06f, 0.9f);
             shadow.effectDistance = new Vector2(1f, -1f);
             var rt = (RectTransform)go.transform;
-            rt.anchoredPosition = pos;
+            rt.anchoredPosition = pos + GlyphCentering(size);
             rt.sizeDelta = box;
             return t;
         }
@@ -964,8 +972,9 @@ namespace AfetUyanisi.Menu.EditorTools
             var nav = button.navigation;
             nav.mode = Navigation.Mode.None;
             button.navigation = nav;
-            var text = Label(img.transform, "Text", label, regular, 8, Ink, new Vector2(0, 1), new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
-            var arrow = Label(img.transform, "Arrow", "▶", regular, 8, Warm, new Vector2(-size.x / 2f + 10f, 1), new Vector2(12, size.y), TextAnchor.MiddleCenter);
+            // Yazı panelin tam ortasında (eski +1 px yukarı kaydırma yazıyı yukarıda gösteriyordu; düzeltme Label'da).
+            var text = Label(img.transform, "Text", label, regular, 8, Ink, Vector2.zero, new Vector2(size.x - 8, size.y), TextAnchor.MiddleCenter);
+            var arrow = Label(img.transform, "Arrow", "▶", regular, 8, Warm, new Vector2(-size.x / 2f + 10f, 0), new Vector2(12, size.y), TextAnchor.MiddleCenter);
             arrow.enabled = false;
             var fx = img.gameObject.AddComponent<MenuButtonFx>();
             SetRef(fx, "background", img);

@@ -15,7 +15,7 @@ const F = { A: ['.#.', '#.#', '###', '#.#', '#.#'], B: ['##.', '#.#', '##.', '#.
   E: ['###', '#..', '##.', '#..', '###'], G: ['.##', '#..', '#.#', '#.#', '.##'], H: ['#.#', '#.#', '###', '#.#', '#.#'], I: ['#', '#', '#', '#', '#'], İ: ['#', '#', '#', '#', '#'],
   K: ['#.#', '#.#', '##.', '#.#', '#.#'], L: ['#..', '#..', '#..', '#..', '###'], N: ['#..#', '##.#', '#.##', '#..#', '#..#'], O: ['###', '#.#', '#.#', '#.#', '###'],
   P: ['##.', '#.#', '##.', '#..', '#..'], R: ['##.', '#.#', '##.', '#.#', '#.#'], S: ['###', '#..', '###', '..#', '###'], T: ['###', '.#.', '.#.', '.#.', '.#.'],
-  U: ['#.#', '#.#', '#.#', '#.#', '###'], Y: ['#.#', '#.#', '.#.', '.#.', '.#.'], Ş: ['###', '#..', '###', '..#', '###'], Ü: ['#.#', '#.#', '#.#', '#.#', '###'],
+  U: ['#.#', '#.#', '#.#', '#.#', '###'], V: ['#.#', '#.#', '#.#', '#.#', '.#.'], Y: ['#.#', '#.#', '.#.', '.#.', '.#.'], Ş: ['###', '#..', '###', '..#', '###'], Ü: ['#.#', '#.#', '#.#', '#.#', '###'],
   M: ['#...#', '##.##', '#.#.#', '#...#', '#...#'], '.': ['.', '.', '.', '.', '#'], '!': ['#', '#', '#', '.', '#'], ' ': ['..', '..', '..', '..', '..'] };
 function t35(str) { const px = []; let x = 0; for (const ch of str) { const g = F[ch]; if (!g) throw new Error('glyph ' + ch); g.forEach((r, y) => [...r].forEach((c, i) => { if (c === '#') px.push([x + i, y]); })); if (ch === 'İ') px.push([x, -2]); if (ch === 'Ü') px.push([x, -2], [x + 2, -2]); if (ch === 'Ş') px.push([x + 1, 5]); x += g[0].length + 1; } return { px, w: x - 1 }; }
 // draw a screen-facing plate on an engine render result (canvas y down)
@@ -169,7 +169,7 @@ for (const lights of [0, 1]) {
   const front = (u, z) => {
     if (z < 10) { const row = fl(z / 4), pu = mod(fl(u) + (row & 1) * 4, 8); if (mod(fl(z), 4) === 3 || pu === 0) return '#6E3B30'; return hash(fl(u / 8), row, 4) < 0.2 ? '#8E4636' : '#A85540'; }
     if (z >= HH - 8) return z >= HH - 3 ? '#C0392B' : '#A82E22';
-    // name board (u 186..250 = canopy width; text "GÜNEŞ İLKOKULU" needs 52 px)
+    // name board (u 186..250 = canopy width; text "KALTEV OKULU" needs 46 px; eski ad "GÜNEŞ İLKOKULU")
     if (u >= 186 && u < 250 && z >= 66 && z < 84) { if (u < 187 || u >= 249 || z < 67 || z >= 83) return '#1F3F7A'; return '#2F5DA8'; }
     // entrance (double door + canopy) at u 192..243
     if (u >= 190 && u < 246) {
@@ -204,7 +204,7 @@ for (const lights of [0, 1]) {
   // name board text (screen-facing, on the sheared board: draw per column following the wall slope)
   // Harfler tek tek, bütün olarak yerleştirilir (sütun sütun kaydırma 3x5 harfleri bozuyordu: N→H, Ü/Ş/İ işaretleri yoktu).
   {
-    const txt = 'GÜNEŞ İLKOKULU'; const t = t35(txt); let gx = Math.round(218 - t.w / 2);
+    const txt = 'KALTEV OKULU'; const t = t35(txt); let gx = Math.round(218 - t.w / 2);
     for (const ch of txt) {
       const g = t35(ch); const gw = F[ch][0].length; const uc = gx + gw / 2;     // harf merkezi
       const [sx0] = scr(r, gx, 0, 0); const [, syc] = scr(r, uc, 0, 79);        // satır 0 (büyük harf üstü) z = 79
@@ -213,7 +213,7 @@ for (const lights of [0, 1]) {
     }
   }
   const res = L.SC.cropImg(Object.assign(L.SC.toImg(r), { keepPivot: true }));
-  emit(res.img, `${OUT}/PROP_Route_SchoolFacade.png`, res.pivot, { kind: 'facade', order: -50, length: 14, note: 'school building, pivot = front-face left corner on the ground (local u=0, v=0). Place at grid (gx0, 14). Entrance doors at local cells 6.0..7.6 (i.e. gx0+6..gx0+7.6), name board "GÜNEŞ İLKOKULU".' });
+  emit(res.img, `${OUT}/PROP_Route_SchoolFacade.png`, res.pivot, { kind: 'facade', order: -50, length: 14, note: 'school building, pivot = front-face left corner on the ground (local u=0, v=0). Place at grid (gx0, 14). Entrance doors at local cells 6.0..7.6 (i.e. gx0+6..gx0+7.6), name board "KALTEV OKULU".' });
 }
 
 L.fs.writeFileSync(__dirname + '/route_manifest.json', JSON.stringify(man, null, 1));

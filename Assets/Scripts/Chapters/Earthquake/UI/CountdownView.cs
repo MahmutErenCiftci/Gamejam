@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace AfetUyanisi.Chapters.Earthquake
 {
     /// <summary>
-    /// Sağ üst 120 sn sayacı (UI_EQ_TimerPanel + saat ikonu). Renk: 120–61 krem, 60–31 amber, 30–11 kırmızı,
+    /// ESKİ sağ üst sayaç (EarthquakeHome artık PreparationQuestHUD kullanır; UI_EQ_TimerPanel + saat ikonu). Renk: >60 krem, 60–31 amber, 30–11 kırmızı,
     /// ≤10 kırmızı + hafif nabız (yanıp sönme yok). Ceza: "-10 SANİYE" yukarı süzülür, sayı yeni değere kayarak iner,
     /// panel kısa ve hafif (±2 px) sarsılır. Arayüzü Awake'te kodla kurar (Canvas sıralaması varsayılan 86).
     /// </summary>
@@ -32,8 +32,8 @@ namespace AfetUyanisi.Chapters.Earthquake
         private Text timeText;
         private Text statusText;
 
-        private float target = 120f;
-        private float shown = 120f;
+        private float target = 60f;
+        private float shown = 60f;
         private float tweenFrom;
         private float tweenT = -1f;
         private int dropFrame = -10;

@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "countdownSeconds": 120,
+  "countdownSeconds": 60,
   "phone": {
     "app": "EŞİK",
-    "title": "DEPREM HAZIRLIĞI: 02:00",
-    "body": "İki dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
+    "title": "DEPREM HAZIRLIĞI: 01:00",
+    "body": "Bir dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
     "note": "",
     "button": "BAŞLA"
   },

@@ -12,7 +12,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     public class EarthquakeModeData
     {
         public string version = "1.0";
-        public float countdownSeconds = 120f;
+        public float countdownSeconds = 60f;
         public EqPhoneData phone;
         public EqInspectableData[] inspectables;
         public EqWarningData[] warnings;
@@ -159,12 +159,12 @@ namespace AfetUyanisi.Chapters.Earthquake
             return new EarthquakeModeData
             {
                 version = "default",
-                countdownSeconds = 120f,
+                countdownSeconds = 60f,
                 phone = new EqPhoneData
                 {
                     app = "EŞİK",
-                    title = "DEPREM HAZIRLIĞI: 02:00",
-                    body = "İki dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
+                    title = "DEPREM HAZIRLIĞI: 01:00",
+                    body = "Bir dakikan var. Evi dolaş, tehlikeleri bul, hazırlan.",
                     note = "",
                     button = "BAŞLA"
                 },

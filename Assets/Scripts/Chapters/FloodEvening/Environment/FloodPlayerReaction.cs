@@ -10,7 +10,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
     /// - Geri itme: IsoPlayerController.ExternalVelocity kısa süre verilir; Rigidbody2D çarpışmaları geçerli kalır (duvardan geçmez).
     /// - Kısa hareket kilidi: CanMove kapatılır, bitince bölüm akışının o anki serbest durumu (FloodEveningHub.FreeRoam) geri verilir.
     /// - Geri bildirim (P-FLOOD 18 Eki): kısa kamera sarsıntısı (~0,25 sn, 2-3 piksel) +
-    ///   elektrik: Cenk'in siluetinde mavi-beyaz titreşen parlama + çevresinde kısa piksel arklar (ses: FloodElectricHazards SFX_FE_Shock);
+    ///   elektrik: Cenk'in siluetinde mavi-beyaz titreşen parlama + çevresinde kısa piksel arklar (ses: FloodElectricHazards SFX_FE_Shock + acı sesi "SFX_Cenk_Hurt");
     ///   enkaz: siluette kısa kırmızı parlama + acı sesi "SFX_Cenk_Hurt" (yoksa SFX_EQ_Injured; ses: FloodDebrisField SFX_FE_Debris_Bump).
     ///   Işığa duyarlılık: tam ekran parlama YOK; yalnız karakterin pikselleri, en çok ~8 Hz, en çok 0,36 sn.
     /// Aynı anda tek tepki; tepki sürerken yenisi başlamaz (zincirleme olmasın). Sel sayacını durdurmaz, tek başına başarısızlık değildir.
@@ -105,7 +105,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
             if (!CanReact) return false;
             LastKind = kind;
             ReactionCount++;
-            if (kind == Kind.Bump) PlayHurt();
+            PlayHurt(); // elektrikte de Cenk'in acı sesi (çarpma sesi FloodElectricHazards'ta)
             routine = StartCoroutine(Run(kind, dirGround, groundSpeed, pushSeconds, lockSeconds, target));
             return true;
         }

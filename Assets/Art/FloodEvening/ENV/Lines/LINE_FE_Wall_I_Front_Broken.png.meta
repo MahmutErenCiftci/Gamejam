@@ -3,6 +3,9 @@ guid: acbb87d238dab451f7bb634663acb939
 TextureImporter:
   internalIDToNameTable:
   - first:
+      213: 3697416265835356337
+    second: LINE_FE_Wall_I_Front_Broken_6
+  - first:
       213: 4181391241119747785
     second: LINE_FE_Wall_I_Front_Broken_7
   - first:
@@ -20,6 +23,12 @@ TextureImporter:
   - first:
       213: 3847073424670107290
     second: LINE_FE_Wall_I_Front_Broken_12
+  - first:
+      213: 979278689785250010
+    second: LINE_FE_Wall_I_Front_Broken_13
+  - first:
+      213: 1119796189726677085
+    second: LINE_FE_Wall_I_Front_Broken_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -130,10 +139,32 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LINE_FE_Wall_I_Front_Broken_7
+      name: LINE_FE_Wall_I_Front_Broken_6
       rect:
         serializedVersion: 2
         x: 0
+        y: 45
+        width: 16
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5, y: 0.357143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac19b8af3b015e9135ff0ad9fc3e158
+      internalID: 3697416265835356337
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_Broken_7
+      rect:
+        serializedVersion: 2
+        x: 16
         y: 53
         width: 16
         height: 49
@@ -155,7 +186,7 @@ TextureImporter:
       name: LINE_FE_Wall_I_Front_Broken_8
       rect:
         serializedVersion: 2
-        x: 16
+        x: 32
         y: 61
         width: 16
         height: 49
@@ -177,7 +208,7 @@ TextureImporter:
       name: LINE_FE_Wall_I_Front_Broken_9
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 69
         width: 16
         height: 49
@@ -199,7 +230,7 @@ TextureImporter:
       name: LINE_FE_Wall_I_Front_Broken_10
       rect:
         serializedVersion: 2
-        x: 48
+        x: 64
         y: 77
         width: 16
         height: 49
@@ -221,7 +252,7 @@ TextureImporter:
       name: LINE_FE_Wall_I_Front_Broken_11
       rect:
         serializedVersion: 2
-        x: 64
+        x: 80
         y: 85
         width: 16
         height: 49
@@ -243,7 +274,7 @@ TextureImporter:
       name: LINE_FE_Wall_I_Front_Broken_12
       rect:
         serializedVersion: 2
-        x: 80
+        x: 96
         y: 93
         width: 16
         height: 49
@@ -257,6 +288,50 @@ TextureImporter:
       bones: []
       spriteID: 3caa5586b18e95e829c0fa0b593dc8b7
       internalID: 3847073424670107290
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_Broken_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 101
+        width: 16
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5, y: 0.357143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aa72a812cdc9e031c447d9585b63878
+      internalID: 979278689785250010
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LINE_FE_Wall_I_Front_Broken_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 109
+        width: 16
+        height: 49
+      alignment: 9
+      pivot: {x: 0.5, y: 0.357143}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd94c87668b77b3e5c3302fcdf3caef3
+      internalID: 1119796189726677085
       vertices: []
       indices:
       edges: []
@@ -275,12 +350,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      LINE_FE_Wall_I_Front_Broken_6: 3697416265835356337
       LINE_FE_Wall_I_Front_Broken_7: 4181391241119747785
       LINE_FE_Wall_I_Front_Broken_8: 4556538085311443703
       LINE_FE_Wall_I_Front_Broken_9: 4411140507380697159
       LINE_FE_Wall_I_Front_Broken_10: 3142606625170612832
       LINE_FE_Wall_I_Front_Broken_11: 3116550125023370282
       LINE_FE_Wall_I_Front_Broken_12: 3847073424670107290
+      LINE_FE_Wall_I_Front_Broken_13: 979278689785250010
+      LINE_FE_Wall_I_Front_Broken_14: 1119796189726677085
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

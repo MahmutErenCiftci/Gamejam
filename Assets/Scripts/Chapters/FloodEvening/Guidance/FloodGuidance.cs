@@ -18,7 +18,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
     ///    apartman finalinin sırası (kilit → posta kutusu → kilit/kapı). Rota çapaları elektrik bölgelerinin (Zone_1..3)
     ///    yanından geçer: ok düz çizgide tehlikeye değil, rota boyunca bir sonraki noktaya bakar.
     ///  • Kullanılabilir [E] noktalarının (dal, posta kutusu, kilit, tabela) altında yumuşak nabız atan izometrik halka.
-    ///  • Oyuncu idleSeconds sn ilerlemezse ok bir kez büyüyüp küçülür.
+    ///  • R3 (18 Eki): ok SÜREKLİ görünmez. Yalnız (a) sahnenin başında startShowSeconds sn, (b) her pulseIntervalSeconds sn'de
+    ///    pulseShowSeconds sn'lik kısa bir nabız, (c) oyuncu idleSeconds sn ilerlemezse (bir kez büyüyüp küçülür) yeniden ilerleyene
+    ///    kadar görünür. Hep yumuşak açılır/kapanır (fadeIn/fadeOut). Zemin halkası eskisi gibi sürekli.
+    ///  • Ok yalnız yürünebilir rota boyunca bakar: oyuncu sokaktaysa sokağa paralel (rotaya hafifçe yaklaşarak), bir sonraki köşeyi
+    ///    geçmeden. Bakılan noktaya düz çizgi duvara/yürüme sınırına (Physics2D), su kenarına (WaterEdge*) ya da elektrik bölgesine
+    ///    çarpıyorsa önce bir sonraki köşe, o da olmazsa rotaya dönüş denenir; hiçbiri temiz değilse ok gösterilmez.
     /// Diyalog, kart, sinematik (ağaç düşüşü, sele kapılma), mini oyun (ritim, PIN, mektup), duraklatma ve sonuç ekranında
     /// hepsi gizlidir. Sahne düzenlemesi gerekmez: FloodSchool / FloodEvening yüklenince kendini ekler. Süreye dokunmaz.
     /// Görev HUD'unda "ŞİMDİ" satırı yok (sel görev şeridi desteklemiyor), bu yüzden eklenmedi.
@@ -35,7 +40,24 @@ namespace AfetUyanisi.Chapters.FloodEvening
         [SerializeField] private float lookAhead = 2.4f;
         [SerializeField] private float bounceHeight = 3f;
         [SerializeField] private float bouncePeriod = 0.7f;
-        [SerializeField] private float idleSeconds = 12f;
+        [Header("Görünme zamanlaması (R3)")]
+        [Tooltip("Sahnenin başında (yönlendirme ilk kez etkin olunca) okun görünme süresi")]
+        [SerializeField] private float startShowSeconds = 3.5f;
+        [Tooltip("Kısa nabızların aralığı (yönlendirmenin etkin olduğu süre)")]
+        [SerializeField] private float pulseIntervalSeconds = 10f;
+        [Tooltip("Her nabızda okun görünme süresi")]
+        [SerializeField] private float pulseShowSeconds = 2.5f;
+        [Tooltip("Bu kadar sn ilerleme yoksa ok, oyuncu yeniden ilerleyene kadar görünür")]
+        [SerializeField] private float idleSeconds = 6f;
+        [Tooltip("Takılma okunun en kısa görünme süresi (hemen sönüp yanıp sönmesin)")]
+        [SerializeField] private float idleMinShowSeconds = 1.5f;
+        [SerializeField] private float fadeInSeconds = 0.35f;
+        [SerializeField] private float fadeOutSeconds = 0.4f;
+        [Header("Rota güvenliği")]
+        [Tooltip("Rotaya bu kadar ızgara biriminden yakınsa ok sokağa paralel bakar (uzaksa önce rotaya döner)")]
+        [SerializeField] private float laneTolerance = 1.7f;
+        [Tooltip("Okun düz çizgisi elektrik bölgesinin kablo ucuna bundan fazla yaklaşmaz (zemin birimi)")]
+        [SerializeField] private float hazardMargin = 0.95f;
         [SerializeField] private float idlePulseScale = 1.75f;
         [SerializeField] private float idlePulseSeconds = 0.7f;
         [Tooltip("Oyuncuya bu zemin uzaklığındaki kullanılabilir [E] noktalarının altında halka")]
@@ -50,8 +72,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private static readonly Vector2[] LegShort = { V(27f, 14.5f), V(27.5f, 10.5f), V(27.5f, 5.5f), V(28.6f, 4.5f), V(32.2f, 4.5f) };
         // Kısa yoldan dönüş: bariyer → köşe → D → kavşak merkezi.
         private static readonly Vector2[] LegBack = { V(32.2f, 4.5f), V(28.6f, 4.5f), V(27.5f, 5.5f), V(27.5f, 10.5f), V(27f, 14.5f) };
-        // Uzun yol: kavşak → F → köşe → G (Zone_2'nin ön şeridinden) → köşe → H (Zone_3'ün sol şeridinden) → köşe → I → TreeStopSpot.
-        private static readonly Vector2[] LegLong = { V(27f, 14.5f), V(27.5f, 19.0f), V(27.5f, 27.2f), V(28.8f, 28.5f), V(37.6f, 28.5f), V(38.9f, 27.1f), V(41.6f, 27.1f), V(43.4f, 26.0f), V(43.5f, 24.4f), V(42.3f, 23.4f), V(42.3f, 20.2f), V(43.5f, 19.2f), V(43.5f, 16.8f), V(44.8f, 15.5f), V(47.6f, 15.5f) };
+        // Uzun yol: kavşak → F → köşe → G (Zone_2'nin ön şeridinden) → köşe → H → köşe → I → TreeStopSpot.
+        // R3 (18 Eki): H artık dümdüz gx 42.4 şeridinde (Wall_H_Left gx 41'den 1.4, Zone_3 ucundan 1.6 uzak; FLOOD-MECH'in güvenli
+        // noktası). Eski zikzak (43.5 → 42.3 → 43.5) oku sokağa çapraz, duvara/çimene doğru döndürüyordu (lider testi 14:48).
+        private static readonly Vector2[] LegLong = { V(27f, 14.5f), V(27.5f, 19.0f), V(27.5f, 27.2f), V(28.8f, 28.5f), V(37.6f, 28.5f), V(38.9f, 27.1f), V(42.4f, 27.1f), V(42.4f, 15.5f), V(47.6f, 15.5f) };
         // Ağaç açıldıktan sonra: ön kenardaki geçit → I'nin sonu → köşe → J → avlu (SafeSpot).
         private static readonly Vector2[] LegFinal = { V(47.6f, 15.5f), V(49.6f, 13.7f), V(53.0f, 13.6f), V(56.2f, 13.7f), V(57.5f, 12.4f), V(57.5f, 1.0f), V(58f, -4.6f) };
 
@@ -120,6 +144,18 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private Vector2 aimWorld;       // halka okunun baktığı dünya noktası
         private bool hasAim;
         private float clock, idleT, pulseT = -1f, bestRemain = float.MaxValue;
+        // Görünme zamanlaması: guideT = yönlendirmenin etkin olduğu toplam süre; ringA/downA = okların görünürlüğü (0..1)
+        private float guideT, ringA, downA, shownSince = -1f, stuckSince;
+        private bool stuck;
+        private int lastIdx;
+        private Vector3 lastGoalWorld;
+        private string showReason;
+        // Düz çizgi denetimi
+        private ContactFilter2D wallFilter;
+        private readonly List<RaycastHit2D> castHits = new List<RaycastHit2D>(8);
+        private readonly List<Collider2D> waterEdges = new List<Collider2D>();
+        private FloodElectricHazards hazards;
+        private int blockedCount;
         private string lastKey;
 
         // --- Test / sürücü için okunur durum ---
@@ -133,6 +169,14 @@ namespace AfetUyanisi.Chapters.FloodEvening
         public Interactable GoalPoint => goalPoint;
         public int GlowCount { get; private set; }
         public int IdlePulses { get; private set; }
+        /// <summary>Okun şu an görünme sebebi ("başlangıç", "nabız", "takılma") ya da boş.</summary>
+        public string ShowReason => showReason ?? "";
+        /// <summary>Görünen okun saydamlığı (0..1, yumuşak açılıp kapanır).</summary>
+        public float ArrowAlpha => Mathf.Max(ringA, downA);
+        /// <summary>Düz çizgisi engelli olduğu için okun yön değiştirdiği / gizlendiği kare sayısı.</summary>
+        public int BlockedCount => blockedCount;
+        /// <summary>Halka okunun son yönü (0..15; 0 = sağ, 4 = yukarı, saat yönünün tersine 22.5°).</summary>
+        public int ArrowDir { get; private set; }
 
         // =====================================================================
         // Kendini sahneye ekleme
@@ -200,8 +244,19 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 schoolSign = sign != null ? sign.GetComponent<Interactable>() : null;
                 stepField = typeof(ChapterControllerBase).GetField("currentStep", BindingFlags.Instance | BindingFlags.NonPublic);
             }
+            if (player != null)
+            {
+                wallFilter = new ContactFilter2D { useTriggers = false };
+                wallFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(player.gameObject.layer));
+            }
+            hazards = FindInScene<FloodElectricHazards>(sc);
+            foreach (var root in sc.GetRootGameObjects())
+                foreach (var col in root.GetComponentsInChildren<Collider2D>(true))
+                    if (col.name.StartsWith("WaterEdge") && !IsUnused(col.transform)) waterEdges.Add(col);
             Build();
-            Debug.Log($"[FE-GUIDE] yönlendirme açıldı ({mode}, {modules.Count} [E] modülü)", this);
+            Debug.Log($"[FE-GUIDE] yönlendirme açıldı ({mode}, {modules.Count} [E] modülü, {waterEdges.Count} su kenarı, " +
+                      $"{(hazards != null ? hazards.ZoneCount : 0)} elektrik bölgesi; ok: başta {startShowSeconds:0.#} sn, {pulseIntervalSeconds:0.#} sn'de bir " +
+                      $"{pulseShowSeconds:0.#} sn, {idleSeconds:0.#} sn ilerleme yoksa)", this);
         }
 
         private void OnDestroy()
@@ -436,6 +491,7 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (!string.IsNullOrEmpty(key)) Debug.Log($"[FE-GUIDE] ok → {key}", this);
             }
             UpdateIdle(dt);
+            UpdateSchedule(dt);
             UpdateArrows(dt);
             UpdateGlows(can);
         }
@@ -519,8 +575,10 @@ namespace AfetUyanisi.Chapters.FloodEvening
         }
 
         /// <summary>
-        /// Rota çizgisini izler: oyuncunun çizgi üstündeki en yakın noktasından lookAhead kadar ilerideki noktaya bakar
-        /// (köşeleri rota boyunca döner; düz çizgide suya/elektriğe kesmez). Oyuncu çizgiden uzaksa önce çizgiye döner.
+        /// Rota çizgisini izler. Oyuncu sokaktaysa (rotaya laneTolerance'tan yakın) ok sokağa paralel bakar: rota üstünde lookAhead
+        /// ilerideki nokta + oyuncunun yanal kayması × 0.7 (hafifçe rotaya yaklaşır, karşı duvara/çimene çapraz bakmaz). Uzaksa önce
+        /// rotaya döner. Ok bir sonraki köşeyi en fazla 0.5 geçer (köşenin iç tarafını kesmez). Son olarak düz çizgi denetlenir
+        /// (IsClear): engelliyse bir sonraki köşe, o da engelliyse rotaya dönüş noktası; hiçbiri temiz değilse ok yok.
         /// </summary>
         private void Follow(Vector2[] pts, string name, Vector2 g)
         {
@@ -536,22 +594,91 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (d <= best + 0.05f) { best = d; bestS = acc + t * len; } // eşitlikte ileriki parça
                 acc += len;
             }
-            // Çizgiden saptıkça ileri bakış kısalır (önce rotaya döner); ok bir sonraki köşeyi en fazla 0.5 geçer, yani
-            // köşenin iç tarafını (direk, duvar, elektrik şeridi) kesip geçmez.
-            float ahead = best > 1.6f ? 0.6f : Mathf.Clamp(lookAhead - 3.5f * best, 0.5f, lookAhead);
-            float sAim = Mathf.Min(total, bestS + ahead);
-            float vertexS = 0f;
+            // Bir sonraki köşe (rota uzunluğu ve indeksi)
+            float vertexS = 0f, nextS = total;
+            int nextI = pts.Length - 1;
             for (int i = 0; i + 1 < pts.Length; i++)
             {
                 vertexS += Vector2.Distance(pts[i], pts[i + 1]);
-                if (vertexS > bestS + 0.05f) { sAim = Mathf.Min(sAim, vertexS + 0.5f); break; }
+                if (vertexS > bestS + 0.05f) { nextS = vertexS; nextI = i + 1; break; }
             }
-            Vector2 aim = PointAt(pts, sAim);
             float remain = total - bestS;
             if (remain < bestRemain - 0.75f) { bestRemain = remain; idleT = 0f; }
             if (remain < 0.6f && best < 1.2f) return; // bacağın sonuna varıldı (ör. kavşak): ok yok
-            aimWorld = GridToWorld(aim);
+
+            Vector2 proj = PointAt(pts, bestS);
+            Vector2 aim;
+            if (best <= laneTolerance)
+                aim = PointAt(pts, Mathf.Min(total, Mathf.Min(bestS + lookAhead, nextS + 0.5f))) + (g - proj) * 0.7f;
+            else
+                aim = PointAt(pts, Mathf.Min(total, Mathf.Min(bestS + 0.6f, nextS + 0.5f)));
+
+            Vector2 from = player.transform.position;
+            Vector2 w = GridToWorld(aim);
+            if (!IsClear(from, w))
+            {
+                blockedCount++;
+                Vector2 corner = GridToWorld(pts[nextI]);
+                Vector2 back = GridToWorld(PointAt(pts, Mathf.Min(total, bestS + 0.3f)));
+                if (IsClear(from, corner)) w = corner;
+                else if (IsClear(from, back)) w = back;
+                else return; // emin değilsek ok yok
+            }
+            aimWorld = w;
             hasAim = true;
+        }
+
+        /// <summary>
+        /// Oyuncudan hedefe düz çizgi yürünebilir mi: Physics2D duvar/yürüme sınırı (tetikleyici olmayan, oyuncunun çarpıştığı
+        /// katmanlar; oyuncunun kendisi ve başlangıçtaki temas hariç), su kenarı alanları (WaterEdge*, dışarıdan girilmez) ve
+        /// elektrik bölgeleri (kablo ucuna hazardMargin'den, ve oyuncunun şu anki uzaklığından daha çok yaklaşmaz).
+        /// </summary>
+        private bool IsClear(Vector2 a, Vector2 b)
+        {
+            Vector2 d = b - a;
+            float len = d.magnitude;
+            if (len < 0.05f) return true;
+            castHits.Clear();
+            Physics2D.Linecast(a, b, wallFilter, castHits);
+            foreach (var h in castHits)
+            {
+                if (h.collider == null || h.collider.transform.IsChildOf(player.transform)) continue;
+                if (h.distance < 0.06f) continue;
+                var rb = h.collider.attachedRigidbody;
+                if (rb != null && rb.bodyType == RigidbodyType2D.Dynamic) continue; // hareketli cisim duvar değildir
+                return Blocked("duvar " + h.collider.name);
+            }
+            foreach (var z in waterEdges)
+            {
+                if (z == null || !z.isActiveAndEnabled || z.OverlapPoint(a)) continue;
+                for (float t = 0.1f; t <= 1.001f; t += 0.1f)
+                    if (z.OverlapPoint(a + d * t)) return Blocked("su kenarı " + z.name);
+            }
+            if (hazards != null)
+                for (int i = 0; i < hazards.ZoneCount; i++)
+                {
+                    Vector2 c = hazards.ContactOf(i);
+                    float now = FloodPlayerReaction.GroundDistance(a, c);
+                    float seg = GroundSegmentDistance(c, a, b);
+                    if (seg < hazardMargin && seg < now - 0.05f) return Blocked("elektrik bölgesi " + i);
+                }
+            return true;
+        }
+
+        private string lastBlock;
+        /// <summary>Engel sebebi değişince Console'a bir kez yazar (teşhis), false döner.</summary>
+        private bool Blocked(string why)
+        {
+            if (why != lastBlock) { lastBlock = why; Debug.Log($"[FE-GUIDE] düz çizgi engelli ({TargetName}): {why}", this); }
+            return false;
+        }
+
+        /// <summary>Noktanın doğru parçasına zemin uzaklığı (y ×2: izometrik zemin ölçüsü, FloodPlayerReaction.GroundDistance ile aynı).</summary>
+        private static float GroundSegmentDistance(Vector2 p, Vector2 a, Vector2 b)
+        {
+            Vector2 P = new Vector2(p.x, 2f * p.y), A = new Vector2(a.x, 2f * a.y), B = new Vector2(b.x, 2f * b.y), ab = B - A;
+            float t = ab.sqrMagnitude > 1e-6f ? Mathf.Clamp01(Vector2.Dot(P - A, ab) / ab.sqrMagnitude) : 0f;
+            return Vector2.Distance(P, A + ab * t);
         }
 
         private static Vector2 PointAt(Vector2[] pts, float s)
@@ -626,7 +753,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 case 4:
                     // Yalnız halka oku (sıçrayan ok çıkışın üstünde dursa oyuncu kestirip suya yürürdü).
                     aimWorld = bankPoint;
-                    hasAim = true;
+                    hasAim = IsClear(pos, bankPoint);
+                    if (!hasAim) blockedCount++;
                     {
                         float d = Vector2.Distance(pos, bankPoint);
                         if (d < bestRemain - 0.5f) { bestRemain = d; idleT = 0f; }
@@ -661,7 +789,9 @@ namespace AfetUyanisi.Chapters.FloodEvening
         private void SchoolAim(Vector2 world, string name)
         {
             aimWorld = world;
-            hasAim = true;
+            // Halka oku yalnız düz çizgi temizse (su kenarı / duvar); sıçrayan ok hedefin üstünde kalır.
+            hasAim = IsClear(player.transform.position, world);
+            if (!hasAim) blockedCount++;
             goalWorld = new Vector3(world.x, world.y + 0.9f, 0f);
             float d = Vector2.Distance(player.transform.position, world);
             if (d < bestRemain - 0.5f) { bestRemain = d; idleT = 0f; }
@@ -671,21 +801,58 @@ namespace AfetUyanisi.Chapters.FloodEvening
 
         private void UpdateIdle(float dt)
         {
-            if (!Active) return;
-            if (goalPoint != null && goalPoint.IsPlayerInRange(player)) { idleT = 0f; return; }
-            idleT += dt;
-            if (idleT >= idleSeconds)
+            if (!Active) { stuck = false; return; }
+            if (goalPoint != null && goalPoint.IsPlayerInRange(player)) idleT = 0f;
+            else idleT += dt;
+            if (!stuck && idleT >= idleSeconds)
             {
-                idleT = 0f;
+                stuck = true;
+                stuckSince = clock;
                 pulseT = 0f;
                 IdlePulses++;
-                Debug.Log($"[FE-GUIDE] {idleSeconds:0} sn ilerleme yok → ok büyüyüp küçülüyor ({TargetName})", this);
+                Debug.Log($"[FE-GUIDE] {idleSeconds:0.#} sn ilerleme yok → ok görünüyor, büyüyüp küçülüyor ({TargetName})", this);
+            }
+            // İlerleme olunca (Follow/SetGoalPoint idleT'yi sıfırlar) en az idleMinShowSeconds sonra söner.
+            if (stuck && idleT < idleSeconds && clock - stuckSince >= idleMinShowSeconds) stuck = false;
+        }
+
+        /// <summary>
+        /// Ok ne zaman görünür: yönlendirme etkinken geçen süre (guideT) ilk startShowSeconds içindeyse "başlangıç"; sonra her
+        /// pulseIntervalSeconds'in son pulseShowSeconds'inde "nabız"; ilerleme yoksa "takılma". Geçişler Console'a yazılır.
+        /// </summary>
+        private void UpdateSchedule(float dt)
+        {
+            string reason = null;
+            if (Active)
+            {
+                guideT += dt;
+                if (stuck) reason = "takılma";
+                else if (guideT <= startShowSeconds) reason = "başlangıç";
+                else
+                {
+                    float iv = Mathf.Max(pulseShowSeconds + 0.5f, pulseIntervalSeconds);
+                    float phase = Mathf.Repeat(guideT - startShowSeconds, iv);
+                    if (phase >= iv - pulseShowSeconds) reason = "nabız";
+                }
+            }
+            if (reason != showReason)
+            {
+                if (reason != null && showReason == null) shownSince = clock;
+                if (reason != null) Debug.Log($"[FE-GUIDE] ok AÇIK ({reason}) t={Time.realtimeSinceStartup:F1} rehber={guideT:F1} → {TargetName}", this);
+                else Debug.Log($"[FE-GUIDE] ok KAPALI t={Time.realtimeSinceStartup:F1} ({clock - shownSince:F1} sn göründü, {(Active ? "süre bitti" : "gizleme kuralı")})", this);
+                showReason = reason;
             }
         }
 
         private void UpdateArrows(float dt)
         {
             var cam = Camera.main;
+            if (cam == null)
+            {
+                ringA = downA = 0f; ringGroup.alpha = downGroup.alpha = 0f;
+                RingVisible = BounceVisible = ArrowVisible = false;
+                return;
+            }
             float k = canvas.scaleFactor > 0f ? canvas.scaleFactor : 1f;
             Vector2 size = canvasRt.rect.size;
             bool inRange = goalPoint != null && goalPoint.IsPlayerInRange(player);
@@ -701,6 +868,8 @@ namespace AfetUyanisi.Chapters.FloodEvening
             float bounce = Mathf.Round(Mathf.Abs(Mathf.Sin(clock * Mathf.PI / Mathf.Max(0.1f, bouncePeriod))) * bounceHeight);
 
             // Sıçrayan ok: hedef (kapı, dal, avlu, posta kutusu, kilit) ekrandaysa üstünde.
+            bool want = showReason != null;
+            float stepIn = dt / Mathf.Max(0.05f, fadeInSeconds), stepOut = dt / Mathf.Max(0.05f, fadeOutSeconds);
             bool showDown = false;
             if (Active && goalWorld.HasValue && !inRange)
             {
@@ -709,12 +878,19 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (sp.z > 0f && local.x > 36f && local.x < size.x - 36f && local.y > 20f && local.y < size.y - 44f)
                 {
                     showDown = true;
-                    downRt.anchoredPosition = new Vector2(Mathf.Round(local.x), Mathf.Round(local.y + bounce));
-                    downRt.localScale = new Vector3(scale * arrowScale, scale * arrowScale, 1f);
+                    lastGoalWorld = goalWorld.Value;
                 }
             }
-            downGroup.alpha = showDown ? 1f : 0f;
-            BounceVisible = showDown;
+            downA = Mathf.MoveTowards(downA, showDown && want ? 1f : 0f, showDown && want ? stepIn : stepOut);
+            if (downA > 0f)
+            {
+                // Sönerken de son hedefin üstünde kalır (ekranda kaymaz)
+                Vector3 sp = cam.WorldToScreenPoint(lastGoalWorld);
+                downRt.anchoredPosition = new Vector2(Mathf.Round(sp.x / k), Mathf.Round(sp.y / k + bounce));
+                downRt.localScale = new Vector3(scale * arrowScale, scale * arrowScale, 1f);
+            }
+            downGroup.alpha = downA;
+            BounceVisible = downA > 0.01f;
 
             // Halka oku: Cenk'in çevresinde, rota üstündeki ileri noktaya doğru. Sıçrayan ok görünürken gösterilmez.
             bool showRing = false;
@@ -727,7 +903,17 @@ namespace AfetUyanisi.Chapters.FloodEvening
                 if (dir.sqrMagnitude > 4f)
                 {
                     float ang = Mathf.Atan2(dir.y, dir.x);
-                    int idx = ((Mathf.RoundToInt(ang / (Mathf.PI / 8f)) % 16) + 16) % 16;
+                    lastIdx = ((Mathf.RoundToInt(ang / (Mathf.PI / 8f)) % 16) + 16) % 16;
+                    showRing = true;
+                }
+            }
+            ringA = Mathf.MoveTowards(ringA, showRing && want ? 1f : 0f, showRing && want ? stepIn : stepOut);
+            if (ringA > 0f)
+            {
+                // Sönerken son yönüyle Cenk'in çevresinde kalır
+                Vector3 c = cam.WorldToScreenPoint(player.transform.position + new Vector3(0f, 0.45f, 0f));
+                {
+                    int idx = lastIdx;
                     ringImg.sprite = dirSprites[idx];
                     float a = idx * Mathf.PI / 8f;
                     float r = ringRadius + Mathf.Round(Mathf.Abs(Mathf.Sin(clock * Mathf.PI / Mathf.Max(0.1f, bouncePeriod))) * 2f);
@@ -736,12 +922,12 @@ namespace AfetUyanisi.Chapters.FloodEvening
                     local.y = Mathf.Clamp(local.y, 20f, size.y - 20f);
                     ringRt.anchoredPosition = new Vector2(Mathf.Round(local.x), Mathf.Round(local.y));
                     ringRt.localScale = new Vector3(scale * arrowScale, scale * arrowScale, 1f);
-                    showRing = true;
                 }
             }
-            ringGroup.alpha = showRing ? 1f : 0f;
-            RingVisible = showRing;
-            ArrowVisible = showDown || showRing;
+            ringGroup.alpha = ringA;
+            RingVisible = ringA > 0.01f;
+            ArrowVisible = RingVisible || BounceVisible;
+            ArrowDir = lastIdx;
         }
 
         // ---------------- Halka (kullanılabilir [E] noktaları) ----------------

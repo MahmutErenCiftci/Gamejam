@@ -7,6 +7,8 @@ namespace AfetUyanisi.Chapters.Earthquake
     /// Hazırlık HUD'unun tek görev satırı (bütün görevler için ortak bileşen). Üç durum:
     /// Incomplete = gri boş halka + krem yazı; Active = amber gösterge + hafif nabız + parlak yazı;
     /// Completed = yeşil tik (pop) + yeşil yazı + kısa yeşil parlama + ince üstü çizili.
+    /// Listeden çıkma (BeginRemove): tik pop + parlama + soldan sağa üstü çizilme (removeHold sn) → sönme → satır yüksekliği
+    /// 1'den 0'a iner (Weight); HUD altındaki satırları Weight toplamıyla yukarı kaydırır, panel kısalır.
     /// Arayüzünü kodla kurar (Create); animasyonlarını PreparationQuestHUD her karede Tick ile ilerletir (ölçeksiz zaman).
     /// </summary>
     public class PreparationQuestRow : MonoBehaviour
@@ -32,10 +34,22 @@ namespace AfetUyanisi.Chapters.Earthquake
         private string suffix = "";
         private float popSeconds = 0.15f, highlightSeconds = 0.3f;
         private float popT = -1f, flashT = -1f;
+        // Listeden çıkma: revealAlpha (HUD'un açılış kademesi) × fade (çıkış sönmesi); weight = satırın listede kapladığı pay (0..1).
+        private float revealAlpha = 1f, fade = 1f, weight = 1f;
+        private float removeT = -1f;
+        private float removeHold = 0.4f, removeFade = 0.15f, removeCollapse = 0.25f;
 
         public string TaskId { get; private set; }
         public State Current { get; private set; } = State.Incomplete;
         public RectTransform Rect => rt;
+        /// <summary>Satırın listede kapladığı yükseklik payı (1 = tam satır, 0 = listeden çıktı).</summary>
+        public float Weight => weight;
+        /// <summary>Listeden tamamen çıktı (gizli, yer kaplamıyor).</summary>
+        public bool Removed { get; private set; }
+        /// <summary>Çıkış animasyonu oynuyor.</summary>
+        public bool Removing => removeT >= 0f;
+        /// <summary>HUD'un son yerleşimde verdiği üst kenar (gereksiz RectTransform yazımını önler).</summary>
+        public float LayoutY { get; set; } = -1f;
         /// <summary>Etiketin referans pikseli cinsinden tercih edilen genişliği (sığma kontrolü için).</summary>
         public float LabelPreferredWidth => label != null ? EqUi.PreferredWidth(label, label.text) : 0f;
         public float LabelWidth => label != null ? label.rectTransform.rect.width : 0f;
@@ -120,9 +134,66 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
         }
 
+        /// <summary>Çıkış zamanlaması: tik + üstü çizilme süresi, sönme, yükseklik kapanması (sn).</summary>
+        public void SetRemoveTimings(float hold, float fadeSeconds, float collapseSeconds)
+        {
+            removeHold = Mathf.Max(0.05f, hold);
+            removeFade = Mathf.Max(0.02f, fadeSeconds);
+            removeCollapse = Mathf.Max(0.02f, collapseSeconds);
+        }
+
         public void SetAlpha(float a)
         {
-            if (group != null) group.alpha = a;
+            revealAlpha = a;
+            ApplyAlpha();
+        }
+
+        private void ApplyAlpha()
+        {
+            if (group != null) group.alpha = revealAlpha * fade;
+        }
+
+        /// <summary>
+        /// Tamamlanan satırı listeden çıkarır. animate: tik pop + parlama + üstü çizilme, sönme, yükseklik kapanması;
+        /// değilse anında (görünmezken tamamlanan / önceden tamamlanmış görev).
+        /// </summary>
+        public void BeginRemove(bool animate)
+        {
+            if (Removed || removeT >= 0f) return;
+            if (!animate)
+            {
+                FinishRemove();
+                return;
+            }
+            removeT = 0f;
+            popT = 0f;
+            flashT = 0f;
+            if (strike != null)
+            {
+                strike.color = EqUi.A(TextDone, 0.9f);
+                strike.rectTransform.sizeDelta = new Vector2(0f, 1f);
+                strike.enabled = true;
+            }
+        }
+
+        private void FinishRemove()
+        {
+            removeT = -1f;
+            weight = 0f;
+            fade = 0f;
+            Removed = true;
+            ApplyAlpha();
+            gameObject.SetActive(false);
+        }
+
+        /// <summary>HUD'un kendisi yönettiği satır (ör. "hepsi tamam" son satırı): yükseklik payı + görünürlük.</summary>
+        public void SetPresence(float w, float f)
+        {
+            weight = Mathf.Clamp01(w);
+            fade = Mathf.Clamp01(f);
+            ApplyAlpha();
+            bool on = weight > 0f;
+            if (gameObject.activeSelf != on) gameObject.SetActive(on);
         }
 
         /// <summary>Durumu değiştirir. animate: tamamlanınca tik pop + yeşil parlama.</summary>
@@ -158,7 +229,7 @@ namespace AfetUyanisi.Chapters.Earthquake
                 t += " <color=#" + EqUi.HexOf(SuffixColor) + ">" + suffix + "</color>";
             label.text = t;
             label.color = Current == State.Completed ? TextDone : Current == State.Active ? TextActive : TextIdle;
-            if (strike != null)
+            if (strike != null && removeT < 0f) // çıkış sırasında çizgiyi Tick büyütür
             {
                 strike.enabled = UseStrike && Current == State.Completed;
                 if (strike.enabled)
@@ -172,7 +243,9 @@ namespace AfetUyanisi.Chapters.Earthquake
         /// <summary>HUD her karede çağırır (ölçeksiz zaman). clock: nabız için ortak saat.</summary>
         public void Tick(float dt, float clock)
         {
-            if (dot == null) return;
+            if (dot == null || Removed) return;
+            if (removeT >= 0f) TickRemove(dt);
+            if (Removed) return;
             float scale = 1f;
             if (popT >= 0f)
             {
@@ -202,6 +275,24 @@ namespace AfetUyanisi.Chapters.Earthquake
             }
             glowC.a = glowA;
             glow.color = glowC;
+        }
+
+        /// <summary>Çıkış: [0, hold] üstü çizilme soldan sağa (hold'un %75'inde tamam) → [hold, +fade] sönme → [+collapse] yükseklik 1→0.</summary>
+        private void TickRemove(float dt)
+        {
+            removeT += dt;
+            if (strike != null)
+            {
+                float full = Mathf.Min(EqUi.PreferredWidth(label, baseLabel), Mathf.Max(0f, LabelWidth));
+                float sk = EqUi.OutCubic(Mathf.Clamp01(removeT / (removeHold * 0.75f)));
+                strike.enabled = true;
+                strike.rectTransform.sizeDelta = new Vector2(Mathf.Round(full * sk), 1f);
+            }
+            fade = 1f - Mathf.Clamp01((removeT - removeHold) / removeFade);
+            float ck = Mathf.Clamp01((removeT - removeHold - removeFade) / removeCollapse);
+            weight = 1f - ck * ck * (3f - 2f * ck);
+            ApplyAlpha();
+            if (removeT >= removeHold + removeFade + removeCollapse) FinishRemove();
         }
     }
 }

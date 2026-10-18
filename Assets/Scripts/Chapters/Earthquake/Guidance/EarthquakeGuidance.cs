@@ -17,7 +17,7 @@ namespace AfetUyanisi.Chapters.Earthquake
     ///  • Görev HUD'unda tek satır "ŞİMDİ: …" (PreparationQuestHUD.SetNowText); sarsıntıdan sonra küçük etiket.
     ///  • Oyuncu idleSeconds sn ilerlemezse ok bir kez büyüyüp küçülür.
     ///  • Hazırlığın başında kısa kontrol ipucu (WASD/oklar: yürü · E: kullan); oyuncu yürüyüp bir kez E'ye basınca kaybolur.
-    /// Mini oyun, kart, diyalog, soru, oda geçişi ve sarsıntı sırasında hepsi kapalıdır. Sayaç 120 sn kalır (bu sınıf süreye dokunmaz).
+    /// Mini oyun, kart, diyalog, soru, oda geçişi ve sarsıntı sırasında hepsi kapalıdır. Sayaç 60 sn kalır (bu sınıf süreye dokunmaz).
     /// EarthquakeModeController Awake'te sahnede yoksa kendine ekler; sahne düzenlemesi gerekmez.
     /// </summary>
     [DisallowMultipleComponent]
